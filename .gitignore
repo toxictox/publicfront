@@ -1,2 +1,16 @@
 /node_modules/
 /package-lock.json
+**.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+Thumbs.db
+.idea
+/.idea
+.idea/*
+.AppleDouble
+.LSOverride
+Icon
+._*
+.env
