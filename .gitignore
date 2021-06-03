@@ -14,3 +14,14 @@ Thumbs.db
 Icon
 ._*
 .env
+*.ai
+*.log
+*.pdf
+*.psd
+*.sublime*
+.cache
+.keep
+node_modules/
+npm-debug.*
+yarn.lock
+package-lock.json
