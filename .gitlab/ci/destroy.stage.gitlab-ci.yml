@@ -1,0 +1,16 @@
+destroy:
+  stage: deploy # stage should be the same as the deploy in order for the environment to stop automatically when the branch is deleted
+  tags:
+    - docker
+  variables:
+    GIT_STRATEGY: none
+    COMPOSE_FILE: docker/docker-compose.yml
+  script:
+    - echo $CI_JOB_STAGE
+    - eval $(docker-machine env stage1)
+    - ./build.sh destroy
+  environment:
+    name: ${CI_COMMIT_REF_NAME}
+    url: https://${VIRTUAL_HOST}
+    action: stop
+  when: manual

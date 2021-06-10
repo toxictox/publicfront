@@ -1,0 +1,13 @@
+build:
+  variables:
+    COMPOSE_FILE: docker/docker-compose.yml
+  tags:
+    - docker
+  stage: build
+  script:
+    - echo $CI_JOB_STAGE
+    - ./build.sh build_stage
+  environment:
+    name: ${CI_COMMIT_REF_NAME}
+  only:
+    - branches
