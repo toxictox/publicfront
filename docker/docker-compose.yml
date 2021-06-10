@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  react-app:
+    image: ${CI_REGISTRY_IMAGE}/react-app:${CI_COMMIT_REF_NAME}
+    build:
+      dockerfile: docker/Dockerfile
+      context: ../
+    restart: always
+    environment:
+      - VIRTUAL_HOST
+    ports:
+      - "80"
+    networks:
+      - nginx-proxy_stages
+
+networks:
+  nginx-proxy_stages:
+    external: true
