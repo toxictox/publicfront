@@ -1,13 +1,17 @@
-import { Suspense, lazy } from 'react';
-import { Navigate } from 'react-router-dom';
-import AuthGuard from './components/AuthGuard';
-import BlogLayout from './components/blog/BlogLayout';
-import BrowseLayout from './components/BrowseLayout';
-import DashboardLayout from './components/dashboard/DashboardLayout';
-import DocsLayout from './components/docs/DocsLayout';
-import GuestGuard from './components/GuestGuard';
-import LoadingScreen from './components/LoadingScreen';
-import MainLayout from './components/MainLayout';
+import { Suspense, lazy } from "react";
+import { Navigate } from "react-router-dom";
+import AuthGuard from "./components/AuthGuard";
+import BlogLayout from "./components/blog/BlogLayout";
+import BrowseLayout from "./components/BrowseLayout";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import DocsLayout from "./components/docs/DocsLayout";
+import GuestGuard from "./components/GuestGuard";
+import LoadingScreen from "./components/LoadingScreen";
+import MainLayout from "./components/MainLayout";
+
+// new
+
+import BaseLayout from "@comp/board/BaseLayout";
 
 const Loadable = (Component) => (props) => (
   <Suspense fallback={<LoadingScreen />}>
@@ -17,148 +21,232 @@ const Loadable = (Component) => (props) => (
 
 // Browse pages
 
-const Browse = Loadable(lazy(() => import('./pages/browse/Browse')));
-const BrowseButtons = Loadable(lazy(() => import('./pages/browse/BrowseButtons')));
-const BrowseCharts = Loadable(lazy(() => import('./pages/browse/BrowseCharts')));
-const BrowseColors = Loadable(lazy(() => import('./pages/browse/BrowseColors')));
-const BrowseDetailLists = Loadable(lazy(() => import('./pages/browse/BrowseDetailLists')));
-const BrowseForms = Loadable(lazy(() => import('./pages/browse/BrowseForms')));
-const BrowseGridLists = Loadable(lazy(() => import('./pages/browse/BrowseGridLists')));
-const BrowseGroupedLists = Loadable(lazy(() => import('./pages/browse/BrowseGroupedLists')));
-const BrowseInputs = Loadable(lazy(() => import('./pages/browse/BrowseInputs')));
-const BrowseModals = Loadable(lazy(() => import('./pages/browse/BrowseModals')));
-const BrowseQuickStats = Loadable(lazy(() => import('./pages/browse/BrowseQuickStats')));
-const BrowseTables = Loadable(lazy(() => import('./pages/browse/BrowseTables')));
-const BrowseTypography = Loadable(lazy(() => import('./pages/browse/BrowseTypography')));
+const Browse = Loadable(lazy(() => import("./pages/browse/Browse")));
+const BrowseButtons = Loadable(
+  lazy(() => import("./pages/browse/BrowseButtons"))
+);
+const BrowseCharts = Loadable(
+  lazy(() => import("./pages/browse/BrowseCharts"))
+);
+const BrowseColors = Loadable(
+  lazy(() => import("./pages/browse/BrowseColors"))
+);
+const BrowseDetailLists = Loadable(
+  lazy(() => import("./pages/browse/BrowseDetailLists"))
+);
+const BrowseForms = Loadable(lazy(() => import("./pages/browse/BrowseForms")));
+const BrowseGridLists = Loadable(
+  lazy(() => import("./pages/browse/BrowseGridLists"))
+);
+const BrowseGroupedLists = Loadable(
+  lazy(() => import("./pages/browse/BrowseGroupedLists"))
+);
+const BrowseInputs = Loadable(
+  lazy(() => import("./pages/browse/BrowseInputs"))
+);
+const BrowseModals = Loadable(
+  lazy(() => import("./pages/browse/BrowseModals"))
+);
+const BrowseQuickStats = Loadable(
+  lazy(() => import("./pages/browse/BrowseQuickStats"))
+);
+const BrowseTables = Loadable(
+  lazy(() => import("./pages/browse/BrowseTables"))
+);
+const BrowseTypography = Loadable(
+  lazy(() => import("./pages/browse/BrowseTypography"))
+);
 
 // Authentication pages
 
-const Login = Loadable(lazy(() => import('./pages/authentication/Login')));
-const PasswordRecovery = Loadable(lazy(() => import('./pages/authentication/PasswordRecovery')));
-const PasswordReset = Loadable(lazy(() => import('./pages/authentication/PasswordReset')));
-const Register = Loadable(lazy(() => import('./pages/authentication/Register')));
-const VerifyCode = Loadable(lazy(() => import('./pages/authentication/VerifyCode')));
+const Login = Loadable(lazy(() => import("./pages/authentication/Login")));
+const PasswordRecovery = Loadable(
+  lazy(() => import("./pages/authentication/PasswordRecovery"))
+);
+const PasswordReset = Loadable(
+  lazy(() => import("./pages/authentication/PasswordReset"))
+);
+const Register = Loadable(
+  lazy(() => import("./pages/authentication/Register"))
+);
+const VerifyCode = Loadable(
+  lazy(() => import("./pages/authentication/VerifyCode"))
+);
 
 // Blog pages
 
-const BlogPostCreate = Loadable(lazy(() => import('./pages/blog/BlogPostCreate')));
-const BlogPostDetails = Loadable(lazy(() => import('./pages/blog/BlogPostDetails')));
-const BlogPostList = Loadable(lazy(() => import('./pages/blog/BlogPostList')));
+const BlogPostCreate = Loadable(
+  lazy(() => import("./pages/blog/BlogPostCreate"))
+);
+const BlogPostDetails = Loadable(
+  lazy(() => import("./pages/blog/BlogPostDetails"))
+);
+const BlogPostList = Loadable(lazy(() => import("./pages/blog/BlogPostList")));
 
 // Dashboard pages
 
-const Account = Loadable(lazy(() => import('./pages/dashboard/Account')));
-const Analytics = Loadable(lazy(() => import('./pages/dashboard/Analytics')));
-const Calendar = Loadable(lazy(() => import('./pages/dashboard/Calendar')));
-const Chat = Loadable(lazy(() => import('./pages/dashboard/Chat')));
-const CustomerDetails = Loadable(lazy(() => import('./pages/dashboard/CustomerDetails')));
-const CustomerEdit = Loadable(lazy(() => import('./pages/dashboard/CustomerEdit')));
-const CustomerList = Loadable(lazy(() => import('./pages/dashboard/CustomerList')));
-const Finance = Loadable(lazy(() => import('./pages/dashboard/Finance')));
-const InvoiceDetails = Loadable(lazy(() => import('./pages/dashboard/InvoiceDetails')));
-const InvoiceList = Loadable(lazy(() => import('./pages/dashboard/InvoiceList')));
-const Kanban = Loadable(lazy(() => import('./pages/dashboard/Kanban')));
-const Mail = Loadable(lazy(() => import('./pages/dashboard/Mail')));
-const OrderDetails = Loadable(lazy(() => import('./pages/dashboard/OrderDetails')));
-const OrderList = Loadable(lazy(() => import('./pages/dashboard/OrderList')));
-const Overview = Loadable(lazy(() => import('./pages/dashboard/Overview')));
-const ProductCreate = Loadable(lazy(() => import('./pages/dashboard/ProductCreate')));
-const ProductList = Loadable(lazy(() => import('./pages/dashboard/ProductList')));
+const Account = Loadable(lazy(() => import("./pages/dashboard/Account")));
+const Analytics = Loadable(lazy(() => import("./pages/dashboard/Analytics")));
+const Calendar = Loadable(lazy(() => import("./pages/dashboard/Calendar")));
+const Chat = Loadable(lazy(() => import("./pages/dashboard/Chat")));
+const CustomerDetails = Loadable(
+  lazy(() => import("./pages/dashboard/CustomerDetails"))
+);
+const CustomerEdit = Loadable(
+  lazy(() => import("./pages/dashboard/CustomerEdit"))
+);
+const CustomerList = Loadable(
+  lazy(() => import("./pages/dashboard/CustomerList"))
+);
+const Finance = Loadable(lazy(() => import("./pages/dashboard/Finance")));
+const InvoiceDetails = Loadable(
+  lazy(() => import("./pages/dashboard/InvoiceDetails"))
+);
+const InvoiceList = Loadable(
+  lazy(() => import("./pages/dashboard/InvoiceList"))
+);
+const Kanban = Loadable(lazy(() => import("./pages/dashboard/Kanban")));
+const Mail = Loadable(lazy(() => import("./pages/dashboard/Mail")));
+const OrderDetails = Loadable(
+  lazy(() => import("./pages/dashboard/OrderDetails"))
+);
+const OrderList = Loadable(lazy(() => import("./pages/dashboard/OrderList")));
+const Overview = Loadable(lazy(() => import("./pages/dashboard/Overview")));
+const ProductCreate = Loadable(
+  lazy(() => import("./pages/dashboard/ProductCreate"))
+);
+const ProductList = Loadable(
+  lazy(() => import("./pages/dashboard/ProductList"))
+);
 
 // Docs pages
 
-const Docs = Loadable(lazy(() => import('./pages/Docs')));
+const Docs = Loadable(lazy(() => import("./pages/Docs")));
 
 // Error pages
 
-const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
-const NotFound = Loadable(lazy(() => import('./pages/NotFound')));
-const ServerError = Loadable(lazy(() => import('./pages/ServerError')));
+const AuthorizationRequired = Loadable(
+  lazy(() => import("./pages/AuthorizationRequired"))
+);
+const NotFound = Loadable(lazy(() => import("./pages/NotFound")));
+const ServerError = Loadable(lazy(() => import("./pages/ServerError")));
 
 // Projects pages
 
-const ProjectBrowse = Loadable(lazy(() => import('./pages/dashboard/ProjectBrowse')));
-const ProjectCreate = Loadable(lazy(() => import('./pages/dashboard/ProjectCreate')));
-const ProjectDetails = Loadable(lazy(() => import('./pages/dashboard/ProjectDetails')));
+const ProjectBrowse = Loadable(
+  lazy(() => import("./pages/dashboard/ProjectBrowse"))
+);
+const ProjectCreate = Loadable(
+  lazy(() => import("./pages/dashboard/ProjectCreate"))
+);
+const ProjectDetails = Loadable(
+  lazy(() => import("./pages/dashboard/ProjectDetails"))
+);
 
 // Social pages
 
-const SocialFeed = Loadable(lazy(() => import('./pages/dashboard/SocialFeed')));
-const SocialProfile = Loadable(lazy(() => import('./pages/dashboard/SocialProfile')));
+const SocialFeed = Loadable(lazy(() => import("./pages/dashboard/SocialFeed")));
+const SocialProfile = Loadable(
+  lazy(() => import("./pages/dashboard/SocialProfile"))
+);
 
 // Other pages
 
-const Checkout = Loadable(lazy(() => import('./pages/Checkout')));
-const Contact = Loadable(lazy(() => import('./pages/Contact')));
-const Home = Loadable(lazy(() => import('./pages/Home')));
-const Pricing = Loadable(lazy(() => import('./pages/Pricing')));
+const Checkout = Loadable(lazy(() => import("./pages/Checkout")));
+const Contact = Loadable(lazy(() => import("./pages/Contact")));
+const Home = Loadable(lazy(() => import("./pages/Home")));
+const Pricing = Loadable(lazy(() => import("./pages/Pricing")));
+
+// New pages
+const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
+const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
+const blog = {
+  path: "blog",
+  element: <BlogLayout />,
+  children: [
+    {
+      path: "/",
+      element: <BlogPostList />,
+    },
+    {
+      path: "new",
+      element: <BlogPostCreate />,
+    },
+    {
+      path: ":postId",
+      element: <BlogPostDetails />,
+    },
+  ],
+};
+
+const docs =
+  process.env.NODE_ENV === "development"
+    ? {
+        path: "docs",
+        element: <DocsLayout />,
+        children: [
+          {
+            path: "/",
+            element: <Navigate to="/docs/overview/welcome" replace />,
+          },
+          {
+            path: "*",
+            element: <Docs />,
+          },
+        ],
+      }
+    : {};
 
 const routes = [
+  docs,
   {
-    path: 'authentication',
+    path: "authentication",
     children: [
       {
-        path: 'login',
+        path: "login",
         element: (
           <GuestGuard>
             <Login />
           </GuestGuard>
-        )
+        ),
       },
       {
-        path: 'login-unguarded',
-        element: <Login />
+        path: "login-unguarded",
+        element: <Login />,
       },
       {
-        path: 'password-recovery',
-        element: <PasswordRecovery />
+        path: "password/reset/:token",
+        element: <PasswordReset />,
       },
       {
-        path: 'password-reset',
-        element: <PasswordReset />
+        path: "password/reset",
+        element: <PasswordRecovery />,
       },
       {
-        path: 'register',
+        path: "register/:token",
         element: (
           <GuestGuard>
             <Register />
           </GuestGuard>
-        )
+        ),
       },
+      // {
+      //   path: "register-unguarded",
+      //   element: <Register />,
+      // },
       {
-        path: 'register-unguarded',
-        element: <Register />
+        path: "verify-code",
+        element: <VerifyCode />,
       },
-      {
-        path: 'verify-code',
-        element: <VerifyCode />
-      }
-    ]
+    ],
+  },
+
+  {
+    path: "contact",
+    element: <Contact />,
   },
   {
-    path: 'blog',
-    element: <BlogLayout />,
-    children: [
-      {
-        path: '/',
-        element: <BlogPostList />
-      },
-      {
-        path: 'new',
-        element: <BlogPostCreate />
-      },
-      {
-        path: ':postId',
-        element: <BlogPostDetails />
-      }
-    ]
-  },
-  {
-    path: 'contact',
-    element: <Contact />
-  },
-  {
-    path: 'dashboard',
+    path: "dashboard",
     element: (
       <AuthGuard>
         <DashboardLayout />
@@ -166,275 +254,276 @@ const routes = [
     ),
     children: [
       {
-        path: '/',
-        element: <Overview />
+        path: "/",
+        element: <Overview />,
       },
       {
-        path: 'account',
-        element: <Account />
+        path: "account",
+        element: <Account />,
       },
       {
-        path: 'analytics',
-        element: <Analytics />
+        path: "analytics",
+        element: <Analytics />,
       },
       {
-        path: 'calendar',
-        element: <Calendar />
+        path: "calendar",
+        element: <Calendar />,
       },
       {
-        path: 'chat',
+        path: "chat",
         children: [
           {
-            path: '/',
-            element: <Chat />
+            path: "/",
+            element: <Chat />,
           },
           {
-            path: 'new',
-            element: <Chat />
+            path: "new",
+            element: <Chat />,
           },
           {
-            path: ':threadKey',
-            element: <Chat />
-          }
-        ]
+            path: ":threadKey",
+            element: <Chat />,
+          },
+        ],
       },
       {
-        path: 'customers',
+        path: "customers",
         children: [
           {
-            path: '/',
-            element: <CustomerList />
+            path: "/",
+            element: <CustomerList />,
           },
           {
-            path: ':customerId',
-            element: <CustomerDetails />
+            path: ":customerId",
+            element: <CustomerDetails />,
           },
           {
-            path: ':customerId/edit',
-            element: <CustomerEdit />
-          }
-        ]
+            path: ":customerId/edit",
+            element: <CustomerEdit />,
+          },
+        ],
       },
       {
-        path: 'invoices',
+        path: "invoices",
         children: [
           {
-            path: '/',
-            element: <InvoiceList />
+            path: "/",
+            element: <InvoiceList />,
           },
           {
-            path: ':invoiceId',
-            element: <InvoiceDetails />
-          }
-        ]
+            path: ":invoiceId",
+            element: <InvoiceDetails />,
+          },
+        ],
       },
       {
-        path: 'kanban',
-        element: <Kanban />
+        path: "kanban",
+        element: <Kanban />,
       },
       {
-        path: 'mail',
+        path: "mail",
         children: [
           {
-            path: '/',
-            element: (
-              <Navigate
-                to="/dashboard/mail/all"
-                replace
-              />
-            )
+            path: "/",
+            element: <Navigate to="/dashboard/mail/all" replace />,
           },
           {
-            path: 'label/:customLabel',
-            element: <Mail />
+            path: "label/:customLabel",
+            element: <Mail />,
           },
           {
-            path: 'label/:customLabel/:emailId',
-            element: <Mail />
+            path: "label/:customLabel/:emailId",
+            element: <Mail />,
           },
           {
-            path: ':systemLabel',
-            element: <Mail />
+            path: ":systemLabel",
+            element: <Mail />,
           },
           {
-            path: ':systemLabel/:emailId',
-            element: <Mail />
-          }
-        ]
+            path: ":systemLabel/:emailId",
+            element: <Mail />,
+          },
+        ],
       },
       {
-        path: 'orders',
+        path: "orders",
         children: [
           {
-            path: '/',
-            element: <OrderList />
+            path: "/",
+            element: <OrderList />,
           },
           {
-            path: ':orderId',
-            element: <OrderDetails />
-          }
-        ]
+            path: ":orderId",
+            element: <OrderDetails />,
+          },
+        ],
       },
       {
-        path: 'finance',
-        element: <Finance />
+        path: "finance",
+        element: <Finance />,
       },
       {
-        path: 'products',
+        path: "products",
         children: [
           {
-            path: '/',
-            element: <ProductList />
+            path: "/",
+            element: <ProductList />,
           },
           {
-            path: 'new',
-            element: <ProductCreate />
-          }
-        ]
+            path: "new",
+            element: <ProductCreate />,
+          },
+        ],
       },
       {
-        path: 'projects',
+        path: "projects",
         children: [
           {
-            path: 'browse',
-            element: <ProjectBrowse />
+            path: "browse",
+            element: <ProjectBrowse />,
           },
           {
-            path: 'new',
-            element: <ProjectCreate />
+            path: "new",
+            element: <ProjectCreate />,
           },
           {
-            path: ':projectId',
-            element: <ProjectDetails />
-          }
-        ]
+            path: ":projectId",
+            element: <ProjectDetails />,
+          },
+        ],
       },
       {
-        path: 'social',
+        path: "social",
         children: [
           {
-            path: 'feed',
-            element: <SocialFeed />
+            path: "feed",
+            element: <SocialFeed />,
           },
           {
-            path: 'profile',
-            element: <SocialProfile />
-          }
-        ]
-      }
-    ]
+            path: "profile",
+            element: <SocialProfile />,
+          },
+        ],
+      },
+    ],
   },
+
   {
-    path: 'docs',
-    element: <DocsLayout />,
+    path: "/",
+    element: (
+      <AuthGuard>
+        <BaseLayout />
+      </AuthGuard>
+    ),
     children: [
       {
-        path: '/',
-        element: (
-          <Navigate
-            to="/docs/overview/welcome"
-            replace
-          />
-        )
+        path: "/",
+        element: <HomeNew />,
       },
       {
-        path: '*',
-        element: <Docs />
-      }
-    ]
+        path: "/account",
+        children: [
+          {
+            path: "/",
+            element: <AccountPage />,
+          },
+        ],
+      },
+    ],
   },
+
   {
-    path: '*',
+    path: "*",
     element: <MainLayout />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        path: "/",
+        element: <Home />,
       },
       {
-        path: 'browse',
+        path: "browse",
         element: <BrowseLayout />,
         children: [
           {
-            path: '/',
-            element: <Browse />
+            path: "/",
+            element: <Browse />,
           },
           {
-            path: '/buttons',
-            element: <BrowseButtons />
+            path: "/buttons",
+            element: <BrowseButtons />,
           },
           {
-            path: '/inputs',
-            element: <BrowseInputs />
+            path: "/inputs",
+            element: <BrowseInputs />,
           },
           {
-            path: '/charts',
-            element: <BrowseCharts />
+            path: "/charts",
+            element: <BrowseCharts />,
           },
           {
-            path: '/colors',
-            element: <BrowseColors />
+            path: "/colors",
+            element: <BrowseColors />,
           },
           {
-            path: '/data-display/detail-lists',
-            element: <BrowseDetailLists />
+            path: "/data-display/detail-lists",
+            element: <BrowseDetailLists />,
           },
           {
-            path: '/data-display/quick-stats',
-            element: <BrowseQuickStats />
+            path: "/data-display/quick-stats",
+            element: <BrowseQuickStats />,
           },
           {
-            path: '/data-display/tables',
-            element: <BrowseTables />
+            path: "/data-display/tables",
+            element: <BrowseTables />,
           },
           {
-            path: '/forms',
-            element: <BrowseForms />
+            path: "/forms",
+            element: <BrowseForms />,
           },
           {
-            path: '/modals',
-            element: <BrowseModals />
+            path: "/modals",
+            element: <BrowseModals />,
           },
           {
-            path: '/lists/grouped-lists',
-            element: <BrowseGroupedLists />
+            path: "/lists/grouped-lists",
+            element: <BrowseGroupedLists />,
           },
           {
-            path: '/lists/grid-lists',
-            element: <BrowseGridLists />
+            path: "/lists/grid-lists",
+            element: <BrowseGridLists />,
           },
           {
-            path: '/typography',
-            element: <BrowseTypography />
-          }
-        ]
+            path: "/typography",
+            element: <BrowseTypography />,
+          },
+        ],
       },
       {
-        path: 'checkout',
-        element: <Checkout />
+        path: "checkout",
+        element: <Checkout />,
       },
       {
-        path: 'pricing',
-        element: <Pricing />
+        path: "pricing",
+        element: <Pricing />,
       },
       {
-        path: '401',
-        element: <AuthorizationRequired />
+        path: "401",
+        element: <AuthorizationRequired />,
       },
       {
-        path: '404',
-        element: <NotFound />
+        path: "404",
+        element: <NotFound />,
       },
       {
-        path: '500',
-        element: <ServerError />
+        path: "500",
+        element: <ServerError />,
       },
       {
-        path: '*',
-        element: <NotFound />
-      }
-    ]
-  }
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
 ];
 
 export default routes;

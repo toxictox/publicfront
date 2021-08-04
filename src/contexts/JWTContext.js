@@ -1,11 +1,14 @@
-import { createContext, useEffect, useReducer } from 'react';
-import PropTypes from 'prop-types';
-import { authApi } from '../__fakeApi__/authApi';
-
+import { createContext, useEffect, useReducer } from "react";
+import PropTypes from "prop-types";
+import axios from "@lib/axios";
+import { app } from "@root/config";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null
+  user: null,
 };
 
 const handlers = {
@@ -16,7 +19,7 @@ const handlers = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
     };
   },
   LOGIN: (state, action) => {
@@ -25,13 +28,13 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
   },
   LOGOUT: (state) => ({
     ...state,
     isAuthenticated: false,
-    user: null
+    user: null,
   }),
   REGISTER: (state, action) => {
     const { user } = action.payload;
@@ -39,59 +42,70 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
-  }
+  },
 };
 
-const reducer = (state, action) => (handlers[action.type]
-  ? handlers[action.type](state, action)
-  : state);
+const reducer = (state, action) =>
+  handlers[action.type] ? handlers[action.type](state, action) : state;
 
 const AuthContext = createContext({
   ...initialState,
-  platform: 'JWT',
+  platform: "JWT",
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
+  passwordRecovery: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken = window.localStorage.getItem('accessToken');
+        const accessToken = window.localStorage.getItem("accessToken");
+        const accessId = window.localStorage.getItem("accessId");
 
         if (accessToken) {
-          const user = await authApi.me(accessToken);
-
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: true,
-              user
-            }
+          await axios.get(`${app.api}/user/${accessId}`).then((response) => {
+            console.log(response.data);
+            dispatch({
+              type: "INITIALIZE",
+              payload: {
+                isAuthenticated: true,
+                user: {
+                  ...response.data,
+                  id: "5e86809283e28b96d2d38537",
+                  avatar:
+                    "/static/mock-images/avatars/avatar-jane_rotanson.png",
+                  name: "Jane Rotanson",
+                  plan: "Premium",
+                },
+              },
+            });
           });
         } else {
           dispatch({
-            type: 'INITIALIZE',
+            type: "INITIALIZE",
             payload: {
               isAuthenticated: false,
-              user: null
-            }
+              user: null,
+            },
           });
         }
       } catch (err) {
         console.error(err);
         dispatch({
-          type: 'INITIALIZE',
+          type: "INITIALIZE",
           payload: {
             isAuthenticated: false,
-            user: null
-          }
+            user: null,
+          },
         });
       }
     };
@@ -100,46 +114,95 @@ export const AuthProvider = (props) => {
   }, []);
 
   const login = async (email, password) => {
-    const accessToken = await authApi.login({ email, password });
-    const user = await authApi.me(accessToken);
-
-    localStorage.setItem('accessToken', accessToken);
-
-    dispatch({
-      type: 'LOGIN',
-      payload: {
-        user
-      }
-    });
+    await axios
+      .post(`${app.api}/login`, {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("accessId", "610a3f774cd85100791187"); //response.data.token
+        dispatch({
+          type: "LOGIN",
+          payload: {
+            user: {
+              id: "5e86809283e28b96d2d38537",
+              avatar: "/static/mock-images/avatars/avatar-jane_rotanson.png",
+              email: "demo@devias.io",
+              name: "Jane Rotanson",
+              plan: "Premium",
+            },
+          },
+        });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   const logout = async () => {
-    localStorage.removeItem('accessToken');
-    dispatch({ type: 'LOGOUT' });
+    localStorage.removeItem("accessToken");
+    dispatch({ type: "LOGOUT" });
   };
 
-  const register = async (email, name, password) => {
-    const accessToken = await authApi.register({ email, name, password });
-    const user = await authApi.me(accessToken);
+  const register = async (email, username, password, linkToken = null) => {
+    console.log(email, username, password, linkToken);
+    await axios
+      .post(`${app.api}/registration`, {
+        email,
+        username,
+        password,
+        linkToken,
+      })
+      .then((response) => {
+        // localStorage.setItem("accessToken", accessToken);
 
-    localStorage.setItem('accessToken', accessToken);
+        // dispatch({
+        //   type: "REGISTER",
+        //   payload: {
+        //     user,
+        //   },
+        // });
+        toast.success(t("Success registration"));
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user
-      }
-    });
+  const passwordRecovery = async (email) => {
+    console.log(email);
+    await axios
+      .post(`${app.api}/password/forget`, {
+        email,
+      })
+      .then((response) => {
+        // localStorage.setItem("accessToken", accessToken);
+
+        // dispatch({
+        //   type: "REGISTER",
+        //   payload: {
+        //     user,
+        //   },
+        // });
+        toast.success(t("Success recovery send token"));
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
-        platform: 'JWT',
+        platform: "JWT",
         login,
         logout,
-        register
+        register,
+        passwordRecovery,
       }}
     >
       {children}
@@ -148,7 +211,7 @@ export const AuthProvider = (props) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default AuthContext;

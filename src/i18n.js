@@ -1,26 +1,25 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { ru } from "./lang/ru";
+import { ua } from "./lang/ua";
 const resources = {
-  en: {
+  ru: {
     translation: {
-      'Welcome to React': 'Welcome to React and react-i18next'
-    }
+      ...ru,
+    },
   },
-  fr: {
+  ua: {
     translation: {
-      'Welcome to React': 'Bienvenue à React et react-i18next'
-    }
-  }
+      ...ua,
+    },
+  },
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'en',
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false
-    }
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "ru",
+  fallbackLng: "ru",
+  interpolation: {
+    escapeValue: false,
+  },
+});
