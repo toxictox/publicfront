@@ -68,6 +68,7 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     const initialize = async () => {
+      console.log(process.env);
       try {
         const accessToken = window.localStorage.getItem("accessToken");
         const accessId = window.localStorage.getItem("accessId");
