@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { format } from 'date-fns';
-import numeral from 'numeral';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { format } from "date-fns";
+import numeral from "numeral";
+import PropTypes from "prop-types";
 import {
   Box,
   Card,
@@ -17,46 +17,42 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
-} from '@material-ui/core';
-import ArrowRightIcon from '../../../icons/ArrowRight';
-import PencilAltIcon from '../../../icons/PencilAlt';
-import Label from '../../Label';
-import MoreMenu from '../../MoreMenu';
-import Scrollbar from '../../Scrollbar';
-import OrderListBulkActions from './OrderListBulkActions';
+  Typography,
+} from "@material-ui/core";
+import ArrowRightIcon from "@icons/ArrowRight";
+import PencilAltIcon from "@icons/PencilAlt";
+import Label from "@comp/Label";
+import MoreMenu from "@comp/MoreMenu";
+import Scrollbar from "@comp/Scrollbar";
+import OrderListBulkActions from "./OrderListBulkActions";
 
 const getStatusLabel = (paymentStatus) => {
   const map = {
     canceled: {
-      color: 'error',
-      text: 'Canceled'
+      color: "error",
+      text: "Canceled",
     },
     completed: {
-      color: 'success',
-      text: 'Completed'
+      color: "success",
+      text: "Completed",
     },
     pending: {
-      color: 'warning',
-      text: 'Pending'
+      color: "warning",
+      text: "Pending",
     },
     rejected: {
-      color: 'error',
-      text: 'Rejected'
-    }
+      color: "error",
+      text: "Rejected",
+    },
   };
 
   const { text, color } = map[paymentStatus];
 
-  return (
-    <Label color={color}>
-      {text}
-    </Label>
-  );
+  return <Label color={color}>{text}</Label>;
 };
 
-const applyPagination = (orders, page, limit) => orders
-  .slice(page * limit, page * limit + limit);
+const applyPagination = (orders, page, limit) =>
+  orders.slice(page * limit, page * limit + limit);
 
 const OrderListTable = (props) => {
   const { orders, ...other } = props;
@@ -65,16 +61,18 @@ const OrderListTable = (props) => {
   const [limit, setLimit] = useState(5);
 
   const handleSelectAllOrders = (event) => {
-    setSelectedOrders(event.target.checked
-      ? orders.map((order) => order.id)
-      : []);
+    setSelectedOrders(
+      event.target.checked ? orders.map((order) => order.id) : []
+    );
   };
 
   const handleSelectOneOrder = (event, orderId) => {
     if (!selectedOrders.includes(orderId)) {
       setSelectedOrders((prevSelected) => [...prevSelected, orderId]);
     } else {
-      setSelectedOrders((prevSelected) => prevSelected.filter((id) => id !== orderId));
+      setSelectedOrders((prevSelected) =>
+        prevSelected.filter((id) => id !== orderId)
+      );
     }
   };
 
@@ -88,16 +86,14 @@ const OrderListTable = (props) => {
 
   const paginatedOrders = applyPagination(orders, page, limit);
   const enableBulkActions = selectedOrders.length > 0;
-  const selectedSomeOrders = selectedOrders.length > 0 && selectedOrders.length < orders.length;
+  const selectedSomeOrders =
+    selectedOrders.length > 0 && selectedOrders.length < orders.length;
   const selectedAllOrders = selectedOrders.length === orders.length;
 
   return (
     <>
       <Card {...other}>
-        <CardHeader
-          action={<MoreMenu />}
-          title="Orders"
-        />
+        <CardHeader action={<MoreMenu />} title="Orders" />
         <Divider />
         <Scrollbar>
           <Box sx={{ minWidth: 1150 }}>
@@ -112,24 +108,12 @@ const OrderListTable = (props) => {
                       onChange={handleSelectAllOrders}
                     />
                   </TableCell>
-                  <TableCell>
-                    Number
-                  </TableCell>
-                  <TableCell>
-                    Customer
-                  </TableCell>
-                  <TableCell>
-                    Method
-                  </TableCell>
-                  <TableCell>
-                    Total
-                  </TableCell>
-                  <TableCell>
-                    Status
-                  </TableCell>
-                  <TableCell align="right">
-                    Actions
-                  </TableCell>
+                  <TableCell>Number</TableCell>
+                  <TableCell>Customer</TableCell>
+                  <TableCell>Method</TableCell>
+                  <TableCell>Total</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell align="right">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -146,7 +130,9 @@ const OrderListTable = (props) => {
                         <Checkbox
                           checked={isOrderSelected}
                           color="primary"
-                          onChange={(event) => handleSelectOneOrder(event, order.id)}
+                          onChange={(event) =>
+                            handleSelectOneOrder(event, order.id)
+                          }
                           value={isOrderSelected}
                         />
                       </TableCell>
@@ -160,36 +146,25 @@ const OrderListTable = (props) => {
                         >
                           {order.number}
                         </Link>
-                        <Typography
-                          color="textSecondary"
-                          variant="body2"
-                        >
-                          {format(order.createdAt, 'dd MMM yyyy | HH:mm')}
+                        <Typography color="textSecondary" variant="body2">
+                          {format(order.createdAt, "dd MMM yyyy | HH:mm")}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography
-                          color="textPrimary"
-                          variant="subtitle2"
-                        >
+                        <Typography color="textPrimary" variant="subtitle2">
                           {order.customer.name}
                         </Typography>
-                        <Typography
-                          color="textSecondary"
-                          variant="body2"
-                        >
+                        <Typography color="textSecondary" variant="body2">
                           {order.customer.email}
                         </Typography>
                       </TableCell>
+                      <TableCell>{order.paymentMethod}</TableCell>
                       <TableCell>
-                        {order.paymentMethod}
+                        {numeral(order.totalAmount).format(
+                          `${order.currency}0,0.00`
+                        )}
                       </TableCell>
-                      <TableCell>
-                        {numeral(order.totalAmount).format(`${order.currency}0,0.00`)}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusLabel(order.status)}
-                      </TableCell>
+                      <TableCell>{getStatusLabel(order.status)}</TableCell>
                       <TableCell align="right">
                         <IconButton>
                           <PencilAltIcon fontSize="small" />
@@ -227,7 +202,7 @@ const OrderListTable = (props) => {
 };
 
 OrderListTable.propTypes = {
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
 };
 
 export default OrderListTable;

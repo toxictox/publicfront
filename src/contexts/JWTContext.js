@@ -68,14 +68,12 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     const initialize = async () => {
-      console.log(process.env);
       try {
         const accessToken = window.localStorage.getItem("accessToken");
         const accessId = window.localStorage.getItem("accessId");
 
         if (accessToken) {
           await axios.get(`${app.api}/user/${accessId}`).then((response) => {
-            console.log(response.data);
             dispatch({
               type: "INITIALIZE",
               payload: {
@@ -92,7 +90,6 @@ export const AuthProvider = (props) => {
             });
           });
         } else {
-          console.log("error");
           dispatch({
             type: "INITIALIZE",
             payload: {
@@ -102,7 +99,6 @@ export const AuthProvider = (props) => {
           });
         }
       } catch (err) {
-        console.error(err);
         dispatch({
           type: "INITIALIZE",
           payload: {
@@ -145,6 +141,7 @@ export const AuthProvider = (props) => {
 
   const logout = async () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("accessId");
     dispatch({ type: "LOGOUT" });
   };
 
@@ -207,7 +204,6 @@ export const AuthProvider = (props) => {
         password,
       })
       .then((response) => {
-        console.log(response, "password");
         // localStorage.setItem("accessToken", accessToken);
 
         // dispatch({
