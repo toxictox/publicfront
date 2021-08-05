@@ -8,13 +8,13 @@ export COMPOSE_FILE=${COMPOSE_FILE='docker/docker-compose.yml'}
 export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME='local_project'}
 
 build() {
-    # cp $1 .env
+    cp $1 .env
     docker-compose build
     docker-compose push
 }
 
 deploy() {
-    # cp $1 .env
+    cp $1 .env
     docker-compose down --volumes --rmi local
     docker-compose pull
     docker-compose up --detach --remove-orphans
@@ -22,10 +22,10 @@ deploy() {
 
 if [ -n "$1" ]; then
     if [ "$1" == "build_stage" ]; then
-        # build .env.stage
+        build .env.stage
         build
     elif [ "$1" == "deploy_stage" ]; then
-        # deploy .env.stage
+        deploy .env.stage
         deploy
     # elif [ "$1" == "build_prod" ]; then
     #     build .env.prod
@@ -41,7 +41,7 @@ if [ -n "$1" ]; then
 else
     # local
     docker network create nginx-proxy_stages > /dev/null 2>&1
-    # cp .env.stage .env
+    cp .env.stage .env
     docker-compose build
     docker-compose down --volumes --rmi local
     docker-compose up --detach --remove-orphans

@@ -1,4 +1,7 @@
 FROM node:14-alpine as builder
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL ${REACT_APP_API_URL}
+
 WORKDIR /react-app
 COPY ./ /react-app
 

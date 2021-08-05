@@ -6,6 +6,8 @@ services:
     build:
       dockerfile: docker/Dockerfile
       context: ../
+      args:
+      - REACT_APP_API_URL
     restart: always
     environment:
       - VIRTUAL_HOST
