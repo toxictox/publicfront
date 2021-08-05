@@ -4,6 +4,7 @@ module.exports = function override(config, env) {
     ...config,
     resolve: {
       alias: {
+        "~/": path.resolve(__dirname, "/src"),
         "@icons": path.resolve(__dirname, "./src/icons/"),
         "@comp": path.resolve(__dirname, "./src/components/"),
         "@pages": path.resolve(__dirname, "./src/pages/"),

@@ -57,6 +57,7 @@ const AuthContext = createContext({
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
   passwordRecovery: () => Promise.resolve(),
+  passwordReset: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -172,7 +173,6 @@ export const AuthProvider = (props) => {
   };
 
   const passwordRecovery = async (email) => {
-    console.log(email);
     await axios
       .post(`${app.api}/password/forget`, {
         email,
@@ -190,7 +190,35 @@ export const AuthProvider = (props) => {
         navigate("/");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        if (err.response !== undefined) {
+          toast.error(t(err.response.data.message));
+        } else {
+          toast.error(`Ошибка отправки данных. Повторите позже`);
+        }
+      });
+  };
+
+  const passwordReset = async (email, password, token) => {
+    await axios
+      .post(`${app.api}/password/change/${token}`, {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response, "password");
+        // localStorage.setItem("accessToken", accessToken);
+
+        // dispatch({
+        //   type: "REGISTER",
+        //   payload: {
+        //     user,
+        //   },
+        // });
+        toast.success(t("Success recovery send token"));
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(t(err.response.data.message));
       });
   };
 
@@ -203,6 +231,7 @@ export const AuthProvider = (props) => {
         logout,
         register,
         passwordRecovery,
+        passwordReset,
       }}
     >
       {children}

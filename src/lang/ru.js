@@ -1,6 +1,12 @@
 const buttons = {
   "Recovery button": "Восстановить",
+  "Change button": "Изменить",
 };
+
+const menu = {
+  "Transaction menu": "Транзакции",
+};
+
 const text = {
   "Having an account": "Уже есть аккаунт",
   "Reset account password": "Восстановить доступ",
@@ -10,9 +16,14 @@ const text = {
   "Success recovery send token": "Инструкция по была отправлена на email",
 };
 
+const server = {
+  "Token error": "Неверный ключ",
+};
+
 const validationForm = {
   required: "Поле обязательно для заполнения",
   email: "Поле должно быть почтовым ящиком",
+  "Passwords must match": "Пароли не совпадают",
 };
 
 export const ru = {
@@ -23,4 +34,6 @@ export const ru = {
   ...buttons,
   ...text,
   ...validationForm,
+  ...menu,
+  ...server,
 };

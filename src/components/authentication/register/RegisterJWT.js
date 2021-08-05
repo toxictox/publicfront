@@ -24,8 +24,12 @@ const RegisterJWT = (props) => {
       validationSchema={Yup.object().shape({
         email: Yup.string().email(t("email")).max(255).required(t("required")),
         name: Yup.string().max(255).required(t("required")),
-        password: Yup.string().min(7).max(255).required(t("required")),
-        repassword: Yup.string().min(7).max(255).required(t("required")),
+        password: Yup.string().min(7).max(60).required(t("required")),
+        repassword: Yup.string()
+          .min(7)
+          .oneOf([Yup.ref("password"), null], t("Passwords must match"))
+          .max(60)
+          .required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {

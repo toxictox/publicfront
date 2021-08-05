@@ -10,7 +10,7 @@ import {
   Divider,
   Link,
 } from "@material-ui/core";
-import { PasswordRecoveryJwt } from "../../components/authentication/password-recovery";
+import { PasswordRecoveryJwt } from "@comp/authentication/password-recovery";
 import gtm from "@lib/gtm";
 import { useTranslation } from "react-i18next";
 

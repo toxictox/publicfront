@@ -5,12 +5,15 @@ import {
   Card,
   CardContent,
   Container,
+  Divider,
+  Link,
   Typography,
 } from "@material-ui/core";
-// import { PasswordResetJwt } from "@comp/authentication/password-reset";
+import { PasswordResetJwt } from "@comp/authentication/password-reset";
 
 import gtm from "../../lib/gtm";
 import { useTranslation } from "react-i18next";
+import { Link as RouterLink } from "react-router-dom";
 
 const PasswordReset = () => {
   const { t } = useTranslation();
@@ -68,8 +71,18 @@ const PasswordReset = () => {
                   mt: 3,
                 }}
               >
-                {/*<PasswordResetAmplify />*/}
+                <PasswordResetJwt />
               </Box>
+              <Divider sx={{ my: 3 }} />
+              <Link
+                color="textSecondary"
+                component={RouterLink}
+                sx={{ mt: 1 }}
+                to="/authentication/login"
+                variant="body2"
+              >
+                {t("Login text")}
+              </Link>
             </CardContent>
           </Card>
         </Container>
