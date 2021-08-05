@@ -1,40 +1,29 @@
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import {
-  Alert,
-  Box,
-  Button,
-  FormHelperText,
-  TextField,
-} from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
+import { Box, Button, FormHelperText, TextField } from "@material-ui/core";
+
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
+import useAuth from "@hooks/useAuth";
 
-const LoginJWT = (props) => {
+const PasswordRecoverJwt = () => {
   const mounted = useMounted();
-  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { passwordRecovery } = useAuth();
   const { t } = useTranslation();
-
   return (
     <Formik
       initialValues={{
         email: "",
-        password: "",
         submit: null,
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email(t("email")).max(255).required(t("required")),
-        password: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await login(values.email, values.password);
-
-          if (mounted.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-          }
+          passwordRecovery(values.email);
         } catch (err) {
           console.error(err);
           if (mounted.current) {
@@ -54,7 +43,7 @@ const LoginJWT = (props) => {
         touched,
         values,
       }) => (
-        <form noValidate onSubmit={handleSubmit} {...props}>
+        <form noValidate onSubmit={handleSubmit}>
           <TextField
             autoFocus
             error={Boolean(touched.email && errors.email)}
@@ -69,25 +58,12 @@ const LoginJWT = (props) => {
             value={values.email}
             variant="outlined"
           />
-          <TextField
-            error={Boolean(touched.password && errors.password)}
-            fullWidth
-            helperText={touched.password && errors.password}
-            label="Password"
-            margin="normal"
-            name="password"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="password"
-            value={values.password}
-            variant="outlined"
-          />
           {errors.submit && (
             <Box sx={{ mt: 3 }}>
               <FormHelperText error>{errors.submit}</FormHelperText>
             </Box>
           )}
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 3 }}>
             <Button
               color="primary"
               disabled={isSubmitting}
@@ -96,7 +72,7 @@ const LoginJWT = (props) => {
               type="submit"
               variant="contained"
             >
-              {t("Login text")}
+              {t("Recovery button")}
             </Button>
           </Box>
         </form>
@@ -105,4 +81,4 @@ const LoginJWT = (props) => {
   );
 };
 
-export default LoginJWT;
+export default PasswordRecoverJwt;

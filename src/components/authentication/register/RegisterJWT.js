@@ -1,73 +1,72 @@
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormHelperText,
-  TextField,
-  Typography,
-  Link
-} from '@material-ui/core';
-import useAuth from '../../../hooks/useAuth';
-import useMounted from '../../../hooks/useMounted';
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { Box, Button, FormHelperText, TextField } from "@material-ui/core";
+import useAuth from "@hooks/useAuth";
+import useMounted from "@hooks/useMounted";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 const RegisterJWT = (props) => {
   const mounted = useMounted();
   const { register } = useAuth();
+  const { t } = useTranslation();
+  const params = useParams();
 
   return (
     <Formik
       initialValues={{
-        email: '',
-        name: '',
-        password: '',
-        policy: false,
-        submit: null
+        email: "",
+        name: "",
+        password: "",
+        repassword: "",
+        submit: null,
       }}
-      validationSchema={Yup
-        .object()
-        .shape({
-          email: Yup
-            .string()
-            .email('Must be a valid email')
-            .max(255)
-            .required('Email is required'),
-          name: Yup
-            .string()
-            .max(255)
-            .required('Name is required'),
-          password: Yup
-            .string()
-            .min(7)
-            .max(255)
-            .required('Password is required'),
-          policy: Yup
-            .boolean()
-            .oneOf([true], 'This field must be checked')
-        })}
+      validationSchema={Yup.object().shape({
+        email: Yup.string().email(t("email")).max(255).required(t("required")),
+        name: Yup.string().max(255).required(t("required")),
+        password: Yup.string().min(7).max(60).required(t("required")),
+        repassword: Yup.string()
+          .min(7)
+          .oneOf([Yup.ref("password"), null], t("Passwords must match"))
+          .max(60)
+          .required(t("required")),
+      })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await register(values.email, values.name, values.password);
+          if (values.password === values.repassword) {
+            await register(
+              values.email,
+              values.name,
+              values.password,
+              params.token
+            );
+          } else {
+            setStatus({ success: false });
+            setErrors({ submit: "asdsdsds" });
+            setSubmitting(false);
+          }
 
           if (mounted.current) {
             setStatus({ success: true });
             setSubmitting(false);
           }
         } catch (err) {
-          console.error(err);
           setStatus({ success: false });
           setErrors({ submit: err.message });
           setSubmitting(false);
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-        <form
-          noValidate
-          onSubmit={handleSubmit}
-          {...props}
-        >
+      {({
+        errors,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+        touched,
+        values,
+      }) => (
+        <form noValidate onSubmit={handleSubmit} {...props}>
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
@@ -106,45 +105,27 @@ const RegisterJWT = (props) => {
             value={values.password}
             variant="outlined"
           />
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              ml: -1,
-              mt: 2
-            }}
-          >
-            <Checkbox
-              checked={values.policy}
-              color="primary"
-              name="policy"
-              onChange={handleChange}
-            />
-            <Typography
-              color="textSecondary"
-              variant="body2"
-            >
-              I have read the
-              {' '}
-              <Link
-                color="primary"
-                component="a"
-                href="#"
-              >
-                Terms and Conditions
-              </Link>
-            </Typography>
-          </Box>
-          {Boolean(touched.policy && errors.policy) && (
-            <FormHelperText error>
-              {errors.policy}
-            </FormHelperText>
-          )}
+
+          <TextField
+            error={Boolean(touched.repassword && errors.repassword)}
+            fullWidth
+            helperText={touched.repassword && errors.repassword}
+            label="Password"
+            margin="normal"
+            name="repassword"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="password"
+            value={values.repassword}
+            variant="outlined"
+          />
+
+          {/*{Boolean(touched.policy && errors.policy) && (*/}
+          {/*  <FormHelperText error>{errors.policy}</FormHelperText>*/}
+          {/*)}*/}
           {errors.submit && (
             <Box sx={{ mt: 3 }}>
-              <FormHelperText error>
-                {errors.submit}
-              </FormHelperText>
+              <FormHelperText error>{errors.submit}</FormHelperText>
             </Box>
           )}
           <Box sx={{ mt: 2 }}>
@@ -156,7 +137,7 @@ const RegisterJWT = (props) => {
               type="submit"
               variant="contained"
             >
-              Register
+              {t("Register account")}
             </Button>
           </Box>
         </form>
