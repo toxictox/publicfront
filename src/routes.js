@@ -409,7 +409,7 @@ const routes = [
   },
 
   {
-    path: "/",
+    path: "*",
     element: (
       <AuthGuard>
         <BaseLayout />
@@ -436,76 +436,76 @@ const routes = [
     path: "*",
     element: <MainLayout />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "browse",
-        element: <BrowseLayout />,
-        children: [
-          {
-            path: "/",
-            element: <Browse />,
-          },
-          {
-            path: "/buttons",
-            element: <BrowseButtons />,
-          },
-          {
-            path: "/inputs",
-            element: <BrowseInputs />,
-          },
-          {
-            path: "/charts",
-            element: <BrowseCharts />,
-          },
-          {
-            path: "/colors",
-            element: <BrowseColors />,
-          },
-          {
-            path: "/data-display/detail-lists",
-            element: <BrowseDetailLists />,
-          },
-          {
-            path: "/data-display/quick-stats",
-            element: <BrowseQuickStats />,
-          },
-          {
-            path: "/data-display/tables",
-            element: <BrowseTables />,
-          },
-          {
-            path: "/forms",
-            element: <BrowseForms />,
-          },
-          {
-            path: "/modals",
-            element: <BrowseModals />,
-          },
-          {
-            path: "/lists/grouped-lists",
-            element: <BrowseGroupedLists />,
-          },
-          {
-            path: "/lists/grid-lists",
-            element: <BrowseGridLists />,
-          },
-          {
-            path: "/typography",
-            element: <BrowseTypography />,
-          },
-        ],
-      },
-      {
-        path: "checkout",
-        element: <Checkout />,
-      },
-      {
-        path: "pricing",
-        element: <Pricing />,
-      },
+      // {
+      //   path: "/",
+      //   element: <Home />,
+      // },
+      // {
+      //   path: "browse",
+      //   element: <BrowseLayout />,
+      //   children: [
+      //     {
+      //       path: "/",
+      //       element: <Browse />,
+      //     },
+      //     {
+      //       path: "/buttons",
+      //       element: <BrowseButtons />,
+      //     },
+      //     {
+      //       path: "/inputs",
+      //       element: <BrowseInputs />,
+      //     },
+      //     {
+      //       path: "/charts",
+      //       element: <BrowseCharts />,
+      //     },
+      //     {
+      //       path: "/colors",
+      //       element: <BrowseColors />,
+      //     },
+      //     {
+      //       path: "/data-display/detail-lists",
+      //       element: <BrowseDetailLists />,
+      //     },
+      //     {
+      //       path: "/data-display/quick-stats",
+      //       element: <BrowseQuickStats />,
+      //     },
+      //     {
+      //       path: "/data-display/tables",
+      //       element: <BrowseTables />,
+      //     },
+      //     {
+      //       path: "/forms",
+      //       element: <BrowseForms />,
+      //     },
+      //     {
+      //       path: "/modals",
+      //       element: <BrowseModals />,
+      //     },
+      //     {
+      //       path: "/lists/grouped-lists",
+      //       element: <BrowseGroupedLists />,
+      //     },
+      //     {
+      //       path: "/lists/grid-lists",
+      //       element: <BrowseGridLists />,
+      //     },
+      //     {
+      //       path: "/typography",
+      //       element: <BrowseTypography />,
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: "checkout",
+      //   element: <Checkout />,
+      // },
+      // {
+      //   path: "pricing",
+      //   element: <Pricing />,
+      // },
       {
         path: "401",
         element: <AuthorizationRequired />,
