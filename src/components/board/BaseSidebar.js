@@ -12,6 +12,7 @@ import {
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useAuth from "@hooks/useAuth";
 import ChartSquareBarIcon from "@icons/ChartSquareBar";
+import User from "@icons/User";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
 import { useTranslation } from "react-i18next";
@@ -20,12 +21,17 @@ const BaseSidebar = (props) => {
   const { t } = useTranslation();
   const sections = [
     {
-      // title: t("Transaction menu"),
+      title: t("Transaction menu"),
       items: [
         {
           title: t("Transaction menu"),
-          path: "/account",
+          path: "/transaction",
           icon: <ChartSquareBarIcon fontSize="small" />,
+        },
+        {
+          title: "Aккаунт",
+          path: "/account",
+          icon: <User fontSize="small" />,
         },
       ],
     },
@@ -87,18 +93,20 @@ const BaseSidebar = (props) => {
         </Box>
         <Divider />
         <Box sx={{ p: 2 }}>
-          {sections.map((section) => (
-            <NavSection
-              key={section.title}
-              pathname={location.pathname}
-              sx={{
-                "& + &": {
-                  mt: 3,
-                },
-              }}
-              {...section}
-            />
-          ))}
+          {sections.map((section) => {
+            return (
+              <NavSection
+                key={section.title}
+                pathname={location.pathname}
+                sx={{
+                  "& + &": {
+                    mt: 3,
+                  },
+                }}
+                {...section}
+              />
+            );
+          })}
         </Box>
       </Scrollbar>
     </Box>

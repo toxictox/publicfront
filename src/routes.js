@@ -160,6 +160,10 @@ const Pricing = Loadable(lazy(() => import("./pages/Pricing")));
 // New pages
 const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
 const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
+const TransactionListPage = Loadable(
+  lazy(() => import("@pages/transactions/List"))
+);
+
 const blog = {
   path: "blog",
   element: <BlogLayout />,
@@ -211,10 +215,6 @@ const routes = [
         ),
       },
       {
-        path: "login-unguarded",
-        element: <Login />,
-      },
-      {
         path: "password/reset/:token",
         element: <PasswordReset />,
       },
@@ -230,10 +230,6 @@ const routes = [
           </GuestGuard>
         ),
       },
-      // {
-      //   path: "register-unguarded",
-      //   element: <Register />,
-      // },
       {
         path: "verify-code",
         element: <VerifyCode />,
@@ -241,10 +237,10 @@ const routes = [
     ],
   },
 
-  {
-    path: "contact",
-    element: <Contact />,
-  },
+  // {
+  //   path: "contact",
+  //   element: <Contact />,
+  // },
   {
     path: "dashboard",
     element: (
@@ -420,6 +416,7 @@ const routes = [
         path: "/",
         element: <HomeNew />,
       },
+
       {
         path: "/account",
         children: [
@@ -429,101 +426,111 @@ const routes = [
           },
         ],
       },
+
+      {
+        path: "/transaction",
+        children: [
+          {
+            path: "/",
+            element: <TransactionListPage />,
+          },
+        ],
+      },
     ],
   },
 
-  {
-    path: "*",
-    element: <MainLayout />,
-    children: [
-      // {
-      //   path: "/",
-      //   element: <Home />,
-      // },
-      // {
-      //   path: "browse",
-      //   element: <BrowseLayout />,
-      //   children: [
-      //     {
-      //       path: "/",
-      //       element: <Browse />,
-      //     },
-      //     {
-      //       path: "/buttons",
-      //       element: <BrowseButtons />,
-      //     },
-      //     {
-      //       path: "/inputs",
-      //       element: <BrowseInputs />,
-      //     },
-      //     {
-      //       path: "/charts",
-      //       element: <BrowseCharts />,
-      //     },
-      //     {
-      //       path: "/colors",
-      //       element: <BrowseColors />,
-      //     },
-      //     {
-      //       path: "/data-display/detail-lists",
-      //       element: <BrowseDetailLists />,
-      //     },
-      //     {
-      //       path: "/data-display/quick-stats",
-      //       element: <BrowseQuickStats />,
-      //     },
-      //     {
-      //       path: "/data-display/tables",
-      //       element: <BrowseTables />,
-      //     },
-      //     {
-      //       path: "/forms",
-      //       element: <BrowseForms />,
-      //     },
-      //     {
-      //       path: "/modals",
-      //       element: <BrowseModals />,
-      //     },
-      //     {
-      //       path: "/lists/grouped-lists",
-      //       element: <BrowseGroupedLists />,
-      //     },
-      //     {
-      //       path: "/lists/grid-lists",
-      //       element: <BrowseGridLists />,
-      //     },
-      //     {
-      //       path: "/typography",
-      //       element: <BrowseTypography />,
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: "checkout",
-      //   element: <Checkout />,
-      // },
-      // {
-      //   path: "pricing",
-      //   element: <Pricing />,
-      // },
-      {
-        path: "401",
-        element: <AuthorizationRequired />,
-      },
-      {
-        path: "404",
-        element: <NotFound />,
-      },
-      {
-        path: "500",
-        element: <ServerError />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
-  },
+  // {
+  // path: "*",
+  // element: <MainLayout />,
+  // children: [
+  // {
+  //   path: "/",
+  //   element: <Home />,
+  // },
+  // {
+  //   path: "browse",
+  //   element: <BrowseLayout />,
+  //   children: [
+  //     {
+  //       path: "/",
+  //       element: <Browse />,
+  //     },
+  //     {
+  //       path: "/buttons",
+  //       element: <BrowseButtons />,
+  //     },
+  //     {
+  //       path: "/inputs",
+  //       element: <BrowseInputs />,
+  //     },
+  //     {
+  //       path: "/charts",
+  //       element: <BrowseCharts />,
+  //     },
+  //     {
+  //       path: "/colors",
+  //       element: <BrowseColors />,
+  //     },
+  //     {
+  //       path: "/data-display/detail-lists",
+  //       element: <BrowseDetailLists />,
+  //     },
+  //     {
+  //       path: "/data-display/quick-stats",
+  //       element: <BrowseQuickStats />,
+  //     },
+  //     {
+  //       path: "/data-display/tables",
+  //       element: <BrowseTables />,
+  //     },
+  //     {
+  //       path: "/forms",
+  //       element: <BrowseForms />,
+  //     },
+  //     {
+  //       path: "/modals",
+  //       element: <BrowseModals />,
+  //     },
+  //     {
+  //       path: "/lists/grouped-lists",
+  //       element: <BrowseGroupedLists />,
+  //     },
+  //     {
+  //       path: "/lists/grid-lists",
+  //       element: <BrowseGridLists />,
+  //     },
+  //     {
+  //       path: "/typography",
+  //       element: <BrowseTypography />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "checkout",
+  //   element: <Checkout />,
+  // },
+  // {
+  //   path: "pricing",
+  //   element: <Pricing />,
+  // },
+  // {
+  //   path: "401",
+  //   element: <AuthorizationRequired />,
+  // },
+  // {
+  //   path: "404",
+  //   element: <NotFound />,
+  // },
+  // {
+  //   path: "500",
+  //   element: <ServerError />,
+  // },
+  // {
+  //   path: "*",
+  //   element: <NotFound />,
+  // },
+  //   ],
+  // },
 ];
 
 export default routes;
