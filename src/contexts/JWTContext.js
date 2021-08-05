@@ -91,6 +91,7 @@ export const AuthProvider = (props) => {
             });
           });
         } else {
+          console.log("error");
           dispatch({
             type: "INITIALIZE",
             payload: {
