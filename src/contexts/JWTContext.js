@@ -113,6 +113,13 @@ export const AuthProvider = (props) => {
 
   const login = async (email, password) => {
     await axios
+      .get(`${app.api}/methods`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => console.log(e));
+
+    await axios
       .post(`${app.api}/test`, {
         email: email,
         password: password,
