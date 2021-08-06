@@ -72,6 +72,16 @@ export const AuthProvider = (props) => {
         const accessToken = window.localStorage.getItem("accessToken");
         const accessId = window.localStorage.getItem("accessId");
 
+        await axios
+          .get(`https://jsonplaceholder.typicode.com/posts`)
+          .then((response) => console.log(response));
+
+        await axios
+          .get(
+            `https://backend-paytech-master.paytech-com-ua.avgr.it/v1/purchase`
+          )
+          .catch((e) => console.log(e));
+
         if (accessToken) {
           await axios.get(`${app.api}/user/${accessId}`).then((response) => {
             dispatch({
