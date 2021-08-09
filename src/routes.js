@@ -374,6 +374,15 @@ const routes = [
   process.env.NODE_ENV === "development" ? dashboard : {},
   process.env.NODE_ENV === "development" ? blog : {},
   {
+    path: "/",
+    element: (
+      <GuestGuard>
+        <Login />
+      </GuestGuard>
+    ),
+  },
+
+  {
     path: "authentication",
     children: [
       {

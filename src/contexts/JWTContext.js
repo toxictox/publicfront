@@ -76,7 +76,6 @@ export const AuthProvider = (props) => {
               type: "INITIALIZE",
               payload: {
                 isAuthenticated: true,
-                isInitialized: true,
                 user: {
                   ...response.data,
                   id: response.data.hash,
