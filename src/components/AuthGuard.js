@@ -14,7 +14,7 @@ const AuthGuard = (props) => {
     if (location.pathname !== requestedLocation) {
       setRequestedLocation(location.pathname);
     }
-    console.log(window.location.pathname, "auth");
+
     return <Login />;
   }
 
