@@ -398,16 +398,6 @@ const routes = [
   //     </GuestGuard>
   //   ),
   // },
-  {
-    path: "*",
-    element: <MainLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-    ],
-  },
 
   {
     path: "authentication",
@@ -451,6 +441,17 @@ const routes = [
             <VerifyCode />
           </GuestGuard>
         ),
+      },
+    ],
+  },
+
+  {
+    path: "*",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
       },
     ],
   },
