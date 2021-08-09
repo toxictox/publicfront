@@ -79,10 +79,10 @@ export const AuthProvider = (props) => {
                 isAuthenticated: true,
                 user: {
                   ...response.data,
-                  id: "5e86809283e28b96d2d38537",
+                  id: response.data.hash,
                   avatar:
                     "/static/mock-images/avatars/avatar-jane_rotanson.png",
-                  name: "Jane Rotanson",
+                  name: `${response.data.firstName} ${response.data.lastName}`,
                   plan: "Premium",
                 },
               },
@@ -113,28 +113,22 @@ export const AuthProvider = (props) => {
 
   const login = async (email, password) => {
     await axios
-      .get(`${app.api}/methods`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => console.log(e));
-
-    await axios
-      .post(`${app.api}/test`, {
+      .post(`${app.api}/login`, {
         email: email,
         password: password,
       })
       .then((response) => {
+        console.log(response.data.user);
         localStorage.setItem("accessToken", response.data.token);
-        localStorage.setItem("accessId", "610a3f774cd85100791187"); //response.data.token
+        localStorage.setItem("accessId", response.data.user.hash); //response.data.token
         dispatch({
           type: "LOGIN",
           payload: {
             user: {
-              id: "5e86809283e28b96d2d38537",
+              ...response.data.user,
+              id: response.data.user.hash,
               avatar: "/static/mock-images/avatars/avatar-jane_rotanson.png",
-              email: "demo@devias.io",
-              name: "Jane Rotanson",
+              name: `${response.data.user.firstName} ${response.data.user.lastName}`,
               plan: "Premium",
             },
           },

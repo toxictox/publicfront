@@ -6,24 +6,32 @@ import {
   Breadcrumbs,
   Button,
   Container,
+  TablePagination,
   Grid,
+  Card,
   Link,
   Typography,
 } from "@material-ui/core";
-import { orderApi } from "../../__fakeApi__/orderApi";
-import { OrderListTable } from "../../components/dashboard/order";
-import useMounted from "../../hooks/useMounted";
-import useSettings from "../../hooks/useSettings";
-import ChevronRightIcon from "../../icons/ChevronRight";
-import DownloadIcon from "../../icons/Download";
-import UploadIcon from "../../icons/Upload";
-import PlusIcon from "../../icons/Plus";
+// import { orderApi } from "../../__fakeApi__/orderApi";
+import useMounted from "@hooks/useMounted";
+import useSettings from "@hooks/useSettings";
+// import ChevronRightIcon from "../../icons/ChevronRight";
+// import DownloadIcon from "../../icons/Download";
+// import UploadIcon from "../../icons/Upload";
+// import PlusIcon from "../../icons/Plus";
 import gtm from "../../lib/gtm";
+import { TransactionListTable } from "@comp/transaction";
+
+import axios from "@lib/axios";
+import { app } from "@root/config";
 
 const TransactionsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
-  const [orders, setOrders] = useState([]);
+  const [dataList, setListData] = useState({
+    data: [],
+  });
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     gtm.push({ event: "page_view" });
@@ -31,15 +39,27 @@ const TransactionsList = () => {
 
   const getOrders = useCallback(async () => {
     try {
-      const data = await orderApi.getOrders();
+      const response = await axios
+        .post(`${app.api}/transactions?page=${page}&count=${25}`)
+        .then((response) => response.data);
 
       if (mounted.current) {
-        setOrders(data);
+        setListData(response);
       }
     } catch (err) {
       console.error(err);
     }
   }, [mounted]);
+
+  const handlePageChange = async (e, newPage) => {
+    setPage(newPage);
+    //getOrders();
+    await axios
+      .post(`${app.api}/transactions?page=${newPage}&count=${25}`)
+      .then((response) => {
+        setListData(response.data);
+      });
+  };
 
   useEffect(() => {
     getOrders();
@@ -63,71 +83,18 @@ const TransactionsList = () => {
               <Typography color="textPrimary" variant="h5">
                 Transactions List
               </Typography>
-              {/*<Breadcrumbs*/}
-              {/*  aria-label="breadcrumb"*/}
-              {/*  separator={<ChevronRightIcon fontSize="small" />}*/}
-              {/*  sx={{ mt: 1 }}*/}
-              {/*>*/}
-              {/*  <Link*/}
-              {/*    color="textPrimary"*/}
-              {/*    component={RouterLink}*/}
-              {/*    to="/dashboard"*/}
-              {/*    variant="subtitle2"*/}
-              {/*  >*/}
-              {/*    Dashboard*/}
-              {/*  </Link>*/}
-              {/*  <Link*/}
-              {/*    color="textPrimary"*/}
-              {/*    component={RouterLink}*/}
-              {/*    to="/dashboard"*/}
-              {/*    variant="subtitle2"*/}
-              {/*  >*/}
-              {/*    Management*/}
-              {/*  </Link>*/}
-              {/*  <Typography color="textSecondary" variant="subtitle2">*/}
-              {/*    Orders*/}
-              {/*  </Typography>*/}
-              {/*</Breadcrumbs>*/}
-              {/*<Box*/}
-              {/*  sx={{*/}
-              {/*    mb: -1,*/}
-              {/*    mx: -1,*/}
-              {/*    mt: 1,*/}
-              {/*  }}*/}
-              {/*>*/}
-              {/*  <Button*/}
-              {/*    color="primary"*/}
-              {/*    startIcon={<UploadIcon fontSize="small" />}*/}
-              {/*    sx={{ m: 1 }}*/}
-              {/*    variant="text"*/}
-              {/*  >*/}
-              {/*    Import*/}
-              {/*  </Button>*/}
-              {/*  <Button*/}
-              {/*    color="primary"*/}
-              {/*    startIcon={<DownloadIcon fontSize="small" />}*/}
-              {/*    sx={{ m: 1 }}*/}
-              {/*    variant="text"*/}
-              {/*  >*/}
-              {/*    Export*/}
-              {/*  </Button>*/}
-              {/*</Box>*/}
             </Grid>
-            {/*<Grid item>*/}
-            {/*  <Box sx={{ m: -1 }}>*/}
-            {/*    <Button*/}
-            {/*      color="primary"*/}
-            {/*      startIcon={<PlusIcon fontSize="small" />}*/}
-            {/*      sx={{ m: 1 }}*/}
-            {/*      variant="contained"*/}
-            {/*    >*/}
-            {/*      New Order*/}
-            {/*    </Button>*/}
-            {/*  </Box>*/}
-            {/*</Grid>*/}
           </Grid>
           <Box sx={{ mt: 3 }}>
-            <OrderListTable orders={orders} />
+            <TransactionListTable data={dataList.data} />
+            <TablePagination
+              component="div"
+              count={dataList.count}
+              onPageChange={handlePageChange}
+              page={page}
+              rowsPerPage={25}
+              rowsPerPageOptions={[25]}
+            />
           </Box>
         </Container>
       </Box>
