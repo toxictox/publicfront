@@ -6,9 +6,10 @@ const GuestGuard = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
+    console.log(window.location.pathname, "redirect");
     return <Navigate to="/board" />;
   }
-
+  console.log(window.location.pathname, "quest");
   return <>{children}</>;
 };
 
