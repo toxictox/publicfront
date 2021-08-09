@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import gtm from "../../lib/gtm";
+import gtm from "@lib/gtm";
 import Ban from "@icons/Ban";
 
 const Home = () => {

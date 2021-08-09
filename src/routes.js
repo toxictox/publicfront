@@ -418,7 +418,42 @@ const routes = [
       },
     ],
   },
-
+  {
+    path: "",
+    element: (
+      <AuthGuard>
+        <BaseLayout />
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <HomeNew />,
+      },
+      {
+        path: "",
+        element: <HomeNew />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: (
+      <AuthGuard>
+        <BaseLayout />
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <HomeNew />,
+      },
+      {
+        path: "",
+        element: <HomeNew />,
+      },
+    ],
+  },
   {
     path: "*",
     element: (
