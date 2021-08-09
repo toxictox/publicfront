@@ -37,7 +37,6 @@ const App = () => {
       <RTL direction={settings.direction}>
         <CssBaseline />
         <Toaster position="top-center" />
-        {/*<SettingsDrawer />*/}
         {auth.isInitialized ? content : <SplashScreen />}
       </RTL>
     </ThemeProvider>

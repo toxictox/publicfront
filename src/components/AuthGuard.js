@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import useAuth from '../hooks/useAuth';
-import Login from '../pages/authentication/Login';
+import { useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
+import useAuth from "@hooks/useAuth";
+import Login from "@pages/authentication/Login";
 
 const AuthGuard = (props) => {
   const { children } = props;
@@ -14,7 +14,6 @@ const AuthGuard = (props) => {
     if (location.pathname !== requestedLocation) {
       setRequestedLocation(location.pathname);
     }
-
     return <Login />;
   }
 
@@ -30,7 +29,7 @@ const AuthGuard = (props) => {
 };
 
 AuthGuard.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default AuthGuard;
