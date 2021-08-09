@@ -6,7 +6,7 @@ const GuestGuard = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to="/account" />;
+    return <Navigate to="/board" />;
   }
 
   return <>{children}</>;

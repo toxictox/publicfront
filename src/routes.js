@@ -3,11 +3,11 @@ import { Navigate } from "react-router-dom";
 import AuthGuard from "@comp/AuthGuard";
 import BlogLayout from "./components/blog/BlogLayout";
 import BrowseLayout from "./components/BrowseLayout";
+import MainLayout from "./components/MainLayout";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DocsLayout from "./components/docs/DocsLayout";
 import GuestGuard from "./components/GuestGuard";
 import LoadingScreen from "./components/LoadingScreen";
-import MainLayout from "./components/MainLayout";
 
 // new
 import BaseLayout from "@comp/board/BaseLayout";
@@ -418,42 +418,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: "",
-    element: (
-      <AuthGuard>
-        <BaseLayout />
-      </AuthGuard>
-    ),
-    children: [
-      {
-        path: "/",
-        element: <HomeNew />,
-      },
-      {
-        path: "",
-        element: <HomeNew />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: (
-      <AuthGuard>
-        <BaseLayout />
-      </AuthGuard>
-    ),
-    children: [
-      {
-        path: "/",
-        element: <HomeNew />,
-      },
-      {
-        path: "",
-        element: <HomeNew />,
-      },
-    ],
-  },
+
   {
     path: "*",
     element: (
@@ -463,12 +428,16 @@ const routes = [
     ),
     children: [
       {
-        path: "",
-        element: <HomeNew />,
+        path: "/",
+        element: (
+          <GuestGuard>
+            <Login />
+          </GuestGuard>
+        ),
       },
 
       {
-        path: "/",
+        path: "board",
         element: <HomeNew />,
       },
 

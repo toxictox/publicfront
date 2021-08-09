@@ -14,7 +14,6 @@ const initialState = {
 const handlers = {
   INITIALIZE: (state, action) => {
     const { isAuthenticated, user } = action.payload;
-
     return {
       ...state,
       isAuthenticated,
@@ -77,6 +76,7 @@ export const AuthProvider = (props) => {
               type: "INITIALIZE",
               payload: {
                 isAuthenticated: true,
+                isInitialized: true,
                 user: {
                   ...response.data,
                   id: response.data.hash,
@@ -118,21 +118,21 @@ export const AuthProvider = (props) => {
         password: password,
       })
       .then((response) => {
-        console.log(response.data.user);
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("accessId", response.data.user.hash); //response.data.token
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            user: {
-              ...response.data.user,
-              id: response.data.user.hash,
-              avatar: "/static/mock-images/avatars/avatar-jane_rotanson.png",
-              name: `${response.data.user.firstName} ${response.data.user.lastName}`,
-              plan: "Premium",
-            },
-          },
-        });
+        // dispatch({
+        //   type: "LOGIN",
+        //   payload: {
+        //     user: {
+        //       ...response.data.user,
+        //       id: response.data.user.hash,
+        //       avatar: "/static/mock-images/avatars/avatar-jane_rotanson.png",
+        //       name: `${response.data.user.firstName} ${response.data.user.lastName}`,
+        //       plan: "Premium",
+        //     },
+        //   },
+        // });
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message);
