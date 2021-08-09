@@ -114,14 +114,6 @@ if (process.env.NODE_ENV === "development") {
 
   const Docs = Loadable(lazy(() => import("./pages/Docs")));
 
-  // Error pages
-
-  const AuthorizationRequired = Loadable(
-    lazy(() => import("./pages/AuthorizationRequired"))
-  );
-  const NotFound = Loadable(lazy(() => import("./pages/NotFound")));
-  const ServerError = Loadable(lazy(() => import("./pages/ServerError")));
-
   // Projects pages
 
   const ProjectBrowse = Loadable(
@@ -362,6 +354,14 @@ const VerifyCode = Loadable(
   lazy(() => import("@pages/authentication/VerifyCode"))
 );
 
+// Error pages
+
+const AuthorizationRequired = Loadable(
+  lazy(() => import("@pages/AuthorizationRequired"))
+);
+const NotFound = Loadable(lazy(() => import("@pages/NotFound")));
+const ServerError = Loadable(lazy(() => import("@pages/ServerError")));
+
 // New pages
 const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
 const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
@@ -420,13 +420,18 @@ const routes = [
   },
 
   {
-    path: "/",
+    path: "*",
     element: (
       <AuthGuard>
         <BaseLayout />
       </AuthGuard>
     ),
     children: [
+      {
+        path: "",
+        element: <HomeNew />,
+      },
+
       {
         path: "/",
         element: <HomeNew />,
@@ -450,6 +455,22 @@ const routes = [
             element: <TransactionListPage />,
           },
         ],
+      },
+      {
+        path: "401",
+        element: <AuthorizationRequired />,
+      },
+      {
+        path: "404",
+        element: <NotFound />,
+      },
+      {
+        path: "500",
+        element: <ServerError />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
