@@ -369,32 +369,44 @@ const TransactionListPage = Loadable(
   lazy(() => import("@pages/transactions/List"))
 );
 
+const Home = Loadable(lazy(() => import("./pages/Home")));
+
 const routes = [
   process.env.NODE_ENV === "development" ? docs : {},
   process.env.NODE_ENV === "development" ? dashboard : {},
   process.env.NODE_ENV === "development" ? blog : {},
+  // {
+  //   element: (
+  //     <GuestGuard>
+  //       <Login />
+  //     </GuestGuard>
+  //   ),
+  // },
+  // {
+  //   path: "/",
+  //   element: (
+  //     <GuestGuard>
+  //       <Login />
+  //     </GuestGuard>
+  //   ),
+  // },
+  // {
+  //   path: "",
+  //   element: (
+  //     <GuestGuard>
+  //       <Login />
+  //     </GuestGuard>
+  //   ),
+  // },
   {
-    element: (
-      <GuestGuard>
-        <Login />
-      </GuestGuard>
-    ),
-  },
-  {
-    path: "/",
-    element: (
-      <GuestGuard>
-        <Login />
-      </GuestGuard>
-    ),
-  },
-  {
-    path: "",
-    element: (
-      <GuestGuard>
-        <Login />
-      </GuestGuard>
-    ),
+    path: "*",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
 
   {
