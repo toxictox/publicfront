@@ -365,8 +365,12 @@ const ServerError = Loadable(lazy(() => import("@pages/ServerError")));
 // New pages
 const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
 const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
-const TransactionListPage = Loadable(
-  lazy(() => import("@pages/transactions/List"))
+const TransactionIndexPage = Loadable(
+  lazy(() => import("@pages/transactions"))
+);
+
+const TransactionItemIdPage = Loadable(
+  lazy(() => import("@pages/transactions/:id"))
 );
 
 const Home = Loadable(lazy(() => import("./pages/Home")));
@@ -375,29 +379,6 @@ const routes = [
   process.env.NODE_ENV === "development" ? docs : {},
   process.env.NODE_ENV === "development" ? dashboard : {},
   process.env.NODE_ENV === "development" ? blog : {},
-  // {
-  //   element: (
-  //     <GuestGuard>
-  //       <Login />
-  //     </GuestGuard>
-  //   ),
-  // },
-  // {
-  //   path: "/",
-  //   element: (
-  //     <GuestGuard>
-  //       <Login />
-  //     </GuestGuard>
-  //   ),
-  // },
-  // {
-  //   path: "",
-  //   element: (
-  //     <GuestGuard>
-  //       <Login />
-  //     </GuestGuard>
-  //   ),
-  // },
 
   {
     path: "authentication",
@@ -447,17 +428,6 @@ const routes = [
 
   {
     path: "*",
-    element: <MainLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-    ],
-  },
-
-  {
-    path: "*",
     element: (
       <AuthGuard>
         <BaseLayout />
@@ -493,7 +463,11 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <TransactionListPage />,
+            element: <TransactionIndexPage />,
+          },
+          {
+            path: ":id",
+            element: <TransactionItemIdPage />,
           },
         ],
       },

@@ -78,14 +78,7 @@ const TransactionsList = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <Grid container justifyContent="space-between" spacing={3}>
-            <Grid item>
-              <Typography color="textPrimary" variant="h5">
-                Transactions List
-              </Typography>
-            </Grid>
-          </Grid>
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 1 }}>
             <TransactionListTable data={dataList.data} />
             <TablePagination
               component="div"

@@ -1,6 +1,7 @@
 const buttons = {
   "Recovery button": "Восстановить",
   "Change button": "Изменить",
+  "Back button": "Назад",
 };
 
 const menu = {
@@ -14,10 +15,26 @@ const text = {
   "Success registration": "Вы успешно разрегестрированы",
   "Reset title": "Восстановление пароля",
   "Success recovery send token": "Инструкция по была отправлена на email",
+  "Transactions List": "Список транзакций",
+  "Transactions Item": "Информация о транзакции",
+  uuid: "Id",
+  createOn: "Создано",
+  merchant: "Мерчант",
+  tranId: "Id транзакции",
+  tranType: "Тип операции",
+  pan: "Номер карты",
+  amount: "Сумма",
+  fee: "Комиссия",
+  gateway: "Экваир",
+  respCode: "Код ответа",
+  lang: "Язык",
+  editOn: "Обновлено",
 };
 
 const server = {
   "Token error": "Неверный ключ",
+  "404 error title": "Страница не найдена",
+  "404 error description": "Страница не найдена 222",
 };
 
 const validationForm = {
