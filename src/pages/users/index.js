@@ -100,7 +100,11 @@ const TransactionsList = () => {
               >
                 {dataList.map(function (item) {
                   return (
-                    <TableRow key={item.hash}>
+                    <TableRow
+                      hover
+                      key={item.hash}
+                      onClick={() => navigate(`/users/id/${item.hash}`)}
+                    >
                       <TableCell>
                         <Link
                           color="textLink"

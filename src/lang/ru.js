@@ -5,6 +5,8 @@ const buttons = {
   "Create button": "Создать",
   "Update button": "Обновить",
   "Delete button": "Удалить",
+  "Search button": "Найти",
+  "Back to Home": "Вернуться на главную",
 };
 
 const menu = {
@@ -55,7 +57,8 @@ const fields = {
 const server = {
   "Token error": "Неверный ключ",
   "404 error title": "Страница не найдена",
-  "404 error description": "Страница не найдена 222",
+  "404 error description":
+    "Страница не найдена. Скорее всего она была удалено или перемещена :(",
 };
 
 const validationForm = {

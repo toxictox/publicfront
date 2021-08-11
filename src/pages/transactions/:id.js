@@ -20,6 +20,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableScroll, TableStatic } from "@comp/core/tables/index";
+import { BackButton } from "@comp/core/buttons";
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -31,12 +32,6 @@ const TransactionsList = () => {
     data: [],
   });
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
-  const goBack = () => {
-    navigate("/transaction");
-  };
   const getItem = useCallback(async () => {
     try {
       const response = await axios
@@ -67,8 +62,9 @@ const TransactionsList = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
+          <BackButton action={() => navigate("/transaction")} />
           <Box sx={{ minWidth: 700 }}>
-            <Card sx={{ mt: 1 }}>
+            <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Transactions Item")} />
               <Divider />
               <TableStatic>
@@ -82,23 +78,6 @@ const TransactionsList = () => {
                 })}
               </TableStatic>
             </Card>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-              sx={{ mt: 0 }}
-            >
-              <Grid sx={12} item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={goBack}
-                  startIcon={<Backspace />}
-                >
-                  {t("Back button")}
-                </Button>
-              </Grid>
-            </Grid>
           </Box>
         </Container>
       </Box>

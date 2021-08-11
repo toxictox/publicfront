@@ -1,16 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Backspace } from "@material-ui/icons";
-import {
-  Box,
-  Container,
-  Grid,
-  Button,
-  Card,
-  CardHeader,
-  Divider,
-} from "@material-ui/core";
+import { Box, Container, Card, CardHeader, Divider } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
@@ -18,6 +9,7 @@ import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import UpdateForm from "@comp/users/UpdateForm";
 import toast from "react-hot-toast";
+import { BackButton } from "@comp/core/buttons";
 
 const UserIdUpdate = () => {
   const mounted = useMounted();
@@ -70,31 +62,15 @@ const UserIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
+          <BackButton action={() => navigate(`/users/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
-            <Card sx={{ mt: 1 }}>
+            <Card sx={{ mt: 2 }}>
               <CardHeader title={t("User Item Update")} />
               <Divider />
               {dataList !== null ? (
                 <UpdateForm data={dataList} callback={handleSubmit} />
               ) : null}
             </Card>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-              sx={{ mt: 0 }}
-            >
-              <Grid sx={12} item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => navigate(`/users/id/${id}`)}
-                  startIcon={<Backspace />}
-                >
-                  {t("Back button")}
-                </Button>
-              </Grid>
-            </Grid>
           </Box>
         </Container>
       </Box>

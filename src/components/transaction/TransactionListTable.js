@@ -32,10 +32,10 @@ const TransactionListTable = (props) => {
       <Card {...other}>
         <CardHeader action={<MoreMenu />} title={t("Transactions List")} />
         <Divider />
-        <TransactionFilter />
+        <TransactionFilter callback={props.callback} />
         <Divider />
         <Scrollbar>
-          <Box sx={{ minWidth: 1150 }}>
+          <Box sx={{ minWidth: false }}>
             <TableStatic
               header={[
                 "createOn",
@@ -52,7 +52,11 @@ const TransactionListTable = (props) => {
             >
               {data.map((order) => {
                 return (
-                  <TableRow hover key={order.uuid}>
+                  <TableRow
+                    hover
+                    key={order.uuid}
+                    onClick={() => navigate(`/transaction/${order.uuid}`)}
+                  >
                     <TableCell>
                       <Link
                         color="textPrimary"

@@ -119,18 +119,6 @@ export const AuthProvider = (props) => {
       .then((response) => {
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("accessId", response.data.user.hash); //response.data.token
-        // dispatch({
-        //   type: "LOGIN",
-        //   payload: {
-        //     user: {
-        //       ...response.data.user,
-        //       id: response.data.user.hash,
-        //       avatar: "/static/mock-images/avatars/avatar-jane_rotanson.png",
-        //       name: `${response.data.user.firstName} ${response.data.user.lastName}`,
-        //       plan: "Premium",
-        //     },
-        //   },
-        // });
         window.location.reload();
       })
       .catch((err) => {
@@ -142,6 +130,7 @@ export const AuthProvider = (props) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("accessId");
     dispatch({ type: "LOGOUT" });
+    navigate("/board");
   };
 
   const register = async (email, username, password, linkToken = null) => {
@@ -155,7 +144,7 @@ export const AuthProvider = (props) => {
       })
       .then((response) => {
         toast.success(t("Success registration"));
-        navigate("/");
+        navigate("/board");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -177,7 +166,7 @@ export const AuthProvider = (props) => {
         //   },
         // });
         toast.success(t("Success recovery send token"));
-        navigate("/");
+        navigate("/board");
       })
       .catch((err) => {
         if (err.response !== undefined) {

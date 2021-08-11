@@ -64,20 +64,20 @@ const BaseSidebar = (props) => {
               borderRadius: 1,
               display: "flex",
               overflow: "hidden",
-              p: 2,
+              p: 1,
             }}
           >
-            <RouterLink to="/dashboard/account">
-              <Avatar
-                src={user.avatar}
-                sx={{
-                  cursor: "pointer",
-                  height: 48,
-                  width: 48,
-                }}
-              />
-            </RouterLink>
-            <Box sx={{ ml: 2 }}>
+            {/*<RouterLink to="/dashboard/account">*/}
+            {/*  <Avatar*/}
+            {/*    src={user.avatar}*/}
+            {/*    sx={{*/}
+            {/*      cursor: "pointer",*/}
+            {/*      height: 48,*/}
+            {/*      width: 48,*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*</RouterLink>*/}
+            <Box sx={{ ml: 1 }}>
               <Typography color="textPrimary" variant="subtitle2">
                 {user.name}
               </Typography>

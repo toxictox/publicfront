@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Backspace } from "@material-ui/icons";
 import {
   Box,
   Container,
-  Grid,
-  Button,
   Card,
   TableRow,
   TableCell,
@@ -19,7 +16,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
-import { GroupTable } from "@comp/core/buttons";
+import { GroupTable, BackButton } from "@comp/core/buttons";
 
 const UserId = () => {
   const mounted = useMounted();
@@ -61,8 +58,9 @@ const UserId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
+          <BackButton action={() => navigate("/users")} />
           <Box sx={{ minWidth: 700 }}>
-            <Card sx={{ mt: 1 }}>
+            <Card sx={{ mt: 2 }}>
               <CardHeader
                 title={t("User Item")}
                 action={
@@ -98,23 +96,6 @@ const UserId = () => {
                 })}
               </TableStatic>
             </Card>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-              sx={{ mt: 0 }}
-            >
-              <Grid sx={12} item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => navigate("/users")}
-                  startIcon={<Backspace />}
-                >
-                  {t("Back button")}
-                </Button>
-              </Grid>
-            </Grid>
           </Box>
         </Container>
       </Box>

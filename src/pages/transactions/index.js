@@ -31,6 +31,7 @@ const TransactionsList = () => {
   const [dataList, setListData] = useState({
     data: [],
   });
+  const [filterList, setFilterList] = useState({});
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -51,11 +52,15 @@ const TransactionsList = () => {
     }
   }, [mounted]);
 
-  const handlePageChange = async (e, newPage) => {
+  const filter = (values) => {
+    setFilterList(values);
+    handlePageChange(0);
+  };
+
+  const handlePageChange = async (newPage) => {
     setPage(newPage);
-    //getOrders();
     await axios
-      .post(`${app.api}/transactions?page=${newPage}&count=${25}`)
+      .post(`${app.api}/transactions?page=${newPage}&count=${25}`, filterList)
       .then((response) => {
         setListData(response.data);
       });
@@ -79,7 +84,7 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ mt: 1 }}>
-            <TransactionListTable data={dataList.data} />
+            <TransactionListTable data={dataList.data} callback={filter} />
             <TablePagination
               component="div"
               count={dataList.count}
