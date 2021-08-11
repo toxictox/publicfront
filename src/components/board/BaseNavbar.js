@@ -7,7 +7,7 @@ import AccountPopover from "./AccountPopover";
 // import ContactsPopover from "./ContactsPopover";
 // import ContentSearch from "./ContentSearch";
 // import LanguagePopover from "./LanguagePopover";
-// import Logo from "../Logo";
+import Logo from "./Logo";
 // import NotificationsPopover from "./NotificationsPopover";
 
 const DashboardNavbarRoot = experimentalStyled(AppBar)(({ theme }) => ({
@@ -41,18 +41,18 @@ const BaseNavbar = (props) => {
         >
           <MenuIcon fontSize="small" />
         </IconButton>
-        {/*<RouterLink to="/">*/}
-        {/*  <Logo*/}
-        {/*    sx={{*/}
-        {/*      display: {*/}
-        {/*        lg: "inline",*/}
-        {/*        xs: "none",*/}
-        {/*      },*/}
-        {/*      height: 40,*/}
-        {/*      width: 40,*/}
-        {/*    }}*/}
-        {/*  />*/}
-        {/*</RouterLink>*/}
+        <RouterLink to="/">
+          <Logo
+            sx={{
+              display: {
+                lg: "inline",
+                xs: "none",
+              },
+              height: 40,
+              width: 150,
+            }}
+          />
+        </RouterLink>
         <Box
           sx={{
             flexGrow: 1,

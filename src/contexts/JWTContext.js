@@ -67,6 +67,9 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     const initialize = async () => {
+      if (window.location.pathname === "" || window.location.pathname === "/") {
+        navigate("/board");
+      }
       try {
         const accessToken = window.localStorage.getItem("accessToken");
         const accessId = window.localStorage.getItem("accessId");
@@ -130,7 +133,8 @@ export const AuthProvider = (props) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("accessId");
     dispatch({ type: "LOGOUT" });
-    navigate("/board");
+    setTimeout(() => navigate("/board"), 200);
+    //window.location.reload();
   };
 
   const register = async (email, username, password, linkToken = null) => {
