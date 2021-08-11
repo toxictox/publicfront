@@ -11,11 +11,10 @@ import {
 } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useAuth from "@hooks/useAuth";
-import ChartSquareBarIcon from "@icons/ChartSquareBar";
-import User from "@icons/User";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
 import { useTranslation } from "react-i18next";
+import { Group, Receipt } from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
@@ -26,12 +25,12 @@ const BaseSidebar = (props) => {
         {
           title: t("Transaction menu"),
           path: "/transaction",
-          icon: <ChartSquareBarIcon fontSize="small" />,
+          icon: <Receipt fontSize="small" />,
         },
         {
-          title: "Aккаунт",
-          path: "/account",
-          icon: <User fontSize="small" />,
+          title: t("Users menu"),
+          path: "/users",
+          icon: <Group fontSize="small" />,
         },
       ],
     },

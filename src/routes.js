@@ -365,6 +365,14 @@ const ServerError = Loadable(lazy(() => import("@pages/ServerError")));
 // New pages
 const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
 const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
+
+// users
+const UsersPage = Loadable(lazy(() => import("@pages/users")));
+const UserItemIdPage = Loadable(lazy(() => import("@pages/users/:id")));
+const UserItemIdUpdatePage = Loadable(
+  lazy(() => import("@pages/users/:update"))
+);
+// transactions
 const TransactionIndexPage = Loadable(
   lazy(() => import("@pages/transactions"))
 );
@@ -449,11 +457,19 @@ const routes = [
       },
 
       {
-        path: "account",
+        path: "users",
         children: [
           {
             path: "/",
-            element: <AccountPage />,
+            element: <UsersPage />,
+          },
+          {
+            path: "id/:id",
+            element: <UserItemIdPage />,
+          },
+          {
+            path: "id/:id/update",
+            element: <UserItemIdUpdatePage />,
           },
         ],
       },

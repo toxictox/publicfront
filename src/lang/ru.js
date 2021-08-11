@@ -2,21 +2,32 @@ const buttons = {
   "Recovery button": "Восстановить",
   "Change button": "Изменить",
   "Back button": "Назад",
+  "Create button": "Создать",
+  "Update button": "Обновить",
+  "Delete button": "Удалить",
 };
 
 const menu = {
   "Transaction menu": "Транзакции",
+  "Users menu": "Пользователи",
+  "User Item": "Информация о пользователе",
 };
 
 const text = {
   "Having an account": "Уже есть аккаунт",
   "Reset account password": "Восстановить доступ",
+  "Success update": "Запись обновлена",
   "Register account": "Регистрация",
   "Success registration": "Вы успешно разрегестрированы",
   "Reset title": "Восстановление пароля",
   "Success recovery send token": "Инструкция по была отправлена на email",
   "Transactions List": "Список транзакций",
   "Transactions Item": "Информация о транзакции",
+  "Users List": "Список пользователей",
+  "User Item Update": "Обновление пользователя",
+};
+
+const fields = {
   uuid: "Id",
   createOn: "Создано",
   merchant: "Мерчант",
@@ -29,6 +40,16 @@ const text = {
   respCode: "Код ответа",
   lang: "Язык",
   editOn: "Обновлено",
+  firstName: "Имя",
+  lastName: "Фамилия",
+  phone: "Телефон",
+  loginTries: "Попыток авторизации",
+  lastLogin: "Дата авторизации",
+  linkToken: "Ключ",
+  role: "Роль",
+  "email table": "Email",
+  "role name field": "Роль",
+  "permissions field": "Разрешения",
 };
 
 const server = {
@@ -49,6 +70,7 @@ export const ru = {
   "Create new account": "Создать аккаунт",
   "Login text": "Авторизация",
   ...buttons,
+  ...fields,
   ...text,
   ...validationForm,
   ...menu,

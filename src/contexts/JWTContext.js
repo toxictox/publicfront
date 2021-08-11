@@ -154,14 +154,6 @@ export const AuthProvider = (props) => {
         linkToken,
       })
       .then((response) => {
-        // localStorage.setItem("accessToken", accessToken);
-
-        // dispatch({
-        //   type: "REGISTER",
-        //   payload: {
-        //     user,
-        //   },
-        // });
         toast.success(t("Success registration"));
         navigate("/");
       })

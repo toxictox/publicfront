@@ -15,13 +15,13 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-// import gtm from "../../lib/gtm";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import { TableScroll, TableStatic } from "@comp/core/tables/index";
+import { TableStatic } from "@comp/core/tables/index";
+import { GroupTable } from "@comp/core/buttons";
 
-const TransactionsList = () => {
+const UserId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
@@ -31,16 +31,10 @@ const TransactionsList = () => {
     data: [],
   });
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
-  const goBack = () => {
-    navigate("/transaction");
-  };
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/transaction/${id}`)
+        .get(`${app.api}/user/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -69,14 +63,36 @@ const TransactionsList = () => {
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 1 }}>
-              <CardHeader title={t("Transactions Item")} />
+              <CardHeader
+                title={t("User Item")}
+                action={
+                  <GroupTable
+                    actionUpdate={() => navigate(`/users/id/${id}/update`)}
+                    actionDelete={() => console.log("delete action")}
+                  />
+                }
+              />
               <Divider />
               <TableStatic>
                 {Object.keys(dataList).map(function (i, index) {
                   return (
                     <TableRow key={i}>
                       <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      <TableCell>
+                        {i === "role" && dataList[i] !== null
+                          ? dataList[i].map((item) => (
+                              <div key={i}>
+                                <div>
+                                  {t("role name field")} : {item.name}
+                                </div>
+                                <div>
+                                  {t("permissions field")} :{" "}
+                                  {item.permissions.join("|")}
+                                </div>
+                              </div>
+                            ))
+                          : dataList[i]}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -92,7 +108,7 @@ const TransactionsList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={goBack}
+                  onClick={() => navigate("/users")}
                   startIcon={<Backspace />}
                 >
                   {t("Back button")}
@@ -106,4 +122,4 @@ const TransactionsList = () => {
   );
 };
 
-export default TransactionsList;
+export default UserId;

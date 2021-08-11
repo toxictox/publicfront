@@ -8,39 +8,29 @@ import {
   Grid,
   Button,
   Card,
-  TableRow,
-  TableCell,
   CardHeader,
   Divider,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-// import gtm from "../../lib/gtm";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import { TableScroll, TableStatic } from "@comp/core/tables/index";
+import UpdateForm from "@comp/users/UpdateForm";
+import toast from "react-hot-toast";
 
-const TransactionsList = () => {
+const UserIdUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [dataList, setListData] = useState({
-    data: [],
-  });
+  const [dataList, setListData] = useState(null);
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
-  const goBack = () => {
-    navigate("/transaction");
-  };
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/transaction/${id}`)
+        .get(`${app.api}/user/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -50,6 +40,19 @@ const TransactionsList = () => {
     }
   }, [mounted]);
 
+  const handleSubmit = async (values) => {
+    try {
+      await axios
+        .patch(`${app.api}/user/${id}`, { ...values })
+        .then((response) => {
+          toast.success(t("Success update"));
+          navigate(`/users/id/${id}`);
+        });
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
   useEffect(() => {
     getItem();
   }, [getItem]);
@@ -57,7 +60,7 @@ const TransactionsList = () => {
   return (
     <>
       <Helmet>
-        <title>Transactions List</title>
+        <title>{t("User Item Update")}</title>
       </Helmet>
       <Box
         sx={{
@@ -69,18 +72,11 @@ const TransactionsList = () => {
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 1 }}>
-              <CardHeader title={t("Transactions Item")} />
+              <CardHeader title={t("User Item Update")} />
               <Divider />
-              <TableStatic>
-                {Object.keys(dataList).map(function (i, index) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableStatic>
+              {dataList !== null ? (
+                <UpdateForm data={dataList} callback={handleSubmit} />
+              ) : null}
             </Card>
             <Grid
               container
@@ -92,7 +88,7 @@ const TransactionsList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={goBack}
+                  onClick={() => navigate(`/users/id/${id}`)}
                   startIcon={<Backspace />}
                 >
                   {t("Back button")}
@@ -106,4 +102,4 @@ const TransactionsList = () => {
   );
 };
 
-export default TransactionsList;
+export default UserIdUpdate;

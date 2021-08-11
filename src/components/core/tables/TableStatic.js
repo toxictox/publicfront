@@ -8,14 +8,12 @@ import {
 } from "@material-ui/core";
 
 import { useTranslation } from "react-i18next";
-import { useStyles } from "./style/table.style";
-const TableScroll = (props) => {
-  const classes = useStyles();
+const TableStatic = (props) => {
   const { t } = useTranslation();
 
   return (
     <>
-      <TableContainer className={classes.container}>
+      <TableContainer>
         <Table stickyHeader size="small" aria-label="sticky table">
           {props.header !== undefined ? (
             <TableHead>
@@ -34,4 +32,4 @@ const TableScroll = (props) => {
   );
 };
 
-export default TableScroll;
+export default TableStatic;

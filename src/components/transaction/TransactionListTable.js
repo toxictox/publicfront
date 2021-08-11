@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // import { format } from "date-fns";
 // import numeral from "numeral";
 import PropTypes from "prop-types";
@@ -14,26 +14,29 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import ArrowRightIcon from "@icons/ArrowRight";
-import PencilAltIcon from "@icons/PencilAlt";
-// import Label from "@comp/Label";
+
 import MoreMenu from "@comp/MoreMenu";
 import Scrollbar from "@comp/Scrollbar";
-import { TableScroll } from "@comp/core/tables/index";
+import { TableStatic } from "@comp/core/tables/index";
 import { useTranslation } from "react-i18next";
+import TransactionFilter from "@comp/transaction/TransactionFilter";
+import { GroupTable } from "@comp/core/buttons";
 
 const TransactionListTable = (props) => {
   const { data, ...other } = props;
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <>
       <Card {...other}>
         <CardHeader action={<MoreMenu />} title={t("Transactions List")} />
         <Divider />
+        <TransactionFilter />
+        <Divider />
         <Scrollbar>
           <Box sx={{ minWidth: 1150 }}>
-            <TableScroll
+            <TableStatic
               header={[
                 "createOn",
                 "merchant",
@@ -81,17 +84,16 @@ const TransactionListTable = (props) => {
                     <TableCell>{order.respCode}</TableCell>
 
                     <TableCell align="right">
-                      <IconButton
-                        component={RouterLink}
-                        to={`/transaction/${order.uuid}`}
-                      >
-                        <ArrowRightIcon fontSize="small" />
-                      </IconButton>
+                      <GroupTable
+                        actionView={() =>
+                          navigate(`/transaction/${order.uuid}`)
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                 );
               })}
-            </TableScroll>
+            </TableStatic>
           </Box>
         </Scrollbar>
       </Card>
