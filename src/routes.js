@@ -372,6 +372,19 @@ const UserItemIdPage = Loadable(lazy(() => import("@pages/users/:id")));
 const UserItemIdUpdatePage = Loadable(
   lazy(() => import("@pages/users/:update"))
 );
+
+// banks
+const BanksPage = Loadable(lazy(() => import("@pages/banks")));
+const BanksPageIdPage = Loadable(lazy(() => import("@pages/banks/:id")));
+const BanksCreatePage = Loadable(lazy(() => import("@pages/banks/:create")));
+const BanksPageIdUpdatePage = Loadable(
+  lazy(() => import("@pages/banks/:update"))
+);
+
+const BanksDepositUpdatePage = Loadable(
+  lazy(() => import("@pages/banks/_deposit/:update"))
+);
+
 // transactions
 const TransactionIndexPage = Loadable(
   lazy(() => import("@pages/transactions"))
@@ -470,6 +483,32 @@ const routes = [
           {
             path: "id/:id/update",
             element: <UserItemIdUpdatePage />,
+          },
+        ],
+      },
+
+      {
+        path: "banks",
+        children: [
+          {
+            path: "/",
+            element: <BanksPage />,
+          },
+          {
+            path: "create",
+            element: <BanksCreatePage />,
+          },
+          {
+            path: "id/:id",
+            element: <BanksPageIdPage />,
+          },
+          {
+            path: "id/:id/update",
+            element: <BanksPageIdUpdatePage />,
+          },
+          {
+            path: "deposit/:id",
+            element: <BanksDepositUpdatePage />,
           },
         ],
       },

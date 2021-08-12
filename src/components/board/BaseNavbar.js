@@ -41,7 +41,7 @@ const BaseNavbar = (props) => {
         >
           <MenuIcon fontSize="small" />
         </IconButton>
-        <RouterLink to="/">
+        <RouterLink to="/board">
           <Logo
             sx={{
               display: {
@@ -49,14 +49,14 @@ const BaseNavbar = (props) => {
                 xs: "none",
               },
               height: 40,
-              width: 150,
+              width: 170,
             }}
           />
         </RouterLink>
         <Box
           sx={{
             flexGrow: 1,
-            ml: 2,
+            ml: 1,
           }}
         />
         {/*<LanguagePopover />*/}

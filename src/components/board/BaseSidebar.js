@@ -14,13 +14,13 @@ import useAuth from "@hooks/useAuth";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
 import { useTranslation } from "react-i18next";
-import { Group, Receipt } from "@material-ui/icons";
+import { Group, Receipt, AccountBalance } from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
   const sections = [
     {
-      title: t("Transaction menu"),
+      title: "",
       items: [
         {
           title: t("Transaction menu"),
@@ -31,6 +31,11 @@ const BaseSidebar = (props) => {
           title: t("Users menu"),
           path: "/users",
           icon: <Group fontSize="small" />,
+        },
+        {
+          title: t("Banks menu"),
+          path: "/banks",
+          icon: <AccountBalance fontSize="small" />,
         },
       ],
     },
@@ -115,7 +120,9 @@ const BaseSidebar = (props) => {
     return (
       <Drawer
         anchor="left"
-        open
+        onClose={onMobileClose}
+        open={openMobile}
+        //open
         PaperProps={{
           sx: {
             backgroundColor: "background.paper",

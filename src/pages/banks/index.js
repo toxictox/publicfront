@@ -22,7 +22,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 
-const TransactionsList = () => {
+const BanksList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
@@ -33,14 +33,10 @@ const TransactionsList = () => {
   });
   const [page, setPage] = useState(1);
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
-
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/users?page=${page}&count=${25}`)
+        .get(`${app.api}/banks?page=${page}&count=${25}`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -53,9 +49,8 @@ const TransactionsList = () => {
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    //getOrders();
     await axios
-      .post(`${app.api}/users?page=${newPage}&count=${25}`)
+      .post(`${app.api}/banks?page=${newPage}&count=${25}`)
       .then((response) => {
         setListData(response.data);
       });
@@ -68,7 +63,7 @@ const TransactionsList = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Users List")}</title>
+        <title>{t("Banks List")}</title>
       </Helmet>
       <Box
         sx={{
@@ -84,7 +79,7 @@ const TransactionsList = () => {
                 title={t("Users List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/users/create")}
+                    action={() => navigate("/banks/create")}
                     text={t("Create button")}
                   />
                 }
@@ -92,11 +87,10 @@ const TransactionsList = () => {
               <Divider />
               <TableStatic
                 header={[
-                  "email table",
-                  "firstName",
-                  "phone",
-                  "loginTries",
-                  "lastLogin",
+                  "name bank field",
+                  "depositLimit",
+                  "createOn",
+                  "editOn",
                   "",
                 ]}
               >
@@ -105,30 +99,26 @@ const TransactionsList = () => {
                     <TableRow
                       hover
                       key={item.hash}
-                      onClick={() => navigate(`/users/id/${item.hash}`)}
+                      onClick={() => navigate(`/banks/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/users/id/${item.hash}`}
+                          to={`/banks/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
-                          {item.email}
+                          {item.name}
                         </Link>
                       </TableCell>
-                      <TableCell>
-                        {item.firstName} {item.lastName}
-                      </TableCell>
-                      <TableCell>{item.phone}</TableCell>
-                      <TableCell>{item.loginTries}</TableCell>
-                      <TableCell>
-                        {item.lastLogin ? item.lastLogin.date : null}
-                      </TableCell>
-                      <TableCell>
+                      <TableCell>{item.depositLimit}</TableCell>
+                      <TableCell>{item.createOn}</TableCell>
+                      <TableCell>{item.editOn}</TableCell>
+
+                      <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/users/id/${item.hash}`)}
+                          actionView={() => navigate(`/banks/id/${item.id}`)}
                         />
                       </TableCell>
                     </TableRow>
@@ -151,4 +141,4 @@ const TransactionsList = () => {
   );
 };
 
-export default TransactionsList;
+export default BanksList;

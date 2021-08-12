@@ -13,6 +13,7 @@ const menu = {
   "Transaction menu": "Транзакции",
   "Users menu": "Пользователи",
   "User Item": "Информация о пользователе",
+  "Banks menu": "Банки",
 };
 
 const text = {
@@ -27,10 +28,15 @@ const text = {
   "Transactions Item": "Информация о транзакции",
   "Users List": "Список пользователей",
   "User Item Update": "Обновление пользователя",
+  "Banks List": "Список банков",
+  "Bank Item Create": "Добавление нового банка",
+  "Bank Item Update": "Обновление банка",
+  "Bank Deposit Update": "Обновление лимита",
 };
 
 const fields = {
   uuid: "Id",
+  name: "Название",
   createOn: "Создано",
   merchant: "Мерчант",
   tranId: "Id транзакции",
@@ -52,6 +58,8 @@ const fields = {
   "email table": "Email",
   "role name field": "Роль",
   "permissions field": "Разрешения",
+  "name bank field": "Название банка",
+  depositLimit: "Лимит депозита",
 };
 
 const server = {
