@@ -399,6 +399,10 @@ const GatewayIndexPage = Loadable(lazy(() => import("@pages/gateway")));
 const GatewayCreatePage = Loadable(
   lazy(() => import("@pages/gateway/:create"))
 );
+const GatewayIdPage = Loadable(lazy(() => import("@pages/gateway/:id")));
+const GatewayIdPagePage = Loadable(
+  lazy(() => import("@pages/gateway/:update"))
+);
 
 // transaction flow
 const TransactionFlowList = Loadable(lazy(() => import("@pages/flow")));
@@ -550,14 +554,14 @@ const routes = [
             path: "create",
             element: <GatewayCreatePage />,
           },
-          // {
-          //   path: "id/:id",
-          //   element: <BanksPageIdPage />,
-          // },
-          // {
-          //   path: "id/:id/update",
-          //   element: <BanksPageIdUpdatePage />,
-          // },
+          {
+            path: "id/:id",
+            element: <GatewayIdPage />,
+          },
+          {
+            path: "id/:id/update",
+            element: <GatewayIdPagePage />,
+          },
           // {
           //   path: "deposit/:id",
           //   element: <BanksDepositUpdatePage />,

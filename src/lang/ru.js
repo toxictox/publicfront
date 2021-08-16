@@ -40,6 +40,8 @@ const text = {
   "Transactions Flow Create": "Создание схемы транзакции",
   "Gateway List": "Список шлюзов",
   "Gateway Item Create": "Создание шлюза",
+  "Gateway Item": "Описание шлюза",
+  "Gateway Item Update": "Обновление шлюза",
 };
 
 const fields = {
@@ -73,6 +75,7 @@ const fields = {
   env: "Окружение",
   bank: "Банк",
   "name gateway field": "Название шлюза",
+  "Select value": "Выбрать значение",
 };
 
 const server = {

@@ -37,6 +37,7 @@ const TransactionFilter = (props) => {
         merchant: "",
         gateway: "",
         respCode: "",
+        bankId: "",
       }}
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
@@ -47,6 +48,7 @@ const TransactionFilter = (props) => {
         createOn: Yup.string().max(255),
         gateway: Yup.string().max(255),
         respCode: Yup.string().max(255),
+        bankId: Yup.string().max(255),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -170,26 +172,47 @@ const TransactionFilter = (props) => {
                 />
               </Grid>
               <Grid item xs={3}>
-                <Select
-                  helperText={touched.gateway && errors.gateway}
-                  error={Boolean(touched.gateway && errors.gateway)}
-                  label="Age"
-                  name="gateway"
-                  value={values.gateway}
-                  size="small"
-                  onChange={handleChange}
+                <TextField
                   fullWidth
-                  sx={{ m: 0 }}
+                  label="bankId"
+                  name="bankId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.bankId}
+                  variant="outlined"
                 >
-                  <MenuItem value={""}>
-                    <em>None</em>
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
                   </MenuItem>
                   {banks.map((item) => (
-                    <MenuItem value={item.id} key={item.id}>
+                    <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
                   ))}
-                </Select>
+                </TextField>
+
+                {/*<Select*/}
+                {/*  helperText={touched.gateway && errors.gateway}*/}
+                {/*  error={Boolean(touched.gateway && errors.gateway)}*/}
+                {/*  label="Age"*/}
+                {/*  name="gateway"*/}
+                {/*  value={values.gateway}*/}
+                {/*  size="small"*/}
+                {/*  onChange={handleChange}*/}
+                {/*  fullWidth*/}
+                {/*  sx={{ m: 0 }}*/}
+                {/*>*/}
+                {/*  <MenuItem value={""}>*/}
+                {/*    <em>None</em>*/}
+                {/*  </MenuItem>*/}
+                {/*  {banks.map((item) => (*/}
+                {/*    <MenuItem value={item.id} key={item.id}>*/}
+                {/*      {item.name}*/}
+                {/*    </MenuItem>*/}
+                {/*  ))}*/}
+                {/*</Select>*/}
                 {/*<TextField*/}
                 {/*  error={Boolean(touched.gateway && errors.gateway)}*/}
                 {/*  fullWidth*/}

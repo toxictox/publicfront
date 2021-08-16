@@ -7,6 +7,8 @@ import {
   FormHelperText,
   TextField,
   MenuItem,
+  FormControl,
+  InputLabel,
   Select,
   Grid,
 } from "@material-ui/core";
@@ -16,7 +18,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import toast from "react-hot-toast";
 
-const CreateGatewayForm = (props) => {
+const UpdateGatewayForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const [banks, setBanks] = useState([]);
@@ -24,25 +26,27 @@ const CreateGatewayForm = (props) => {
 
   useEffect(async () => {
     await axios.get(`${app.api}/banks`).then((response) => {
-      setBanks(response.data.data);
+      if (mounted.current) {
+        setBanks(response.data.data);
+      }
     });
-  }, []);
+  }, [setBanks]);
+
   return (
     <Formik
       initialValues={{
-        name: "",
-        endpoint: "",
-        env: "",
-        // bank: "",
+        name: data.name,
+        endpoint: data.endpoint,
+        env: data.env,
+        // bank: data.bank,
         bankId: "",
-        // depositLimit: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         endpoint: Yup.string().max(255).required(t("required")),
         env: Yup.string().max(255).required(t("required")),
         // bank: Yup.string().max(255).required(t("required")),
-        bankId: Yup.string().max(255),
+        bankId: Yup.number().required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -70,7 +74,7 @@ const CreateGatewayForm = (props) => {
         touched,
         values,
       }) => (
-        <form s onSubmit={handleSubmit} {...props}>
+        <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -148,6 +152,33 @@ const CreateGatewayForm = (props) => {
               {/*</Grid>*/}
 
               <Grid item xs={12}>
+                {/*<FormControl>*/}
+                {/*  <InputLabel id="demo-customized-select-label">Age</InputLabel>*/}
+                {/*  <Select*/}
+                {/*    labelId="demo-customized-select-label"*/}
+                {/*    id="demo-customized-select"*/}
+                {/*    // label={t("env")}*/}
+                {/*    name="bankId"*/}
+                {/*    value={values.bankId !== undefined ? values.bankId : ""}*/}
+                {/*    size="small"*/}
+                {/*    defaultValue={""}*/}
+                {/*    key={values.bankId}*/}
+                {/*    // defaultValue={values.bankId}*/}
+                {/*    // defaultChecked={values.bankId}*/}
+                {/*    onChange={handleChange}*/}
+                {/*    fullWidth*/}
+                {/*    displayEmpty*/}
+                {/*    sx={{ m: 0 }}*/}
+                {/*  >*/}
+                {/*    <MenuItem value="">{t("Select value")}</MenuItem>*/}
+                {/*    {banks.map((item) => (*/}
+                {/*      <MenuItem value={item.id} key={item.id}>*/}
+                {/*        {item.name}*/}
+                {/*      </MenuItem>*/}
+                {/*    ))}*/}
+                {/*  </Select>*/}
+                {/*</FormControl>*/}
+
                 <TextField
                   fullWidth
                   label="bankId"
@@ -179,7 +210,7 @@ const CreateGatewayForm = (props) => {
                     variant="contained"
                     size="large"
                   >
-                    {t("Create button")}
+                    {t("Update button")}
                   </Button>
                 </Box>
               </Grid>
@@ -197,4 +228,4 @@ const CreateGatewayForm = (props) => {
   );
 };
 
-export default CreateGatewayForm;
+export default UpdateGatewayForm;
