@@ -394,6 +394,18 @@ const TransactionItemIdPage = Loadable(
   lazy(() => import("@pages/transactions/:id"))
 );
 
+// gateways
+const GatewayIndexPage = Loadable(lazy(() => import("@pages/gateway")));
+const GatewayCreatePage = Loadable(
+  lazy(() => import("@pages/gateway/:create"))
+);
+
+// transaction flow
+const TransactionFlowList = Loadable(lazy(() => import("@pages/flow")));
+const TransactionFlowCreate = Loadable(
+  lazy(() => import("@pages/flow/:create"))
+);
+
 const Home = Loadable(lazy(() => import("./pages/Home")));
 
 const routes = [
@@ -510,6 +522,46 @@ const routes = [
             path: "deposit/:id",
             element: <BanksDepositUpdatePage />,
           },
+        ],
+      },
+
+      {
+        path: "flow",
+        children: [
+          {
+            path: "/",
+            element: <TransactionFlowList />,
+          },
+          {
+            path: "/create",
+            element: <TransactionFlowCreate />,
+          },
+        ],
+      },
+
+      {
+        path: "gateway",
+        children: [
+          {
+            path: "/",
+            element: <GatewayIndexPage />,
+          },
+          {
+            path: "create",
+            element: <GatewayCreatePage />,
+          },
+          // {
+          //   path: "id/:id",
+          //   element: <BanksPageIdPage />,
+          // },
+          // {
+          //   path: "id/:id/update",
+          //   element: <BanksPageIdUpdatePage />,
+          // },
+          // {
+          //   path: "deposit/:id",
+          //   element: <BanksDepositUpdatePage />,
+          // },
         ],
       },
 

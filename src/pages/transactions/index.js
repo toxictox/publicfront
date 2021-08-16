@@ -1,18 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  Container,
-  TablePagination,
-  Grid,
-  Card,
-  Link,
-  Typography,
-} from "@material-ui/core";
-// import { orderApi } from "../../__fakeApi__/orderApi";
+import { Box, Container, TablePagination } from "@material-ui/core";
+
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 // import ChevronRightIcon from "../../icons/ChevronRight";
@@ -32,7 +22,7 @@ const TransactionsList = () => {
     data: [],
   });
   const [filterList, setFilterList] = useState({});
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     gtm.push({ event: "page_view" });
@@ -88,7 +78,7 @@ const TransactionsList = () => {
             <TablePagination
               component="div"
               count={dataList.count}
-              onPageChange={handlePageChange}
+              onPageChange={() => handlePageChange(page + 1)}
               page={page}
               rowsPerPage={25}
               rowsPerPageOptions={[25]}

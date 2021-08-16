@@ -3,9 +3,11 @@ const buttons = {
   "Change button": "Изменить",
   "Back button": "Назад",
   "Create button": "Создать",
+  "Save button": "Сохранить",
   "Update button": "Обновить",
   "Delete button": "Удалить",
   "Search button": "Найти",
+  "Clear button": "Очистить",
   "Back to Home": "Вернуться на главную",
 };
 
@@ -14,6 +16,8 @@ const menu = {
   "Users menu": "Пользователи",
   "User Item": "Информация о пользователе",
   "Banks menu": "Банки",
+  "Flow menu": "Схемы",
+  "Gateway menu": "Шлюз",
 };
 
 const text = {
@@ -32,6 +36,10 @@ const text = {
   "Bank Item Create": "Добавление нового банка",
   "Bank Item Update": "Обновление банка",
   "Bank Deposit Update": "Обновление лимита",
+  "Transactions Flow List": "Список схем транзакций",
+  "Transactions Flow Create": "Создание схемы транзакции",
+  "Gateway List": "Список шлюзов",
+  "Gateway Item Create": "Создание шлюза",
 };
 
 const fields = {
@@ -60,6 +68,11 @@ const fields = {
   "permissions field": "Разрешения",
   "name bank field": "Название банка",
   depositLimit: "Лимит депозита",
+  flowName: "Название схемы",
+  endpoint: "Точка входа",
+  env: "Окружение",
+  bank: "Банк",
+  "name gateway field": "Название шлюза",
 };
 
 const server = {

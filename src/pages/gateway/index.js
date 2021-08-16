@@ -22,7 +22,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 
-const BanksList = () => {
+const GatewayList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const BanksList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/banks?page=${page}&count=${25}`)
+        .get(`${app.api}/gateways?page=${page}&count=${25}`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -50,7 +50,7 @@ const BanksList = () => {
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
     await axios
-      .post(`${app.api}/banks?page=${newPage}&count=${25}`)
+      .post(`${app.api}/gateways?page=${newPage}&count=${25}`)
       .then((response) => {
         setListData(response.data);
       });
@@ -63,7 +63,7 @@ const BanksList = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Banks List")}</title>
+        <title>{t("Gateway List")}</title>
       </Helmet>
       <Box
         sx={{
@@ -76,36 +76,30 @@ const BanksList = () => {
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
               <CardHeader
-                title={t("Users List")}
+                title={t("Gateway List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/banks/create")}
+                    action={() => navigate("/gateway/create")}
                     text={t("Create button")}
                   />
                 }
               />
               <Divider />
               <TableStatic
-                header={[
-                  "name bank field",
-                  "depositLimit",
-                  "createOn",
-                  "editOn",
-                  "",
-                ]}
+                header={["name", "endpoint", "env", "createOn", "bank", ""]}
               >
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow
                       hover
                       key={item.hash}
-                      onClick={() => navigate(`/banks/id/${item.id}`)}
+                      onClick={() => navigate(`/gateway/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/banks/id/${item.id}`}
+                          to={`/gateway/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
@@ -118,7 +112,7 @@ const BanksList = () => {
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/banks/id/${item.id}`)}
+                          actionView={() => navigate(`/gateway/id/${item.id}`)}
                         />
                       </TableCell>
                     </TableRow>
@@ -129,7 +123,7 @@ const BanksList = () => {
             <TablePagination
               component="div"
               count={dataList.count}
-              onPageChange={() => handlePageChange(page + 1)}
+              onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}
               rowsPerPageOptions={[25]}
@@ -141,4 +135,4 @@ const BanksList = () => {
   );
 };
 
-export default BanksList;
+export default GatewayList;

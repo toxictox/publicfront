@@ -31,7 +31,7 @@ const TransactionsList = () => {
   const [dataList, setListData] = useState({
     data: [],
   });
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   // useEffect(() => {
   //   gtm.push({ event: "page_view" });
@@ -53,7 +53,7 @@ const TransactionsList = () => {
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    //getOrders();
+
     await axios
       .post(`${app.api}/users?page=${newPage}&count=${25}`)
       .then((response) => {
@@ -139,7 +139,7 @@ const TransactionsList = () => {
             <TablePagination
               component="div"
               count={dataList.count}
-              onPageChange={handlePageChange}
+              onPageChange={() => handlePageChange(page + 1)}
               page={page}
               rowsPerPage={25}
               rowsPerPageOptions={[25]}

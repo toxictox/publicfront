@@ -6,11 +6,11 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import CreateBankForm from "@comp/banks/CreateBankForm";
+import CreateGatewayForm from "@comp/gateway/CreateGatewayForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
-const UserIdUpdate = () => {
+const GatewayCreate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
@@ -19,9 +19,9 @@ const UserIdUpdate = () => {
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post(`${app.api}/bank`, { ...values }).then((response) => {
+      await axios.post(`${app.api}/gateway`, { ...values }).then((response) => {
         toast.success(t("Success update"));
-        navigate(`/banks`);
+        navigate(`/gateway`);
       });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -41,12 +41,12 @@ const UserIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/banks`)} />
+          <BackButton action={() => navigate(`/gateway`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Bank Item Create")} />
+              <CardHeader title={t("Gateway Item Create")} />
               <Divider />
-              <CreateBankForm callback={handleSubmit} />
+              <CreateGatewayForm callback={handleSubmit} />
             </Card>
           </Box>
         </Container>
@@ -55,4 +55,4 @@ const UserIdUpdate = () => {
   );
 };
 
-export default UserIdUpdate;
+export default GatewayCreate;

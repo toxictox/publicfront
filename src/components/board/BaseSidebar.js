@@ -14,7 +14,13 @@ import useAuth from "@hooks/useAuth";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
 import { useTranslation } from "react-i18next";
-import { Group, Receipt, AccountBalance } from "@material-ui/icons";
+import {
+  Group,
+  Receipt,
+  AccountBalance,
+  Timeline,
+  CenterFocusWeak,
+} from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
@@ -36,6 +42,16 @@ const BaseSidebar = (props) => {
           title: t("Banks menu"),
           path: "/banks",
           icon: <AccountBalance fontSize="small" />,
+        },
+        {
+          title: t("Flow menu"),
+          path: "/flow",
+          icon: <Timeline fontSize="small" />,
+        },
+        {
+          title: t("Gateway menu"),
+          path: "/gateway",
+          icon: <CenterFocusWeak fontSize="small" />,
         },
       ],
     },

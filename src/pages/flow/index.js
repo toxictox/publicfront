@@ -22,7 +22,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 
-const BanksList = () => {
+const TransactionsFlowList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
@@ -33,10 +33,14 @@ const BanksList = () => {
   });
   const [page, setPage] = useState(0);
 
+  // useEffect(() => {
+  //   gtm.push({ event: "page_view" });
+  // }, []);
+
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/banks?page=${page}&count=${25}`)
+        .get(`${app.api}/users?page=${page}&count=${25}`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -49,8 +53,9 @@ const BanksList = () => {
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
+    //getOrders();
     await axios
-      .post(`${app.api}/banks?page=${newPage}&count=${25}`)
+      .post(`${app.api}/users?page=${newPage}&count=${25}`)
       .then((response) => {
         setListData(response.data);
       });
@@ -63,7 +68,7 @@ const BanksList = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Banks List")}</title>
+        <title>{t("Transactions Flow List")}</title>
       </Helmet>
       <Box
         sx={{
@@ -76,10 +81,10 @@ const BanksList = () => {
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
               <CardHeader
-                title={t("Users List")}
+                title={t("Transactions Flow List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/banks/create")}
+                    action={() => navigate("/flow/create")}
                     text={t("Create button")}
                   />
                 }
@@ -87,10 +92,11 @@ const BanksList = () => {
               <Divider />
               <TableStatic
                 header={[
-                  "name bank field",
-                  "depositLimit",
-                  "createOn",
-                  "editOn",
+                  "email table",
+                  "firstName",
+                  "phone",
+                  "loginTries",
+                  "lastLogin",
                   "",
                 ]}
               >
@@ -99,26 +105,30 @@ const BanksList = () => {
                     <TableRow
                       hover
                       key={item.hash}
-                      onClick={() => navigate(`/banks/id/${item.id}`)}
+                      onClick={() => navigate(`/flow/id/${item.hash}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/banks/id/${item.id}`}
+                          to={`/users/id/${item.hash}`}
                           underline="none"
                           variant="subtitle2"
                         >
-                          {item.name}
+                          {item.email}
                         </Link>
                       </TableCell>
-                      <TableCell>{item.depositLimit}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-                      <TableCell>{item.editOn}</TableCell>
-
-                      <TableCell align={"right"}>
+                      <TableCell>
+                        {item.firstName} {item.lastName}
+                      </TableCell>
+                      <TableCell>{item.phone}</TableCell>
+                      <TableCell>{item.loginTries}</TableCell>
+                      <TableCell>
+                        {item.lastLogin ? item.lastLogin.date : null}
+                      </TableCell>
+                      <TableCell>
                         <GroupTable
-                          actionView={() => navigate(`/banks/id/${item.id}`)}
+                          actionView={() => navigate(`/flow/id/${item.hash}`)}
                         />
                       </TableCell>
                     </TableRow>
@@ -141,4 +151,4 @@ const BanksList = () => {
   );
 };
 
-export default BanksList;
+export default TransactionsFlowList;

@@ -6,15 +6,27 @@ import {
   FormHelperText,
   TextField,
   Grid,
+  MenuItem,
+  Select,
 } from "@material-ui/core";
 import useAuth from "@hooks/useAuth";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import axios from "@lib/axios";
+import { app } from "@root/config";
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
   const { login } = useAuth();
   const { t } = useTranslation();
+  const [banks, setBanks] = useState([]);
+
+  useEffect(async () => {
+    await axios.get(`${app.api}/banks`).then((response) => {
+      setBanks(response.data.data);
+    });
+  }, []);
 
   return (
     <Formik
@@ -158,21 +170,41 @@ const TransactionFilter = (props) => {
                 />
               </Grid>
               <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.gateway && errors.gateway)}
-                  fullWidth
+                <Select
                   helperText={touched.gateway && errors.gateway}
-                  label={t("gateway")}
-                  margin="normal"
+                  error={Boolean(touched.gateway && errors.gateway)}
+                  label="Age"
                   name="gateway"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
                   value={values.gateway}
-                  variant="outlined"
                   size="small"
+                  onChange={handleChange}
+                  fullWidth
                   sx={{ m: 0 }}
-                />
+                >
+                  <MenuItem value={""}>
+                    <em>None</em>
+                  </MenuItem>
+                  {banks.map((item) => (
+                    <MenuItem value={item.id} key={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {/*<TextField*/}
+                {/*  error={Boolean(touched.gateway && errors.gateway)}*/}
+                {/*  fullWidth*/}
+                {/*  helperText={touched.gateway && errors.gateway}*/}
+                {/*  label={t("gateway")}*/}
+                {/*  margin="normal"*/}
+                {/*  name="gateway"*/}
+                {/*  onBlur={handleBlur}*/}
+                {/*  onChange={handleChange}*/}
+                {/*  type="text"*/}
+                {/*  value={values.gateway}*/}
+                {/*  variant="outlined"*/}
+                {/*  size="small"*/}
+                {/*  sx={{ m: 0 }}*/}
+                {/*/>*/}
               </Grid>
               <Grid item xs={3}>
                 <TextField
