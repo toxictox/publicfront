@@ -29,29 +29,20 @@ import ReactFlow, {
   Background,
 } from "react-flow-renderer";
 import nodeTypes from "@comp/flow/nodes";
-import TitleFlowForm from "@comp/flow/forms";
+import TitleFlowFormUpdate from "@comp/flow/forms/update";
 import { useStyles } from "@comp/flow/styles/elements.style";
 
-const initialElements = [
-  {
-    id: `${Date.now()}`,
-    tranType: "start",
-    type: "start", // input node
-    data: { label: "Start Node" },
-    position: { x: 250, y: 5 },
-  },
-];
-
-const FlowCreate = () => {
+const FlowIdUpdate = () => {
   const mounted = useMounted();
 
-  const [elements, setElements] = useState(initialElements);
+  const [elements, setElements] = useState([]);
   const [connect, setConnent] = useState([]);
   const [title, setTitle] = useState("");
   const [types, setTypes] = useState([]);
   const { settings } = useSettings();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { id } = useParams();
   const classes = useStyles();
 
   const onElementsRemove = (elementsToRemove) => {
@@ -73,7 +64,14 @@ const FlowCreate = () => {
         .get(`${app.api}/methods`)
         .then((response) => response.data);
 
+      const flow = await axios
+        .get(`${app.api}/get_flow/${id}`)
+        .then((response) => response.data);
+
       if (mounted.current) {
+        setTitle(flow.flowName);
+        setConnent(flow.connect);
+        setElements(flow.elements);
         setTypes(response.data);
       }
     } catch (err) {
@@ -124,7 +122,7 @@ const FlowCreate = () => {
       toast.error(err.response.data.message);
     }
   };
-  console.log(elements, connect);
+  console.log(elements, connect, title);
   return (
     <>
       <Helmet>
@@ -159,7 +157,10 @@ const FlowCreate = () => {
               />
               <Divider />
               <CardContent>
-                <TitleFlowForm callback={(title) => setTitle(title)} />
+                <TitleFlowFormUpdate
+                  callback={(title) => setTitle(title)}
+                  data={title}
+                />
               </CardContent>
             </Card>
             <Grid container>
@@ -181,20 +182,22 @@ const FlowCreate = () => {
               </Grid>
               <Grid item xs={9}>
                 <Box className={classes.flow}>
-                  <ReactFlowProvider>
-                    <ReactFlow
-                      elements={[...elements, ...connect]}
-                      nodeTypes={nodeTypes}
-                      onLoad={null}
-                      onElementsRemove={onElementsRemove}
-                      onConnect={onConnect}
-                      snapToGrid={true}
-                      deleteKeyCode={46}
-                      key="edge-with-button"
-                    >
-                      <Background />
-                    </ReactFlow>
-                  </ReactFlowProvider>
+                  {elements.length > 0 ? (
+                    <ReactFlowProvider>
+                      <ReactFlow
+                        elements={[...elements, ...connect]}
+                        nodeTypes={nodeTypes}
+                        onLoad={null}
+                        onElementsRemove={onElementsRemove}
+                        onConnect={onConnect}
+                        snapToGrid={true}
+                        deleteKeyCode={46}
+                        key="edge-with-button"
+                      >
+                        <Background />
+                      </ReactFlow>
+                    </ReactFlowProvider>
+                  ) : null}
                 </Box>
               </Grid>
             </Grid>
@@ -205,4 +208,4 @@ const FlowCreate = () => {
   );
 };
 
-export default FlowCreate;
+export default FlowIdUpdate;

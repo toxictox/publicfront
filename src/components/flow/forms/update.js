@@ -10,7 +10,7 @@ import {
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 
-const TitleFlowForm = (props) => {
+const TitleFlowFormUpdate = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const TitleFlowForm = (props) => {
     <Formik
       enableReinitialize={true}
       initialValues={{
-        flowName: data.title,
+        flowName: data,
       }}
       validationSchema={Yup.object().shape({
         flowName: Yup.string().max(255).required(t("required")),
@@ -95,4 +95,4 @@ const TitleFlowForm = (props) => {
   );
 };
 
-export default TitleFlowForm;
+export default TitleFlowFormUpdate;

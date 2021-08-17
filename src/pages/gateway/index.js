@@ -10,6 +10,7 @@ import {
   CardHeader,
   Divider,
   TableRow,
+  Dialog,
   TableCell,
 } from "@material-ui/core";
 
@@ -72,6 +73,9 @@ const GatewayList = () => {
           py: 2,
         }}
       >
+        <Dialog open={true} fullWidth maxWidth="sm">
+          <Box sx={{ m: 1 }}>222222</Box>
+        </Dialog>
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
@@ -86,7 +90,7 @@ const GatewayList = () => {
               />
               <Divider />
               <TableStatic
-                header={["name", "endpoint", "env", "createOn", "bank", ""]}
+                header={["bank", "endpoint", "env", "createOn", "editOn", ""]}
               >
                 {dataList.data.map(function (item) {
                   return (
@@ -106,7 +110,8 @@ const GatewayList = () => {
                           {item.name}
                         </Link>
                       </TableCell>
-                      <TableCell>{item.depositLimit}</TableCell>
+                      <TableCell>{item.endpoint}</TableCell>
+                      <TableCell>{item.env}</TableCell>
                       <TableCell>{item.createOn}</TableCell>
                       <TableCell>{item.editOn}</TableCell>
 

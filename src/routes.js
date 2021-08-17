@@ -410,6 +410,8 @@ const TransactionFlowCreate = Loadable(
   lazy(() => import("@pages/flow/:create"))
 );
 
+const TransactionFlowUpdate = Loadable(lazy(() => import("@pages/flow/:id")));
+
 const Home = Loadable(lazy(() => import("./pages/Home")));
 
 const routes = [
@@ -539,6 +541,10 @@ const routes = [
           {
             path: "/create",
             element: <TransactionFlowCreate />,
+          },
+          {
+            path: "id/:id",
+            element: <TransactionFlowUpdate />,
           },
         ],
       },

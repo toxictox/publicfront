@@ -28,9 +28,7 @@ const TransactionsFlowList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [dataList, setListData] = useState({
-    data: [],
-  });
+  const [dataList, setListData] = useState([]);
   const [page, setPage] = useState(0);
 
   // useEffect(() => {
@@ -40,7 +38,7 @@ const TransactionsFlowList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/users?page=${page}&count=${25}`)
+        .get(`${app.api}/tran_types?page=${page}&count=${25}`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -55,7 +53,7 @@ const TransactionsFlowList = () => {
     setPage(newPage);
     //getOrders();
     await axios
-      .post(`${app.api}/users?page=${newPage}&count=${25}`)
+      .post(`${app.api}/tran_types?page=${newPage}&count=${25}`)
       .then((response) => {
         setListData(response.data);
       });
@@ -90,45 +88,29 @@ const TransactionsFlowList = () => {
                 }
               />
               <Divider />
-              <TableStatic
-                header={[
-                  "email table",
-                  "firstName",
-                  "phone",
-                  "loginTries",
-                  "lastLogin",
-                  "",
-                ]}
-              >
-                {dataList.data.map(function (item) {
+              <TableStatic header={["name", ""]}>
+                {dataList.map(function (item) {
                   return (
                     <TableRow
                       hover
-                      key={item.hash}
-                      onClick={() => navigate(`/flow/id/${item.hash}`)}
+                      key={item.id}
+                      onClick={() => navigate(`/flow/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/users/id/${item.hash}`}
+                          to={`/flow/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
-                          {item.email}
+                          {item.name}
                         </Link>
                       </TableCell>
-                      <TableCell>
-                        {item.firstName} {item.lastName}
-                      </TableCell>
-                      <TableCell>{item.phone}</TableCell>
-                      <TableCell>{item.loginTries}</TableCell>
-                      <TableCell>
-                        {item.lastLogin ? item.lastLogin.date : null}
-                      </TableCell>
-                      <TableCell>
+
+                      <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/flow/id/${item.hash}`)}
+                          actionView={() => navigate(`/flow/id/${item.id}`)}
                         />
                       </TableCell>
                     </TableRow>
@@ -138,7 +120,7 @@ const TransactionsFlowList = () => {
             </Card>
             <TablePagination
               component="div"
-              count={dataList.count}
+              count={dataList.length}
               onPageChange={() => handlePageChange(page + 1)}
               page={page}
               rowsPerPage={25}
