@@ -73,9 +73,9 @@ const GatewayList = () => {
           py: 2,
         }}
       >
-        <Dialog open={true} fullWidth maxWidth="sm">
-          <Box sx={{ m: 1 }}>222222</Box>
-        </Dialog>
+        {/*<Dialog open={true} fullWidth maxWidth="sm">*/}
+        {/*  <Box sx={{ m: 1 }}>222222</Box>*/}
+        {/*</Dialog>*/}
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>

@@ -52,6 +52,21 @@ const FlowIdUpdate = () => {
 
   const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
 
+  const onNodeDragStop = (e, n) => {
+    let newCoords = elements.map((item) => {
+      if (item.id === n.id) {
+        return {
+          ...n,
+          tranType: item.tranType,
+        };
+      }
+
+      return item;
+    });
+
+    setElements(newCoords);
+  };
+
   const onConnect = (params, e) => {
     return setConnent((els) =>
       addEdge({ ...params, className: classes.edge }, els)
@@ -122,7 +137,7 @@ const FlowIdUpdate = () => {
       toast.error(err.response.data.message);
     }
   };
-  console.log(elements, connect, title);
+
   return (
     <>
       <Helmet>
@@ -146,10 +161,6 @@ const FlowIdUpdate = () => {
                       {
                         title: t("Save button"),
                         callback: handleSubmit,
-                      },
-                      {
-                        title: t("Clear button"),
-                        callback: handleClear,
                       },
                     ]}
                   />
@@ -188,6 +199,7 @@ const FlowIdUpdate = () => {
                         elements={[...elements, ...connect]}
                         nodeTypes={nodeTypes}
                         onLoad={null}
+                        onNodeDragStop={onNodeDragStop}
                         onElementsRemove={onElementsRemove}
                         onConnect={onConnect}
                         snapToGrid={true}

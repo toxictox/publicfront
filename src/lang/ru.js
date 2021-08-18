@@ -8,6 +8,7 @@ const buttons = {
   "Delete button": "Удалить",
   "Search button": "Найти",
   "Clear button": "Очистить",
+  "Copy button": "Скопировать",
   "Back to Home": "Вернуться на главную",
 };
 

@@ -19,7 +19,7 @@ const TitleFlowForm = (props) => {
     <Formik
       enableReinitialize={true}
       initialValues={{
-        flowName: data.title,
+        flowName: data !== undefined ? data : "",
       }}
       validationSchema={Yup.object().shape({
         flowName: Yup.string().max(255).required(t("required")),

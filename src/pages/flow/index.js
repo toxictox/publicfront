@@ -103,6 +103,7 @@ const TransactionsFlowList = () => {
                           to={`/flow/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
+                          square
                         >
                           {item.name}
                         </Link>
@@ -110,7 +111,20 @@ const TransactionsFlowList = () => {
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/flow/id/${item.id}`)}
+                          // actionView={() => navigate(`/flow/id/${item.id}`)}
+                          actionCustom={[
+                            {
+                              title: t("Copy button"),
+                              callback: (e) => {
+                                e.stopPropagation();
+                                navigate(`/flow/create`, {
+                                  state: {
+                                    id: item.id,
+                                  },
+                                });
+                              },
+                            },
+                          ]}
                         />
                       </TableCell>
                     </TableRow>

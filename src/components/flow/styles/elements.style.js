@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   flow: {
     width: "100%",
-    height: 400,
+    height: "100%",
     padding: "25px 0 0 20px",
   },
 

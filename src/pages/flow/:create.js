@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -44,13 +44,13 @@ const initialElements = [
 
 const FlowCreate = () => {
   const mounted = useMounted();
-
   const [elements, setElements] = useState(initialElements);
   const [connect, setConnent] = useState([]);
   const [title, setTitle] = useState("");
   const [types, setTypes] = useState([]);
   const { settings } = useSettings();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -67,14 +67,42 @@ const FlowCreate = () => {
     );
   };
 
+  const onNodeDragStop = (e, n) => {
+    let newCoords = elements.map((item) => {
+      if (item.id === n.id) {
+        return {
+          ...n,
+          tranType: item.tranType,
+        };
+      }
+
+      return item;
+    });
+
+    setElements(newCoords);
+  };
+
   const getTypes = useCallback(async () => {
     try {
+      let flow;
       const response = await axios
         .get(`${app.api}/methods`)
         .then((response) => response.data);
 
+      if (state !== null && state.id !== undefined && state.id !== "") {
+        flow = await axios
+          .get(`${app.api}/get_flow/${state.id}`)
+          .then((response) => response.data);
+      }
+
       if (mounted.current) {
         setTypes(response.data);
+      }
+
+      if (flow) {
+        setTitle(`${flow.flowName}_copy`);
+        setConnent(flow.connect);
+        setElements(flow.elements);
       }
     } catch (err) {
       console.error(err);
@@ -124,7 +152,7 @@ const FlowCreate = () => {
       toast.error(err.response.data.message);
     }
   };
-  console.log(elements, connect);
+
   return (
     <>
       <Helmet>
@@ -149,17 +177,16 @@ const FlowCreate = () => {
                         title: t("Save button"),
                         callback: handleSubmit,
                       },
-                      {
-                        title: t("Clear button"),
-                        callback: handleClear,
-                      },
                     ]}
                   />
                 }
               />
               <Divider />
               <CardContent>
-                <TitleFlowForm callback={(title) => setTitle(title)} />
+                <TitleFlowForm
+                  callback={(title) => setTitle(title)}
+                  data={title}
+                />
               </CardContent>
             </Card>
             <Grid container>
@@ -186,6 +213,7 @@ const FlowCreate = () => {
                       elements={[...elements, ...connect]}
                       nodeTypes={nodeTypes}
                       onLoad={null}
+                      onNodeDragStop={onNodeDragStop}
                       onElementsRemove={onElementsRemove}
                       onConnect={onConnect}
                       snapToGrid={true}
