@@ -68,9 +68,19 @@ const FlowIdUpdate = () => {
   };
 
   const onConnect = (params, e) => {
-    return setConnent((els) =>
-      addEdge({ ...params, className: classes.edge }, els)
-    );
+    let className = "base";
+    if (params.sourceHandle === "error") className = "error";
+    if (params.sourceHandle === "success") className = "success";
+
+    return setConnent((els) => {
+      return addEdge(
+        {
+          ...params,
+          className: className,
+        },
+        els
+      );
+    });
   };
 
   const getTypes = useCallback(async () => {

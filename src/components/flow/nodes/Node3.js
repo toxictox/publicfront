@@ -10,6 +10,7 @@ const customNodeStyles = {
   border: "1px solid #000",
   fontSize: "14px",
   textAlign: "center",
+  position: "relative",
   "&.setected >div": {
     background: "red",
   },
@@ -33,7 +34,7 @@ const Node3 = (props) => {
         id="input"
         style={{
           left: "50%",
-          bottom: "0%",
+          top: "-7px",
           borderRadius: 50,
           background: "blue",
           width: 15,
@@ -42,24 +43,26 @@ const Node3 = (props) => {
       />
       <Handle
         type="source"
-        position="left"
-        id="success"
+        position="bottom"
+        id="error"
         style={{
-          left: "-7px",
+          left: "20%",
           borderRadius: 50,
           background: "red",
           width: 15,
           height: 15,
+          bottom: "-7px",
         }}
       />
       <Handle
         type="source"
-        position="right"
-        id="error"
+        position="bottom"
+        id="success"
         style={{
-          right: "-7px",
+          left: "80%",
           borderRadius: 50,
           background: "green",
+          bottom: "-7px",
           width: 15,
           height: 15,
         }}
