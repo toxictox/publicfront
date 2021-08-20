@@ -409,8 +409,24 @@ const TransactionFlowList = Loadable(lazy(() => import("@pages/flow")));
 const TransactionFlowCreate = Loadable(
   lazy(() => import("@pages/flow/:create"))
 );
-
 const TransactionFlowUpdate = Loadable(lazy(() => import("@pages/flow/:id")));
+
+// cascading
+
+const CascadingRulesList = Loadable(
+  lazy(() => import("@pages/cascading/rules"))
+);
+
+const CascadingModelList = Loadable(
+  lazy(() => import("@pages/cascading/models"))
+);
+const CascadingModelId = Loadable(
+  lazy(() => import("@pages/cascading/models/:id"))
+);
+
+const CascadingCreate = Loadable(
+  lazy(() => import("@pages/cascading/models/:create"))
+);
 
 const Home = Loadable(lazy(() => import("./pages/Home")));
 
@@ -572,6 +588,28 @@ const routes = [
           //   path: "deposit/:id",
           //   element: <BanksDepositUpdatePage />,
           // },
+        ],
+      },
+
+      {
+        path: "cascading",
+        children: [
+          {
+            path: "/",
+            element: <CascadingModelList />,
+          },
+          {
+            path: "create",
+            element: <CascadingCreate />,
+          },
+          {
+            path: "id/:id",
+            element: <CascadingModelId />,
+          },
+          {
+            path: "id/:id/update",
+            element: <GatewayIdPagePage />,
+          },
         ],
       },
 

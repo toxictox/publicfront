@@ -20,6 +20,7 @@ import {
   AccountBalance,
   Timeline,
   CenterFocusWeak,
+  LinearScale,
 } from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
@@ -52,6 +53,11 @@ const BaseSidebar = (props) => {
           title: t("Gateway menu"),
           path: "/gateway",
           icon: <CenterFocusWeak fontSize="small" />,
+        },
+        {
+          title: t("Cascading menu"),
+          path: "/cascading",
+          icon: <LinearScale fontSize="small" />,
         },
       ],
     },

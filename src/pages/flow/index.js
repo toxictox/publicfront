@@ -51,7 +51,7 @@ const TransactionsFlowList = () => {
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    //getOrders();
+
     await axios
       .post(`${app.api}/tran_types?page=${newPage}&count=${25}`)
       .then((response) => {
@@ -135,7 +135,7 @@ const TransactionsFlowList = () => {
             <TablePagination
               component="div"
               count={dataList.length}
-              onPageChange={() => handlePageChange(page + 1)}
+              onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}
               rowsPerPageOptions={[25]}

@@ -19,6 +19,9 @@ const menu = {
   "Banks menu": "Банки",
   "Flow menu": "Схемы",
   "Gateway menu": "Шлюз",
+  "Cascading menu": "Каскад",
+  "Cascading rules menu": "Правила",
+  "Cascading models menu": "Модели",
 };
 
 const text = {
@@ -43,6 +46,9 @@ const text = {
   "Gateway Item Create": "Создание шлюза",
   "Gateway Item": "Описание шлюза",
   "Gateway Item Update": "Обновление шлюза",
+  "Cascading Rules List": "Список правил",
+  "Cascading Models List": "Список моделей",
+  "Cascading Model Create": "Создание модели",
 };
 
 const fields = {

@@ -22,25 +22,19 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 
-const TransactionsList = () => {
+const CascadingModelsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [dataList, setListData] = useState({
-    data: [],
-  });
+  const [dataList, setListData] = useState([]);
   const [page, setPage] = useState(0);
-
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
 
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/users?page=${page}&count=${25}`)
+        .post(`${app.api}/cascade/models?page=${page}&count=${25}`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -54,7 +48,7 @@ const TransactionsList = () => {
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
     await axios
-      .post(`${app.api}/users?page=${newPage}&count=${25}`)
+      .post(`${app.api}/cascade/models?page=${newPage}&count=${25}`)
       .then((response) => {
         setListData(response.data);
       });
@@ -67,7 +61,7 @@ const TransactionsList = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Users List")}</title>
+        <title>{t("Cascading Models List")}</title>
       </Helmet>
       <Box
         sx={{
@@ -80,54 +74,51 @@ const TransactionsList = () => {
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
               <CardHeader
-                title={t("Users List")}
+                title={t("Cascading Models List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/users/create")}
+                    action={() =>
+                      navigate("/cascading/create", {
+                        state: {
+                          priority: 20,
+                        },
+                      })
+                    }
                     text={t("Create button")}
                   />
                 }
               />
               <Divider />
               <TableStatic
-                header={[
-                  "email table",
-                  "firstName",
-                  "phone",
-                  "loginTries",
-                  "lastLogin",
-                  "",
-                ]}
+                header={["rule", "merchant", "gateway", "createOn", ""]}
               >
-                {dataList.data.map(function (item) {
+                {dataList.map(function (item) {
                   return (
                     <TableRow
                       hover
                       key={item.hash}
-                      onClick={() => navigate(`/users/id/${item.hash}`)}
+                      onClick={() => navigate(`/cascading/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/users/id/${item.hash}`}
+                          to={`/cascading/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
-                          {item.email}
+                          {item.rule}
                         </Link>
                       </TableCell>
-                      <TableCell>
-                        {item.firstName} {item.lastName}
-                      </TableCell>
-                      <TableCell>{item.phone}</TableCell>
-                      <TableCell>{item.loginTries}</TableCell>
-                      <TableCell>
-                        {item.lastLogin ? item.lastLogin.date : null}
-                      </TableCell>
-                      <TableCell>
+                      <TableCell>{item.merchant}</TableCell>
+                      <TableCell>{item.gateway}</TableCell>
+                      <TableCell>{item.createOn}</TableCell>
+
+                      <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/users/id/${item.hash}`)}
+                          actionView={() =>
+                            navigate(`/cascading/id/${item.id}`)
+                          }
                         />
                       </TableCell>
                     </TableRow>
@@ -137,7 +128,7 @@ const TransactionsList = () => {
             </Card>
             <TablePagination
               component="div"
-              count={dataList.count}
+              count={dataList.length}
               onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}
@@ -150,4 +141,4 @@ const TransactionsList = () => {
   );
 };
 
-export default TransactionsList;
+export default CascadingModelsList;

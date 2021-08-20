@@ -1,0 +1,358 @@
+import { useState, useEffect } from "react";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  TextField,
+  MenuItem,
+  Select,
+  Grid,
+} from "@material-ui/core";
+import useMounted from "@hooks/useMounted";
+import { useTranslation } from "react-i18next";
+import axios from "@lib/axios";
+import { app } from "@root/config";
+import toast from "react-hot-toast";
+
+const CreateModelForm = (props) => {
+  const mounted = useMounted();
+  const { data, callback } = props;
+  const [condition, setCondition] = useState(null);
+  const [conditionData, setConditionData] = useState([]);
+  const [merchant, setMerchant] = useState([]);
+  const [gateway, setGateway] = useState([]);
+  const [gatewayMethod, setGatewayMethod] = useState([]);
+  const [tranType, setTranType] = useState([]);
+  const [rules, setRules] = useState([]);
+  const { t } = useTranslation();
+
+  useEffect(async () => {
+    await axios.get(`${app.api}/gateways`).then((response) => {
+      setGateway(response.data.data);
+    });
+
+    await axios.get(`${app.api}/cascade/rules`).then((response) => {
+      setRules(response.data.data);
+    });
+
+    await axios.get(`${app.api}/merchants`).then((response) => {
+      setMerchant(response.data.data);
+    });
+
+    await axios.get(`${app.api}/tran_types`).then((response) => {
+      setTranType(response.data);
+    });
+
+    await axios.get(`${app.api}/gateway/methods`).then((response) => {
+      setGatewayMethod(response.data.data);
+    });
+  }, []);
+
+  const addCondition = (e) => {
+    setConditionData([
+      ...conditionData,
+      {
+        hash: Date.now(),
+        ruleCond: "",
+        ruleValue: "",
+      },
+    ]);
+  };
+
+  const handleChangeRule = async (e, set) => {
+    set(e.target.name, e.target.value);
+    let flag = null;
+    for (let i = 0; i < rules.length; i++) {
+      if (rules[i].id === e.target.value) {
+        flag = rules[i].condition;
+        break;
+      }
+    }
+    if (flag) {
+      setCondition(flag);
+      setConditionData([
+        {
+          hash: Date.now(),
+          ruleCond: "",
+          ruleValue: "",
+        },
+      ]);
+    } else {
+      setCondition(null);
+      setConditionData([]);
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        gatewayId: "",
+        ruleId: "",
+        gatewayMethodId: "",
+        merchantId: "",
+        tranTypeId: "",
+        ruleCondition: "",
+        // depositLimit: "",
+      }}
+      validationSchema={Yup.object().shape({
+        gatewayId: Yup.string().max(5).required(t("required")),
+        ruleId: Yup.string().max(5).required(t("required")),
+        gatewayMethodId: Yup.string().max(5).required(t("required")),
+        merchantId: Yup.string().max(5).required(t("required")),
+        tranTypeId: Yup.string().max(5).required(t("required")),
+        // ---------------------
+      })}
+      onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        try {
+          console.log(values);
+          await callback(values);
+
+          if (mounted.current) {
+            setStatus({ success: true });
+            setSubmitting(false);
+          }
+        } catch (err) {
+          if (mounted.current) {
+            setStatus({ success: false });
+            setErrors({ submit: err.message });
+            setSubmitting(false);
+          }
+        }
+      }}
+    >
+      {({
+        errors,
+        handleBlur,
+        handleChange,
+        setFieldValue,
+        handleSubmit,
+        isSubmitting,
+        touched,
+        values,
+      }) => (
+        <form onSubmit={handleSubmit} {...props}>
+          <Box m={2}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.gatewayId && errors.gatewayId)}
+                  fullWidth
+                  helperText={touched.gatewayId && errors.gatewayId}
+                  label="gatewayId"
+                  name="gatewayId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.gatewayId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {gateway.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(
+                    touched.gatewayMethodId && errors.gatewayMethodId
+                  )}
+                  fullWidth
+                  helperText={touched.gatewayMethodId && errors.gatewayMethodId}
+                  label="gatewayMethodId"
+                  name="gatewayMethodId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.gatewayMethodId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {gatewayMethod.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.ruleId && errors.ruleId)}
+                  fullWidth
+                  helperText={touched.ruleId && errors.ruleId}
+                  label="ruleId"
+                  name="ruleId"
+                  onChange={(e) => handleChangeRule(e, setFieldValue)}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.ruleId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {rules.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.merchantId && errors.merchantId)}
+                  fullWidth
+                  helperText={touched.merchantId && errors.merchantId}
+                  label="merchantId"
+                  name="merchantId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.merchantId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {merchant.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.tranTypeId && errors.tranTypeId)}
+                  fullWidth
+                  helperText={touched.tranTypeId && errors.tranTypeId}
+                  label="tranTypeId"
+                  name="tranTypeId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.tranTypeId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {tranType.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              {condition ? (
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="large"
+                        onClick={addCondition}
+                      >
+                        +
+                      </Button>
+                    </Grid>
+                  </Grid>
+
+                  {conditionData.length
+                    ? conditionData.map((item) => (
+                        <Grid
+                          container
+                          key={item.id}
+                          spacing={2}
+                          sx={{ mt: 2 }}
+                        >
+                          <Grid item xs={4}>
+                            <TextField
+                              fullWidth
+                              label={t("ruleCond")}
+                              margin="normal"
+                              name="ruleCond"
+                              onBlur={handleBlur}
+                              select
+                              variant="outlined"
+                              size="small"
+                              sx={{ m: 0 }}
+                            >
+                              <MenuItem value={"more"}>{">"}</MenuItem>
+                              <MenuItem value={"less"}>{"<"}</MenuItem>
+                              <MenuItem value={"equal"}>{"="}</MenuItem>
+                            </TextField>
+                          </Grid>
+
+                          <Grid item xs={8}>
+                            <TextField
+                              autoFocus
+                              error={Boolean(
+                                touched.ruleValue && errors.ruleValue
+                              )}
+                              fullWidth
+                              helperText={touched.ruleValue && errors.ruleValue}
+                              label={t("ruleValue")}
+                              margin="normal"
+                              name="ruleValue"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              type="text"
+                              value={values.ruleValue}
+                              variant="outlined"
+                              size="small"
+                              sx={{ m: 0 }}
+                            />
+                          </Grid>
+                        </Grid>
+                      ))
+                    : null}
+                </Grid>
+              ) : null}
+
+              <Grid item xs={12}>
+                <Box sx={{ mt: 2 }}>
+                  <Button
+                    color="primary"
+                    disabled={isSubmitting}
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                  >
+                    {t("Create button")}
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+
+          {errors.submit && (
+            <Box sx={{ mt: 3 }}>
+              <FormHelperText error>{errors.submit}</FormHelperText>
+            </Box>
+          )}
+        </form>
+      )}
+    </Formik>
+  );
+};
+
+export default CreateModelForm;

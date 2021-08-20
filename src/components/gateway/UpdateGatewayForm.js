@@ -39,7 +39,7 @@ const UpdateGatewayForm = (props) => {
         endpoint: data.endpoint,
         env: data.env,
         // bank: data.bank,
-        bankId: "",
+        bankId: data.bankId,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),

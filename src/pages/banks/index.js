@@ -129,7 +129,7 @@ const BanksList = () => {
             <TablePagination
               component="div"
               count={dataList.count}
-              onPageChange={() => handlePageChange(page + 1)}
+              onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}
               rowsPerPageOptions={[25]}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -33,6 +33,7 @@ const GatewayList = () => {
     data: [],
   });
   const [page, setPage] = useState(0);
+  const [c, setC] = useState(0);
 
   const getOrders = useCallback(async () => {
     try {
