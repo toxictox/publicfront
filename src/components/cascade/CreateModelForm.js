@@ -61,6 +61,22 @@ const CreateModelForm = (props) => {
     ]);
   };
 
+  const removeCondition = (id) => {
+    setConditionData([...conditionData.filter((item) => item.hash !== id)]);
+  };
+
+  const handleChangeRules = (e, id) => {
+    setConditionData([
+      ...conditionData.map((item) => {
+        if (item.hash === id) {
+          item[e.target.name] = e.target.value;
+        }
+
+        return item;
+      }),
+    ]);
+  };
+
   const handleChangeRule = async (e, set) => {
     set(e.target.name, e.target.value);
     let flag = null;
@@ -93,8 +109,6 @@ const CreateModelForm = (props) => {
         gatewayMethodId: "",
         merchantId: "",
         tranTypeId: "",
-        ruleCondition: "",
-        // depositLimit: "",
       }}
       validationSchema={Yup.object().shape({
         gatewayId: Yup.string().max(5).required(t("required")),
@@ -106,8 +120,7 @@ const CreateModelForm = (props) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          console.log(values);
-          await callback(values);
+          await callback({ ...values, ruleCondition: conditionData });
 
           if (mounted.current) {
             setStatus({ success: true });
@@ -280,7 +293,7 @@ const CreateModelForm = (props) => {
                     ? conditionData.map((item) => (
                         <Grid
                           container
-                          key={item.id}
+                          key={item.hash}
                           spacing={2}
                           sx={{ mt: 2 }}
                         >
@@ -289,10 +302,11 @@ const CreateModelForm = (props) => {
                               fullWidth
                               label={t("ruleCond")}
                               margin="normal"
-                              name="ruleCond"
-                              onBlur={handleBlur}
+                              name={`ruleCond`}
+                              onChange={(e) => handleChangeRules(e, item.hash)}
                               select
                               variant="outlined"
+                              value={item.ruleCond}
                               size="small"
                               sx={{ m: 0 }}
                             >
@@ -302,25 +316,34 @@ const CreateModelForm = (props) => {
                             </TextField>
                           </Grid>
 
-                          <Grid item xs={8}>
+                          <Grid item xs={6}>
                             <TextField
                               autoFocus
-                              error={Boolean(
-                                touched.ruleValue && errors.ruleValue
-                              )}
+                              error={Boolean(touched.item && errors.item)}
                               fullWidth
-                              helperText={touched.ruleValue && errors.ruleValue}
+                              helperText={touched.item && errors.item}
                               label={t("ruleValue")}
                               margin="normal"
-                              name="ruleValue"
+                              value={item.ruleValue}
+                              name={`ruleValue`}
                               onBlur={handleBlur}
-                              onChange={handleChange}
+                              onChange={(e) => handleChangeRules(e, item.hash)}
                               type="text"
-                              value={values.ruleValue}
                               variant="outlined"
                               size="small"
                               sx={{ m: 0 }}
                             />
+                          </Grid>
+
+                          <Grid item xs={2}>
+                            <Button
+                              color="secondary"
+                              variant="contained"
+                              size="large"
+                              onClick={() => removeCondition(item.hash)}
+                            >
+                              -
+                            </Button>
                           </Grid>
                         </Grid>
                       ))

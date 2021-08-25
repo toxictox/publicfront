@@ -18,16 +18,16 @@ const CascadingCreate = () => {
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
-    let priority = state.priority;
-    console.log(priority);
-    // try {
-    //   await axios.post(`${app.api}/gateway`, { ...values }).then((response) => {
-    //     toast.success(t("Success update"));
-    //     navigate(`/gateway`);
-    //   });
-    // } catch (err) {
-    //   toast.error(err.response.data.message);
-    // }
+    try {
+      await axios
+        .post(`${app.api}/cascade/model`, { ...values })
+        .then((response) => {
+          toast.success(t("Success update"));
+          navigate(`/cascade`);
+        });
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   return (
