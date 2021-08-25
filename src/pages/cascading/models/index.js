@@ -11,6 +11,8 @@ import {
   Divider,
   TableRow,
   TableCell,
+  MenuItem,
+  TextField,
 } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
@@ -29,16 +31,18 @@ const CascadingModelsList = () => {
   const navigate = useNavigate();
 
   const [dataList, setListData] = useState([]);
+  const [merchantId, setMerchantId] = useState(0);
+  const [merchant, setMerchant] = useState([]);
   const [page, setPage] = useState(0);
 
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .post(`${app.api}/cascade/models?page=${page}&count=${25}`)
-        .then((response) => response.data);
+        .get(`${app.api}/merchants`)
+        .then((response) => response.data.data);
 
       if (mounted.current) {
-        setListData(response);
+        setMerchant(response);
       }
     } catch (err) {
       console.error(err);
@@ -52,6 +56,15 @@ const CascadingModelsList = () => {
       .then((response) => {
         setListData(response.data);
       });
+  };
+
+  const handleChange = async (e) => {
+    setMerchantId(e.target.value);
+    await axios
+      .post(`${app.api}/cascade/models?page=${page}&count=${25}`, {
+        merchantId: e.target.value,
+      })
+      .then((response) => setListData(response.data));
   };
 
   useEffect(() => {
@@ -88,7 +101,29 @@ const CascadingModelsList = () => {
                   />
                 }
               />
+
               <Divider />
+              <Box sx={{ m: 2 }}>
+                <TextField
+                  fullWidth
+                  label="gatewayId"
+                  name="gatewayId"
+                  onChange={handleChange}
+                  select
+                  size="small"
+                  value={merchantId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {merchant.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Box>
               <TableStatic
                 header={["rule", "merchant", "gateway", "createOn", ""]}
               >

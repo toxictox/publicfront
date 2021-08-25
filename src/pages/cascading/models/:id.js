@@ -58,20 +58,10 @@ const CascadingModelId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/cascading/model")} />
+          <BackButton action={() => navigate("/cascading")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader
-                title={t("Gateway Item")}
-                action={
-                  <GroupTable
-                    actionUpdate={() =>
-                      navigate(`/cascading/model/id/${id}/update`)
-                    }
-                    actionDelete={() => console.log("delete action")}
-                  />
-                }
-              />
+              <CardHeader title={t("Gateway Item")} />
               <Divider />
               <TableStatic>
                 {Object.keys(dataList).map(function (i, index) {
