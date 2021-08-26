@@ -67,8 +67,28 @@ const CascadingModelId = () => {
                 {Object.keys(dataList).map(function (i, index) {
                   return (
                     <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      {i === "status" ? (
+                        <>
+                          <TableCell>{t(i)}</TableCell>
+                          <TableCell>{dataList[i].toString()}</TableCell>
+                        </>
+                      ) : i == "ruleCondition" ? (
+                        <>
+                          <TableCell>{t(i)}</TableCell>
+                          <TableCell>
+                            {dataList[i].map((item) => (
+                              <p>
+                                {item.ruleCond} {item.ruleValue}
+                              </p>
+                            ))}
+                          </TableCell>
+                        </>
+                      ) : (
+                        <>
+                          <TableCell>{t(i)}</TableCell>
+                          <TableCell>{dataList[i].toString()}</TableCell>
+                        </>
+                      )}
                     </TableRow>
                   );
                 })}

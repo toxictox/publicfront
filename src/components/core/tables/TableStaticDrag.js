@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { useTranslation } from "react-i18next";
-const TableStatic = (props) => {
+const TableStaticDrag = (props) => {
   const { t } = useTranslation();
 
   return (
@@ -25,11 +25,11 @@ const TableStatic = (props) => {
             </TableHead>
           ) : null}
 
-          <TableBody>{props.children}</TableBody>
+          {props.children}
         </Table>
       </TableContainer>
     </>
   );
 };
 
-export default TableStatic;
+export default TableStaticDrag;

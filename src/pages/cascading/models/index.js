@@ -1,28 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, Fragment } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
-  TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
-  TableCell,
+  TableBody,
   MenuItem,
   TextField,
 } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-import { TableStatic } from "@comp/core/tables";
+import { TableStaticDrag } from "@comp/core/tables";
 import { GroupTable, CreateButton } from "@comp/core/buttons";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+import Item from "./Item";
 
 const CascadingModelsList = () => {
   const mounted = useMounted();
@@ -33,7 +34,6 @@ const CascadingModelsList = () => {
   const [dataList, setListData] = useState([]);
   const [merchantId, setMerchantId] = useState(0);
   const [merchant, setMerchant] = useState([]);
-  const [page, setPage] = useState(0);
 
   const getOrders = useCallback(async () => {
     try {
@@ -49,28 +49,83 @@ const CascadingModelsList = () => {
     }
   }, [mounted]);
 
-  const handlePageChange = async (e, newPage) => {
-    setPage(newPage);
-    await axios
-      .post(`${app.api}/cascade/models?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
+  const handleChangeSwitch = (id, val) => {
+    setListData(
+      dataList.map((item) => {
+        if (item.id === id) {
+          item.status = val;
+        }
+        return item;
+      })
+    );
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    result.forEach((item, i) => {
+      item.priority = i + 1;
+    });
+
+    return result;
+  };
+
+  const handlePriority = (items) => {
+    const params = items.map((item) => {
+      return {
+        id: item.id,
+        priority: item.priority,
+      };
+    });
+
+    axios
+      .patch(`${app.api}/cascade/models/priority`, {
+        priority: params,
+      })
+      .then((s) => {
+        toast.success(t("Success update"));
+      })
+      .catch((e) => {
+        toast.error(e);
       });
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      dataList,
+      result.source.index,
+      result.destination.index
+    );
+
+    handlePriority(items);
+
+    setListData(items);
   };
 
   const handleChange = async (e) => {
     setMerchantId(e.target.value);
-    await axios
-      .post(`${app.api}/cascade/models?page=${page}&count=${25}`, {
-        merchantId: e.target.value,
-      })
-      .then((response) => setListData(response.data));
+    if (e.target.value !== 0 && e.target.value !== "") {
+      await axios
+        .post(`${app.api}/cascade/models`, {
+          merchantId: e.target.value,
+        })
+        .then((response) => setListData(response.data));
+    } else {
+      setListData([]);
+    }
   };
 
   useEffect(() => {
     getOrders();
   }, [getOrders]);
 
+  console.log(dataList);
   return (
     <>
       <Helmet>
@@ -89,16 +144,18 @@ const CascadingModelsList = () => {
               <CardHeader
                 title={t("Cascading Models List")}
                 action={
-                  <CreateButton
-                    action={() =>
-                      navigate("/cascading/create", {
-                        state: {
-                          priority: 20,
-                        },
-                      })
-                    }
-                    text={t("Create button")}
-                  />
+                  merchantId ? (
+                    <CreateButton
+                      action={() =>
+                        navigate("/cascading/create", {
+                          state: {
+                            merchantId: merchantId,
+                          },
+                        })
+                      }
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
 
@@ -106,8 +163,8 @@ const CascadingModelsList = () => {
               <Box sx={{ m: 2 }}>
                 <TextField
                   fullWidth
-                  label="gatewayId"
-                  name="gatewayId"
+                  label="merchant"
+                  name="merchantId"
                   onChange={handleChange}
                   select
                   size="small"
@@ -124,51 +181,52 @@ const CascadingModelsList = () => {
                   ))}
                 </TextField>
               </Box>
-              <TableStatic
-                header={["rule", "merchant", "gateway", "createOn", ""]}
+              <TableStaticDrag
+                header={[
+                  "",
+                  "priority",
+                  "tranType",
+                  "gateway",
+                  "gatewayMethod",
+                  "status",
+                  "",
+                ]}
               >
-                {dataList.map(function (item) {
-                  return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/cascading/id/${item.id}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/cascading/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.rule}
-                        </Link>
-                      </TableCell>
-                      <TableCell>{item.merchant}</TableCell>
-                      <TableCell>{item.gateway}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-
-                      <TableCell align={"right"}>
-                        <GroupTable
-                          actionView={() =>
-                            navigate(`/cascading/id/${item.id}`)
-                          }
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableStatic>
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="list">
+                    {(provided) => (
+                      <TableBody
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {dataList.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id.toString()}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <TableRow
+                                hover
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                <Item
+                                  item={item}
+                                  switchStatus={handleChangeSwitch}
+                                />
+                              </TableRow>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </TableBody>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </TableStaticDrag>
             </Card>
-            <TablePagination
-              component="div"
-              count={dataList.length}
-              onPageChange={handlePageChange}
-              page={page}
-              rowsPerPage={25}
-              rowsPerPageOptions={[25]}
-            />
           </Box>
         </Container>
       </Box>
