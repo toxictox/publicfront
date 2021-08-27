@@ -76,7 +76,7 @@ const BanksList = () => {
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
               <CardHeader
-                title={t("Users List")}
+                title={t("Banks List")}
                 action={
                   <CreateButton
                     action={() => navigate("/banks/create")}

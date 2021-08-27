@@ -17,6 +17,8 @@ import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { GroupTable, BackButton } from "@comp/core/buttons";
+import { useDispatch } from "react-redux";
+import { showConfirm } from "@slices/dialog";
 
 const GatewayId = () => {
   const mounted = useMounted();
@@ -27,6 +29,7 @@ const GatewayId = () => {
   const [dataList, setListData] = useState({
     data: [],
   });
+  const dispatch = useDispatch();
 
   const getItem = useCallback(async () => {
     try {
@@ -66,7 +69,15 @@ const GatewayId = () => {
                 action={
                   <GroupTable
                     actionUpdate={() => navigate(`/gateway/id/${id}/update`)}
-                    actionDelete={() => console.log("delete action")}
+                    actionDelete={() => {
+                      dispatch(
+                        showConfirm({
+                          title: t("Do you want to remove"),
+                          isOpen: true,
+                          okCallback: () => alert(2222),
+                        })
+                      );
+                    }}
                   />
                 }
               />

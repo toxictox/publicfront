@@ -56,7 +56,7 @@ Next.js uses a custom `_app.js` file that wraps every route and can be used as a
 container), similar to the `App`
 component [(learn more here)](https://nextjs.org/docs/advanced-features/custom-app).
 
-Note that the app uses an `index.js` file as a wrapper over `App` component to pass required data
+Note that the app uses an `AlertDialog.js` file as a wrapper over `App` component to pass required data
 from a top level, so you may need to move that logic.
 
 ### Routing & Linking

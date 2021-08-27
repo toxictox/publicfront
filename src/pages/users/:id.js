@@ -66,7 +66,6 @@ const UserId = () => {
                 action={
                   <GroupTable
                     actionUpdate={() => navigate(`/users/id/${id}/update`)}
-                    actionDelete={() => console.log("delete action")}
                   />
                 }
               />

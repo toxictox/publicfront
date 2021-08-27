@@ -22,7 +22,7 @@ you want it back, simply follow these steps:
 
 ### Step 1. Import the provider
 
-Open `src/index.js` file, import the provider and wrap the App component with it.
+Open `src/AlertDialog.js` file, import the provider and wrap the App component with it.
 
 ```js
 import { AuthProvider } from './contexts/JWTContext';

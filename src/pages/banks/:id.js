@@ -48,7 +48,7 @@ const BankId = () => {
   return (
     <>
       <Helmet>
-        <title>Transactions List</title>
+        <title>{t("Banks Item Id")}</title>
       </Helmet>
       <Box
         sx={{
@@ -62,7 +62,7 @@ const BankId = () => {
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
-                title={t("User Item")}
+                title={t("Banks Item Id")}
                 action={
                   <GroupTable
                     actionUpdate={() => navigate(`/banks/id/${id}/update`)}

@@ -10,6 +10,7 @@ import {
   TableRow,
   TableBody,
   MenuItem,
+  Typography,
   TextField,
 } from "@material-ui/core";
 
@@ -121,11 +122,13 @@ const CascadingModelsList = () => {
     }
   };
 
+  const handleRemoveItem = (id) => {};
+
   useEffect(() => {
     getOrders();
   }, [getOrders]);
 
-  console.log(dataList);
+  console.log(dataList, "dataList");
   return (
     <>
       <Helmet>
@@ -180,6 +183,12 @@ const CascadingModelsList = () => {
                     </MenuItem>
                   ))}
                 </TextField>
+
+                {dataList.length === 0 ? (
+                  <Typography variant="body2" gutterBottom sx={{ m: 2 }}>
+                    Выберите мерчанта, чтобы подгрузить список моделей
+                  </Typography>
+                ) : null}
               </Box>
               <TableStaticDrag
                 header={[
@@ -215,6 +224,7 @@ const CascadingModelsList = () => {
                                 <Item
                                   item={item}
                                   switchStatus={handleChangeSwitch}
+                                  removeItem={handleRemoveItem}
                                 />
                               </TableRow>
                             )}

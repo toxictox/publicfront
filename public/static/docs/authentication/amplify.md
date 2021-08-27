@@ -59,7 +59,7 @@ authentication server). To make use of Amplify simply follow these steps:
 
 ### Step 1. Replace the provider
 
-Open `src/index.js` file and replace the following line:
+Open `src/AlertDialog.js` file and replace the following line:
 
 ```js
 import { AuthProvider } from './contexts/JWTContext';

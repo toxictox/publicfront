@@ -12,6 +12,7 @@ module.exports = function override(config, env) {
         "@lib": path.resolve(__dirname, "./src/lib/"),
         "@utils": path.resolve(__dirname, "./src/utils/"),
         "@contexts": path.resolve(__dirname, "./src/contexts/"),
+        "@slices": path.resolve(__dirname, "./src/slices/"),
         "@root": path.resolve(__dirname, "./src/"),
         "react-native": "react-native-web",
       },

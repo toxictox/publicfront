@@ -72,7 +72,9 @@ const CascadingModelId = () => {
                           <TableCell>{t(i)}</TableCell>
                           <TableCell>{dataList[i].toString()}</TableCell>
                         </>
-                      ) : i == "ruleCondition" ? (
+                      ) : i == "ruleCondition" &&
+                        dataList[i] !== null &&
+                        dataList[i] !== undefined ? (
                         <>
                           <TableCell>{t(i)}</TableCell>
                           <TableCell>
@@ -86,7 +88,7 @@ const CascadingModelId = () => {
                       ) : (
                         <>
                           <TableCell>{t(i)}</TableCell>
-                          <TableCell>{dataList[i].toString()}</TableCell>
+                          <TableCell>{dataList[i]}</TableCell>
                         </>
                       )}
                     </TableRow>

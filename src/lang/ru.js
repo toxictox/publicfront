@@ -9,6 +9,8 @@ const buttons = {
   "Search button": "Найти",
   "Clear button": "Очистить",
   "Copy button": "Скопировать",
+  "Cancel button": "Отмена",
+  "Ok button": "Ok",
   "Back to Home": "Вернуться на главную",
 };
 
@@ -28,6 +30,7 @@ const text = {
   "Having an account": "Уже есть аккаунт",
   "Reset account password": "Восстановить доступ",
   "Success update": "Запись обновлена",
+  "Do you want to remove": "Хотите удалить запись?",
   "Register account": "Регистрация",
   "Success registration": "Вы успешно разрегестрированы",
   "Reset title": "Восстановление пароля",
@@ -37,6 +40,7 @@ const text = {
   "Users List": "Список пользователей",
   "User Item Update": "Обновление пользователя",
   "Banks List": "Список банков",
+  "Banks Item Id": "Информация о банке",
   "Bank Item Create": "Добавление нового банка",
   "Bank Item Update": "Обновление банка",
   "Bank Deposit Update": "Обновление лимита",
