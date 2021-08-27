@@ -21,6 +21,7 @@ import {
   Timeline,
   CenterFocusWeak,
   LinearScale,
+  BlurLinear,
 } from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
@@ -58,6 +59,11 @@ const BaseSidebar = (props) => {
           title: t("Cascading menu"),
           path: "/cascading",
           icon: <LinearScale fontSize="small" />,
+        },
+        {
+          title: t("Terminals menu"),
+          path: "/terminals",
+          icon: <BlurLinear fontSize="small" />,
         },
       ],
     },

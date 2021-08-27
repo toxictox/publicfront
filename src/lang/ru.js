@@ -24,6 +24,7 @@ const menu = {
   "Cascading menu": "Каскад",
   "Cascading rules menu": "Правила",
   "Cascading models menu": "Модели",
+  "Terminals menu": "Терминалы",
 };
 
 const text = {
@@ -35,21 +36,32 @@ const text = {
   "Success registration": "Вы успешно разрегестрированы",
   "Reset title": "Восстановление пароля",
   "Success recovery send token": "Инструкция по была отправлена на email",
+
   "Transactions List": "Список транзакций",
   "Transactions Item": "Информация о транзакции",
+
   "Users List": "Список пользователей",
   "User Item Update": "Обновление пользователя",
+
+  "Terminals List": "Список терминалов",
+  "Terminals Item Id": "Информация о терминале",
+  "Terminals Model Create": "Создание нового терминала",
+  "Terminals Token Update": "Обновление ключей",
+
   "Banks List": "Список банков",
   "Banks Item Id": "Информация о банке",
   "Bank Item Create": "Добавление нового банка",
   "Bank Item Update": "Обновление банка",
   "Bank Deposit Update": "Обновление лимита",
+
   "Transactions Flow List": "Список схем транзакций",
   "Transactions Flow Create": "Создание схемы транзакции",
+
   "Gateway List": "Список шлюзов",
   "Gateway Item Create": "Создание шлюза",
   "Gateway Item": "Описание шлюза",
   "Gateway Item Update": "Обновление шлюза",
+
   "Cascading Rules List": "Список правил",
   "Cascading Models List": "Список моделей",
   "Cascading Model Create": "Создание модели",
@@ -81,6 +93,7 @@ const fields = {
   "permissions field": "Разрешения",
   "name bank field": "Название банка",
   depositLimit: "Лимит депозита",
+  keyToken: "Ключи",
   flowName: "Название схемы",
   endpoint: "Точка входа",
   env: "Окружение",

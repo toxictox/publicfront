@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Box, Container, Card, CardHeader, Divider } from "@material-ui/core";
@@ -6,34 +7,52 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import CreateModelForm from "@comp/cascade/CreateModelForm";
+import UpdateForm from "@comp/banks/deposit/UpdateForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
-const CascadingCreate = () => {
+const BankDepositIdUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
-  const { state } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [dataList, setListData] = useState(null);
+
+  const getItem = useCallback(async () => {
+    try {
+      const response = await axios
+        .get(`${app.api}/terminals/${id}`)
+        .then((response) => response.data);
+      if (mounted.current) {
+        setListData(response);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [mounted]);
 
   const handleSubmit = async (values) => {
     try {
       await axios
-        .post(`${app.api}/cascade/model`, { ...values })
+        .patch(`${app.api}/bank/deposit/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/cascade`);
+          navigate(`/terminals/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
     }
   };
 
+  useEffect(() => {
+    getItem();
+  }, [getItem]);
+
   return (
     <>
       <Helmet>
-        <title>{t("Cascading Model Create")}</title>
+        <title>{t("Terminals Token Update")}</title>
       </Helmet>
       <Box
         sx={{
@@ -43,12 +62,14 @@ const CascadingCreate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/cascading`)} />
+          <BackButton action={() => navigate(`/terminals/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Cascading Model Create")} />
+              <CardHeader title={t("Terminals Token Update")} />
               <Divider />
-              <CreateModelForm callback={handleSubmit} />
+              {dataList !== null ? (
+                <UpdateForm data={dataList} callback={handleSubmit} />
+              ) : null}
             </Card>
           </Box>
         </Container>
@@ -57,4 +78,4 @@ const CascadingCreate = () => {
   );
 };
 
-export default CascadingCreate;
+export default BankDepositIdUpdate;

@@ -6,24 +6,24 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import CreateModelForm from "@comp/cascade/CreateModelForm";
+import CreateTerminalForm from "@comp/terminals/CreateTerminalForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
-const CascadingCreate = () => {
+const UserIdUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
-  const { state } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     try {
       await axios
-        .post(`${app.api}/cascade/model`, { ...values })
+        .post(`${app.api}/terminal`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/cascade`);
+          navigate(`/terminals`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -33,7 +33,7 @@ const CascadingCreate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Cascading Model Create")}</title>
+        <title>{t("Terminals Model Create")}</title>
       </Helmet>
       <Box
         sx={{
@@ -43,12 +43,12 @@ const CascadingCreate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/cascading`)} />
+          <BackButton action={() => navigate(`/terminals`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Cascading Model Create")} />
+              <CardHeader title={t("Terminals Model Create")} />
               <Divider />
-              <CreateModelForm callback={handleSubmit} />
+              <CreateTerminalForm callback={handleSubmit} />
             </Card>
           </Box>
         </Container>
@@ -57,4 +57,4 @@ const CascadingCreate = () => {
   );
 };
 
-export default CascadingCreate;
+export default UserIdUpdate;

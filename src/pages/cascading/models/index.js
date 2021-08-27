@@ -34,7 +34,9 @@ const CascadingModelsList = () => {
 
   const [dataList, setListData] = useState([]);
   const [merchantId, setMerchantId] = useState(0);
+  const [tranTypesId, setTranTypesId] = useState(0);
   const [merchant, setMerchant] = useState([]);
+  const [tranTypes, setTranTypes] = useState([]);
 
   const getOrders = useCallback(async () => {
     try {
@@ -109,11 +111,25 @@ const CascadingModelsList = () => {
     setListData(items);
   };
 
-  const handleChange = async (e) => {
-    setMerchantId(e.target.value);
+  const handleChangeTranTypes = async (e) => {
+    setTranTypesId(e.target.value);
     if (e.target.value !== 0 && e.target.value !== "") {
       await axios
         .post(`${app.api}/cascade/models`, {
+          merchantId: merchantId,
+          tranTypeId: e.target.value,
+        })
+        .then((response) => setListData(response.data));
+    } else {
+      setListData([]);
+    }
+  };
+
+  const handleChangeMerchant = async (e) => {
+    setMerchantId(e.target.value);
+    if (e.target.value !== 0 && e.target.value !== "") {
+      await axios
+        .post(`${app.api}/merchant/tran_types`, {
           merchantId: e.target.value,
         })
         .then((response) => setListData(response.data));
@@ -163,12 +179,12 @@ const CascadingModelsList = () => {
               />
 
               <Divider />
-              <Box sx={{ m: 2 }}>
+              <Box xs={6} sx={{ m: 2 }}>
                 <TextField
                   fullWidth
                   label="merchant"
                   name="merchantId"
-                  onChange={handleChange}
+                  onChange={handleChangeMerchant}
                   select
                   size="small"
                   value={merchantId}
@@ -183,13 +199,38 @@ const CascadingModelsList = () => {
                     </MenuItem>
                   ))}
                 </TextField>
-
-                {dataList.length === 0 ? (
-                  <Typography variant="body2" gutterBottom sx={{ m: 2 }}>
-                    Выберите мерчанта, чтобы подгрузить список моделей
-                  </Typography>
-                ) : null}
               </Box>
+              {merchantId !== "" &&
+              merchantId !== 0 &&
+              merchantId !== undefined ? (
+                <Box xs={6} sx={{ m: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="tranTypesId"
+                    name="tranTypesId"
+                    onChange={handleChangeTranTypes}
+                    select
+                    size="small"
+                    value={tranTypesId}
+                    variant="outlined"
+                  >
+                    <MenuItem key={-1} value={""}>
+                      {t("Select value")}
+                    </MenuItem>
+                    {tranTypes.map((item) => (
+                      <MenuItem key={item.id} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              ) : null}
+
+              {dataList.length === 0 ? (
+                <Typography variant="body2" gutterBottom sx={{ m: 2 }}>
+                  Выберите мерчанта, чтобы подгрузить список моделей
+                </Typography>
+              ) : null}
               <TableStaticDrag
                 header={[
                   "",

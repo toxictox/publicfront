@@ -428,6 +428,18 @@ const CascadingCreate = Loadable(
   lazy(() => import("@pages/cascading/models/:create"))
 );
 
+// terminals
+
+const TerminalsList = Loadable(lazy(() => import("@pages/terminals")));
+const TerminalsModelId = Loadable(lazy(() => import("@pages/terminals/:id")));
+const TerminalsCreate = Loadable(
+  lazy(() => import("@pages/terminals/:create"))
+);
+
+const TerminalsUpdateToken = Loadable(
+  lazy(() => import("@pages/terminals/_token/:update"))
+);
+
 const Home = Loadable(lazy(() => import("./pages/Home")));
 
 const routes = [
@@ -588,6 +600,32 @@ const routes = [
           //   path: "deposit/:id",
           //   element: <BanksDepositUpdatePage />,
           // },
+        ],
+      },
+
+      {
+        path: "terminals",
+        children: [
+          {
+            path: "/",
+            element: <TerminalsList />,
+          },
+          {
+            path: "create",
+            element: <TerminalsCreate />,
+          },
+          {
+            path: "id/:id",
+            element: <TerminalsModelId />,
+          },
+          {
+            path: "id/:id/update",
+            element: <GatewayIdPagePage />,
+          },
+          {
+            path: "token/:id",
+            element: <TerminalsUpdateToken />,
+          },
         ],
       },
 
