@@ -23,7 +23,7 @@ const CascadingCreate = () => {
         .post(`${app.api}/cascade/model`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/cascade`);
+          navigate(`/cascading`);
         });
     } catch (err) {
       toast.error(err.response.data.message);

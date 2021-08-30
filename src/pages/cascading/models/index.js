@@ -139,13 +139,22 @@ const CascadingModelsList = () => {
     }
   };
 
-  const handleRemoveItem = (id) => {};
+  const handleRemoveItem = async (id) => {
+    await axios
+      .delete(`${app.api}/cascade/model/${id}`)
+      .then((response) => {
+        toast.success(t("Success deleted"));
+        let newList = dataList.filter((item) => item.id !== id);
+        setListData(reorder(newList));
+        handlePriority(reorder(newList));
+      })
+      .catch((e) => toast.error(e));
+  };
 
   useEffect(() => {
     getOrders();
   }, [getOrders]);
 
-  console.log(tranTypes, "dataList");
   return (
     <>
       <Helmet>
@@ -245,6 +254,7 @@ const CascadingModelsList = () => {
                   "tranType",
                   "gateway",
                   "gatewayMethod",
+                  "rule",
                   "status",
                   "",
                 ]}
@@ -272,7 +282,7 @@ const CascadingModelsList = () => {
                                 <Item
                                   item={item}
                                   switchStatus={handleChangeSwitch}
-                                  removeItem={handleRemoveItem}
+                                  removeItem={() => handleRemoveItem(item.id)}
                                 />
                               </TableRow>
                             )}

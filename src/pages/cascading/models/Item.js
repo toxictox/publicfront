@@ -48,6 +48,7 @@ const CascadingModelsListItem = ({ item, switchStatus, removeItem }) => {
       </TableCell>
       <TableCell>{item.gateway}</TableCell>
       <TableCell>{item.gatewayMethod}</TableCell>
+      <TableCell>{item.rule}</TableCell>
       <TableCell>
         <Switch
           checked={item.status}
@@ -67,7 +68,7 @@ const CascadingModelsListItem = ({ item, switchStatus, removeItem }) => {
               showConfirm({
                 title: t("Do you want to remove"),
                 isOpen: true,
-                okCallback: () => alert(2222),
+                okCallback: removeItem,
               })
             );
           }}

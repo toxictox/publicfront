@@ -41,10 +41,6 @@ const CreateModelForm = (props) => {
     await axios.get(`${app.api}/tran_types`).then((response) => {
       setTranType(response.data);
     });
-
-    await axios.get(`${app.api}/gateway/methods`).then((response) => {
-      setGatewayMethod(response.data.data);
-    });
   }, []);
 
   const addCondition = (e) => {
@@ -72,6 +68,16 @@ const CreateModelForm = (props) => {
         return item;
       }),
     ]);
+  };
+
+  const getGatewayMethods = async (id) => {
+    if (id !== "" && id !== 0 && id !== undefined) {
+      await axios.get(`${app.api}/methods/gateway/${id}`).then((response) => {
+        setGatewayMethod(response.data);
+      });
+    } else {
+      setGatewayMethod([]);
+    }
   };
 
   const handleChangeRule = async (e, set) => {
@@ -177,7 +183,10 @@ const CreateModelForm = (props) => {
                     helperText={touched.gatewayId && errors.gatewayId}
                     label="gatewayId"
                     name="gatewayId"
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setFieldValue("gatewayId", e.target.value);
+                      getGatewayMethods(e.target.value);
+                    }}
                     onBlur={handleBlur}
                     select
                     size="small"
