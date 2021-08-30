@@ -46,7 +46,13 @@ const AlertDialog = () => {
           <Button onClick={handleClose} color="primary">
             {t("Cancel button")}
           </Button>
-          <Button onClick={dialog.okCallback} color="secondary">
+          <Button
+            onClick={() => {
+              dialog.okCallback();
+              handleClose();
+            }}
+            color="secondary"
+          >
             {t("Ok button")}
           </Button>
         </DialogActions>

@@ -164,24 +164,6 @@ const UpdateForm = (props) => {
                 </TextField>
               </Grid>
 
-              {/*<Grid item xs={12}>*/}
-              {/*  <TextField*/}
-              {/*    error={Boolean(touched.depositLimit && errors.depositLimit)}*/}
-              {/*    fullWidth*/}
-              {/*    helperText={touched.depositLimit && errors.depositLimit}*/}
-              {/*    label={t("depositLimit")}*/}
-              {/*    margin="normal"*/}
-              {/*    name="depositLimit"*/}
-              {/*    onBlur={handleBlur}*/}
-              {/*    onChange={handleChange}*/}
-              {/*    type="text"*/}
-              {/*    value={values.depositLimit}*/}
-              {/*    variant="outlined"*/}
-              {/*    size="small"*/}
-              {/*    sx={{ m: 0 }}*/}
-              {/*  />*/}
-              {/*</Grid>*/}
-
               <Grid item xs={12}>
                 <Box sx={{ mt: 2 }}>
                   <Button

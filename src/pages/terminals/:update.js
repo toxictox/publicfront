@@ -7,10 +7,10 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import UpdateForm from "@comp/banks/UpdateBankForm";
+import UpdateForm from "@comp/terminals/UpdateBankForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
-
+import { useDispatch } from "react-redux";
 const BankIdUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -22,7 +22,7 @@ const BankIdUpdate = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/bank/${id}`)
+        .get(`${app.api}/terminal/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -35,10 +35,10 @@ const BankIdUpdate = () => {
   const handleSubmit = async (values) => {
     try {
       await axios
-        .patch(`${app.api}/bank/${id}`, { ...values })
+        .patch(`${app.api}/terminal/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/banks/id/${id}`);
+          navigate(`/terminals/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -52,7 +52,7 @@ const BankIdUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Bank Deposit Update")}</title>
+        <title>{t("Terminals Item Update")}</title>
       </Helmet>
       <Box
         sx={{
@@ -62,10 +62,10 @@ const BankIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/banks/id/${id}`)} />
+          <BackButton action={() => navigate(`/terminals/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Bank Deposit Update")} />
+              <CardHeader title={t("Terminals Item Update")} />
               <Divider />
               {dataList !== null ? (
                 <UpdateForm data={dataList} callback={handleSubmit} />

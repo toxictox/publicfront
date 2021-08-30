@@ -6,22 +6,45 @@ import {
   FormHelperText,
   TextField,
   Grid,
+  MenuItem,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import axios from "@lib/axios";
+import { app } from "@root/config";
 
 const UpdateBankForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
+  const [gatewayMethod, setGatewayMethod] = useState([]);
+  const [merchantList, setMerchantList] = useState([]);
+
+  useEffect(async () => {
+    await axios.get(`${app.api}/merchants`).then((response) => {
+      setMerchantList(response.data.data);
+    });
+
+    await axios.get(`${app.api}/gateway/methods`).then((response) => {
+      setGatewayMethod(response.data.data);
+    });
+  }, []);
 
   return (
     <Formik
       initialValues={{
         name: data.name,
+        tid: data.tid,
+        gatewayMethodId: data.gatewayMethodId,
+        merchantId: data.merchantId,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
+        tid: Yup.string().max(255),
+        gatewayMethodId: Yup.string().max(5).required(t("required")),
+        merchantId: Yup.string().required(t("required")),
+        // depositLimit: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -69,6 +92,75 @@ const UpdateBankForm = (props) => {
                   size="small"
                   sx={{ m: 0 }}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.tid && errors.tid)}
+                  fullWidth
+                  helperText={touched.tid && errors.tid}
+                  label={t("tid")}
+                  margin="normal"
+                  name="tid"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.tid}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(
+                    touched.gatewayMethodId && errors.gatewayMethodId
+                  )}
+                  fullWidth
+                  helperText={touched.gatewayMethodId && errors.gatewayMethodId}
+                  label="gatewayMethodId"
+                  name="gatewayMethodId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.gatewayMethodId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {gatewayMethod.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.merchantId && errors.merchantId)}
+                  fullWidth
+                  helperText={touched.merchantId && errors.merchantId}
+                  label="merchantId"
+                  name="merchantId"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.merchantId}
+                  variant="outlined"
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {merchantList.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={12}>

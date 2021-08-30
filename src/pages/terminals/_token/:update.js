@@ -7,7 +7,7 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import UpdateForm from "@comp/banks/deposit/UpdateForm";
+import UpdateForm from "@comp/terminals/token/UpdateForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
@@ -17,7 +17,7 @@ const BankDepositIdUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [dataList, setListData] = useState(null);
+  const [dataList, setListData] = useState({});
 
   const getItem = useCallback(async () => {
     try {
@@ -67,9 +67,8 @@ const BankDepositIdUpdate = () => {
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Terminals Token Update")} />
               <Divider />
-              {dataList !== null ? (
-                <UpdateForm data={dataList} callback={handleSubmit} />
-              ) : null}
+
+              <UpdateForm data={dataList} callback={handleSubmit} />
             </Card>
           </Box>
         </Container>

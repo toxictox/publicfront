@@ -19,6 +19,7 @@ import { TableStatic } from "@comp/core/tables/index";
 import { GroupTable, BackButton } from "@comp/core/buttons";
 import { showConfirm } from "@slices/dialog";
 import { useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
 
 const BankId = () => {
   const mounted = useMounted();
@@ -42,6 +43,16 @@ const BankId = () => {
       console.error(err);
     }
   }, [mounted]);
+
+  const handleDelete = async (id) => {
+    await axios
+      .delete(`${app.api}/terminal/${id}`)
+      .then((response) => {
+        toast.success(t("Success deleted"));
+        navigate("/terminals");
+      })
+      .catch((e) => toast.error(e));
+  };
 
   useEffect(() => {
     getItem();
@@ -73,7 +84,7 @@ const BankId = () => {
                         showConfirm({
                           title: t("Do you want to remove"),
                           isOpen: true,
-                          okCallback: () => alert(2222),
+                          okCallback: () => handleDelete(id),
                         })
                       );
                     }}

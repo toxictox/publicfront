@@ -34,6 +34,7 @@ const text = {
   "Do you want to remove": "Хотите удалить запись?",
   "Register account": "Регистрация",
   "Success registration": "Вы успешно разрегестрированы",
+  "Success deleted": "Запись удалена",
   "Reset title": "Восстановление пароля",
   "Success recovery send token": "Инструкция по была отправлена на email",
 
@@ -47,6 +48,9 @@ const text = {
   "Terminals Item Id": "Информация о терминале",
   "Terminals Model Create": "Создание нового терминала",
   "Terminals Token Update": "Обновление ключей",
+  "Terminals Item Update": "Обновление терминала",
+  "Terminal Item Id": "Информация о терминале",
+  "Do you want to update token": "Вы действительно хотите обновить ключ?",
 
   "Banks List": "Список банков",
   "Banks Item Id": "Информация о банке",

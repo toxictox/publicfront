@@ -436,6 +436,10 @@ const TerminalsCreate = Loadable(
   lazy(() => import("@pages/terminals/:create"))
 );
 
+const TerminalsItemUpdate = Loadable(
+  lazy(() => import("@pages/terminals/:update"))
+);
+
 const TerminalsUpdateToken = Loadable(
   lazy(() => import("@pages/terminals/_token/:update"))
 );
@@ -597,7 +601,7 @@ const routes = [
             element: <GatewayIdPagePage />,
           },
           // {
-          //   path: "deposit/:id",
+          //   path: "token/:id",
           //   element: <BanksDepositUpdatePage />,
           // },
         ],
@@ -620,7 +624,7 @@ const routes = [
           },
           {
             path: "id/:id/update",
-            element: <GatewayIdPagePage />,
+            element: <TerminalsItemUpdate />,
           },
           {
             path: "token/:id",
