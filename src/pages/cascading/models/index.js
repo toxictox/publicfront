@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
+  Grid,
   Container,
   Card,
   CardHeader,
@@ -132,9 +133,9 @@ const CascadingModelsList = () => {
         .post(`${app.api}/merchant/tran_types`, {
           merchantId: e.target.value,
         })
-        .then((response) => setListData(response.data));
+        .then((response) => setTranTypes(response.data));
     } else {
-      setListData([]);
+      setTranTypes([]);
     }
   };
 
@@ -144,7 +145,7 @@ const CascadingModelsList = () => {
     getOrders();
   }, [getOrders]);
 
-  console.log(dataList, "dataList");
+  console.log(tranTypes, "dataList");
   return (
     <>
       <Helmet>
@@ -177,60 +178,66 @@ const CascadingModelsList = () => {
                   ) : null
                 }
               />
-
               <Divider />
-              <Box xs={6} sx={{ m: 2 }}>
-                <TextField
-                  fullWidth
-                  label="merchant"
-                  name="merchantId"
-                  onChange={handleChangeMerchant}
-                  select
-                  size="small"
-                  value={merchantId}
-                  variant="outlined"
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {merchant.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Box>
-              {merchantId !== "" &&
-              merchantId !== 0 &&
-              merchantId !== undefined ? (
-                <Box xs={6} sx={{ m: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="tranTypesId"
-                    name="tranTypesId"
-                    onChange={handleChangeTranTypes}
-                    select
-                    size="small"
-                    value={tranTypesId}
-                    variant="outlined"
-                  >
-                    <MenuItem key={-1} value={""}>
-                      {t("Select value")}
-                    </MenuItem>
-                    {tranTypes.map((item) => (
-                      <MenuItem key={item.id} value={item.id}>
-                        {item.name}
+              <Box m={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      label="merchant"
+                      name="merchantId"
+                      onChange={handleChangeMerchant}
+                      select
+                      size="small"
+                      value={merchantId}
+                      variant="outlined"
+                    >
+                      <MenuItem key={-1} value={""}>
+                        {t("Select value")}
                       </MenuItem>
-                    ))}
-                  </TextField>
-                </Box>
-              ) : null}
+                      {merchant.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  {merchantId !== "" &&
+                  merchantId !== 0 &&
+                  merchantId !== undefined ? (
+                    <Grid item xs={6}>
+                      <TextField
+                        fullWidth
+                        label="tranTypesId"
+                        name="tranTypesId"
+                        onChange={handleChangeTranTypes}
+                        select
+                        size="small"
+                        value={tranTypesId}
+                        variant="outlined"
+                      >
+                        <MenuItem key={-1} value={""}>
+                          {t("Select value")}
+                        </MenuItem>
+                        {tranTypes.map((item) => (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  ) : null}
 
-              {dataList.length === 0 ? (
-                <Typography variant="body2" gutterBottom sx={{ m: 2 }}>
-                  Выберите мерчанта, чтобы подгрузить список моделей
-                </Typography>
-              ) : null}
+                  {dataList.length === 0 ? (
+                    <Grid item xs={12}>
+                      <Typography variant="body2" gutterBottom>
+                        Выберите мерчанта и тип операции, чтобы подгрузить
+                        список моделей
+                      </Typography>
+                    </Grid>
+                  ) : null}
+                </Grid>
+              </Box>
               <TableStaticDrag
                 header={[
                   "",
