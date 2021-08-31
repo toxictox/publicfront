@@ -22,7 +22,7 @@ const BankDepositIdUpdate = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/terminals/${id}`)
+        .get(`${app.api}/terminal/key/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -35,7 +35,7 @@ const BankDepositIdUpdate = () => {
   const handleSubmit = async (values) => {
     try {
       await axios
-        .patch(`${app.api}/bank/deposit/${id}`, { ...values })
+        .patch(`${app.api}/terminal/key/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
           navigate(`/terminals/id/${id}`);
@@ -67,8 +67,9 @@ const BankDepositIdUpdate = () => {
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Terminals Token Update")} />
               <Divider />
-
-              <UpdateForm data={dataList} callback={handleSubmit} />
+              {dataList !== null ? (
+                <UpdateForm data={dataList} callback={handleSubmit} />
+              ) : null}
             </Card>
           </Box>
         </Container>

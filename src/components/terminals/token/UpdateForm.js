@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import {
@@ -22,18 +22,16 @@ const UpdateForm = (props) => {
   const [privateKey, setPrivateKey] = useState(true);
   const [publicKey, setPublicKey] = useState(true);
   const [clientKey, setClientKey] = useState(true);
+
   return (
     <Formik
       initialValues={{
-        private: data.private,
-        public: data.public,
-        rsa: data.rsa,
+        secret: data.secret,
+        rsaPublic: data.rsaPublic,
+        rsaPrivate: data.rsaPrivate,
       }}
-      validationSchema={Yup.object().shape({
-        private: Yup.string().min(20).required(t("required")),
-        public: Yup.string().min(20).required(t("required")),
-        rsa: Yup.string().min(20).required(t("required")),
-      })}
+      enableReinitialize={true}
+      validationSchema={Yup.object().shape({})}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
           await callback(values);
@@ -65,23 +63,23 @@ const UpdateForm = (props) => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.private && errors.private)}
+                  error={Boolean(touched.secret && errors.secret)}
                   disabled={privateKey}
                   fullWidth
-                  helperText={touched.private && errors.private}
-                  label={t("private token")}
+                  helperText={touched.secret && errors.secret}
+                  label={t("secret token")}
                   margin="normal"
-                  name="depositLimit"
+                  name="secret"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   multiline
                   rows={3}
-                  value={values.private}
+                  value={values.secret}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
                   InputProps={{
-                    endAdornment: (
+                    endAdornment: privateKey ? (
                       <Edit
                         onClick={() => {
                           dispatch(
@@ -95,30 +93,30 @@ const UpdateForm = (props) => {
                           );
                         }}
                       />
-                    ),
+                    ) : null,
                   }}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.public && errors.public)}
+                  error={Boolean(touched.rsaPublic && errors.rsaPublic)}
                   fullWidth
                   disabled={publicKey}
-                  helperText={touched.public && errors.public}
-                  label={t("public token")}
+                  helperText={touched.rsaPublic && errors.rsaPublic}
+                  label={t("rsaPublic token")}
                   margin="normal"
-                  name="public"
+                  name="rsaPublic"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   multiline
                   rows={3}
-                  value={values.public}
+                  value={values.rsaPublic}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
                   InputProps={{
-                    endAdornment: (
+                    endAdornment: publicKey ? (
                       <Edit
                         onClick={() => {
                           dispatch(
@@ -130,30 +128,30 @@ const UpdateForm = (props) => {
                           );
                         }}
                       />
-                    ),
+                    ) : null,
                   }}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.rsa && errors.rsa)}
+                  error={Boolean(touched.rsaPrivate && errors.rsaPrivate)}
                   fullWidth
                   disabled={clientKey}
-                  helperText={touched.rsa && errors.rsa}
-                  label={t("rsa token")}
+                  helperText={touched.rsaPrivate && errors.rsaPrivate}
+                  label={t("rsaPrivate token")}
                   margin="normal"
-                  name="rsa"
+                  name="rsaPrivate"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   multiline
                   rows={3}
-                  value={values.rsa}
+                  value={values.rsaPrivate}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
                   InputProps={{
-                    endAdornment: (
+                    endAdornment: clientKey ? (
                       <Edit
                         onClick={() => {
                           dispatch(
@@ -165,7 +163,7 @@ const UpdateForm = (props) => {
                           );
                         }}
                       />
-                    ),
+                    ) : null,
                   }}
                 />
               </Grid>
