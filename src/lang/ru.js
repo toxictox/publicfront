@@ -25,6 +25,7 @@ const menu = {
   "Cascading rules menu": "Правила",
   "Cascading models menu": "Модели",
   "Terminals menu": "Терминалы",
+  "Merchant menu": "Мерчанты",
 };
 
 const text = {
@@ -51,6 +52,12 @@ const text = {
   "Terminals Item Update": "Обновление терминала",
   "Terminal Item Id": "Информация о терминале",
   "Do you want to update token": "Вы действительно хотите обновить ключ?",
+
+  "Merchant List": "Список мерчантов",
+  "Merchant Item Id": "Описание мерчанта",
+  "Merchant Item Update": "Обновление мерчанта",
+  "Merchant Item Create": "Создание мерчанта",
+  "Merchant Token Update": "Обновление ключа мерчанта",
 
   "Banks List": "Список банков",
   "Banks Item Id": "Информация о банке",

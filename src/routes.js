@@ -413,9 +413,9 @@ const TransactionFlowUpdate = Loadable(lazy(() => import("@pages/flow/:id")));
 
 // cascading
 
-const CascadingRulesList = Loadable(
-  lazy(() => import("@pages/cascading/rules"))
-);
+// const CascadingRulesList = Loadable(
+//   lazy(() => import("@pages/cascading/rules"))
+// );
 
 const CascadingModelList = Loadable(
   lazy(() => import("@pages/cascading/models"))
@@ -426,6 +426,21 @@ const CascadingModelId = Loadable(
 
 const CascadingCreate = Loadable(
   lazy(() => import("@pages/cascading/models/:create"))
+);
+
+// merchant
+const MerchantList = Loadable(lazy(() => import("@pages/merchant/index")));
+const MerchantModelId = Loadable(lazy(() => import("@pages/merchant/:id")));
+const MerchantModelIdUpdate = Loadable(
+  lazy(() => import("@pages/merchant/:update"))
+);
+
+const MerchantModelCreate = Loadable(
+  lazy(() => import("@pages/merchant/:create"))
+);
+
+const MerchantTokenUpdate = Loadable(
+  lazy(() => import("@pages/merchant/_token/:update"))
 );
 
 // terminals
@@ -656,6 +671,33 @@ const routes = [
       },
 
       {
+        path: "merchant",
+        children: [
+          {
+            path: "/",
+            element: <MerchantList />,
+          },
+          {
+            path: "create",
+            element: <MerchantModelCreate />,
+          },
+          {
+            path: "id/:id",
+            element: <MerchantModelId />,
+          },
+          {
+            path: "id/:id/update",
+            element: <MerchantModelIdUpdate />,
+          },
+
+          {
+            path: "token/:id",
+            element: <MerchantTokenUpdate />,
+          },
+        ],
+      },
+
+      {
         path: "transaction",
         children: [
           {
@@ -686,99 +728,6 @@ const routes = [
       },
     ],
   },
-
-  // {
-  // path: "*",
-  // element: <MainLayout />,
-  // children: [
-  // {
-  //   path: "/",
-  //   element: <Home />,
-  // },
-  // {
-  //   path: "browse",
-  //   element: <BrowseLayout />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: <Browse />,
-  //     },
-  //     {
-  //       path: "/buttons",
-  //       element: <BrowseButtons />,
-  //     },
-  //     {
-  //       path: "/inputs",
-  //       element: <BrowseInputs />,
-  //     },
-  //     {
-  //       path: "/charts",
-  //       element: <BrowseCharts />,
-  //     },
-  //     {
-  //       path: "/colors",
-  //       element: <BrowseColors />,
-  //     },
-  //     {
-  //       path: "/data-display/detail-lists",
-  //       element: <BrowseDetailLists />,
-  //     },
-  //     {
-  //       path: "/data-display/quick-stats",
-  //       element: <BrowseQuickStats />,
-  //     },
-  //     {
-  //       path: "/data-display/tables",
-  //       element: <BrowseTables />,
-  //     },
-  //     {
-  //       path: "/forms",
-  //       element: <BrowseForms />,
-  //     },
-  //     {
-  //       path: "/modals",
-  //       element: <BrowseModals />,
-  //     },
-  //     {
-  //       path: "/lists/grouped-lists",
-  //       element: <BrowseGroupedLists />,
-  //     },
-  //     {
-  //       path: "/lists/grid-lists",
-  //       element: <BrowseGridLists />,
-  //     },
-  //     {
-  //       path: "/typography",
-  //       element: <BrowseTypography />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "checkout",
-  //   element: <Checkout />,
-  // },
-  // {
-  //   path: "pricing",
-  //   element: <Pricing />,
-  // },
-  // {
-  //   path: "401",
-  //   element: <AuthorizationRequired />,
-  // },
-  // {
-  //   path: "404",
-  //   element: <NotFound />,
-  // },
-  // {
-  //   path: "500",
-  //   element: <ServerError />,
-  // },
-  // {
-  //   path: "*",
-  //   element: <NotFound />,
-  // },
-  //   ],
-  // },
 ];
 
 export default routes;

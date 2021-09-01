@@ -22,6 +22,7 @@ import {
   CenterFocusWeak,
   LinearScale,
   BlurLinear,
+  Storefront,
 } from "@material-ui/icons";
 
 const BaseSidebar = (props) => {
@@ -64,6 +65,11 @@ const BaseSidebar = (props) => {
           title: t("Terminals menu"),
           path: "/terminals",
           icon: <BlurLinear fontSize="small" />,
+        },
+        {
+          title: t("Merchant menu"),
+          path: "/merchant",
+          icon: <Storefront fontSize="small" />,
         },
       ],
     },
