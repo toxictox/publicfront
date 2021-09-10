@@ -1,0 +1,14 @@
+build_prod:
+  variables:
+    COMPOSE_FILE: $COMPOSE_FILE_PROD
+  tags:
+    - docker
+  stage: build
+  script:
+    - echo $CI_JOB_STAGE
+    - ./build.sh build_prod
+  environment:
+    name: production
+  only:
+    - master
+  when: manual

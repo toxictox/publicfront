@@ -15,8 +15,8 @@ build() {
 
 deploy() {
     cp $1 .env
-    docker-compose down --volumes --rmi local
     docker-compose pull
+    docker-compose down --volumes --rmi local
     docker-compose up --detach --remove-orphans
 }
 
@@ -27,10 +27,10 @@ if [ -n "$1" ]; then
     elif [ "$1" == "deploy_stage" ]; then
         deploy .env.stage
         deploy
-    # elif [ "$1" == "build_prod" ]; then
-    #     build .env.prod
-    # elif [ "$1" == "deploy_prod" ]; then
-    #     deploy .env.stage
+    elif [ "$1" == "build_prod" ]; then
+        build .env.prod
+    elif [ "$1" == "deploy_prod" ]; then
+        deploy .env.stage
     elif [ "$1" == "destroy" ]; then
         docker rm -fv $(docker ps -q --filter label=com.docker.compose.project=${DOCKER_PROJECT})
         docker network prune --force

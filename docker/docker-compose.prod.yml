@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  react-app:
+    image: ${CI_REGISTRY_IMAGE}/react-app:prod
+    build:
+      dockerfile: docker/prod/Dockerfile
+      context: ../
+      args:
+        - REACT_APP_API_URL
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"

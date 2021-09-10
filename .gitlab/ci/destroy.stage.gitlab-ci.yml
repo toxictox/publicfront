@@ -4,7 +4,7 @@ destroy:
     - docker
   variables:
     GIT_STRATEGY: none
-    COMPOSE_FILE: docker/docker-compose.yml
+    COMPOSE_FILE: $COMPOSE_FILE_STAGE
   script:
     - echo $CI_JOB_STAGE
     - eval $(docker-machine env stage1)

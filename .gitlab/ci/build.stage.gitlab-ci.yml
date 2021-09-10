@@ -1,6 +1,6 @@
 build:
   variables:
-    COMPOSE_FILE: docker/docker-compose.yml
+    COMPOSE_FILE: $COMPOSE_FILE_STAGE
   tags:
     - docker
   stage: build
