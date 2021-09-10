@@ -4,7 +4,7 @@ services:
   react-app:
     image: ${CI_REGISTRY_IMAGE}/react-app:${CI_COMMIT_REF_NAME}
     build:
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/stage/Dockerfile
       context: ../
       args:
         - REACT_APP_API_URL

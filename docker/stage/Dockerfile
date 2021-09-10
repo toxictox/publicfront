@@ -19,4 +19,4 @@ RUN npm run build
 
 FROM nginx:1-alpine
 COPY --chown=82:82 --from=builder /react-app/build /var/www/react-app
-COPY ./docker/default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/stage/default.conf /etc/nginx/conf.d/default.conf

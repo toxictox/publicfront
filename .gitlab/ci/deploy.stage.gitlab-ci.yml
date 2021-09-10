@@ -3,7 +3,7 @@ deploy_stage:
     - docker
   stage: deploy
   variables:
-    COMPOSE_FILE: docker/docker-compose.yml
+    COMPOSE_FILE: $COMPOSE_FILE_STAGE
   script:
     - echo $CI_JOB_STAGE
     - eval "$(docker-machine env ${DOCKER_MACHINE_STAGE})"

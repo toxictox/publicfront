@@ -1,0 +1,18 @@
+deploy_prod:
+  tags:
+    - docker
+  stage: deploy
+  variables:
+    COMPOSE_FILE: $COMPOSE_FILE_PROD
+    VIRTUAL_HOST: $PRODUCTION_HOST
+  script:
+    - echo $CI_JOB_STAGE
+    - eval "$(docker-machine env ${DOCKER_MACHINE_PROD})"
+    - ./build.sh deploy_prod
+    - echo https://$VIRTUAL_HOST
+  environment:
+    name: production
+    url: https://${VIRTUAL_HOST}
+  only:
+    - master
+  when: manual
