@@ -14,9 +14,9 @@ stages:
 variables:
   PROJECT: paytech
   STAGE_HOST: paytech-com-ua.avgr.it
-  COMPOSE_PROJECT_NAME: react-app-${PROJECT}-${CI_COMMIT_REF_SLUG}
+  COMPOSE_PROJECT_NAME: react-front2-${PROJECT}-${CI_COMMIT_REF_SLUG}
   COMPOSE_PROJECT_NAME_PROD: front1-paytech-production
-  VIRTUAL_HOST: react-app-${PROJECT}-${CI_COMMIT_REF_SLUG}.${STAGE_HOST}
+  VIRTUAL_HOST: react-front2-${PROJECT}-${CI_COMMIT_REF_SLUG}.${STAGE_HOST}
   PRODUCTION_HOST: paytech.com.ua
 
   COMPOSE_FILE_STAGE: docker/docker-compose.stage.yml
