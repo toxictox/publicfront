@@ -15,15 +15,15 @@ variables:
   PROJECT: paytech
   STAGE_HOST: paytech-com-ua.avgr.it
   COMPOSE_PROJECT_NAME: react-front2-${PROJECT}-${CI_COMMIT_REF_SLUG}
-  COMPOSE_PROJECT_NAME_PROD: front1-paytech-production
+  COMPOSE_PROJECT_NAME_PROD: front2-paytech-production
   VIRTUAL_HOST: react-front2-${PROJECT}-${CI_COMMIT_REF_SLUG}.${STAGE_HOST}
-  PRODUCTION_HOST: paytech.com.ua
+  PRODUCTION_HOST: admin.paytech.com.ua
 
   COMPOSE_FILE_STAGE: docker/docker-compose.stage.yml
   COMPOSE_FILE_PROD: docker/docker-compose.prod.yml
 
   DOCKER_MACHINE_STAGE: stage1
-  DOCKER_MACHINE_PROD: prod-ua-paytech-frontend1-01
+  DOCKER_MACHINE_PROD: prod-ua-paytech-frontend2-01
 
   DOCKER_DRIVER: overlay2
   DOCKER_CONFIG: ".docker-config/"
