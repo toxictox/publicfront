@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
 import AuthGuard from "@comp/AuthGuard";
+import ACLGuard from "@comp/ACLGuard";
 import BlogLayout from "./components/blog/BlogLayout";
 import BrowseLayout from "./components/BrowseLayout";
 import MainLayout from "./components/MainLayout";
@@ -373,6 +374,12 @@ const UserItemIdUpdatePage = Loadable(
   lazy(() => import("@pages/users/:update"))
 );
 
+const UserRoleUpdatePage = Loadable(
+  lazy(() => import("@pages/users/roles/:update"))
+);
+
+const UserCreatePage = Loadable(lazy(() => import("@pages/users/:create")));
+
 // banks
 const BanksPage = Loadable(lazy(() => import("@pages/banks")));
 const BanksPageIdPage = Loadable(lazy(() => import("@pages/banks/:id")));
@@ -459,6 +466,26 @@ const TerminalsUpdateToken = Loadable(
   lazy(() => import("@pages/terminals/_token/:update"))
 );
 
+// roles
+
+const RolesList = Loadable(lazy(() => import("@pages/roles/index")));
+const CreateRole = Loadable(lazy(() => import("@pages/roles/:create")));
+const UpdateRole = Loadable(lazy(() => import("@pages/roles/:update")));
+
+// Codes
+const CodesList = Loadable(lazy(() => import("./pages/codes/index")));
+const CodesItemId = Loadable(lazy(() => import("./pages/codes/:id")));
+const CodesItemUpdate = Loadable(lazy(() => import("./pages/codes/:update")));
+const CodesItemСreate = Loadable(lazy(() => import("./pages/codes/:create")));
+
+// Reconciliation
+const ReconciliationList = Loadable(
+  lazy(() => import("./pages/reconciliation/index"))
+);
+
+// export list
+const ExportIndexPage = Loadable(lazy(() => import("@pages/export/index")));
+
 const Home = Loadable(lazy(() => import("./pages/Home")));
 
 const routes = [
@@ -539,15 +566,106 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <UsersPage />,
+            element: (
+              <ACLGuard can={"read"}>
+                <UsersPage />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "create",
+            element: (
+              <ACLGuard can={"create"}>
+                <UserCreatePage />
+              </ACLGuard>
+            ),
+          },
+          // {
+          //   path: "id/:id",
+          //   element: <UserItemIdPage />,
+          // },
+          {
+            path: "id/:id/update",
+            element: (
+              <ACLGuard can={"update"}>
+                <UserItemIdUpdatePage />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "id/:id/role",
+            element: (
+              <ACLGuard can={"update"}>
+                <UserRoleUpdatePage />
+              </ACLGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: "roles",
+        children: [
+          {
+            element: (
+              <ACLGuard can={"getPermissionsList"}>
+                <RolesList />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "create",
+            element: (
+              <ACLGuard can={"getRole"}>
+                <CreateRole />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <UserItemIdPage />,
+            element: (
+              <ACLGuard can={"updateRole"}>
+                <UpdateRole />
+              </ACLGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: "codes",
+        children: [
+          {
+            path: "/",
+            element: (
+              <ACLGuard can={"read"}>
+                <CodesList />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "create",
+            element: (
+              <ACLGuard can={"create"}>
+                <CodesItemСreate />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "id/:id",
+            element: (
+              <ACLGuard can={"details"}>
+                <CodesItemId />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <UserItemIdUpdatePage />,
+            element: (
+              <ACLGuard can={"update"}>
+                <CodesItemUpdate />
+              </ACLGuard>
+            ),
           },
         ],
       },
@@ -557,33 +675,57 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <BanksPage />,
+            element: (
+              <ACLGuard can={"read"}>
+                <BanksPage />
+              </ACLGuard>
+            ),
           },
           {
             path: "create",
-            element: <BanksCreatePage />,
+            element: (
+              <ACLGuard can={"create"}>
+                <BanksCreatePage />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <BanksPageIdPage />,
+            element: (
+              <ACLGuard can={"details"}>
+                <BanksPageIdPage />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <BanksPageIdUpdatePage />,
+            element: (
+              <ACLGuard can={"update"}>
+                <BanksPageIdUpdatePage />
+              </ACLGuard>
+            ),
           },
           {
             path: "deposit/:id",
-            element: <BanksDepositUpdatePage />,
+            element: (
+              <ACLGuard can={"updateBankDeposit"}>
+                <BanksDepositUpdatePage />
+              </ACLGuard>
+            ),
           },
         ],
       },
 
       {
-        path: "flow",
+        path: "flows",
         children: [
           {
             path: "/",
-            element: <TransactionFlowList />,
+            element: (
+              <ACLGuard can={"read"}>
+                <TransactionFlowList />
+              </ACLGuard>
+            ),
           },
           {
             path: "/create",
@@ -597,23 +739,39 @@ const routes = [
       },
 
       {
-        path: "gateway",
+        path: "gateways",
         children: [
           {
             path: "/",
-            element: <GatewayIndexPage />,
+            element: (
+              <ACLGuard can={"read"}>
+                <GatewayIndexPage />
+              </ACLGuard>
+            ),
           },
           {
             path: "create",
-            element: <GatewayCreatePage />,
+            element: (
+              <ACLGuard can={"create"}>
+                <GatewayCreatePage />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <GatewayIdPage />,
+            element: (
+              <ACLGuard can={"details"}>
+                <GatewayIdPage />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <GatewayIdPagePage />,
+            element: (
+              <ACLGuard can={"update"}>
+                <GatewayIdPagePage />
+              </ACLGuard>
+            ),
           },
           // {
           //   path: "token/:id",
@@ -627,19 +785,36 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <TerminalsList />,
+            element: (
+              <ACLGuard can={"read"}>
+                <TerminalsList />
+              </ACLGuard>
+            ),
           },
           {
             path: "create",
-            element: <TerminalsCreate />,
+            element: (
+              <ACLGuard can={"create"}>
+                {" "}
+                <TerminalsCreate />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <TerminalsModelId />,
+            element: (
+              <ACLGuard can={"details"}>
+                <TerminalsModelId />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <TerminalsItemUpdate />,
+            element: (
+              <ACLGuard can={"update"}>
+                <TerminalsItemUpdate />
+              </ACLGuard>
+            ),
           },
           {
             path: "token/:id",
@@ -653,41 +828,74 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <CascadingModelList />,
+            element: (
+              <ACLGuard can={"read"}>
+                <CascadingModelList />
+              </ACLGuard>
+            ),
           },
           {
             path: "create",
-            element: <CascadingCreate />,
+            element: (
+              <ACLGuard can={"create"}>
+                <CascadingCreate />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <CascadingModelId />,
+            element: (
+              <ACLGuard can={"details"}>
+                <CascadingModelId />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <GatewayIdPagePage />,
+            element: (
+              <ACLGuard can={"update"}>
+                <GatewayIdPagePage />
+              </ACLGuard>
+            ),
           },
         ],
       },
 
       {
-        path: "merchant",
+        path: "merchants",
         children: [
           {
             path: "/",
-            element: <MerchantList />,
+            element: (
+              <ACLGuard can={"read"}>
+                <MerchantList />
+              </ACLGuard>
+            ),
           },
           {
             path: "create",
-            element: <MerchantModelCreate />,
+            element: (
+              <ACLGuard can={"create"}>
+                <MerchantModelCreate />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <MerchantModelId />,
+            element: (
+              <ACLGuard can={"details"}>
+                <MerchantModelId />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id/update",
-            element: <MerchantModelIdUpdate />,
+            element: (
+              <ACLGuard can={"update"}>
+                {" "}
+                <MerchantModelIdUpdate />
+              </ACLGuard>
+            ),
           },
 
           {
@@ -698,18 +906,55 @@ const routes = [
       },
 
       {
-        path: "transaction",
+        path: "transactions",
         children: [
           {
             path: "/",
-            element: <TransactionIndexPage />,
+            element: (
+              <ACLGuard can={"read"}>
+                <TransactionIndexPage />
+              </ACLGuard>
+            ),
           },
           {
             path: ":id",
-            element: <TransactionItemIdPage />,
+            element: (
+              <ACLGuard can={"details"}>
+                <TransactionItemIdPage />
+              </ACLGuard>
+            ),
           },
         ],
       },
+
+      {
+        path: "export",
+        children: [
+          {
+            path: "/",
+            element: (
+              <ACLGuard can={"read"}>
+                <ExportIndexPage />
+              </ACLGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: "reconciliation",
+        children: [
+          {
+            path: "/",
+            element: (
+              <ACLGuard can={"read"}>
+                <ReconciliationList />
+              </ACLGuard>
+            ),
+          },
+        ],
+      },
+
       {
         path: "401",
         element: <AuthorizationRequired />,

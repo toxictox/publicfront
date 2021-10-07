@@ -38,7 +38,7 @@ const GatewayIdUpdate = () => {
         .patch(`${app.api}/gateway/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/gateway/id/${id}`);
+          navigate(`/gateways/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -62,7 +62,7 @@ const GatewayIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/gateway/id/${id}`)} />
+          <BackButton action={() => navigate(`/gateways/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Gateway Item Update")} />

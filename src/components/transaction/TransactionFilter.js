@@ -14,6 +14,7 @@ import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
+import { formatDate } from "@lib/date";
 import { app } from "@root/config";
 
 const TransactionFilter = (props) => {
@@ -21,10 +22,24 @@ const TransactionFilter = (props) => {
   const { login } = useAuth();
   const { t } = useTranslation();
   const [banks, setBanks] = useState([]);
+  const [tran, setTran] = useState([]);
+  const [tranType, setTranType] = useState([]);
+  const [respCode, setRespCode] = useState([]);
 
   useEffect(async () => {
+    // await axios.get(`${app.api}/banks`).then((response) => {
+    //   setBanks(response.data.data);
+    // });
     await axios.get(`${app.api}/banks`).then((response) => {
       setBanks(response.data.data);
+    });
+
+    await axios.get(`${app.api}/tran_types`).then((response) => {
+      setTranType(response.data);
+    });
+
+    await axios.post(`${app.api}/codes`).then((response) => {
+      setRespCode(response.data.data);
     });
   }, []);
 
@@ -32,34 +47,43 @@ const TransactionFilter = (props) => {
     <Formik
       initialValues={{
         tranId: "",
-        tranType: "",
-        amount: "",
-        merchant: "",
-        gateway: "",
-        respCode: "",
+        tranTypeId: "",
+        amountFrom: "",
+        amountTo: "",
+        pan1: "",
+        pan2: "",
+        dateStart: new Date().toISOString().slice(0, 16),
+        dateEnd: "",
+        gatewayId: "",
+        respCodeId: "",
         bankId: "",
       }}
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
-        //email: Yup.string().email(t("email")).max(255).required(t("required")),
-        tranType: Yup.string().max(255),
-        amount: Yup.string().max(255),
-        merchant: Yup.string().max(255),
-        createOn: Yup.string().max(255),
-        gateway: Yup.string().max(255),
-        respCode: Yup.string().max(255),
+        tranTypeId: Yup.string().max(255),
+        amountFrom: Yup.string().max(25),
+        amountTo: Yup.string().max(25),
+        dateStart: Yup.string().max(255),
+        dateEnd: Yup.string().max(255),
+        gatewayId: Yup.string().max(255),
+        respCodeId: Yup.string().max(255),
         bankId: Yup.string().max(255),
+        pan1: Yup.string().min(6).max(6),
+        pan2: Yup.string().min(4).max(4),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await props.callback(values);
+          await props.callback({
+            ...values,
+            dateStart: formatDate(values.dateStart),
+            dateEnd: formatDate(values.dateEnd),
+          });
 
           if (mounted.current) {
             setStatus({ success: true });
             setSubmitting(false);
           }
         } catch (err) {
-          console.error(err);
           if (mounted.current) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -80,19 +104,41 @@ const TransactionFilter = (props) => {
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xs={6}>
                 <TextField
                   autoFocus
-                  error={Boolean(touched.createOn && errors.createOn)}
+                  error={Boolean(touched.dateStart && errors.dateStart)}
                   fullWidth
-                  helperText={touched.createOn && errors.createOn}
+                  helperText={touched.dateStart && errors.dateStart}
                   label={t("createOn")}
                   margin="normal"
-                  name="createOn"
+                  name="dateStart"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="datetime-local"
+                  value={values.dateStart}
+                  variant="outlined"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  autoFocus
+                  error={Boolean(touched.dateEnd && errors.dateEnd)}
+                  fullWidth
+                  helperText={touched.dateEnd && errors.dateEnd}
+                  label={t("dateEnd")}
+                  margin="normal"
+                  name="dateEnd"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="date"
-                  value={values.createOn}
+                  value={values.dateEnd}
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
@@ -104,76 +150,37 @@ const TransactionFilter = (props) => {
 
               <Grid item xs={3}>
                 <TextField
-                  autoFocus
-                  error={Boolean(touched.tranId && errors.tranId)}
+                  error={Boolean(touched.tranTypeId && errors.tranTypeId)}
                   fullWidth
-                  helperText={touched.tranId && errors.tranId}
-                  label={t("tranId")}
+                  select
+                  helperText={touched.tranTypeId && errors.tranTypeId}
+                  label={t("tranTypeId")}
                   margin="normal"
-                  name="tranId"
+                  name="tranTypeId"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.tranId}
+                  value={values.tranTypeId}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
-                />
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {tranType.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
+
               <Grid item xs={3}>
                 <TextField
-                  error={Boolean(touched.tranType && errors.tranType)}
+                  error={Boolean(touched.bankId && errors.bankId)}
                   fullWidth
-                  helperText={touched.tranType && errors.tranType}
-                  label={t("tranType")}
-                  margin="normal"
-                  name="tranType"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.tranType}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.amount && errors.amount)}
-                  fullWidth
-                  helperText={touched.amount && errors.amount}
-                  label={t("amount")}
-                  margin="normal"
-                  name="amount"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.amount}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.merchant && errors.merchant)}
-                  fullWidth
-                  helperText={touched.merchant && errors.merchant}
-                  label={t("merchant")}
-                  margin="normal"
-                  name="merchant"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.merchant}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextField
-                  fullWidth
+                  helperText={touched.bankId && errors.bankId}
                   label="bankId"
                   name="bankId"
                   onChange={handleChange}
@@ -192,55 +199,121 @@ const TransactionFilter = (props) => {
                     </MenuItem>
                   ))}
                 </TextField>
-
-                {/*<Select*/}
-                {/*  helperText={touched.gateway && errors.gateway}*/}
-                {/*  error={Boolean(touched.gateway && errors.gateway)}*/}
-                {/*  label="Age"*/}
-                {/*  name="gateway"*/}
-                {/*  value={values.gateway}*/}
-                {/*  size="small"*/}
-                {/*  onChange={handleChange}*/}
-                {/*  fullWidth*/}
-                {/*  sx={{ m: 0 }}*/}
-                {/*>*/}
-                {/*  <MenuItem value={""}>*/}
-                {/*    <em>None</em>*/}
-                {/*  </MenuItem>*/}
-                {/*  {banks.map((item) => (*/}
-                {/*    <MenuItem value={item.id} key={item.id}>*/}
-                {/*      {item.name}*/}
-                {/*    </MenuItem>*/}
-                {/*  ))}*/}
-                {/*</Select>*/}
-                {/*<TextField*/}
-                {/*  error={Boolean(touched.gateway && errors.gateway)}*/}
-                {/*  fullWidth*/}
-                {/*  helperText={touched.gateway && errors.gateway}*/}
-                {/*  label={t("gateway")}*/}
-                {/*  margin="normal"*/}
-                {/*  name="gateway"*/}
-                {/*  onBlur={handleBlur}*/}
-                {/*  onChange={handleChange}*/}
-                {/*  type="text"*/}
-                {/*  value={values.gateway}*/}
-                {/*  variant="outlined"*/}
-                {/*  size="small"*/}
-                {/*  sx={{ m: 0 }}*/}
-                {/*/>*/}
               </Grid>
+
               <Grid item xs={3}>
                 <TextField
-                  error={Boolean(touched.respCode && errors.respCode)}
+                  error={Boolean(touched.respCodeId && errors.respCodeId)}
                   fullWidth
-                  helperText={touched.respCode && errors.respCode}
-                  label={t("respCode")}
+                  select
+                  helperText={touched.respCodeId && errors.respCodeId}
+                  label={t("respCodeId")}
                   margin="normal"
                   name="respCode"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.respCode}
+                  value={values.respCodeId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {respCode.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.langEn}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  error={Boolean(touched.amountFrom && errors.amountFrom)}
+                  fullWidth
+                  helperText={touched.amountFrom && errors.amountFrom}
+                  label={t("amountFrom")}
+                  margin="normal"
+                  name="amountFrom"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.amountFrom}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  error={Boolean(touched.amountTo && errors.amountTo)}
+                  fullWidth
+                  helperText={touched.amountTo && errors.amountTo}
+                  label={t("amountTo")}
+                  margin="normal"
+                  name="amountTo"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.amountTo}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  error={Boolean(touched.pan1 && errors.pan1)}
+                  fullWidth
+                  helperText={touched.pan1 && errors.pan1}
+                  label={t("card first 6 number")}
+                  margin="normal"
+                  name="pan1"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.pan1}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  error={Boolean(touched.pan2 && errors.pan2)}
+                  fullWidth
+                  helperText={touched.pan2 && errors.pan2}
+                  label={t("card last 4 number")}
+                  margin="normal"
+                  name="pan2"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.pan2}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  autoFocus
+                  error={Boolean(touched.tranId && errors.tranId)}
+                  fullWidth
+                  helperText={touched.tranId && errors.tranId}
+                  label={t("tranId")}
+                  margin="normal"
+                  name="tranId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.tranId}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}

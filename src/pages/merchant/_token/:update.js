@@ -17,7 +17,7 @@ const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [dataList, setListData] = useState({});
+  const [dataList, setListData] = useState(null);
 
   const getItem = useCallback(async () => {
     try {
@@ -38,7 +38,7 @@ const Update = () => {
         .patch(`${app.api}/merchant/key/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/merchant/id/${id}`);
+          navigate(`/merchants/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -62,7 +62,7 @@ const Update = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/merchant/id/${id}`)} />
+          <BackButton action={() => navigate(`/merchants/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Merchant Token Update")} />

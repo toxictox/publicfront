@@ -23,7 +23,8 @@ const UserIdUpdate = () => {
         .post(`${app.api}/merchant`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/merchant`);
+          window.localStorage.setItem("merchId", response.data.merchantId);
+          window.location.replace("/board");
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -43,7 +44,7 @@ const UserIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/merchant`)} />
+          <BackButton action={() => navigate(`/merchants`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Merchant Model Create")} />

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -11,6 +11,7 @@ import {
   Divider,
   TableRow,
   TableCell,
+  Alert,
 } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
@@ -22,20 +23,25 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 
-const TransactionsList = () => {
+const UserList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [dataList, setListData] = useState({
     data: [],
   });
   const [page, setPage] = useState(0);
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
+  const [linkToken, setLinkToken] = useState(
+    state !== null && state.link !== undefined ? state.link : undefined
+  );
+
+  const createInviteLink = () => {
+    return `${window.location.origin}/authentication/register/${linkToken}`;
+  };
 
   const getOrders = useCallback(async () => {
     try {
@@ -78,6 +84,12 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ mt: 1 }}>
+            {linkToken !== undefined ? (
+              <Alert severity="success">
+                {t("Invitation link")} — {createInviteLink()}
+              </Alert>
+            ) : null}
+
             <Card sx={{ mt: 1 }}>
               <CardHeader
                 title={t("Users List")}
@@ -101,33 +113,25 @@ const TransactionsList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/users/id/${item.hash}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/users/id/${item.hash}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.email}
-                        </Link>
-                      </TableCell>
+                    <TableRow hover key={item.hash}>
+                      <TableCell>{item.email}</TableCell>
                       <TableCell>
                         {item.firstName} {item.lastName}
                       </TableCell>
                       <TableCell>{item.phone}</TableCell>
                       <TableCell>{item.loginTries}</TableCell>
                       <TableCell>
-                        {item.lastLogin ? item.lastLogin.date : null}
+                        {item.lastLogin ? item.lastLogin : null}
                       </TableCell>
-                      <TableCell>
+                      <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/users/id/${item.hash}`)}
+                          actionCustom={[
+                            {
+                              title: t("role"),
+                              callback: () =>
+                                navigate(`/users/id/${item.hash}/role`),
+                            },
+                          ]}
                         />
                       </TableCell>
                     </TableRow>
@@ -150,4 +154,4 @@ const TransactionsList = () => {
   );
 };
 
-export default TransactionsList;
+export default UserList;

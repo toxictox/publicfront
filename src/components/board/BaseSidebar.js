@@ -1,16 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import {
-  Avatar,
-  Box,
-  Divider,
-  Drawer,
-  Link,
-  Typography,
-} from "@material-ui/core";
+import { Box, Divider, Drawer, MenuItem, TextField } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import useAuth from "@hooks/useAuth";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
 import { useTranslation } from "react-i18next";
@@ -23,62 +15,124 @@ import {
   LinearScale,
   BlurLinear,
   Storefront,
+  Security,
+  PriceCheck,
+  DescriptionOutlined,
+  Code,
 } from "@material-ui/icons";
+
+import useAuth from "@hooks/useAuth";
+import axios from "@lib/axios";
+import { app } from "@root/config";
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const [merchId, setMerchId] = useState(
+    localStorage.getItem("merchId") !== null
+      ? localStorage.getItem("merchId")
+      : user.merchantId
+  );
+
+  const getActiveStatus = (name) => {
+    return user.permissions[name] !== undefined;
+  };
   const sections = [
     {
       title: "",
       items: [
         {
           title: t("Transaction menu"),
-          path: "/transaction",
+          path: "/transactions",
           icon: <Receipt fontSize="small" />,
+          active: getActiveStatus("transactions"),
         },
         {
           title: t("Users menu"),
           path: "/users",
           icon: <Group fontSize="small" />,
+          active: getActiveStatus("users"),
+        },
+        {
+          title: t("Role menu"),
+          path: "/roles",
+          icon: <Security fontSize="small" />,
+          active: getActiveStatus("roles"),
         },
         {
           title: t("Banks menu"),
           path: "/banks",
           icon: <AccountBalance fontSize="small" />,
+          active: getActiveStatus("banks"),
         },
         {
           title: t("Flow menu"),
-          path: "/flow",
+          path: "/flows",
           icon: <Timeline fontSize="small" />,
+          active: getActiveStatus("flows"),
         },
         {
           title: t("Gateway menu"),
-          path: "/gateway",
+          path: "/gateways",
           icon: <CenterFocusWeak fontSize="small" />,
+          active: getActiveStatus("gateways"),
         },
         {
           title: t("Cascading menu"),
           path: "/cascading",
           icon: <LinearScale fontSize="small" />,
+          active: getActiveStatus("cascading"),
         },
         {
           title: t("Terminals menu"),
           path: "/terminals",
           icon: <BlurLinear fontSize="small" />,
+          active: getActiveStatus("terminals"),
         },
         {
           title: t("Merchant menu"),
-          path: "/merchant",
+          path: "/merchants",
           icon: <Storefront fontSize="small" />,
+          active: getActiveStatus("merchants"),
+        },
+        {
+          title: t("Reconciliation menu"),
+          path: "/reconciliation",
+          icon: <PriceCheck fontSize="small" />,
+          active: getActiveStatus("reconciliation"),
+        },
+        {
+          title: t("Description menu"),
+          path: "/export",
+          icon: <DescriptionOutlined fontSize="small" />,
+          active: getActiveStatus("export"),
+        },
+        {
+          title: t("Codes menu"),
+          path: "/codes",
+          icon: <Code fontSize="small" />,
+          active: getActiveStatus("codes"),
         },
       ],
     },
   ];
-
   const { onMobileClose, openMobile } = props;
   const location = useLocation();
-  const { user } = useAuth();
+
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+
+  const handleChangeMerch = async (e) => {
+    localStorage.setItem("merchId", e.target.value);
+    setMerchId(e.target.value);
+    await axios
+      .post(`${app.api}/user/${user.hash}`, {
+        merchantId: e.target.value,
+      })
+      .then((response) => {
+        localStorage.setItem("accessToken", response.data.token);
+        window.location.replace("/board");
+      });
+  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -96,37 +150,25 @@ const BaseSidebar = (props) => {
     >
       <Scrollbar options={{ suppressScrollX: true }}>
         <Box sx={{ p: 2 }}>
-          <Box
-            sx={{
-              alignItems: "center",
-              backgroundColor: "background.default",
-              borderRadius: 1,
-              display: "flex",
-              overflow: "hidden",
-              p: 1,
-            }}
-          >
-            {/*<RouterLink to="/dashboard/account">*/}
-            {/*  <Avatar*/}
-            {/*    src={user.avatar}*/}
-            {/*    sx={{*/}
-            {/*      cursor: "pointer",*/}
-            {/*      height: 48,*/}
-            {/*      width: 48,*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</RouterLink>*/}
-            <Box sx={{ ml: 1 }}>
-              <Typography color="textPrimary" variant="subtitle2">
-                {user.name}
-              </Typography>
-              <Typography color="textSecondary" variant="body2">
-                Your plan:{" "}
-                <Link color="primary" component={RouterLink} to="/pricing">
-                  {user.plan}
-                </Link>
-              </Typography>
-            </Box>
+          <Box>
+            <TextField
+              fullWidth
+              label="merchId"
+              onChange={handleChangeMerch}
+              select
+              size="small"
+              value={merchId}
+              variant="outlined"
+            >
+              {user.merchants.map((item) => {
+                return (
+                  <MenuItem value={item.merchantId} key={item.merchantId}>
+                    {item.merchanName}
+                  </MenuItem>
+                );
+              })}
+              ))}
+            </TextField>
           </Box>
         </Box>
         <Divider />

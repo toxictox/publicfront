@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import {
   Box,
   FormHelperText,
+  InputLabel,
   TextField,
   Button,
   Grid,
@@ -22,7 +23,7 @@ const UpdateForm = (props) => {
   const [privateKey, setPrivateKey] = useState(true);
   const [publicKey, setPublicKey] = useState(true);
   const [clientKey, setClientKey] = useState(true);
-
+  console.log(data);
   return (
     <Formik
       initialValues={{
@@ -30,7 +31,7 @@ const UpdateForm = (props) => {
         rsaPublic: data.rsaPublic,
         rsaPrivate: data.rsaPrivate,
       }}
-      enableReinitialize={true}
+      // enableReinitialize={true}
       validationSchema={Yup.object().shape({})}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {

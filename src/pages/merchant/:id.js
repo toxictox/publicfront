@@ -9,6 +9,7 @@ import {
   TableCell,
   CardHeader,
   Divider,
+  Chip,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
@@ -20,6 +21,7 @@ import { GroupTable, BackButton } from "@comp/core/buttons";
 import { showConfirm } from "@slices/dialog";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
+import useAuth from "@hooks/useAuth";
 
 const MerchantId = () => {
   const mounted = useMounted();
@@ -27,6 +29,7 @@ const MerchantId = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -47,9 +50,21 @@ const MerchantId = () => {
   const handleDelete = async (id) => {
     await axios
       .delete(`${app.api}/merchant/${id}`)
-      .then((response) => {
-        toast.success(t("Success deleted"));
-        navigate("/merchant");
+      .then(async (response) => {
+        let newMerchId =
+          user.merchants[0].merchantId != id
+            ? user.merchants[0].merchantId
+            : user.merchants[1].merchantId;
+
+        await axios
+          .post(`${app.api}/user/${user.hash}`, {
+            merchantId: newMerchId,
+          })
+          .then((response) => {
+            localStorage.setItem("accessToken", response.data.token);
+            localStorage.setItem("merchId", newMerchId);
+            window.location.replace("/board");
+          });
       })
       .catch((e) => toast.error(e));
   };
@@ -71,14 +86,14 @@ const MerchantId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/merchant")} />
+          <BackButton action={() => navigate("/merchants")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
                 title={t("Merchant Item Id")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/merchant/id/${id}/update`)}
+                    actionUpdate={() => navigate(`/merchants/id/${id}/update`)}
                     actionDelete={() => {
                       dispatch(
                         showConfirm({
@@ -91,7 +106,7 @@ const MerchantId = () => {
                     actionCustom={[
                       {
                         title: t("keyToken"),
-                        callback: () => navigate(`/merchant/token/${id}`),
+                        callback: () => navigate(`/merchants/token/${id}`),
                       },
                     ]}
                   />
@@ -103,7 +118,25 @@ const MerchantId = () => {
                   return (
                     <TableRow key={i}>
                       <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      {i === "status" ? (
+                        <TableCell>
+                          {dataList[i] === true ? (
+                            <Chip
+                              label={"true"}
+                              size={"small"}
+                              color="success"
+                            />
+                          ) : (
+                            <Chip
+                              label={"false"}
+                              size={"small"}
+                              color="error"
+                            />
+                          )}
+                        </TableCell>
+                      ) : (
+                        <TableCell>{dataList[i]}</TableCell>
+                      )}
                     </TableRow>
                   );
                 })}

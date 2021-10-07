@@ -38,7 +38,7 @@ const BankIdUpdate = () => {
         .patch(`${app.api}/merchant/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/merchant/id/${id}`);
+          navigate(`/merchants/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -62,7 +62,7 @@ const BankIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/merchant/id/${id}`)} />
+          <BackButton action={() => navigate(`/merchants/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Merchant Item Update")} />

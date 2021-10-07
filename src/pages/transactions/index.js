@@ -43,15 +43,18 @@ const TransactionsList = () => {
   }, [mounted]);
 
   const filter = (values) => {
-    setFilterList(values);
-    handlePageChange(0);
+    handlePageChange(null, 0, values);
   };
 
-  const handlePageChange = async (e, newPage) => {
+  const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
     await axios
-      .post(`${app.api}/transactions?page=${newPage}&count=${25}`, filterList)
+      .post(
+        `${app.api}/transactions?page=${newPage}&count=${25}`,
+        values !== undefined ? values : filterList
+      )
       .then((response) => {
+        setFilterList(values);
         setListData(response.data);
       });
   };

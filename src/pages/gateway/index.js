@@ -84,7 +84,7 @@ const GatewayList = () => {
                 title={t("Gateway List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/gateway/create")}
+                    action={() => navigate("/gateways/create")}
                     text={t("Create button")}
                   />
                 }
@@ -98,13 +98,13 @@ const GatewayList = () => {
                     <TableRow
                       hover
                       key={item.hash}
-                      onClick={() => navigate(`/gateway/id/${item.id}`)}
+                      onClick={() => navigate(`/gateways/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/gateway/id/${item.id}`}
+                          to={`/gateways/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
@@ -118,7 +118,7 @@ const GatewayList = () => {
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/gateway/id/${item.id}`)}
+                          actionView={() => navigate(`/gateways/id/${item.id}`)}
                         />
                       </TableCell>
                     </TableRow>

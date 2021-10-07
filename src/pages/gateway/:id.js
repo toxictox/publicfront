@@ -61,14 +61,14 @@ const GatewayId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/gateway")} />
+          <BackButton action={() => navigate("/gateways")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
                 title={t("Gateway Item")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/gateway/id/${id}/update`)}
+                    actionUpdate={() => navigate(`/gateways/id/${id}/update`)}
                     actionDelete={() => {
                       dispatch(
                         showConfirm({

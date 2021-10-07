@@ -115,7 +115,7 @@ const CreateModelForm = (props) => {
       }}
       validationSchema={Yup.object().shape({
         gatewayId: Yup.string().max(5).required(t("required")),
-        ruleId: Yup.string().max(5).required(t("required")),
+        ruleId: Yup.string().max(5).nullable(),
         gatewayMethodId: Yup.string().max(5).required(t("required")),
         tranTypeId: Yup.string().max(5).required(t("required")),
         // ---------------------

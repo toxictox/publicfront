@@ -17,7 +17,7 @@ const BankDepositIdUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [dataList, setListData] = useState({});
+  const [dataList, setListData] = useState(null);
 
   const getItem = useCallback(async () => {
     try {

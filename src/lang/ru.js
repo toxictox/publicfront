@@ -17,6 +17,7 @@ const buttons = {
 const menu = {
   "Transaction menu": "Транзакции",
   "Users menu": "Пользователи",
+  "Role menu": "Роли",
   "User Item": "Информация о пользователе",
   "Banks menu": "Банки",
   "Flow menu": "Схемы",
@@ -26,6 +27,9 @@ const menu = {
   "Cascading models menu": "Модели",
   "Terminals menu": "Терминалы",
   "Merchant menu": "Мерчанты",
+  "Description menu": "Экспорт",
+  "Codes menu": "Коды",
+  "Reconciliation menu": "Сверка",
 };
 
 const text = {
@@ -44,6 +48,11 @@ const text = {
 
   "Users List": "Список пользователей",
   "User Item Update": "Обновление пользователя",
+  "User Item Create": "Создание пользователя",
+
+  "Roles List": "Список ролей",
+  "Role Item Create": "Создание роли",
+  "Role Item Update": "Обновление роли",
 
   "Terminals List": "Список терминалов",
   "Terminals Item Id": "Информация о терминале",
@@ -76,6 +85,16 @@ const text = {
   "Cascading Rules List": "Список правил",
   "Cascading Models List": "Список моделей",
   "Cascading Model Create": "Создание модели",
+
+  "Codes List": "Список кодов",
+  "Codes Item Id": "Информация о коде",
+  "Code Item Update": "Обновления кода",
+  "Code Item Create": "Создание кода",
+
+  "Reconciliation List": "Сверка",
+
+  "Export List": "Экспорт файлов",
+  "Invitation link": "Ссылка для приглашения пользователя",
 };
 
 const fields = {
@@ -124,6 +143,9 @@ const validationForm = {
   required: "Поле обязательно для заполнения",
   email: "Поле должно быть почтовым ящиком",
   "Passwords must match": "Пароли не совпадают",
+  "Error password format":
+    "В пароле должно быть минимум 8 символом. Используйте прописные и заглавные буквы,а также цифры и спец. символы",
+  "Error phone format": "Телефон должен быть в формате 380XXXXXXXXX",
 };
 
 export const ru = {

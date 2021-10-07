@@ -55,13 +55,13 @@ const TransactionListTable = (props) => {
                   <TableRow
                     hover
                     key={order.uuid}
-                    onClick={() => navigate(`/transaction/${order.uuid}`)}
+                    onClick={() => navigate(`/transactions/${order.uuid}`)}
                   >
                     <TableCell>
                       <Link
                         color="textPrimary"
                         component={RouterLink}
-                        to={`/transaction/${order.uuid}`}
+                        to={`/transactions/${order.uuid}`}
                         underline="none"
                         variant="subtitle2"
                       ></Link>
@@ -90,7 +90,7 @@ const TransactionListTable = (props) => {
                     <TableCell align="right">
                       <GroupTable
                         actionView={() =>
-                          navigate(`/transaction/${order.uuid}`)
+                          navigate(`/transactions/${order.uuid}`)
                         }
                       />
                     </TableCell>

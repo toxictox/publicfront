@@ -15,18 +15,26 @@ const RegisterJWT = (props) => {
   return (
     <Formik
       initialValues={{
-        email: "",
-        name: "",
+        phone: "",
         password: "",
         repassword: "",
-        submit: null,
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email(t("email")).max(255).required(t("required")),
-        name: Yup.string().max(255).required(t("required")),
-        password: Yup.string().min(7).max(60).required(t("required")),
+        phone: Yup.string()
+          .max(255)
+          .trim()
+          .matches(/^38(0\d{9})$/, t("Error phone format"))
+          .required(t("required")),
+        password: Yup.string()
+          .min(8)
+          .trim()
+          .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            t("Error password format")
+          )
+          .required(t("required")),
         repassword: Yup.string()
-          .min(7)
+          .min(8)
           .oneOf([Yup.ref("password"), null], t("Passwords must match"))
           .max(60)
           .required(t("required")),
@@ -34,12 +42,8 @@ const RegisterJWT = (props) => {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
           if (values.password === values.repassword) {
-            await register(
-              values.email,
-              values.name,
-              values.password,
-              params.token
-            );
+            console.log(values, params);
+            await register(values.phone, values.password, params.token);
           } else {
             setStatus({ success: false });
             setErrors({ submit: "asdsdsds" });
@@ -68,27 +72,15 @@ const RegisterJWT = (props) => {
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <TextField
-            error={Boolean(touched.name && errors.name)}
+            error={Boolean(touched.phone && errors.phone)}
             fullWidth
-            helperText={touched.name && errors.name}
-            label="Name"
+            helperText={touched.phone && errors.phone}
+            label="Phone"
             margin="normal"
-            name="name"
+            name="phone"
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.name}
-            variant="outlined"
-          />
-          <TextField
-            error={Boolean(touched.email && errors.email)}
-            fullWidth
-            helperText={touched.email && errors.email}
-            label="Email Address"
-            margin="normal"
-            name="email"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="email"
+            type="text"
             value={values.email}
             variant="outlined"
           />
@@ -110,7 +102,7 @@ const RegisterJWT = (props) => {
             error={Boolean(touched.repassword && errors.repassword)}
             fullWidth
             helperText={touched.repassword && errors.repassword}
-            label="Password"
+            label="rePassword"
             margin="normal"
             name="repassword"
             onBlur={handleBlur}
@@ -120,9 +112,6 @@ const RegisterJWT = (props) => {
             variant="outlined"
           />
 
-          {/*{Boolean(touched.policy && errors.policy) && (*/}
-          {/*  <FormHelperText error>{errors.policy}</FormHelperText>*/}
-          {/*)}*/}
           {errors.submit && (
             <Box sx={{ mt: 3 }}>
               <FormHelperText error>{errors.submit}</FormHelperText>

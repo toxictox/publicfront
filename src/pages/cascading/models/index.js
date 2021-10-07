@@ -7,18 +7,18 @@ import {
   Container,
   Card,
   CardHeader,
-  Divider,
   TableRow,
   TableBody,
   MenuItem,
   Typography,
   TextField,
+  Divider,
 } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { TableStaticDrag } from "@comp/core/tables";
-import { GroupTable, CreateButton } from "@comp/core/buttons";
+import { CreateButton } from "@comp/core/buttons";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import axios from "@lib/axios";
@@ -26,15 +26,17 @@ import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import Item from "./Item";
+import useAuth from "@hooks/useAuth";
 
 const CascadingModelsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [dataList, setListData] = useState([]);
-  const [merchantId, setMerchantId] = useState(0);
+  const [merchantId, setMerchantId] = useState(user.merchantId);
   const [tranTypesId, setTranTypesId] = useState(0);
   const [merchant, setMerchant] = useState([]);
   const [tranTypes, setTranTypes] = useState([]);
@@ -42,11 +44,13 @@ const CascadingModelsList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/merchants`)
-        .then((response) => response.data.data);
+        .post(`${app.api}/merchant/tran_types`, {
+          merchantId: user.merchantId,
+        })
+        .then((response) => response.data);
 
       if (mounted.current) {
-        setMerchant(response);
+        setTranTypes(response);
       }
     } catch (err) {
       console.error(err);
@@ -117,7 +121,7 @@ const CascadingModelsList = () => {
     if (e.target.value !== 0 && e.target.value !== "") {
       await axios
         .post(`${app.api}/cascade/models`, {
-          merchantId: merchantId,
+          merchantId: user.merchantId,
           tranTypeId: e.target.value,
         })
         .then((response) => setListData(response.data));
@@ -126,18 +130,18 @@ const CascadingModelsList = () => {
     }
   };
 
-  const handleChangeMerchant = async (e) => {
-    setMerchantId(e.target.value);
-    if (e.target.value !== 0 && e.target.value !== "") {
-      await axios
-        .post(`${app.api}/merchant/tran_types`, {
-          merchantId: e.target.value,
-        })
-        .then((response) => setTranTypes(response.data));
-    } else {
-      setTranTypes([]);
-    }
-  };
+  // const handleChangeMerchant = async (e) => {
+  //   setMerchantId(e.target.value);
+  //   if (e.target.value !== 0 && e.target.value !== "") {
+  //     await axios
+  //       .post(`${app.api}/merchant/tran_types`, {
+  //         merchantId: e.target.value,
+  //       })
+  //       .then((response) => setTranTypes(response.data));
+  //   } else {
+  //     setTranTypes([]);
+  //   }
+  // };
 
   const handleRemoveItem = async (id) => {
     await axios
@@ -190,52 +194,74 @@ const CascadingModelsList = () => {
               <Divider />
               <Box m={2}>
                 <Grid container spacing={2}>
+                  {/*<Grid item xs={6}>*/}
+                  {/*  <TextField*/}
+                  {/*    fullWidth*/}
+                  {/*    label="merchant"*/}
+                  {/*    name="merchantId"*/}
+                  {/*    onChange={handleChangeMerchant}*/}
+                  {/*    select*/}
+                  {/*    size="small"*/}
+                  {/*    value={merchantId}*/}
+                  {/*    variant="outlined"*/}
+                  {/*  >*/}
+                  {/*    <MenuItem key={-1} value={""}>*/}
+                  {/*      {t("Select value")}*/}
+                  {/*    </MenuItem>*/}
+                  {/*    {merchant.map((item) => (*/}
+                  {/*      <MenuItem key={item.id} value={item.id}>*/}
+                  {/*        {item.name}*/}
+                  {/*      </MenuItem>*/}
+                  {/*    ))}*/}
+                  {/*  </TextField>*/}
+                  {/*</Grid>*/}
+                  {/*{merchantId !== "" &&*/}
+                  {/*merchantId !== 0 &&*/}
+                  {/*merchantId !== undefined ? (*/}
+                  {/*  <Grid item xs={6}>*/}
+                  {/*    <TextField*/}
+                  {/*      fullWidth*/}
+                  {/*      label="tranTypesId"*/}
+                  {/*      name="tranTypesId"*/}
+                  {/*      onChange={handleChangeTranTypes}*/}
+                  {/*      select*/}
+                  {/*      size="small"*/}
+                  {/*      value={tranTypesId}*/}
+                  {/*      variant="outlined"*/}
+                  {/*    >*/}
+                  {/*      <MenuItem key={-1} value={""}>*/}
+                  {/*        {t("Select value")}*/}
+                  {/*      </MenuItem>*/}
+                  {/*      {tranTypes.map((item) => (*/}
+                  {/*        <MenuItem key={item.id} value={item.id}>*/}
+                  {/*          {item.name}*/}
+                  {/*        </MenuItem>*/}
+                  {/*      ))}*/}
+                  {/*    </TextField>*/}
+                  {/*  </Grid>*/}
+                  {/*) : null}*/}
+
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
-                      label="merchant"
-                      name="merchantId"
-                      onChange={handleChangeMerchant}
+                      label="tranTypesId"
+                      name="tranTypesId"
+                      onChange={handleChangeTranTypes}
                       select
                       size="small"
-                      value={merchantId}
+                      value={tranTypesId}
                       variant="outlined"
                     >
                       <MenuItem key={-1} value={""}>
                         {t("Select value")}
                       </MenuItem>
-                      {merchant.map((item) => (
+                      {tranTypes.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
                           {item.name}
                         </MenuItem>
                       ))}
                     </TextField>
                   </Grid>
-                  {merchantId !== "" &&
-                  merchantId !== 0 &&
-                  merchantId !== undefined ? (
-                    <Grid item xs={6}>
-                      <TextField
-                        fullWidth
-                        label="tranTypesId"
-                        name="tranTypesId"
-                        onChange={handleChangeTranTypes}
-                        select
-                        size="small"
-                        value={tranTypesId}
-                        variant="outlined"
-                      >
-                        <MenuItem key={-1} value={""}>
-                          {t("Select value")}
-                        </MenuItem>
-                        {tranTypes.map((item) => (
-                          <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-                  ) : null}
 
                   {dataList.length === 0 ? (
                     <Grid item xs={12}>

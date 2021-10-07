@@ -13,21 +13,29 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
 import { app } from "@root/config";
+import toast from "react-hot-toast";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
+  const [timezoneData, setTimezoneData] = useState([]);
   const { t } = useTranslation();
-
+  useEffect(async () => {
+    await axios.get(`${app.api}/timezone`).then((response) => {
+      setTimezoneData(response.data.data);
+    });
+  }, []);
   return (
     <Formik
       initialValues={{
         name: "",
         description: "",
+        timezoneId: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         description: Yup.string().max(255),
+        timezoneId: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -92,6 +100,34 @@ const CreateForm = (props) => {
                   size="small"
                   sx={{ m: 0 }}
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.timezoneId && errors.timezoneId)}
+                  fullWidth
+                  helperText={touched.timezoneId && errors.timezoneId}
+                  label={t("timezoneId")}
+                  margin="normal"
+                  name="timezoneId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  select
+                  value={values.timezoneId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {timezoneData.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={12}>

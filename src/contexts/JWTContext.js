@@ -122,6 +122,7 @@ export const AuthProvider = (props) => {
       .then((response) => {
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("accessId", response.data.user.hash); //response.data.token
+        localStorage.setItem("merchId", response.data.user.merchantId);
         window.location.reload();
       })
       .catch((err) => {
@@ -130,21 +131,18 @@ export const AuthProvider = (props) => {
   };
 
   const logout = async () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("accessId");
+    localStorage.clear();
     dispatch({ type: "LOGOUT" });
     setTimeout(() => navigate("/board"), 200);
     //window.location.reload();
   };
 
-  const register = async (email, username, password, linkToken = null) => {
-    console.log(email, username, password, linkToken);
+  const register = async (phone, password, linkToken = null) => {
     await axios
       .post(`${app.api}/registration`, {
-        email,
-        username,
+        phone,
         password,
-        linkToken,
+        inviteHash: linkToken,
       })
       .then((response) => {
         toast.success(t("Success registration"));

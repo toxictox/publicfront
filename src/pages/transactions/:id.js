@@ -62,7 +62,7 @@ const TransactionsList = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/transaction")} />
+          <BackButton action={() => navigate("/transactions")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Transactions Item")} />

@@ -141,7 +141,7 @@ const FlowIdUpdate = () => {
         })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/flow`);
+          navigate(`/flows`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -160,7 +160,7 @@ const FlowIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/flow`)} />
+          <BackButton action={() => navigate(`/flows`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader

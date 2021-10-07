@@ -82,7 +82,7 @@ const TransactionsFlowList = () => {
                 title={t("Transactions Flow List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/flow/create")}
+                    action={() => navigate("/flows/create")}
                     text={t("Create button")}
                   />
                 }
@@ -94,13 +94,13 @@ const TransactionsFlowList = () => {
                     <TableRow
                       hover
                       key={item.id}
-                      onClick={() => navigate(`/flow/id/${item.id}`)}
+                      onClick={() => navigate(`/flows/id/${item.id}`)}
                     >
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/flow/id/${item.id}`}
+                          to={`/flows/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                           square
@@ -117,7 +117,7 @@ const TransactionsFlowList = () => {
                               title: t("Copy button"),
                               callback: (e) => {
                                 e.stopPropagation();
-                                navigate(`/flow/create`, {
+                                navigate(`/flows/create`, {
                                   state: {
                                     id: item.id,
                                   },

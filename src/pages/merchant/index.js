@@ -11,6 +11,7 @@ import {
   Divider,
   TableRow,
   TableCell,
+  Switch,
 } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
@@ -21,6 +22,7 @@ import { GroupTable, CreateButton } from "@comp/core/buttons";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const TerminalsList = () => {
   const mounted = useMounted();
@@ -28,10 +30,34 @@ const TerminalsList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [dataList, setListData] = useState({
+  const [dataList, setDataList] = useState({
     data: [],
   });
   const [page, setPage] = useState(0);
+
+  const handleChangeSwitch = async (e, id) => {
+    await axios
+      .patch(`${app.api}/merchant/status/${id}`, {
+        status: Number(e.target.checked),
+      })
+      .then((response) => {
+        toast.success(t("Success update"));
+
+        setDataList({
+          page: dataList.page,
+          count: dataList.count,
+          data: dataList.data.map((item) => {
+            if (item.id === id) {
+              item.status = e.target.checked ? false : true;
+            }
+            return item;
+          }),
+        });
+      })
+      .catch((e) => {
+        toast.error(e);
+      });
+  };
 
   const getOrders = useCallback(async () => {
     try {
@@ -40,7 +66,7 @@ const TerminalsList = () => {
         .then((response) => response.data);
 
       if (mounted.current) {
-        setListData(response);
+        setDataList(response);
       }
     } catch (err) {
       console.error(err);
@@ -52,7 +78,7 @@ const TerminalsList = () => {
     await axios
       .post(`${app.api}/merchants?page=${newPage}&count=${25}`)
       .then((response) => {
-        setListData(response.data);
+        setDataList(response.data);
       });
   };
 
@@ -79,25 +105,30 @@ const TerminalsList = () => {
                 title={t("Merchant List")}
                 action={
                   <CreateButton
-                    action={() => navigate("/merchant/create")}
+                    action={() => navigate("/merchants/create")}
                     text={t("Create button")}
                   />
                 }
               />
               <Divider />
-              <TableStatic header={["name", "description", "createOn", ""]}>
+              <TableStatic
+                header={[
+                  "name",
+                  "description",
+                  "createOn",
+                  "editOn",
+                  "status",
+                  "",
+                ]}
+              >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/merchant/id/${item.id}`)}
-                    >
+                    <TableRow hover key={item.hash}>
                       <TableCell>
                         <Link
                           color="textLink"
                           component={RouterLink}
-                          to={`/merchant/id/${item.id}`}
+                          to={`/merchants/id/${item.id}`}
                           underline="none"
                           variant="subtitle2"
                         >
@@ -105,11 +136,24 @@ const TerminalsList = () => {
                         </Link>
                       </TableCell>
                       <TableCell>{item.description}</TableCell>
-                      <TableCell>{item.creatOn}</TableCell>
+                      <TableCell>{item.createOn}</TableCell>
+                      <TableCell>{item.editOn}</TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={item.status}
+                          onChange={(e) => handleChangeSwitch(e, item.id)}
+                          name={`check[${item.id}]`}
+                          inputProps={{
+                            "aria-label": "secondary checkbox",
+                          }}
+                        />
+                      </TableCell>
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/merchant/id/${item.id}`)}
+                          actionView={() =>
+                            navigate(`/merchants/id/${item.id}`)
+                          }
                         />
                       </TableCell>
                     </TableRow>

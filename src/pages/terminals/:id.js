@@ -46,10 +46,10 @@ const BankId = () => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete(`${app.api}/terminal/${id}`)
+      .delete(`${app.api}/role/${id}`)
       .then((response) => {
         toast.success(t("Success deleted"));
-        navigate("/terminals");
+        navigate("/role");
       })
       .catch((e) => toast.error(e));
   };
