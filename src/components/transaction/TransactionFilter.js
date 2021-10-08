@@ -34,11 +34,11 @@ const TransactionFilter = (props) => {
       setBanks(response.data.data);
     });
 
-    await axios.get(`${app.api}/tran_types`).then((response) => {
+    await axios.post(`${app.api}/transactions/tran_types`).then((response) => {
       setTranType(response.data);
     });
 
-    await axios.post(`${app.api}/codes`).then((response) => {
+    await axios.post(`${app.api}/transactions/codes`).then((response) => {
       setRespCode(response.data.data);
     });
   }, []);
@@ -137,7 +137,7 @@ const TransactionFilter = (props) => {
                   name="dateEnd"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="date"
+                  type="datetime-local"
                   value={values.dateEnd}
                   variant="outlined"
                   size="small"
@@ -223,7 +223,7 @@ const TransactionFilter = (props) => {
                   </MenuItem>
                   {respCode.map((item) => (
                     <MenuItem key={item.id} value={item.id}>
-                      {item.langEn}
+                      {item.external} - {item.langEn}
                     </MenuItem>
                   ))}
                 </TextField>

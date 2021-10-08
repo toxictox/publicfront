@@ -38,13 +38,12 @@ const CascadingModelsList = () => {
   const [dataList, setListData] = useState([]);
   const [merchantId, setMerchantId] = useState(user.merchantId);
   const [tranTypesId, setTranTypesId] = useState(0);
-  const [merchant, setMerchant] = useState([]);
   const [tranTypes, setTranTypes] = useState([]);
 
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .post(`${app.api}/merchant/tran_types`, {
+        .post(`${app.api}/cascade/tran_types`, {
           merchantId: user.merchantId,
         })
         .then((response) => response.data);
@@ -177,12 +176,15 @@ const CascadingModelsList = () => {
               <CardHeader
                 title={t("Cascading Models List")}
                 action={
-                  merchantId ? (
+                  merchantId &&
+                  tranTypesId !== undefined &&
+                  tranTypesId !== 0 ? (
                     <CreateButton
                       action={() =>
                         navigate("/cascading/create", {
                           state: {
                             merchantId: merchantId,
+                            tranTypesId: tranTypesId,
                           },
                         })
                       }

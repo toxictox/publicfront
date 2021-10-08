@@ -111,13 +111,12 @@ const CreateModelForm = (props) => {
         ruleId: "",
         gatewayMethodId: "",
         merchantId: state.merchantId,
-        tranTypeId: "",
+        tranTypeId: state.tranTypesId,
       }}
       validationSchema={Yup.object().shape({
         gatewayId: Yup.string().max(5).required(t("required")),
         ruleId: Yup.string().max(5).nullable(),
         gatewayMethodId: Yup.string().max(5).required(t("required")),
-        tranTypeId: Yup.string().max(5).required(t("required")),
         // ---------------------
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -150,31 +149,6 @@ const CreateModelForm = (props) => {
         <form onSubmit={handleSubmit} {...props}>
           <Box m={2}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.tranTypeId && errors.tranTypeId)}
-                  fullWidth
-                  helperText={touched.tranTypeId && errors.tranTypeId}
-                  label="tranTypeId"
-                  name="tranTypeId"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  select
-                  size="small"
-                  value={values.tranTypeId}
-                  variant="outlined"
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {tranType.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
               {values.tranTypeId !== "" ? (
                 <Grid item xs={12}>
                   <TextField
