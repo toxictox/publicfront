@@ -17,5 +17,5 @@ services:
     logging:
       driver: gelf
       options:
-        gelf-address: udp://10.6.11.9:12201
+        gelf-address: udp://elk-gelf.paytech.com.ua:12201
 
