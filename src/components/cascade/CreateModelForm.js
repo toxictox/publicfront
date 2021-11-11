@@ -104,6 +104,8 @@ const CreateModelForm = (props) => {
     }
   };
 
+  console.log("---------conditionData", conditionData, condition);
+
   return (
     <Formik
       initialValues={{
@@ -273,9 +275,11 @@ const CreateModelForm = (props) => {
                               size="small"
                               sx={{ m: 0 }}
                             >
-                              <MenuItem value={"more"}>{">"}</MenuItem>
-                              <MenuItem value={"less"}>{"<"}</MenuItem>
-                              <MenuItem value={"equal"}>{"="}</MenuItem>
+                              {Object.keys(condition).map((name, i) => (
+                                <MenuItem value={name} key={name}>
+                                  {condition[name]}
+                                </MenuItem>
+                              ))}
                             </TextField>
                           </Grid>
 

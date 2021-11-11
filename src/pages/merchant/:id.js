@@ -22,7 +22,7 @@ import { showConfirm } from "@slices/dialog";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import useAuth from "@hooks/useAuth";
-
+import { toLocaleDateTime } from "@lib/date";
 const MerchantId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -135,7 +135,11 @@ const MerchantId = () => {
                           )}
                         </TableCell>
                       ) : (
-                        <TableCell>{dataList[i]}</TableCell>
+                        <TableCell>
+                          {i === "createOn" || i === "editOn"
+                            ? toLocaleDateTime(dataList[i])
+                            : dataList[i]}
+                        </TableCell>
                       )}
                     </TableRow>
                   );

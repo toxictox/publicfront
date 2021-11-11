@@ -20,6 +20,7 @@ import { GroupTable, BackButton } from "@comp/core/buttons";
 import { showConfirm } from "@slices/dialog";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
+import { toLocaleDateTime } from "@lib/date";
 
 const BankId = () => {
   const mounted = useMounted();
@@ -46,10 +47,10 @@ const BankId = () => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete(`${app.api}/role/${id}`)
+      .delete(`${app.api}/terminal/${id}`)
       .then((response) => {
         toast.success(t("Success deleted"));
-        navigate("/role");
+        navigate("/terminals");
       })
       .catch((e) => toast.error(e));
   };
@@ -103,7 +104,11 @@ const BankId = () => {
                   return (
                     <TableRow key={i}>
                       <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      <TableCell>
+                        {i === "editOn" || i === "createOn"
+                          ? toLocaleDateTime(dataList[i])
+                          : dataList[i]}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

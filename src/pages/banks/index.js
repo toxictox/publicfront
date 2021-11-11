@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -21,6 +20,7 @@ import { GroupTable, CreateButton } from "@comp/core/buttons";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
+import { toLocaleDateTime } from "@lib/date";
 
 const BanksList = () => {
   const mounted = useMounted();
@@ -96,25 +96,11 @@ const BanksList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/banks/id/${item.id}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/banks/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.name}
-                        </Link>
-                      </TableCell>
+                    <TableRow hover key={item.hash}>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell>{item.depositLimit}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-                      <TableCell>{item.editOn}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.editOn)}</TableCell>
 
                       <TableCell align={"right"}>
                         <GroupTable

@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
 import { ButtonGroup, Button } from "@material-ui/core";
 import { Edit, HighlightOff, Visibility } from "@material-ui/icons";
-import { useTranslation } from "react-i18next";
 
 const GroupTable = (props) => {
-  const { actionUpdate, actionDelete, actionView, actionCustom } = props;
-
-  const { t } = useTranslation();
+  const {
+    actionUpdate,
+    actionDelete,
+    actionView,
+    actionCustom,
+    actionCustomIcon,
+  } = props;
 
   return (
     <>
@@ -29,6 +32,14 @@ const GroupTable = (props) => {
             <Visibility />
           </Button>
         ) : null}
+
+        {actionCustomIcon !== undefined
+          ? actionCustomIcon.map((item) => (
+              <Button size={"small"} color={"primary"} onClick={item.callback}>
+                {item.icon}
+              </Button>
+            ))
+          : null}
 
         {actionUpdate !== undefined ? (
           <Button size={"small"} color={"primary"} onClick={actionUpdate}>

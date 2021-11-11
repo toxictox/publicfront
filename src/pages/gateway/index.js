@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
-  Dialog,
   TableCell,
 } from "@material-ui/core";
 
@@ -18,6 +16,7 @@ import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { TableStatic } from "@comp/core/tables";
 import { GroupTable, CreateButton } from "@comp/core/buttons";
+import { toLocaleDateTime } from "@lib/date";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
@@ -33,7 +32,6 @@ const GatewayList = () => {
     data: [],
   });
   const [page, setPage] = useState(0);
-  const [c, setC] = useState(0);
 
   const getOrders = useCallback(async () => {
     try {
@@ -74,9 +72,6 @@ const GatewayList = () => {
           py: 2,
         }}
       >
-        {/*<Dialog open={true} fullWidth maxWidth="sm">*/}
-        {/*  <Box sx={{ m: 1 }}>222222</Box>*/}
-        {/*</Dialog>*/}
         <Container maxWidth={settings.compact ? "xl" : false}>
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
@@ -95,26 +90,12 @@ const GatewayList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/gateways/id/${item.id}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/gateways/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.name}
-                        </Link>
-                      </TableCell>
+                    <TableRow hover key={item.hash}>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell>{item.endpoint}</TableCell>
                       <TableCell>{item.env}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-                      <TableCell>{item.editOn}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.editOn)}</TableCell>
 
                       <TableCell align={"right"}>
                         <GroupTable

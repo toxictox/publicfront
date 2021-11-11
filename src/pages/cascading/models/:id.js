@@ -16,7 +16,8 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
-import { GroupTable, BackButton } from "@comp/core/buttons";
+import { toLocaleDateTime } from "@lib/date";
+import { BackButton } from "@comp/core/buttons";
 
 const CascadingModelId = () => {
   const mounted = useMounted();
@@ -88,7 +89,11 @@ const CascadingModelId = () => {
                       ) : (
                         <>
                           <TableCell>{t(i)}</TableCell>
-                          <TableCell>{dataList[i]}</TableCell>
+                          <TableCell>
+                            {i === "createOn" || i === "editOn"
+                              ? toLocaleDateTime(dataList[i])
+                              : dataList[i]}
+                          </TableCell>
                         </>
                       )}
                     </TableRow>

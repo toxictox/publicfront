@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -22,7 +21,7 @@ import { GroupTable, CreateButton } from "@comp/core/buttons";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-
+import { toLocaleDateTime } from "@lib/date";
 const UserList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -121,10 +120,13 @@ const UserList = () => {
                       <TableCell>{item.phone}</TableCell>
                       <TableCell>{item.loginTries}</TableCell>
                       <TableCell>
-                        {item.lastLogin ? item.lastLogin : null}
+                        {item.lastLogin
+                          ? toLocaleDateTime(item.lastLogin)
+                          : null}
                       </TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
+                          actionView={() => navigate(`/users/id/${item.hash}`)}
                           actionCustom={[
                             {
                               title: t("role"),

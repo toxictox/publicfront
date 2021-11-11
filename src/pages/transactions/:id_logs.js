@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link as RouterLink } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -12,18 +12,21 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
+
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
-import { GroupTable, BackButton } from "@comp/core/buttons";
+import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
-const BankId = () => {
+
+const TransactionsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -31,7 +34,7 @@ const BankId = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/bank/${id}`)
+        .get(`${app.api}/transactions/logs/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -48,7 +51,7 @@ const BankId = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Banks Item Id")}</title>
+        <title>{t("Transactions Logs Item")}</title>
       </Helmet>
       <Box
         sx={{
@@ -58,38 +61,21 @@ const BankId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/banks")} />
+          <BackButton action={() => navigate(-1)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader
-                title={t("Banks Item Id")}
-                action={
-                  <GroupTable
-                    actionUpdate={() => navigate(`/banks/id/${id}/update`)}
-                    actionDelete={() => console.log("delete action")}
-                    actionCustom={[
-                      {
-                        title: t("depositLimit"),
-                        callback: () => navigate(`/banks/deposit/${id}`),
-                      },
-                    ]}
-                  />
-                }
-              />
+              <CardHeader title={t("Transactions Logs Item")} />
               <Divider />
-              <TableStatic>
-                {Object.keys(dataList).map(function (i, index) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
-                      <TableCell>
-                        {i === "editOn" || i === "createOn"
-                          ? toLocaleDateTime(dataList[i])
-                          : dataList[i]}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              <TableStatic header={["createOn", "message", "data"]}>
+                {dataList.data.map((item) => (
+                  <TableRow hover key={item.id}>
+                    <TableCell width={200}>
+                      {toLocaleDateTime(item.createOn)}
+                    </TableCell>
+                    <TableCell>{item.message}</TableCell>
+                    <TableCell width={"50%"}>{item.data}</TableCell>
+                  </TableRow>
+                ))}
               </TableStatic>
             </Card>
           </Box>
@@ -99,4 +85,4 @@ const BankId = () => {
   );
 };
 
-export default BankId;
+export default TransactionsList;

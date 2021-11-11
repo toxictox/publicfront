@@ -7,30 +7,24 @@ import {
   TextField,
   Grid,
   MenuItem,
-  Select,
 } from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
-import { formatDate } from "@lib/date";
+
 import { app } from "@root/config";
+import { GetFilterDataFromStore } from "@lib/filter";
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
-  const { login } = useAuth();
   const { t } = useTranslation();
   const [banks, setBanks] = useState([]);
-  const [tran, setTran] = useState([]);
   const [tranType, setTranType] = useState([]);
   const [respCode, setRespCode] = useState([]);
 
   useEffect(async () => {
-    // await axios.get(`${app.api}/banks`).then((response) => {
-    //   setBanks(response.data.data);
-    // });
-    await axios.get(`${app.api}/banks`).then((response) => {
+    await axios.post(`${app.api}/transactions/banks`).then((response) => {
       setBanks(response.data.data);
     });
 
@@ -43,21 +37,14 @@ const TransactionFilter = (props) => {
     });
   }, []);
 
+  console.log(222222, GetFilterDataFromStore("transactions"));
+  const dataForFields =
+    GetFilterDataFromStore("transactions") !== undefined
+      ? GetFilterDataFromStore("transactions")
+      : {};
   return (
     <Formik
-      initialValues={{
-        tranId: "",
-        tranTypeId: "",
-        amountFrom: "",
-        amountTo: "",
-        pan1: "",
-        pan2: "",
-        dateStart: new Date().toISOString().slice(0, 16),
-        dateEnd: "",
-        gatewayId: "",
-        respCodeId: "",
-        bankId: "",
-      }}
+      initialValues={dataForFields}
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
         tranTypeId: Yup.string().max(255),
@@ -66,7 +53,7 @@ const TransactionFilter = (props) => {
         dateStart: Yup.string().max(255),
         dateEnd: Yup.string().max(255),
         gatewayId: Yup.string().max(255),
-        respCodeId: Yup.string().max(255),
+        respCode: Yup.string().max(255),
         bankId: Yup.string().max(255),
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
@@ -75,8 +62,6 @@ const TransactionFilter = (props) => {
         try {
           await props.callback({
             ...values,
-            dateStart: formatDate(values.dateStart),
-            dateEnd: formatDate(values.dateEnd),
           });
 
           if (mounted.current) {
@@ -203,17 +188,17 @@ const TransactionFilter = (props) => {
 
               <Grid item xs={3}>
                 <TextField
-                  error={Boolean(touched.respCodeId && errors.respCodeId)}
+                  error={Boolean(touched.respCode && errors.respCode)}
                   fullWidth
                   select
-                  helperText={touched.respCodeId && errors.respCodeId}
-                  label={t("respCodeId")}
+                  helperText={touched.respCode && errors.respCode}
+                  label={t("respCode")}
                   margin="normal"
                   name="respCode"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.respCodeId}
+                  value={values.respCode}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -222,7 +207,7 @@ const TransactionFilter = (props) => {
                     {t("Select value")}
                   </MenuItem>
                   {respCode.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
+                    <MenuItem key={item.external} value={item.external}>
                       {item.external} - {item.langEn}
                     </MenuItem>
                   ))}
@@ -303,7 +288,6 @@ const TransactionFilter = (props) => {
 
               <Grid item xs={3}>
                 <TextField
-                  autoFocus
                   error={Boolean(touched.tranId && errors.tranId)}
                   fullWidth
                   helperText={touched.tranId && errors.tranId}

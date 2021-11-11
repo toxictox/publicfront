@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -31,7 +30,6 @@ const TransactionsList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [merchant, setMerchant] = useState([]);
   const [merchantId, setMerchantId] = useState(0);
   const [dataList, setListData] = useState({ roles: [] });
   const [page, setPage] = useState(0);
@@ -133,17 +131,7 @@ const TransactionsList = () => {
                 {dataList.roles.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/roles/id/${item.roleId}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.roleName}
-                        </Link>
-                      </TableCell>
+                      <TableCell>{item.roleName}</TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
                           actionView={() =>

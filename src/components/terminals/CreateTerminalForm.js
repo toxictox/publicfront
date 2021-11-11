@@ -38,11 +38,15 @@ const UpdateForm = (props) => {
         tid: "",
         gatewayMethodId: "",
         merchantId: "",
+        endpoint: "",
+        wsdlUrl: "",
         // depositLimit: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         tid: Yup.string().max(255),
+        endpoint: Yup.string().max(255),
+        wsdlUrl: Yup.string().max(255),
         gatewayMethodId: Yup.string().max(5).required(t("required")),
         merchantId: Yup.string().required(t("required")),
         // depositLimit: Yup.string().max(255).required(t("required")),
@@ -162,6 +166,42 @@ const UpdateForm = (props) => {
                     </MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.endpoint && errors.endpoint)}
+                  fullWidth
+                  helperText={touched.endpoint && errors.endpoint}
+                  label={t("endpoint")}
+                  margin="normal"
+                  name="endpoint"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.endpoint}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.wsdlUrl && errors.wsdlUrl)}
+                  fullWidth
+                  helperText={touched.wsdlUrl && errors.wsdlUrl}
+                  label={t("wsdlUrl")}
+                  margin="normal"
+                  name="wsdlUrl"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.wsdlUrl}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
               </Grid>
 
               <Grid item xs={12}>

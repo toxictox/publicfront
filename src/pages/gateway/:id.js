@@ -19,6 +19,7 @@ import { TableStatic } from "@comp/core/tables/index";
 import { GroupTable, BackButton } from "@comp/core/buttons";
 import { useDispatch } from "react-redux";
 import { showConfirm } from "@slices/dialog";
+import { toLocaleDateTime } from "@lib/date";
 
 const GatewayId = () => {
   const mounted = useMounted();
@@ -74,7 +75,7 @@ const GatewayId = () => {
                         showConfirm({
                           title: t("Do you want to remove"),
                           isOpen: true,
-                          okCallback: () => alert(2222),
+                          okCallback: () => alert("You dont have permission"),
                         })
                       );
                     }}
@@ -87,7 +88,11 @@ const GatewayId = () => {
                   return (
                     <TableRow key={i}>
                       <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      <TableCell>
+                        {i === "createOn" || i === "editOn"
+                          ? toLocaleDateTime(dataList[i])
+                          : dataList[i]}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

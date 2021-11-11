@@ -20,6 +20,7 @@ const UpdateForm = (props) => {
       initialValues={{
         external: data.external,
         internal: data.internal,
+        color: data.color,
         langEn: data.langEn,
         langRu: data.langRu,
         langUk: data.langUk,
@@ -27,6 +28,7 @@ const UpdateForm = (props) => {
       validationSchema={Yup.object().shape({
         external: Yup.string().max(255).required(t("required")),
         internal: Yup.string().max(255).required(t("required")),
+        color: Yup.string().max(255).nullable(),
         langEn: Yup.string().max(255).required(t("required")),
         langRu: Yup.string().max(255).required(t("required")),
         langUk: Yup.string().max(255).required(t("required")),
@@ -90,6 +92,23 @@ const UpdateForm = (props) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.internal}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.color && errors.color)}
+                  fullWidth
+                  helperText={touched.color && errors.color}
+                  label={t("color")}
+                  margin="normal"
+                  name="color"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.color}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}

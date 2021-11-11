@@ -117,7 +117,9 @@ const CodesList = () => {
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
-                      <TableCell>{item.external}</TableCell>
+                      <TableCell sx={{ color: item.color }}>
+                        {item.external}
+                      </TableCell>
                       <TableCell>{item.langEn}</TableCell>
                       <TableCell>{item.langRu}</TableCell>
                       <TableCell>{item.langUk}</TableCell>

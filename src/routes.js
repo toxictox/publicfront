@@ -401,6 +401,10 @@ const TransactionItemIdPage = Loadable(
   lazy(() => import("@pages/transactions/:id"))
 );
 
+const TransactionLogsPage = Loadable(
+  lazy(() => import("@pages/transactions/:id_logs"))
+);
+
 // gateways
 const GatewayIndexPage = Loadable(lazy(() => import("@pages/gateway")));
 const GatewayCreatePage = Loadable(
@@ -410,6 +414,9 @@ const GatewayIdPage = Loadable(lazy(() => import("@pages/gateway/:id")));
 const GatewayIdPagePage = Loadable(
   lazy(() => import("@pages/gateway/:update"))
 );
+
+// bin
+const BinIndexPage = Loadable(lazy(() => import("@pages/bin/index")));
 
 // transaction flow
 const TransactionFlowList = Loadable(lazy(() => import("@pages/flow")));
@@ -580,10 +587,14 @@ const routes = [
               </ACLGuard>
             ),
           },
-          // {
-          //   path: "id/:id",
-          //   element: <UserItemIdPage />,
-          // },
+          {
+            path: "id/:id",
+            element: (
+              <ACLGuard can={"details"}>
+                <UserItemIdPage />
+              </ACLGuard>
+            ),
+          },
           {
             path: "id/:id/update",
             element: (
@@ -906,6 +917,20 @@ const routes = [
       },
 
       {
+        path: "bin",
+        children: [
+          {
+            path: "/",
+            element: (
+              <ACLGuard can={"read"}>
+                <BinIndexPage />
+              </ACLGuard>
+            ),
+          },
+        ],
+      },
+
+      {
         path: "transactions",
         children: [
           {
@@ -921,6 +946,14 @@ const routes = [
             element: (
               <ACLGuard can={"details"}>
                 <TransactionItemIdPage />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: ":id/logs",
+            element: (
+              <ACLGuard can={"details"}>
+                <TransactionLogsPage />
               </ACLGuard>
             ),
           },

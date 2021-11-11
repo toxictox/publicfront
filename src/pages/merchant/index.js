@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
   TableCell,
   Switch,
 } from "@material-ui/core";
-
+import { toLocaleDateTime } from "@lib/date";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { TableStatic } from "@comp/core/tables";
@@ -124,20 +123,10 @@ const TerminalsList = () => {
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.hash}>
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/merchants/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.name}
-                        </Link>
-                      </TableCell>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell>{item.description}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-                      <TableCell>{item.editOn}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.editOn)}</TableCell>
                       <TableCell>
                         <Switch
                           checked={item.status}

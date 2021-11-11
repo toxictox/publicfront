@@ -29,6 +29,7 @@ const menu = {
   "Merchant menu": "Мерчанты",
   "Description menu": "Экспорт",
   "Codes menu": "Коды",
+  "Bin menu": "Bin",
   "Reconciliation menu": "Сверка",
 };
 
@@ -90,10 +91,12 @@ const text = {
   "Codes Item Id": "Информация о коде",
   "Code Item Update": "Обновления кода",
   "Code Item Create": "Создание кода",
+  "Transactions Logs Item": "Логи транзакций",
 
   "Reconciliation List": "Сверка",
 
   "Export List": "Экспорт файлов",
+  "Bin List": "Bin",
   "Invitation link": "Ссылка для приглашения пользователя",
 };
 

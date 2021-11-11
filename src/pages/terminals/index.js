@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -17,7 +16,7 @@ import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { TableStatic } from "@comp/core/tables";
 import { GroupTable, CreateButton } from "@comp/core/buttons";
-
+import { toLocaleDateTime } from "@lib/date";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
@@ -97,26 +96,12 @@ const TerminalsList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.hash}
-                      onClick={() => navigate(`/terminals/id/${item.id}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/terminals/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                        >
-                          {item.name}
-                        </Link>
-                      </TableCell>
+                    <TableRow hover key={item.hash}>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell>{item.tid}</TableCell>
                       <TableCell>{item.gatewayMethod}</TableCell>
                       <TableCell>{item.merchant}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
 
                       <TableCell align={"right"}>
                         <GroupTable

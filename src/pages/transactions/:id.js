@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Backspace } from "@material-ui/icons";
 import {
   Box,
   Container,
-  Grid,
-  Button,
   Card,
   TableRow,
   TableCell,
@@ -15,12 +12,14 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-// import gtm from "../../lib/gtm";
+import { Info } from "@material-ui/icons";
+
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import { TableScroll, TableStatic } from "@comp/core/tables/index";
-import { BackButton } from "@comp/core/buttons";
+import { TableStatic } from "@comp/core/tables/index";
+import { BackButton, GroupTable } from "@comp/core/buttons";
+import { toLocaleDateTime } from "@lib/date";
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -65,14 +64,30 @@ const TransactionsList = () => {
           <BackButton action={() => navigate("/transactions")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Transactions Item")} />
+              <CardHeader
+                title={t("Transactions Item")}
+                action={
+                  <GroupTable
+                    actionCustomIcon={[
+                      {
+                        icon: <Info />,
+                        callback: () => navigate(`/transactions/${id}/logs`),
+                      },
+                    ]}
+                  />
+                }
+              />
               <Divider />
               <TableStatic>
                 {Object.keys(dataList).map(function (i, index) {
                   return (
                     <TableRow key={i}>
                       <TableCell>{t(i)}</TableCell>
-                      <TableCell>{dataList[i]}</TableCell>
+                      <TableCell>
+                        {i === "createOn" || i === "editOn"
+                          ? toLocaleDateTime(dataList[i])
+                          : dataList[i]}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

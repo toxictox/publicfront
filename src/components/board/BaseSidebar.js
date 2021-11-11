@@ -19,6 +19,7 @@ import {
   PriceCheck,
   DescriptionOutlined,
   Code,
+  Dns,
 } from "@material-ui/icons";
 
 import useAuth from "@hooks/useAuth";
@@ -106,6 +107,12 @@ const BaseSidebar = (props) => {
           path: "/export",
           icon: <DescriptionOutlined fontSize="small" />,
           active: getActiveStatus("export"),
+        },
+        {
+          title: t("Bin menu"),
+          path: "/bin",
+          icon: <Dns fontSize="small" />,
+          active: getActiveStatus("bin"),
         },
         {
           title: t("Codes menu"),

@@ -91,27 +91,11 @@ const TransactionsFlowList = () => {
               <TableStatic header={["name", ""]}>
                 {dataList.map(function (item) {
                   return (
-                    <TableRow
-                      hover
-                      key={item.id}
-                      onClick={() => navigate(`/flows/id/${item.id}`)}
-                    >
-                      <TableCell>
-                        <Link
-                          color="textLink"
-                          component={RouterLink}
-                          to={`/flows/id/${item.id}`}
-                          underline="none"
-                          variant="subtitle2"
-                          square
-                        >
-                          {item.name}
-                        </Link>
-                      </TableCell>
-
+                    <TableRow hover key={item.id}>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
-                          // actionView={() => navigate(`/flow/id/${item.id}`)}
+                          actionView={() => navigate(`/flows/id/${item.id}`)}
                           actionCustom={[
                             {
                               title: t("Copy button"),

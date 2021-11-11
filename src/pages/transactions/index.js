@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Box, Container, TablePagination } from "@material-ui/core";
 
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-// import ChevronRightIcon from "../../icons/ChevronRight";
-// import DownloadIcon from "../../icons/Download";
-// import UploadIcon from "../../icons/Upload";
-// import PlusIcon from "../../icons/Plus";
-import gtm from "../../lib/gtm";
+
+import gtm from "@lib/gtm";
+import { GetFilterDataFromStore, GetFilterPageFromStore } from "@lib/filter";
 import { TransactionListTable } from "@comp/transaction";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
+import { useDispatch } from "@store";
+import { setFilterParams, setFilterPage } from "@slices/filter";
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -21,8 +20,11 @@ const TransactionsList = () => {
   const [dataList, setListData] = useState({
     data: [],
   });
-  const [filterList, setFilterList] = useState({});
-  const [page, setPage] = useState(0);
+
+  const filterList = GetFilterDataFromStore("transactions");
+
+  const [page, setPage] = useState(GetFilterPageFromStore("transactions"));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     gtm.push({ event: "page_view" });
@@ -31,7 +33,7 @@ const TransactionsList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .post(`${app.api}/transactions?page=${page}&count=${25}`)
+        .post(`${app.api}/transactions?page=${page}&count=${25}`, filterList)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -48,13 +50,19 @@ const TransactionsList = () => {
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
+    dispatch(setFilterPage({ path: "transactions", page: newPage }));
+
     await axios
       .post(
         `${app.api}/transactions?page=${newPage}&count=${25}`,
         values !== undefined ? values : filterList
       )
-      .then((response) => {
-        setFilterList(values);
+      .then(async (response) => {
+        if (values !== undefined) {
+          dispatch(
+            setFilterParams({ path: "transactions", params: { ...values } })
+          );
+        }
         setListData(response.data);
       });
   };

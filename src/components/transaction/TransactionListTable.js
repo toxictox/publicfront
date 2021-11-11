@@ -1,14 +1,11 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-// import { format } from "date-fns";
-// import numeral from "numeral";
+
 import PropTypes from "prop-types";
 import {
   Box,
   Card,
   CardHeader,
   Divider,
-  IconButton,
-  Tooltip,
   Link,
   TableCell,
   TableRow,
@@ -21,7 +18,7 @@ import { TableStatic } from "@comp/core/tables/index";
 import { useTranslation } from "react-i18next";
 import TransactionFilter from "@comp/transaction/TransactionFilter";
 import { GroupTable } from "@comp/core/buttons";
-
+import { toLocaleDateTime } from "@lib/date";
 const TransactionListTable = (props) => {
   const { data, ...other } = props;
   const { t } = useTranslation();
@@ -52,11 +49,7 @@ const TransactionListTable = (props) => {
             >
               {data.map((order) => {
                 return (
-                  <TableRow
-                    hover
-                    key={order.uuid}
-                    onClick={() => navigate(`/transactions/${order.uuid}`)}
-                  >
+                  <TableRow hover key={order.uuid}>
                     <TableCell>
                       <Link
                         color="textPrimary"
@@ -66,11 +59,10 @@ const TransactionListTable = (props) => {
                         variant="subtitle2"
                       ></Link>
                       <Typography color="textSecondary" variant="body2">
-                        {order.createOn}
-                        {/*{format(order.createOn, "dd MMM yyyy | HH:mm")}*/}
+                        {toLocaleDateTime(order.createOn)}
                       </Typography>
                     </TableCell>
-                    <TableCell>{order.merchant}</TableCell>
+                    <TableCell sx={{ width: 450 }}>{order.merchant}</TableCell>
                     <TableCell>{order.tranId}</TableCell>
                     <TableCell>
                       <Typography
@@ -85,7 +77,9 @@ const TransactionListTable = (props) => {
                     <TableCell>{order.amount}</TableCell>
                     <TableCell>{order.fee}</TableCell>
                     <TableCell>{order.gateway}</TableCell>
-                    <TableCell>{order.respCode}</TableCell>
+                    <TableCell sx={{ color: order.respCodeColor }}>
+                      {order.respCode} {order.respMessage}
+                    </TableCell>
 
                     <TableCell align="right">
                       <GroupTable
