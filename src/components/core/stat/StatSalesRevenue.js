@@ -1,5 +1,11 @@
 import Chart from "react-apexcharts";
-import { Card, CardContent, CardHeader } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  MenuItem,
+  TextField,
+} from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
@@ -13,7 +19,7 @@ const FinanceSalesRevenue = (props) => {
 
   useEffect(async () => {
     await axios
-      .get(`${app.api}/board/trx/chart/30`)
+      .get(`${app.api}/board/trx/chart/7`)
       .then((response) => setChart(response.data));
   }, []);
 
@@ -41,10 +47,16 @@ const FinanceSalesRevenue = (props) => {
       toolbar: {
         show: true,
       },
+      type: "area",
     },
     colors: ["green", "red"],
     dataLabels: {
       enabled: true,
+    },
+    legend: {
+      horizontalAlign: "left",
+      offsetX: -20,
+      offsetY: 5,
     },
     fill: {
       type: "solid",
@@ -58,7 +70,7 @@ const FinanceSalesRevenue = (props) => {
       size: 6,
     },
     stroke: {
-      curve: "straight",
+      curve: "smooth",
       width: 2,
     },
     theme: {
@@ -90,7 +102,34 @@ const FinanceSalesRevenue = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader title={title} />
+      <CardHeader
+        sx={{ marginX: 2, marginTop: 1 }}
+        // subheader={"18 октября 2021 - 19 ноября 2021"}
+        title={title}
+        // action={
+        //   <TextField
+        //     fullWidth
+        //     select
+        //     // label={"asd"}
+        //     margin="normal"
+        //     name="tranTypeId"
+        //     // onBlur={handleBlur}
+        //     // onChange={handleChange}
+        //     type="text"
+        //     value={1}
+        //     variant="outlined"
+        //     size="small"
+        //     sx={{ m: 0, minWidth: 250 }}
+        //   >
+        //     <MenuItem key={-1} value={1}>
+        //       Общая статистика
+        //     </MenuItem>
+        //     <MenuItem key={-1} value={2}>
+        //       Общая статистика
+        //     </MenuItem>
+        //   </TextField>
+        // }
+      />
       <CardContent>
         <Chart
           height="360"

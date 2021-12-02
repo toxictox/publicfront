@@ -7,9 +7,6 @@ import {
   Divider,
   TextField,
   Grid,
-  MenuItem,
-  Select,
-  InputLabel,
 } from "@material-ui/core";
 import useAuth from "@hooks/useAuth";
 import useMounted from "@hooks/useMounted";
@@ -19,6 +16,7 @@ import axios from "@lib/axios";
 import { formatDate } from "@lib/date";
 import { app } from "@root/config";
 import fields from "@comp/export/fields";
+import { SelectCheckbox } from "@comp/core/forms";
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
@@ -31,9 +29,6 @@ const ExportFileFilter = (props) => {
   const [respCode, setRespCode] = useState([]);
 
   useEffect(async () => {
-    // await axios.get(`${app.api}/banks`).then((response) => {
-    //   setBanks(response.data.data);
-    // });
     await axios.get(`${app.api}/banks`).then((response) => {
       setBanks(response.data.data);
     });
@@ -66,17 +61,17 @@ const ExportFileFilter = (props) => {
         gatewayId: [],
         respCodeId: [],
         bankId: [],
-        fields: [],
+        fields: [
+          "createOn",
+          "amount",
+          "tranType",
+          "merchant",
+          "respCode",
+          "pan",
+          "tranId",
+        ],
       }}
       validationSchema={Yup.object().shape({
-        // tranId: Yup.string().max(255),
-        // //email: Yup.string().email(t("email")).max(255).required(t("required")),
-        // tranTypeId: Yup.string().max(255),
-        // amount: Yup.string().max(255),
-        // merchantId: Yup.string().max(255),
-        // dateStart: Yup.string().max(255),
-        // dateEnd: Yup.string().max(255),
-        // gatewayId: Yup.string().max(255),
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
       })}
@@ -159,116 +154,82 @@ const ExportFileFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                <Select
+                <SelectCheckbox
                   error={Boolean(touched.tranTypeId && errors.tranTypeId)}
-                  fullWidth
-                  select
+                  labelId="tranTypeId"
                   helperText={touched.tranTypeId && errors.tranTypeId}
                   label={t("tranTypeId")}
-                  margin="normal"
                   name="tranTypeId"
                   onBlur={handleBlur}
-                  type="text"
                   value={values.tranTypeId}
-                  variant="outlined"
-                  size="small"
+                  renderValue={() => values.tranTypeId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("tranTypeId", e.target.value);
                   }}
-                  multiple
-                >
-                  {tranType.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  // onSelectAll={(value) => {
+                  //   value.map((item, i) => {
+                  //     console.log(i, item);
+                  //     setFieldValue(`tranTypeId[${i}]`, item, false);
+                  //   });
+                  // }}
+                  items={tranType}
+                />
               </Grid>
 
               <Grid item xs={3}>
-                <Select
+                <SelectCheckbox
                   error={Boolean(touched.merchantId && errors.merchantId)}
-                  fullWidth
-                  select
+                  labelId="merchantId"
                   helperText={touched.merchantId && errors.merchantId}
                   label={t("merchantId")}
-                  margin="normal"
                   name="merchantId"
                   onBlur={handleBlur}
-                  type="text"
                   value={values.merchantId}
-                  variant="outlined"
-                  size="small"
+                  renderValue={() => values.merchantId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("merchantId", e.target.value);
                   }}
-                  multiple
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {merchant.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  items={merchant}
+                />
               </Grid>
 
               <Grid item xs={3}>
-                <Select
+                <SelectCheckbox
                   error={Boolean(touched.bankId && errors.bankId)}
-                  fullWidth
-                  select
+                  labelId="bankId"
                   helperText={touched.bankId && errors.bankId}
-                  label="bankId"
+                  label={t("bankId")}
                   name="bankId"
                   onBlur={handleBlur}
-                  size="small"
                   value={values.bankId}
-                  variant="outlined"
+                  renderValue={() => values.bankId.join(",")}
+                  sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("bankId", e.target.value);
                   }}
-                  multiple
-                >
-                  {banks.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  items={banks}
+                />
               </Grid>
 
               <Grid item xs={3}>
-                {/*<InputLabel id="respCodeId">respCodeId</InputLabel>*/}
-                <Select
+                <SelectCheckbox
                   error={Boolean(touched.respCodeId && errors.respCodeId)}
                   labelId="respCodeId"
-                  fullWidth
-                  select
                   helperText={touched.respCodeId && errors.respCodeId}
                   label={t("respCodeId")}
-                  margin="normal"
-                  name="respCode"
+                  name="respCodeId"
                   onBlur={handleBlur}
                   value={values.respCodeId}
-                  variant="outlined"
-                  size="small"
+                  renderValue={() => values.respCodeId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("respCodeId", e.target.value);
                   }}
-                  multiple
-                >
-                  {respCode.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.langEn}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  fieldText={["external", "langEn"]}
+                  items={respCode}
+                />
               </Grid>
 
               <Grid item xs={3}>
@@ -367,32 +328,21 @@ const ExportFileFilter = (props) => {
               </Grid>
 
               <Grid item xs={12}>
-                {/*<InputLabel id="respCodeId">respCodeId</InputLabel>*/}
-                <Select
+                <SelectCheckbox
                   error={Boolean(touched.fields && errors.fields)}
                   labelId="respCodeId"
-                  fullWidth
-                  select
                   helperText={touched.fields && errors.fields}
                   label={t("fields")}
-                  margin="normal"
                   name="fields"
                   onBlur={handleBlur}
                   value={values.fields}
-                  variant="outlined"
-                  size="small"
+                  renderValue={() => values.fields.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("fields", e.target.value);
                   }}
-                  multiple
-                >
-                  {fields.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  items={fields}
+                />
               </Grid>
 
               <Grid item xs={12}>

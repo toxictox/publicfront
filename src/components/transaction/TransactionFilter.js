@@ -37,7 +37,6 @@ const TransactionFilter = (props) => {
     });
   }, []);
 
-  console.log(222222, GetFilterDataFromStore("transactions"));
   const dataForFields =
     GetFilterDataFromStore("transactions") !== undefined
       ? GetFilterDataFromStore("transactions")

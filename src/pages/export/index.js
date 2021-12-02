@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Box, CardHeader, Container, Card } from "@material-ui/core";
 
@@ -12,7 +12,6 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 
 const ExportList = () => {
-  const mounted = useMounted();
   const { t } = useTranslation();
   const { settings } = useSettings();
   const [filterList, setFilterList] = useState({});

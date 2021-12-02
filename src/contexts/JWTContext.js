@@ -153,22 +153,13 @@ export const AuthProvider = (props) => {
       });
   };
 
-  const passwordRecovery = async (email) => {
+  const passwordRecovery = async (email, cb) => {
     await axios
       .post(`${app.api}/password/forget`, {
         email,
       })
       .then((response) => {
-        // localStorage.setItem("accessToken", accessToken);
-
-        // dispatch({
-        //   type: "REGISTER",
-        //   payload: {
-        //     user,
-        //   },
-        // });
-        toast.success(t("Success recovery send token"));
-        navigate("/board");
+        cb(true);
       })
       .catch((err) => {
         if (err.response !== undefined) {
@@ -176,6 +167,7 @@ export const AuthProvider = (props) => {
         } else {
           toast.error(`Ошибка отправки данных. Повторите позже`);
         }
+        cb(false);
       });
   };
 
@@ -186,16 +178,8 @@ export const AuthProvider = (props) => {
         password,
       })
       .then((response) => {
-        // localStorage.setItem("accessToken", accessToken);
-
-        // dispatch({
-        //   type: "REGISTER",
-        //   payload: {
-        //     user,
-        //   },
-        // });
-        toast.success(t("Success recovery send token"));
-        navigate("/");
+        toast.success(t("Password was successfully changed"));
+        navigate("/board");
       })
       .catch((err) => {
         toast.error(t(err.response.data.message));

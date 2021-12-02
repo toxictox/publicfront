@@ -13,6 +13,7 @@ import {
   Timeline,
   CenterFocusWeak,
   LinearScale,
+  Home,
   BlurLinear,
   Storefront,
   Security,
@@ -42,6 +43,12 @@ const BaseSidebar = (props) => {
     {
       title: "",
       items: [
+        {
+          title: t("Dashboard menu"),
+          path: "/board",
+          icon: <Home fontSize="small" />,
+          active: true,
+        },
         {
           title: t("Transaction menu"),
           path: "/transactions",

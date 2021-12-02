@@ -388,10 +388,6 @@ const BanksPageIdUpdatePage = Loadable(
   lazy(() => import("@pages/banks/:update"))
 );
 
-const BanksDepositUpdatePage = Loadable(
-  lazy(() => import("@pages/banks/_deposit/:update"))
-);
-
 // transactions
 const TransactionIndexPage = Loadable(
   lazy(() => import("@pages/transactions"))
@@ -455,6 +451,10 @@ const MerchantModelCreate = Loadable(
 
 const MerchantTokenUpdate = Loadable(
   lazy(() => import("@pages/merchant/_token/:update"))
+);
+
+const MerchantDepositUpdate = Loadable(
+  lazy(() => import("@pages/merchant/_deposit/:update"))
 );
 
 // terminals
@@ -716,14 +716,6 @@ const routes = [
               </ACLGuard>
             ),
           },
-          {
-            path: "deposit/:id",
-            element: (
-              <ACLGuard can={"updateBankDeposit"}>
-                <BanksDepositUpdatePage />
-              </ACLGuard>
-            ),
-          },
         ],
       },
 
@@ -912,6 +904,10 @@ const routes = [
           {
             path: "token/:id",
             element: <MerchantTokenUpdate />,
+          },
+          {
+            path: "deposit/:id",
+            element: <MerchantDepositUpdate />,
           },
         ],
       },

@@ -6,7 +6,7 @@ import MenuIcon from "@icons/Menu";
 import AccountPopover from "./AccountPopover";
 // import ContactsPopover from "./ContactsPopover";
 // import ContentSearch from "./ContentSearch";
-// import LanguagePopover from "./LanguagePopover";
+import LanguagePopover from "./LanguagePopover";
 import Logo from "./Logo";
 // import NotificationsPopover from "./NotificationsPopover";
 
@@ -29,7 +29,7 @@ const BaseNavbar = (props) => {
 
   return (
     <DashboardNavbarRoot {...other}>
-      <Toolbar sx={{ minHeight: 50 }}>
+      <Toolbar sx={{ minHeight: 50, alignItems: "center" }}>
         <IconButton
           color="inherit"
           onClick={onSidebarMobileOpen}
@@ -59,7 +59,7 @@ const BaseNavbar = (props) => {
             ml: 1,
           }}
         />
-        {/*<LanguagePopover />*/}
+        <LanguagePopover />
         {/*<Box sx={{ ml: 1 }}>*/}
         {/*  <ContentSearch />*/}
         {/*</Box>*/}

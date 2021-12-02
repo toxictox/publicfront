@@ -18,12 +18,20 @@ import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { GroupTable, BackButton } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
+import DepositForm from "@pages/merchant/_deposit/_form";
+import toast from "react-hot-toast";
+import DepositHistory from "@comp/history/_history";
 const BankId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [reload, setReload] = useState(false);
+  const [tab, setTab] = useState({
+    open: false,
+    action: null,
+  });
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -44,6 +52,36 @@ const BankId = () => {
   useEffect(() => {
     getItem();
   }, [getItem]);
+
+  const handleSubmit = async (values) => {
+    try {
+      await axios
+        .patch(`${app.api}/bank/deposit/${id}`, { ...values })
+        .then((response) => {
+          toast.success(t("Success update"));
+          setListData({
+            ...dataList,
+            depositLimit: response.data.depositLimit,
+          });
+
+          setTab({
+            open: false,
+            action: null,
+          });
+
+          setReload(response.data);
+        });
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+
+  const openTab = (id, action) => {
+    setTab({
+      open: id,
+      action: action,
+    });
+  };
 
   return (
     <>
@@ -66,11 +104,24 @@ const BankId = () => {
                 action={
                   <GroupTable
                     actionUpdate={() => navigate(`/banks/id/${id}/update`)}
-                    actionDelete={() => console.log("delete action")}
+                    // actionDelete={() => console.log("delete action")}
                     actionCustom={[
                       {
-                        title: t("depositLimit"),
-                        callback: () => navigate(`/banks/deposit/${id}`),
+                        title: t("Set deposit limit"),
+                        color: tab.action === "set" ? "success" : "primary",
+                        callback: () => openTab(true, "set"),
+                      },
+                      {
+                        title: t("Increase deposit limit"),
+                        color:
+                          tab.action === "increase" ? "success" : "primary",
+                        callback: () => openTab(true, "increase"),
+                      },
+                      {
+                        title: t("Decrease deposit limit"),
+                        color:
+                          tab.action === "decrease" ? "success" : "primary",
+                        callback: () => openTab(true, "decrease"),
                       },
                     ]}
                   />
@@ -90,7 +141,28 @@ const BankId = () => {
                     </TableRow>
                   );
                 })}
+                {tab.open ? (
+                  <TableRow key={dataList.id}>
+                    <TableCell colSpan={4}>
+                      <DepositForm
+                        limit={dataList.depositLimit}
+                        bankId={id}
+                        cb={handleSubmit}
+                        action={tab.action}
+                        cancel={() => openTab(false, null)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ) : null}
               </TableStatic>
+            </Card>
+          </Box>
+
+          <Box sx={{ minWidth: 700 }}>
+            <Card sx={{ mt: 2 }}>
+              <CardHeader title={t("Bank Deposit History")} />
+              <Divider />
+              <DepositHistory reload={reload} action={"bank"} />
             </Card>
           </Box>
         </Container>

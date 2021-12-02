@@ -15,7 +15,7 @@ const buttons = {
 };
 
 const menu = {
-  "Transaction menu": "asdddddddd",
+  "Transaction menu": "Транзакции",
   "Users menu": "Пользователи",
   "Role menu": "Роли",
   "User Item": "Информация о пользователе",
@@ -133,6 +133,13 @@ const fields = {
   bank: "Банк",
   "name gateway field": "Название шлюза",
   "Select value": "Выбрать значение",
+  "Set deposit limit": "Установить",
+  "Increase deposit limit": "Увеличить",
+  "Decrease deposit limit": "Уменьшить",
+  "Comment show": "Комментарий",
+  "Password was successfully changed": "Пароль был успешно изменен",
+  "Reset success send":
+    "Инструкция по восстановлению пароля была отправлена на указанный email",
 };
 
 const server = {
@@ -151,7 +158,7 @@ const validationForm = {
   "Error phone format": "Телефон должен быть в формате 380XXXXXXXXX",
 };
 
-export const ua = {
+export const en = {
   "Welcome to React": "привет реакт",
   "Forgot password": "Забыли пароль?",
   "Create new account": "Создать аккаунт",

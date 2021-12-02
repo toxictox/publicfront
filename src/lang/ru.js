@@ -133,6 +133,13 @@ const fields = {
   bank: "Банк",
   "name gateway field": "Название шлюза",
   "Select value": "Выбрать значение",
+  "Set deposit limit": "Установить",
+  "Increase deposit limit": "Увеличить",
+  "Decrease deposit limit": "Уменьшить",
+  "Comment show": "Комментарий",
+  "Password was successfully changed": "Пароль был успешно изменен",
+  "Reset success send":
+    "Инструкция по восстановлению пароля была отправлена на указанный email",
 };
 
 const server = {

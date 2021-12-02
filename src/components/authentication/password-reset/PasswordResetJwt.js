@@ -19,13 +19,11 @@ const PasswordResetJwt = () => {
   return (
     <Formik
       initialValues={{
-        email: location.state?.username || "",
         password: "",
         passwordConfirm: "",
         submit: null,
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email(t("email")).max(255).required(t("required")),
         password: Yup.string()
           .min(7, "Must be at least 7 characters")
           .max(255)
@@ -38,7 +36,6 @@ const PasswordResetJwt = () => {
         try {
           await passwordReset(values.email, values.password, params.token);
         } catch (err) {
-          console.error(err);
           if (mounted.current) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -58,30 +55,30 @@ const PasswordResetJwt = () => {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit}>
-          {!location.state?.username ? (
-            <TextField
-              autoFocus
-              error={Boolean(touched.email && errors.email)}
-              fullWidth
-              helperText={touched.email && errors.email}
-              label="Email Address"
-              margin="normal"
-              name="email"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="email"
-              value={values.email}
-              variant="outlined"
-            />
-          ) : (
-            <TextField
-              disabled
-              fullWidth
-              margin="normal"
-              value={location.state.username}
-              variant="outlined"
-            />
-          )}
+          {/*{!location.state?.username ? (*/}
+          {/*  <TextField*/}
+          {/*    autoFocus*/}
+          {/*    error={Boolean(touched.email && errors.email)}*/}
+          {/*    fullWidth*/}
+          {/*    helperText={touched.email && errors.email}*/}
+          {/*    label="Email Address"*/}
+          {/*    margin="normal"*/}
+          {/*    name="email"*/}
+          {/*    onBlur={handleBlur}*/}
+          {/*    onChange={handleChange}*/}
+          {/*    type="email"*/}
+          {/*    value={values.email}*/}
+          {/*    variant="outlined"*/}
+          {/*  />*/}
+          {/*) : (*/}
+          {/*  <TextField*/}
+          {/*    disabled*/}
+          {/*    fullWidth*/}
+          {/*    margin="normal"*/}
+          {/*    value={location.state.username}*/}
+          {/*    variant="outlined"*/}
+          {/*  />*/}
+          {/*)}*/}
 
           <TextField
             error={Boolean(touched.password && errors.password)}

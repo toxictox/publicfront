@@ -54,7 +54,7 @@ const Home = () => {
                   />
                 </Grid>
                 <Grid item md={12} sm={12} xs={12}>
-                  <StatSalesRevenue title={"Транзакции"} />
+                  <StatSalesRevenue title={"Аналитика транзакций"} />
                 </Grid>
               </Grid>
             </Grid>

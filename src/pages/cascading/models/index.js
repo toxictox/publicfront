@@ -148,8 +148,12 @@ const CascadingModelsList = () => {
       .then((response) => {
         toast.success(t("Success deleted"));
         let newList = dataList.filter((item) => item.id !== id);
-        setListData(reorder(newList));
-        handlePriority(reorder(newList));
+        if (newList.length !== 0) {
+          setListData(reorder(newList));
+          handlePriority(reorder(newList));
+        } else {
+          setListData(newList);
+        }
       })
       .catch((e) => toast.error(e));
   };

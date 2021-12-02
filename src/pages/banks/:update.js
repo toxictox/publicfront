@@ -52,7 +52,7 @@ const BankIdUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Bank Deposit Update")}</title>
+        <title>{t("Bank Item Update")}</title>
       </Helmet>
       <Box
         sx={{
@@ -65,7 +65,7 @@ const BankIdUpdate = () => {
           <BackButton action={() => navigate(`/banks/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Bank Deposit Update")} />
+              <CardHeader title={t("Bank Item Update")} />
               <Divider />
               {dataList !== null ? (
                 <UpdateForm data={dataList} callback={handleSubmit} />

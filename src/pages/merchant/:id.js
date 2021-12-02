@@ -105,6 +105,10 @@ const MerchantId = () => {
                     }}
                     actionCustom={[
                       {
+                        title: t("depositLimit"),
+                        callback: () => navigate(`/merchants/deposit/${id}`),
+                      },
+                      {
                         title: t("keyToken"),
                         callback: () => navigate(`/merchants/token/${id}`),
                       },

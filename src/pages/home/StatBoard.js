@@ -109,7 +109,7 @@ const BarChart = () => {
       },
     },
     stroke: {
-      width: 0,
+      curve: "smooth",
     },
     theme: {
       mode: theme.palette.mode,

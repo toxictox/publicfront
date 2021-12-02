@@ -1,117 +1,38 @@
-import { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Popover,
-  Typography
-} from '@material-ui/core';
-
-const languageOptions = {
-  ru: {
-    icon: '/static/icons/uk_flag.svg',
-    label: 'RU'
-  },
-  ua: {
-    icon: '/static/icons/de_flag.svg',
-    label: 'UA'
-  },
-};
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { MenuItem, TextField } from "@material-ui/core";
+import { useStyles } from "./styles/lang.style";
+// import { KeyboardArrowDown } from "@material-ui/icons";
 
 const LanguagePopover = () => {
-  const anchorRef = useRef(null);
+  const lang = localStorage.getItem("i18nextLng");
   const { i18n } = useTranslation();
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
+  const [value, setValue] = useState(lang !== null ? lang : "en");
+  const classes = useStyles();
+  const handleChangeLanguage = (e) => {
+    i18n.changeLanguage(e.target.value);
+    setValue(e.target.value);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleChangeLanguage = (language) => {
-    i18n.changeLanguage(language);
-    setOpen(false);
-  };
-
-  const selectedOption = languageOptions[i18n.language];
 
   return (
-    <>
-      <IconButton
-        onClick={handleOpen}
-        ref={anchorRef}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            height: 20,
-            width: 20,
-            '& img': {
-              width: '100%'
-            }
-          }}
-        >
-          <img
-            alt={selectedOption.label}
-            src={selectedOption.icon}
-          />
-        </Box>
-      </IconButton>
-      <Popover
-        anchorEl={anchorRef.current}
-        anchorOrigin={{
-          horizontal: 'center',
-          vertical: 'bottom'
-        }}
-        keepMounted
-        onClose={handleClose}
-        open={open}
-        PaperProps={{
-          sx: { width: 240 }
-        }}
-      >
-        {Object.keys(languageOptions).map((language) => (
-          <MenuItem
-            onClick={() => handleChangeLanguage(language)}
-            key={language}
-          >
-            <ListItemIcon>
-              <Box
-                sx={{
-                  display: 'flex',
-                  height: 20,
-                  width: 20,
-                  '& img': {
-                    width: '100%'
-                  }
-                }}
-              >
-                <img
-                  alt={languageOptions[language].label}
-                  src={languageOptions[language].icon}
-                />
-              </Box>
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography
-                  color="textPrimary"
-                  variant="subtitle2"
-                >
-                  {languageOptions[language].label}
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        ))}
-      </Popover>
-    </>
+    <TextField
+      select
+      onChange={handleChangeLanguage}
+      className={classes.root}
+      margin="normal"
+      name="tranTypeId"
+      type="text"
+      value={value}
+      variant="outlined"
+      size="small"
+      // SelectProps={{
+      //   IconComponent: () => <KeyboardArrowDown />,
+      // }}
+    >
+      <MenuItem value={"ru"}>Ru</MenuItem>
+      <MenuItem value={"ua"}>Ua</MenuItem>
+      <MenuItem value={"en"}>En</MenuItem>
+    </TextField>
   );
 };
 
