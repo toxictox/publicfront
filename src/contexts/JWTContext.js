@@ -107,6 +107,8 @@ export const AuthProvider = (props) => {
             user: null,
           },
         });
+
+        navigate("/board");
       }
     };
 

@@ -46,7 +46,7 @@ const TransactionsList = () => {
           })
         );
       })
-      .catch((e) => toast.error(e));
+      .catch((e) => toast.error(t(e.response.data.message)));
   };
 
   const getOrders = useCallback(async () => {

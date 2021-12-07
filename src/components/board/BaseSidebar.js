@@ -177,7 +177,7 @@ const BaseSidebar = (props) => {
               {user.merchants.map((item) => {
                 return (
                   <MenuItem value={item.merchantId} key={item.merchantId}>
-                    {item.merchanName}
+                    {item.merchantName}
                   </MenuItem>
                 );
               })}
