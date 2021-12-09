@@ -15,7 +15,7 @@ const buttons = {
 };
 
 const menu = {
-  "Transaction menu": "asdddddddd",
+  "Transaction menu": "Транзакции",
   "Users menu": "Пользователи",
   "Role menu": "Роли",
   "User Item": "Информация о пользователе",
@@ -98,6 +98,9 @@ const text = {
   "Export List": "Экспорт файлов",
   "Bin List": "Bin",
   "Invitation link": "Ссылка для приглашения пользователя",
+  "Success tab": "Успешные",
+  "Failed tab": "Отклоненные",
+  "Conversion tab": "Конверсия",
 };
 
 const fields = {

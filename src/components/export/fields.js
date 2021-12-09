@@ -24,6 +24,10 @@ const fields = [
     name: "pan",
   },
   {
+    id: "description",
+    name: "description",
+  },
+  {
     id: "tranId",
     name: "tranId",
   },

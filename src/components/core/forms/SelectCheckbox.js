@@ -48,6 +48,20 @@ const SelectCheckbox = (props) => {
   } = props;
   const { t } = useTranslation();
 
+  const setRenderValue = () => {
+    const arr = [];
+
+    items.forEach((item) => {
+      if (value.includes(item.id) && Array.isArray(fieldText)) {
+        arr.push(`${item[fieldText[0]]} ${item[fieldText[1]]}`);
+      } else if (value.includes(item.id)) {
+        arr.push(item.name);
+      }
+    });
+    return arr.join(",");
+  };
+
+  setRenderValue();
   return (
     <FormControl
       sx={{
@@ -67,7 +81,7 @@ const SelectCheckbox = (props) => {
         value={value}
         variant="outlined"
         size="small"
-        renderValue={renderValue}
+        renderValue={setRenderValue}
         sx={{ m: 0 }}
         MenuProps={MenuProps}
         onChange={onChange}

@@ -69,6 +69,7 @@ const ExportFileFilter = (props) => {
           "respCode",
           "pan",
           "tranId",
+          "description",
         ],
       }}
       validationSchema={Yup.object().shape({
@@ -162,17 +163,10 @@ const ExportFileFilter = (props) => {
                   name="tranTypeId"
                   onBlur={handleBlur}
                   value={values.tranTypeId}
-                  renderValue={() => values.tranTypeId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("tranTypeId", e.target.value);
                   }}
-                  // onSelectAll={(value) => {
-                  //   value.map((item, i) => {
-                  //     console.log(i, item);
-                  //     setFieldValue(`tranTypeId[${i}]`, item, false);
-                  //   });
-                  // }}
                   items={tranType}
                 />
               </Grid>
@@ -186,7 +180,6 @@ const ExportFileFilter = (props) => {
                   name="merchantId"
                   onBlur={handleBlur}
                   value={values.merchantId}
-                  renderValue={() => values.merchantId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("merchantId", e.target.value);
@@ -204,7 +197,6 @@ const ExportFileFilter = (props) => {
                   name="bankId"
                   onBlur={handleBlur}
                   value={values.bankId}
-                  renderValue={() => values.bankId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("bankId", e.target.value);
@@ -222,7 +214,6 @@ const ExportFileFilter = (props) => {
                   name="respCodeId"
                   onBlur={handleBlur}
                   value={values.respCodeId}
-                  renderValue={() => values.respCodeId.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("respCodeId", e.target.value);
@@ -336,7 +327,6 @@ const ExportFileFilter = (props) => {
                   name="fields"
                   onBlur={handleBlur}
                   value={values.fields}
-                  renderValue={() => values.fields.join(",")}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("fields", e.target.value);

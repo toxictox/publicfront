@@ -22,11 +22,11 @@ const UpdateForm = (props) => {
   const [merchantList, setMerchantList] = useState([]);
 
   useEffect(async () => {
-    await axios.get(`${app.api}/merchants`).then((response) => {
+    await axios.get(`${app.api}/terminal/merchants`).then((response) => {
       setMerchantList(response.data.data);
     });
 
-    await axios.get(`${app.api}/gateway/methods`).then((response) => {
+    await axios.get(`${app.api}/terminal/gateway/methods`).then((response) => {
       setGatewayMethod(response.data.data);
     });
   }, []);

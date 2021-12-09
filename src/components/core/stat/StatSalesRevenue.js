@@ -102,34 +102,7 @@ const FinanceSalesRevenue = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader
-        sx={{ marginX: 2, marginTop: 1 }}
-        // subheader={"18 октября 2021 - 19 ноября 2021"}
-        title={title}
-        // action={
-        //   <TextField
-        //     fullWidth
-        //     select
-        //     // label={"asd"}
-        //     margin="normal"
-        //     name="tranTypeId"
-        //     // onBlur={handleBlur}
-        //     // onChange={handleChange}
-        //     type="text"
-        //     value={1}
-        //     variant="outlined"
-        //     size="small"
-        //     sx={{ m: 0, minWidth: 250 }}
-        //   >
-        //     <MenuItem key={-1} value={1}>
-        //       Общая статистика
-        //     </MenuItem>
-        //     <MenuItem key={-1} value={2}>
-        //       Общая статистика
-        //     </MenuItem>
-        //   </TextField>
-        // }
-      />
+      <CardHeader sx={{ marginX: 2, marginTop: 1 }} title={title} />
       <CardContent>
         <Chart
           height="360"

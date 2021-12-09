@@ -98,6 +98,9 @@ const text = {
   "Export List": "Экспорт файлов",
   "Bin List": "Bin",
   "Invitation link": "Ссылка для приглашения пользователя",
+  "Success tab": "Успешные",
+  "Failed tab": "Отклоненные",
+  "Conversion tab": "Конверсия",
 };
 
 const fields = {

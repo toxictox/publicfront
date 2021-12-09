@@ -133,7 +133,7 @@ const BarChart = () => {
 const StatBox = (props) => {
   const { title, description, status, value } = props;
   return (
-    <Card>
+    <Card sx={{ height: "100%" }}>
       <Box
         sx={{
           alignItems: "center",
@@ -152,37 +152,45 @@ const StatBox = (props) => {
         </div>
         <BarChart />
       </Box>
-      <Divider />
-      <Box
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          px: 3,
-          py: 2,
-        }}
-      >
-        <Avatar
-          sx={{
-            backgroundColor: (theme) =>
-              alpha(
-                status ? theme.palette.success.main : theme.palette.error.main,
-                0.08
-              ),
-            color: status ? "success.main" : "error.main",
-            height: 36,
-            width: 36,
-          }}
-        >
-          {status ? (
-            <ChevronUpIcon fontSize="small" />
-          ) : (
-            <ChevronDownIcon fontSize="small" />
-          )}
-        </Avatar>
-        <Typography color="textSecondary" sx={{ ml: 1 }} variant="caption">
-          {description}
-        </Typography>
-      </Box>
+
+      {status != undefined ? (
+        <>
+          <Divider />
+          <Box
+            sx={{
+              alignItems: "center",
+              display: "flex",
+              px: 3,
+              py: 2,
+            }}
+          >
+            <Avatar
+              sx={{
+                backgroundColor: (theme) =>
+                  alpha(
+                    status
+                      ? theme.palette.success.main
+                      : theme.palette.error.main,
+                    0.08
+                  ),
+                color: status ? "success.main" : "error.main",
+                height: 36,
+                width: 36,
+              }}
+            >
+              {status === true ? (
+                <ChevronUpIcon fontSize="small" />
+              ) : (
+                <ChevronDownIcon fontSize="small" />
+              )}
+            </Avatar>
+
+            <Typography color="textSecondary" sx={{ ml: 1 }} variant="caption">
+              {description}
+            </Typography>
+          </Box>
+        </>
+      ) : null}
     </Card>
   );
 };

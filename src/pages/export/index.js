@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Box, CardHeader, Container, Card } from "@material-ui/core";
 
-import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { useTranslation } from "react-i18next";
 import gtm from "../../lib/gtm";
