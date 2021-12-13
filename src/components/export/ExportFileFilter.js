@@ -29,19 +29,19 @@ const ExportFileFilter = (props) => {
   const [respCode, setRespCode] = useState([]);
 
   useEffect(async () => {
-    await axios.get(`${app.api}/banks`).then((response) => {
+    await axios.get(`${app.api}/filter/banks`).then((response) => {
       setBanks(response.data.data);
     });
 
-    await axios.get(`${app.api}/tran_types`).then((response) => {
+    await axios.get(`${app.api}/filter/tran_types`).then((response) => {
       setTranType(response.data);
     });
 
-    await axios.get(`${app.api}/merchants`).then((response) => {
+    await axios.get(`${app.api}/filter/merchants`).then((response) => {
       setMerchant(response.data.data);
     });
 
-    await axios.post(`${app.api}/codes`).then((response) => {
+    await axios.post(`${app.api}/filter/codes`).then((response) => {
       setRespCode(response.data.data);
     });
   }, []);

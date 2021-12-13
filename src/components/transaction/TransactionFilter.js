@@ -24,15 +24,15 @@ const TransactionFilter = (props) => {
   const [respCode, setRespCode] = useState([]);
 
   useEffect(async () => {
-    await axios.post(`${app.api}/transactions/banks`).then((response) => {
+    await axios.get(`${app.api}/filter/banks`).then((response) => {
       setBanks(response.data.data);
     });
 
-    await axios.post(`${app.api}/transactions/tran_types`).then((response) => {
+    await axios.get(`${app.api}/filter/tran_types`).then((response) => {
       setTranType(response.data);
     });
 
-    await axios.post(`${app.api}/transactions/codes`).then((response) => {
+    await axios.get(`${app.api}/filter/codes`).then((response) => {
       setRespCode(response.data.data);
     });
   }, []);
