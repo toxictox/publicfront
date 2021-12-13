@@ -94,13 +94,31 @@ const text = {
   "Transactions Logs Item": "Логи транзакций",
 
   "Reconciliation List": "Сверка",
+  dateStart: "Период с",
+  dateEnd: "Период по",
+  tranTypeId: "Тип операции",
+  bankId: "Банк",
+  amountFrom: "Сумма от",
+  amountTo: "Сумма до",
+  "card first 6 bumber": "Первые 6 цифр карты",
+  "card last 4 bumber": "Последние 4 цифры карты",
+  tranId: "ID транзакции",
+  gateway: "Банк",
+  acsStatus: "Статус 3DS",
+  amount: "Сумма",
+  approval: "Код авторизации",
+  callbackUrl: "Call back URL",
+  fee: "Комиссия",
+  getewayRefNo: "ID банка",
+  lang: "Язык",
+  pan: "Карта",
+  respCode: "Статус",
+  rrn: "RRN",
+  tranType: "Тип операции",
 
   "Export List": "Экспорт файлов",
   "Bin List": "Bin",
   "Invitation link": "Ссылка для приглашения пользователя",
-  "Success tab": "Успешные",
-  "Failed tab": "Отклоненные",
-  "Conversion tab": "Конверсия",
 };
 
 const fields = {
@@ -136,13 +154,6 @@ const fields = {
   bank: "Банк",
   "name gateway field": "Название шлюза",
   "Select value": "Выбрать значение",
-  "Set deposit limit": "Установить",
-  "Increase deposit limit": "Увеличить",
-  "Decrease deposit limit": "Уменьшить",
-  "Comment show": "Комментарий",
-  "Password was successfully changed": "Пароль был успешно изменен",
-  "Reset success send":
-    "Инструкция по восстановлению пароля была отправлена на указанный email",
 };
 
 const server = {

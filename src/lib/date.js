@@ -7,7 +7,7 @@ const formatDate = (val) => {
 };
 
 const toLocaleDateTime = (val) => {
-  return format(new Date(val), "yyyy-MM-dd  HH:mm");
+  return format(new Date(val), "yyyy-MM-dd  HH:mm:ss");
 };
 
 export { formatDate, toLocaleDateTime };

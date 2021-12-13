@@ -6,24 +6,27 @@ import {
   FormHelperText,
   TextField,
   Grid,
+  Input,
+  Button,
+  Stack,
+  CircularProgress,
 } from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
-import useMounted from "@hooks/useMounted";
+
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
 import { app } from "@root/config";
+import toast from "react-hot-toast";
 
 const TransactionFilter = (props) => {
-  const mounted = useMounted();
-  const { login } = useAuth();
   const { t } = useTranslation();
   const { callback } = props;
   const [banksList, setBanksList] = useState([]);
+  const [file, setFile] = useState(true);
 
   useEffect(async () => {
     await axios
-      .get(`${app.api}/banks?page=0&count=${25}`)
+      .get(`${app.api}/filter/banks`)
       .then((response) => {
         setBanksList(response.data.data);
       })
@@ -41,29 +44,26 @@ const TransactionFilter = (props) => {
         bankId: Yup.string().max(255),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        try {
-          await props.callback(values);
-
-          if (mounted.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-          }
-        } catch (err) {
-          if (mounted.current) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-            setSubmitting(false);
-          }
-        }
+        const formData = new FormData();
+        formData.append("file", values.file, values.file.name);
+        formData.append("bankId", values.bankId);
+        await axios
+          .post(`${app.api}/reconciliation/file`, formData)
+          .then((response) => {
+            setFile(true);
+            toast.success(t("Success upload"));
+          })
+          .catch((e) => {
+            setFile(true);
+            toast.error(e.response.data.message);
+          });
       }}
     >
       {({
         errors,
         handleBlur,
-        handleChange,
         handleSubmit,
         setFieldValue,
-        isSubmitting,
         touched,
         values,
       }) => (
@@ -101,6 +101,40 @@ const TransactionFilter = (props) => {
                     </MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+              <Grid item xs={6}>
+                {values.bankId !== "" ? (
+                  <Stack direction="row" spacing={2}>
+                    <label htmlFor="contained-button-file">
+                      {file ? (
+                        <>
+                          <Input
+                            // accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                            id="contained-button-file"
+                            name={"file"}
+                            multiple
+                            type="file"
+                            onChange={(e) => {
+                              setFieldValue("file", e.currentTarget.files[0]);
+                              handleSubmit();
+                              setFile(false);
+                            }}
+                            sx={{ display: "none" }}
+                          />
+                          <Button variant="contained" component="span">
+                            {t("Upload file")}
+                          </Button>
+                        </>
+                      ) : (
+                        <Button variant="contained" disabled={true}>
+                          {t("Loading")}
+                          {"   "}
+                          <CircularProgress color="inherit" size={20} />
+                        </Button>
+                      )}
+                    </label>
+                  </Stack>
+                ) : null}
               </Grid>
             </Grid>
           </Box>

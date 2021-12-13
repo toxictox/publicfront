@@ -37,6 +37,7 @@ const text = {
   "Having an account": "Уже есть аккаунт",
   "Reset account password": "Восстановить доступ",
   "Success update": "Запись обновлена",
+  "Success upload": "Файл загружен",
   "Do you want to remove": "Хотите удалить запись?",
   "Register account": "Регистрация",
   "Success registration": "Вы успешно разрегестрированы",
@@ -143,6 +144,8 @@ const fields = {
   "Password was successfully changed": "Пароль был успешно изменен",
   "Reset success send":
     "Инструкция по восстановлению пароля была отправлена на указанный email",
+  Loading: "Загрузка",
+  "Upload file": "Загрузить файл",
 };
 
 const server = {
