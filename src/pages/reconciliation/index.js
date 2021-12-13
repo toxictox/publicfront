@@ -49,16 +49,33 @@ const ReconciliationList = () => {
   };
 
   const checkStatus = async (id) => {
-    await axios.get(`${app.api}/reconciliation/file/${id}`).then((response) => {
-      setListData({
-        ...dataList,
-        data: dataList.data.map((item) => {
-          if (item.id === id) return response.data;
-          else return item;
-        }),
+    await axios
+      .get(`${app.api}/reconciliation/file/${id}`)
+      .then((response) => {
+        setListData({
+          ...dataList,
+          data: dataList.data.map((item) => {
+            if (item.id === id) return response.data;
+            else return item;
+          }),
+        });
+        toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
       });
-      toast.success(t("Success update"));
-    });
+  };
+
+  const startReconciliation = async (id) => {
+    await axios
+      .get(`${app.api}/reconciliation/make/${id}`)
+      .then((response) => {
+        console.log(response);
+        toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
@@ -110,7 +127,7 @@ const ReconciliationList = () => {
                             actionCustomIcon={[
                               {
                                 icon: <Send />,
-                                callback: () => alert(222),
+                                callback: () => startReconciliation(item.id),
                               },
                             ]}
                           />
