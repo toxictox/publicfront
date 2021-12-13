@@ -14,12 +14,14 @@ import {
 import useSettings from "@hooks/useSettings";
 import { TableStatic } from "@comp/core/tables";
 import { GroupTable } from "@comp/core/buttons";
+import { Cached, Send } from "@material-ui/icons";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import useAuth from "@hooks/useAuth";
+import toast from "react-hot-toast";
 import ReconciliationFilter from "@comp/reconciliation/ReconciliationFilter";
+import { toLocaleDateTime } from "@lib/date";
 
 const ReconciliationList = () => {
   const { settings } = useSettings();
@@ -29,7 +31,6 @@ const ReconciliationList = () => {
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
   const [bankId, setBankId] = useState(null);
-  const { user } = useAuth();
 
   const updateData = async (values) => {
     await setBankId(values);
@@ -37,16 +38,44 @@ const ReconciliationList = () => {
   };
 
   const handlePageChange = async (e, newPage, values) => {
-    // setPage(newPage);
-    // await axios
-    //   .post(
-    //     `${app.api}/codes?page=${newPage}&count=${25}`,
-    //     values !== undefined ? values : filterList
-    //   )
-    //   .then((response) => {
-    //     setFilterList(values);
-    //     setListData(response.data);
-    //   });
+    setPage(newPage);
+    const params = values !== undefined ? values : filterList;
+    await axios
+      .get(`${app.api}/reconciliation/files/bank/${params.bankId}`)
+      .then((response) => {
+        setFilterList(values);
+        setListData(response.data);
+      });
+  };
+
+  const checkStatus = async (id) => {
+    await axios
+      .get(`${app.api}/reconciliation/file/${id}`)
+      .then((response) => {
+        setListData({
+          ...dataList,
+          data: dataList.data.map((item) => {
+            if (item.id === id) return response.data;
+            else return item;
+          }),
+        });
+        toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const startReconciliation = async (id) => {
+    await axios
+      .get(`${app.api}/reconciliation/make/${id}`)
+      .then((response) => {
+        console.log(response);
+        toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
@@ -71,28 +100,47 @@ const ReconciliationList = () => {
               <TableStatic
                 header={[
                   "id",
-                  "create_on",
-                  "update_on",
-                  "total_count",
-                  "success_count",
-                  "failed_count",
+                  "name",
+                  "createOn",
+                  "editOn",
+                  "totalCount",
+                  "successCount",
+                  "failedCount",
                   "status",
+                  "",
                 ]}
               >
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.id}</TableCell>
-                      <TableCell>{item.create_on}</TableCell>
-                      <TableCell>{item.update_on}</TableCell>
-                      <TableCell>{item.total_count}</TableCell>
-                      <TableCell>{item.success_count}</TableCell>
-                      <TableCell>{item.failed_count}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
+                      <TableCell>{toLocaleDateTime(item.editOn)}</TableCell>
+                      <TableCell>{item.totalCount}</TableCell>
+                      <TableCell>{item.successCount}</TableCell>
+                      <TableCell>{item.failedCount}</TableCell>
                       <TableCell>{item.status}</TableCell>
-                      <TableCell align={"right"}>
-                        <GroupTable
-                          actionView={() => alert("check status")} //navigate(`/codes/id/${item.id}`)
-                        />
+                      <TableCell>
+                        {item.status === "loaded" ? (
+                          <GroupTable
+                            actionCustomIcon={[
+                              {
+                                icon: <Send />,
+                                callback: () => startReconciliation(item.id),
+                              },
+                            ]}
+                          />
+                        ) : item.status === "pending" ? (
+                          <GroupTable
+                            actionCustomIcon={[
+                              {
+                                icon: <Cached />,
+                                callback: () => checkStatus(item.id),
+                              },
+                            ]}
+                          />
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   );
