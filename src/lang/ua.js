@@ -139,6 +139,8 @@ const fields = {
   "Select value": "Выбрать значение",
   Loading: "Загрузка",
   "Upload file": "Загрузить файл",
+  "field float": "Поле должно быть целым или дробным числом",
+  "field number": "Поле должно быть целым числом",
 };
 
 const server = {

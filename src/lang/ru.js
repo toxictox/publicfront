@@ -154,6 +154,8 @@ const fields = {
   bank: "Банк",
   "name gateway field": "Название шлюза",
   "Select value": "Выбрать значение",
+  "field float": "Поле должно быть целым или дробным числом",
+  "field number": "Поле должно быть целым числом",
 };
 
 const server = {

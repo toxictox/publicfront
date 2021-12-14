@@ -31,6 +31,8 @@ const menu = {
   "Codes menu": "Коды",
   "Bin menu": "Bin",
   "Reconciliation menu": "Сверка",
+  "field float": "Поле должно быть целым или дробным числом",
+  "field number": "Поле должно быть целым числом",
 };
 
 const text = {
