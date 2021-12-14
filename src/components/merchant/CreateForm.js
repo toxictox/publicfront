@@ -13,13 +13,14 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
 import { app } from "@root/config";
-import toast from "react-hot-toast";
+import { fields } from "@lib/validate";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const [timezoneData, setTimezoneData] = useState([]);
   const { t } = useTranslation();
+
   useEffect(async () => {
     await axios.get(`${app.api}/timezone`).then((response) => {
       setTimezoneData(response.data.data);
@@ -31,10 +32,18 @@ const CreateForm = (props) => {
         name: "",
         description: "",
         timezoneId: "",
+        percentFee: "",
+        minAmountFee: "",
+        fixAmountFee: 0,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         description: Yup.string().max(255),
+        fixAmountFee: Yup.string().max(255),
+        percentFee: Yup.string()
+          .matches(fields.decimal, t("field float"))
+          .max(60),
+        minAmountFee: Yup.number().typeError(t("field number")).max(255),
         timezoneId: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -96,6 +105,60 @@ const CreateForm = (props) => {
                   onChange={handleChange}
                   type="text"
                   value={values.description}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.fixAmountFee && errors.fixAmountFee)}
+                  fullWidth
+                  helperText={touched.fixAmountFee && errors.fixAmountFee}
+                  label={t("fixAmountFee")}
+                  margin="normal"
+                  name="fixAmountFee"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.fixAmountFee}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.percentFee && errors.percentFee)}
+                  fullWidth
+                  helperText={touched.percentFee && errors.percentFee}
+                  label={t("percentFee")}
+                  margin="normal"
+                  name="percentFee"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.percentFee}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.minAmountFee && errors.minAmountFee)}
+                  fullWidth
+                  helperText={touched.minAmountFee && errors.minAmountFee}
+                  label={t("minAmountFee")}
+                  margin="normal"
+                  name="minAmountFee"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.minAmountFee}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}

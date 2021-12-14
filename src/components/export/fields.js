@@ -32,6 +32,15 @@ const fields = [
     name: "tranId",
   },
   {
+    id: "bankFee",
+    name: "bankFee",
+  },
+  {
+    id: "merchantFee",
+    name: "merchantFee",
+  },
+
+  {
     id: "acsStatus",
     name: "acsStatus",
   },
