@@ -70,6 +70,8 @@ const ExportFileFilter = (props) => {
           "pan",
           "tranId",
           "description",
+          "bankFee",
+          "merchantFee",
         ],
       }}
       validationSchema={Yup.object().shape({

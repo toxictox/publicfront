@@ -9,12 +9,11 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
-
+import { fields } from "@lib/validate";
 const UpdateForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
-  const decimal = /^\d+((\,|\.)\d{0,2})?$/;
   return (
     <Formik
       initialValues={{
@@ -22,7 +21,7 @@ const UpdateForm = (props) => {
       }}
       validationSchema={Yup.object().shape({
         depositLimit: Yup.string()
-          .matches(decimal)
+          .matches(fields.decimal)
           .max(60)
           .required(t("required")),
       })}
