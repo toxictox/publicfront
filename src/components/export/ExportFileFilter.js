@@ -41,7 +41,7 @@ const ExportFileFilter = (props) => {
       setMerchant(response.data.data);
     });
 
-    await axios.post(`${app.api}/filter/codes`).then((response) => {
+    await axios.get(`${app.api}/filter/codes`).then((response) => {
       setRespCode(response.data.data);
     });
   }, []);
