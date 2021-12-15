@@ -24,6 +24,7 @@ const StackedChart = (props) => {
   }, []);
 
   const getDates = () => {
+    if (chart.topRejectCodes === undefined) return [];
     let arr = [];
     for (let key in chart.topRejectCodes.daily) {
       arr.push(key);
