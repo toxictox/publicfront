@@ -3,7 +3,12 @@ import { Helmet } from "react-helmet-async";
 import gtm from "@lib/gtm";
 import { Box, Container, Grid } from "@material-ui/core";
 import useSettings from "@hooks/useSettings";
-import { StatBox, StatSalesRevenue, PieStat } from "@comp/core/stat/index";
+import {
+  StatBox,
+  StatSalesRevenue,
+  PieStat,
+  StackedChart,
+} from "@comp/core/stat/index";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
@@ -64,6 +69,9 @@ const Home = () => {
                 </Grid>
                 <Grid item md={12} sm={12} xs={12}>
                   <StatSalesRevenue title={"Аналитика транзакций"} />
+                </Grid>
+                <Grid item md={12} sm={12} xs={12}>
+                  <StackedChart title={"Top кодов отказа"} />
                 </Grid>
                 <Grid item md={6} sm={6} xs={6}>
                   <PieStat title={"Visa/Master"} data={total} />
