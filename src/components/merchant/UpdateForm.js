@@ -39,11 +39,9 @@ const UpdateBankForm = (props) => {
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         description: Yup.string().max(255),
-        percentFee: Yup.string()
-          .matches(fields.decimal, t("field float"))
-          .max(60),
-        minAmountFee: Yup.number().typeError(t("field number")).max(255),
-        fixAmountFee: Yup.number().max(255),
+        percentFee: Yup.string().matches(fields.decimal, t("field float")),
+        minAmountFee: Yup.number().typeError(t("field number")),
+        fixAmountFee: Yup.number(),
         timezoneId: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
