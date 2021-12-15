@@ -25,26 +25,37 @@ const StackedChart = (props) => {
 
   const getDates = () => {
     let arr = [];
-    for (let key in chart.topRejectCodes) {
+    for (let key in chart.topRejectCodes.daily) {
       arr.push(key);
     }
 
     return arr;
   };
 
+  const getDataByCode = (code) => {
+    let data = [];
+    for (let key in chart.topRejectCodes.daily) {
+      if (code in chart.topRejectCodes.daily[key]) {
+        data.push(chart.topRejectCodes.daily[key][code]);
+      } else {
+        data.push(0);
+      }
+    }
+
+    return data;
+  };
+
   const getDataFromResponse = () => {
-    let dirtyData = [];
-    // for (let date in chart.topRejectCodes) {
-    //   for(let code in chart.topRejectCodes[date]){
-    //     if(code)
-    //   }
-    // }
-    //
-    // return {
-    //   category,
-    //   success,
-    //   fail,
-    // };
+    let arr = [];
+    if (chart.topRejectCodes === undefined) return [];
+    chart.topRejectCodes.codes.map((code) => {
+      arr.push({
+        name: code,
+        data: getDataByCode(code),
+      });
+    });
+
+    return arr;
   };
 
   const chartOptions = {
@@ -84,24 +95,7 @@ const StackedChart = (props) => {
     },
   };
 
-  const chartSeries = [
-    {
-      name: "2000",
-      data: [44, 55, 41, 67, 22, 43],
-    },
-    {
-      name: "2500",
-      data: [13, 23, 20, 8, 13, 0],
-    },
-    {
-      name: "3000",
-      data: [11, 17, 15, 15, 21, 14],
-    },
-    {
-      name: "4000",
-      data: [21, 7, 25, 13, 22, 8],
-    },
-  ];
+  const chartSeries = [...getDataFromResponse()];
 
   return (
     <Card {...props}>
