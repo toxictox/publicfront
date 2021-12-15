@@ -68,9 +68,15 @@ const ReconciliationList = () => {
 
   const startReconciliation = async (id) => {
     await axios
-      .get(`${app.api}/reconciliation/make/${id}`)
+      .post(`${app.api}/reconciliation/make/${id}`)
       .then((response) => {
-        console.log(response);
+        setListData({
+          ...dataList,
+          data: dataList.data.map((item) => {
+            if (item.id === id) return response.data;
+            else return item;
+          }),
+        });
         toast.success(t("Success update"));
       })
       .catch((err) => {

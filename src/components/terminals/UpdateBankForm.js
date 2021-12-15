@@ -52,11 +52,9 @@ const UpdateBankForm = (props) => {
         wsdlUrl: Yup.string().max(255),
         gatewayMethodId: Yup.string().max(5).required(t("required")),
         merchantId: Yup.string().required(t("required")),
-        fixAmountFee: Yup.string().max(255),
-        percentFee: Yup.string()
-          .matches(fields.decimal, t("field float"))
-          .max(60),
-        minAmountFee: Yup.number().typeError(t("field number")).max(255),
+        fixAmountFee: Yup.string(),
+        percentFee: Yup.string().matches(fields.decimal, t("field float")),
+        minAmountFee: Yup.number().typeError(t("field number")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
