@@ -85,10 +85,9 @@ const ReconciliationList = () => {
   };
 
   const updateList = async (response) => {
-    console.log(22222, response, dataList);
     setListData({
-      ...dataList,
-      data: [...dataList.data, response],
+      dataList,
+      data: [response, ...dataList.data],
     });
   };
 
