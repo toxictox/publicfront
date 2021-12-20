@@ -20,7 +20,7 @@ import toast from "react-hot-toast";
 
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
-  const { callback } = props;
+  const { callback, update } = props;
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
 
@@ -51,6 +51,7 @@ const TransactionFilter = (props) => {
           .post(`${app.api}/reconciliation/file`, formData)
           .then((response) => {
             setFile(true);
+            update(response.data);
             toast.success(t("Success upload"));
           })
           .catch((e) => {
