@@ -84,6 +84,14 @@ const ReconciliationList = () => {
       });
   };
 
+  const updateList = async (response) => {
+    console.log(22222, response, dataList);
+    setListData({
+      ...dataList,
+      data: [...dataList.data, response],
+    });
+  };
+
   return (
     <>
       <Helmet>
@@ -101,7 +109,7 @@ const ReconciliationList = () => {
             <Card sx={{ mt: 1 }}>
               <CardHeader title={t("Reconciliation List")} />
               <Divider />
-              <ReconciliationFilter callback={updateData} />
+              <ReconciliationFilter callback={updateData} update={updateList} />
               <Divider />
               <TableStatic
                 header={[
