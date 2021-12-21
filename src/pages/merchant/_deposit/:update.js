@@ -52,14 +52,16 @@ const Update = () => {
     });
   };
 
-  const handleChangeSwitch = async (e, id) => {
+  const handleChangeSwitch = async (e, bankId) => {
     await axios
       .patch(`${app.api}/merchant/deposit/status/${id}`, {
         status: Number(e.target.checked),
+        bankId: bankId,
+        action: !e.target.checked ? "Switch on" : "Switch off",
       })
       .then((response) => {
         const newData = dataList.map((item) => {
-          if (item.bankId === id) {
+          if (item.bankId === bankId) {
             item.status = !e.target.checked;
             return item;
           }
