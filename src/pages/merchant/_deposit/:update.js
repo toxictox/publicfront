@@ -57,7 +57,7 @@ const Update = () => {
       .patch(`${app.api}/merchant/deposit/status/${id}`, {
         status: Number(e.target.checked),
         bankId: bankId,
-        action: !e.target.checked ? "Switch on" : "Switch off",
+        action: !e.target.checked ? "switchOff" : "switchOn",
       })
       .then((response) => {
         const newData = dataList.map((item) => {
