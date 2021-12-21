@@ -52,6 +52,27 @@ const Update = () => {
     });
   };
 
+  const handleChangeSwitch = async (e, id) => {
+    await axios
+      .patch(`${app.api}/merchant/deposit/status/${id}`, {
+        status: Number(e.target.checked),
+      })
+      .then((response) => {
+        const newData = dataList.map((item) => {
+          if (item.bankId === id) {
+            item.status = !e.target.checked;
+            return item;
+          }
+
+          return item;
+        });
+        setListData(newData);
+      })
+      .catch((e) => {
+        toast.error(e);
+      });
+  };
+
   const handleSubmit = async (values) => {
     try {
       await axios
@@ -100,7 +121,9 @@ const Update = () => {
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("Merchant Deposit Update")} />
               <Divider />
-              <TableStatic header={["id", "bankName", "depositLimit", ""]}>
+              <TableStatic
+                header={["id", "bankName", "depositLimit", "status", ""]}
+              >
                 {dataList.map(function (item) {
                   return (
                     <>
@@ -108,6 +131,16 @@ const Update = () => {
                         <TableCell width={30}>{item.bankId}</TableCell>
                         <TableCell width={200}>{item.bankName}</TableCell>
                         <TableCell>{item.depositLimit}</TableCell>
+                        <TableCell>
+                          <Switch
+                            checked={item.status}
+                            onChange={(e) => handleChangeSwitch(e, item.bankId)}
+                            name={`check[${item.bankId}]`}
+                            inputProps={{
+                              "aria-label": "secondary checkbox",
+                            }}
+                          />
+                        </TableCell>
 
                         <TableCell align={"right"}>
                           <GroupTable
