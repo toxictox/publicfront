@@ -27,7 +27,7 @@ const UpdateForm = (props) => {
       setMerchantList(response.data.data);
     });
 
-    await axios.get(`${app.api}/terminal/gateway/methods`).then((response) => {
+    await axios.get(`${app.api}/filter/gateway/methods`).then((response) => {
       setGatewayMethod(response.data.data);
     });
   }, []);
