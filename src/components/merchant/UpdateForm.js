@@ -31,7 +31,7 @@ const UpdateBankForm = (props) => {
       initialValues={{
         name: data.name,
         description: data.description,
-        timezoneId: data.timezoneId,
+        timezoneId: data.timezone,
         percentFee: data.percentFee,
         minAmountFee: data.minAmountFee,
         fixAmountFee: data.fixAmountFee,
