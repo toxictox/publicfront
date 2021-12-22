@@ -47,7 +47,7 @@ const TransactionsList = () => {
 
   const sendCallback = async (id) => {
     await axios
-      .post(`https://jsonplaceholder.typicode.com/posts`)
+      .post(`${app.api}/transaction/callback/${id}`)
       .then((response) => {
         toast.success(t("Success update"));
       })
