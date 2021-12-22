@@ -55,7 +55,7 @@ const SelectCheckbox = (props) => {
       if (value.includes(item.id) && Array.isArray(fieldText)) {
         arr.push(`${item[fieldText[0]]} ${item[fieldText[1]]}`);
       } else if (value.includes(item.id)) {
-        arr.push(item.name);
+        arr.push(t(item.name));
       }
     });
     return arr.join(",");
@@ -118,7 +118,7 @@ const SelectCheckbox = (props) => {
                 primary={`${item[fieldText[0]]} ${item[fieldText[1]]}`}
               />
             ) : (
-              <ListItemText primary={item.name} />
+              <ListItemText primary={t(item.name)} />
             )}
           </MenuItem>
         ))}

@@ -178,7 +178,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.merchantId && errors.merchantId)}
                   labelId="merchantId"
                   helperText={touched.merchantId && errors.merchantId}
-                  label={t("merchantId")}
+                  label={t("merchId")}
                   name="merchantId"
                   onBlur={handleBlur}
                   value={values.merchantId}
