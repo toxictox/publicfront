@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-import { Info } from "@material-ui/icons";
+import { Info, Compare } from "@material-ui/icons";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
+import toast from "react-hot-toast";
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -43,6 +44,17 @@ const TransactionsList = () => {
       console.error(err);
     }
   }, [mounted]);
+
+  const sendCallback = async (id) => {
+    await axios
+      .post(`https://jsonplaceholder.typicode.com/posts`)
+      .then((response) => {
+        toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
 
   useEffect(() => {
     getItem();
@@ -72,6 +84,10 @@ const TransactionsList = () => {
                       {
                         icon: <Info />,
                         callback: () => navigate(`/transactions/${id}/logs`),
+                      },
+                      {
+                        icon: <Compare />,
+                        callback: () => sendCallback(),
                       },
                     ]}
                   />
