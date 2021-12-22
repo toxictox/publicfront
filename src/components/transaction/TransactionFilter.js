@@ -15,6 +15,7 @@ import axios from "@lib/axios";
 
 import { app } from "@root/config";
 import { GetFilterDataFromStore } from "@lib/filter";
+import { SelectCheckbox } from "@comp/core/forms";
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -40,7 +41,10 @@ const TransactionFilter = (props) => {
   const dataForFields =
     GetFilterDataFromStore("transactions") !== undefined
       ? GetFilterDataFromStore("transactions")
-      : {};
+      : {
+          respCode: [],
+        };
+
   return (
     <Formik
       initialValues={dataForFields}
@@ -52,7 +56,6 @@ const TransactionFilter = (props) => {
         dateStart: Yup.string().max(255),
         dateEnd: Yup.string().max(255),
         gatewayId: Yup.string().max(255),
-        respCode: Yup.string().max(255),
         bankId: Yup.string().max(255),
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
@@ -81,6 +84,7 @@ const TransactionFilter = (props) => {
         handleBlur,
         handleChange,
         handleSubmit,
+        setFieldValue,
         isSubmitting,
         touched,
         values,
@@ -186,31 +190,21 @@ const TransactionFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                <TextField
+                <SelectCheckbox
                   error={Boolean(touched.respCode && errors.respCode)}
-                  fullWidth
-                  select
+                  labelId="respCode"
                   helperText={touched.respCode && errors.respCode}
                   label={t("respCode")}
-                  margin="normal"
                   name="respCode"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.respCode}
-                  variant="outlined"
-                  size="small"
+                  value={values.respCode !== undefined ? values.respCode : []}
                   sx={{ m: 0 }}
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {respCode.map((item) => (
-                    <MenuItem key={item.external} value={item.external}>
-                      {item.external} - {item.langEn}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  onChange={(e) => {
+                    setFieldValue("respCode", e.target.value);
+                  }}
+                  fieldText={["external", "langEn"]}
+                  items={respCode}
+                />
               </Grid>
 
               <Grid item xs={3}>
