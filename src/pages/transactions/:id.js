@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-import { Info, Compare } from "@material-ui/icons";
+import { Info } from "@material-ui/icons";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
@@ -45,7 +45,7 @@ const TransactionsList = () => {
     }
   }, [mounted]);
 
-  const sendCallback = async (id) => {
+  const sendCallback = async () => {
     await axios
       .post(`${app.api}/transaction/callback/${id}`)
       .then((response) => {
@@ -85,8 +85,10 @@ const TransactionsList = () => {
                         icon: <Info />,
                         callback: () => navigate(`/transactions/${id}/logs`),
                       },
+                    ]}
+                    actionCustom={[
                       {
-                        icon: <Compare />,
+                        title: "callback",
                         callback: () => sendCallback(),
                       },
                     ]}
