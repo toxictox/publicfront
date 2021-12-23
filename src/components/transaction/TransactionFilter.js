@@ -15,7 +15,7 @@ import axios from "@lib/axios";
 
 import { app } from "@root/config";
 import { GetFilterDataFromStore } from "@lib/filter";
-import { SelectCheckbox } from "@comp/core/forms";
+import { SelectCheckbox, SelectCheckboxCodes } from "@comp/core/forms";
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -43,20 +43,21 @@ const TransactionFilter = (props) => {
       ? GetFilterDataFromStore("transactions")
       : {
           respCode: [],
+          bankId: [],
         };
-
   return (
     <Formik
       initialValues={dataForFields}
+      enableReinitialize={true}
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
-        tranTypeId: Yup.string().max(255),
+        tranTypeId: Yup.array(),
         amountFrom: Yup.string().max(25),
         amountTo: Yup.string().max(25),
         dateStart: Yup.string().max(255),
         dateEnd: Yup.string().max(255),
         gatewayId: Yup.string().max(255),
-        bankId: Yup.string().max(255),
+        bankId: Yup.array(),
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
       })}
@@ -137,60 +138,43 @@ const TransactionFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                <TextField
+                <SelectCheckbox
                   error={Boolean(touched.tranTypeId && errors.tranTypeId)}
-                  fullWidth
-                  select
+                  labelId="tranTypeId"
                   helperText={touched.tranTypeId && errors.tranTypeId}
                   label={t("tranTypeId")}
-                  margin="normal"
                   name="tranTypeId"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.tranTypeId}
-                  variant="outlined"
-                  size="small"
+                  value={
+                    values.tranTypeId != undefined ? values.tranTypeId : []
+                  }
                   sx={{ m: 0 }}
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {tranType.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.bankId && errors.bankId)}
-                  fullWidth
-                  helperText={touched.bankId && errors.bankId}
-                  label="bankId"
-                  name="bankId"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  select
-                  size="small"
-                  value={values.bankId}
-                  variant="outlined"
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {banks.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  onChange={(e) => {
+                    setFieldValue("tranTypeId", e.target.value);
+                  }}
+                  items={tranType}
+                />
               </Grid>
 
               <Grid item xs={3}>
                 <SelectCheckbox
+                  error={Boolean(touched.bankId && errors.bankId)}
+                  labelId="bankId"
+                  helperText={touched.bankId && errors.bankId}
+                  label={t("bankId")}
+                  name="bankId"
+                  onBlur={handleBlur}
+                  value={values.bankId != undefined ? values.bankId : []}
+                  sx={{ m: 0 }}
+                  onChange={(e) => {
+                    setFieldValue("bankId", e.target.value);
+                  }}
+                  items={banks}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <SelectCheckboxCodes
                   error={Boolean(touched.respCode && errors.respCode)}
                   labelId="respCode"
                   helperText={touched.respCode && errors.respCode}
@@ -199,8 +183,8 @@ const TransactionFilter = (props) => {
                   onBlur={handleBlur}
                   value={values.respCode !== undefined ? values.respCode : []}
                   sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue("respCode", e.target.value);
+                  onChange={(data) => {
+                    setFieldValue("respCode", data);
                   }}
                   fieldText={["external", "langEn"]}
                   items={respCode}

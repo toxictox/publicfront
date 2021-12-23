@@ -52,7 +52,11 @@ const SelectCheckbox = (props) => {
     const arr = [];
 
     items.forEach((item) => {
-      if (value.includes(item.id) && Array.isArray(fieldText)) {
+      if (
+        fieldText != null &&
+        value.includes(item.id) &&
+        Array.isArray(fieldText)
+      ) {
         arr.push(`${item[fieldText[0]]} ${item[fieldText[1]]}`);
       } else if (value.includes(item.id)) {
         arr.push(t(item.name));
