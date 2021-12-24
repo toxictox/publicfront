@@ -47,7 +47,7 @@ const TransactionsList = () => {
 
   const sendCallback = async () => {
     await axios
-      .post(`${app.api}/transaction/callback/${id}`)
+      .post(`${app.api}/transactions/callback/${id}`)
       .then((response) => {
         toast.success(t("Success update"));
       })
