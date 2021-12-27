@@ -369,6 +369,7 @@ const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
 
 // users
 const UsersPage = Loadable(lazy(() => import("@pages/users")));
+const UsersPageInactive = Loadable(lazy(() => import("@pages/users/inactive")));
 const UserItemIdPage = Loadable(lazy(() => import("@pages/users/:id")));
 const UserItemIdUpdatePage = Loadable(
   lazy(() => import("@pages/users/:update"))
@@ -576,6 +577,14 @@ const routes = [
             element: (
               <ACLGuard can={"read"}>
                 <UsersPage />
+              </ACLGuard>
+            ),
+          },
+          {
+            path: "/inactive",
+            element: (
+              <ACLGuard can={"read"}>
+                <UsersPageInactive />
               </ACLGuard>
             ),
           },
