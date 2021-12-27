@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Box, Divider, Drawer, MenuItem, TextField } from "@material-ui/core";
+import {
+  Box,
+  Divider,
+  Drawer,
+  MenuItem,
+  TextField,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import NavSection from "./NavSection";
 import Scrollbar from "./Scrollbar";
@@ -35,6 +43,10 @@ const BaseSidebar = (props) => {
       ? localStorage.getItem("merchId")
       : user.merchantId
   );
+
+  const [balance, setBalance] = useState({
+    balance: 0,
+  });
 
   const getActiveStatus = (name) => {
     return user.permissions[name] !== undefined;
@@ -148,10 +160,18 @@ const BaseSidebar = (props) => {
       });
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
+    await axios
+      .get(`${app.api}/board/depositBalance`)
+      .then((response) => {
+        setBalance(response.data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }, [location.pathname]);
 
   const content = (
@@ -184,6 +204,26 @@ const BaseSidebar = (props) => {
               ))}
             </TextField>
           </Box>
+        </Box>
+        <Divider />
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                {t("Balance")}
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: "right" }}
+              >
+                {balance.balance} {"\u20B4"}
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
         <Divider />
         <Box sx={{ p: 2 }}>

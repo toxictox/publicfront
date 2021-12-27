@@ -130,6 +130,7 @@ const text = {
   Profile: "Профиль",
   Settings: "Настройки",
   Logout: "Выйти",
+  Balance: "Баланс",
 
   "Export List": "Экспорт файлов",
   "Bin List": "Bin",
