@@ -17,6 +17,8 @@ const buttons = {
 const menu = {
   "Transaction menu": "Транзакции",
   "Users menu": "Пользователи",
+  "Users inactive menu": "Неативные",
+  "Users active menu": "Активные",
   "Role menu": "Роли",
   "User Item": "Информация о пользователе",
   "Banks menu": "Банки",

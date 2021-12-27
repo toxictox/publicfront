@@ -72,6 +72,20 @@ const BaseSidebar = (props) => {
           path: "/users",
           icon: <Group fontSize="small" />,
           active: getActiveStatus("users"),
+          children: [
+            {
+              title: t("Users active menu"),
+              path: "/users",
+              icon: <Group fontSize="small" />,
+              active: getActiveStatus("users"),
+            },
+            {
+              title: t("Users inactive menu"),
+              path: "/users/inactive",
+              icon: <Group fontSize="small" />,
+              active: getActiveStatus("users"),
+            },
+          ],
         },
         {
           title: t("Role menu"),
@@ -164,6 +178,9 @@ const BaseSidebar = (props) => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
+  }, [location.pathname]);
+
+  useEffect(async () => {
     await axios
       .get(`${app.api}/board/depositBalance`)
       .then((response) => {
@@ -172,7 +189,7 @@ const BaseSidebar = (props) => {
       .catch((e) => {
         console.error(e);
       });
-  }, [location.pathname]);
+  }, []);
 
   const content = (
     <Box
