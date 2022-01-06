@@ -188,6 +188,13 @@ export const AuthProvider = (props) => {
       });
   };
 
+  const getAccess = (path, name) => {
+    return (
+      state.user.permissions[path] !== undefined &&
+      state.user.permissions[path].includes(name)
+    );
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -198,6 +205,7 @@ export const AuthProvider = (props) => {
         register,
         passwordRecovery,
         passwordReset,
+        getAccess,
       }}
     >
       {children}
