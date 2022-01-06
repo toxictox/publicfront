@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { ButtonGroup, Button } from "@material-ui/core";
 import { Edit, HighlightOff, Visibility } from "@material-ui/icons";
+import useAuth from "@hooks/useAuth";
 
 const GroupTable = (props) => {
+  const { user } = useAuth();
   const {
     actionUpdate,
     actionDelete,
@@ -15,17 +17,19 @@ const GroupTable = (props) => {
     <>
       <ButtonGroup variant="text" aria-label="text primary button group">
         {actionCustom !== undefined
-          ? actionCustom.map((item) => (
-              <Button
-                key={item.title}
-                variant={"contained"}
-                size={"small"}
-                color={item.color ? item.color : "primary"}
-                onClick={item.callback}
-              >
-                {item.title}
-              </Button>
-            ))
+          ? actionCustom.map((item) =>
+              item.access !== false ? (
+                <Button
+                  key={item.title}
+                  variant={"contained"}
+                  size={"small"}
+                  color={item.color ? item.color : "primary"}
+                  onClick={item.callback}
+                >
+                  {item.title}
+                </Button>
+              ) : null
+            )
           : null}
         {actionView !== undefined ? (
           <Button size={"small"} color={"primary"} onClick={actionView}>
@@ -34,11 +38,17 @@ const GroupTable = (props) => {
         ) : null}
 
         {actionCustomIcon !== undefined
-          ? actionCustomIcon.map((item) => (
-              <Button size={"small"} color={"primary"} onClick={item.callback}>
-                {item.icon}
-              </Button>
-            ))
+          ? actionCustomIcon.map((item) =>
+              item.access !== false ? (
+                <Button
+                  size={"small"}
+                  color={"primary"}
+                  onClick={item.callback}
+                >
+                  {item.icon}
+                </Button>
+              ) : null
+            )
           : null}
 
         {actionUpdate !== undefined ? (

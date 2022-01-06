@@ -904,7 +904,6 @@ const routes = [
             path: "id/:id/update",
             element: (
               <ACLGuard can={"update"}>
-                {" "}
                 <MerchantModelIdUpdate />
               </ACLGuard>
             ),
@@ -916,7 +915,11 @@ const routes = [
           },
           {
             path: "deposit/:id",
-            element: <MerchantDepositUpdate />,
+            element: (
+              <ACLGuard can={"depositLimitEdit"}>
+                <MerchantDepositUpdate />
+              </ACLGuard>
+            ),
           },
         ],
       },

@@ -29,7 +29,7 @@ const MerchantId = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, getAccess } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -107,10 +107,12 @@ const MerchantId = () => {
                       {
                         title: t("depositLimit"),
                         callback: () => navigate(`/merchants/deposit/${id}`),
+                        access: getAccess("merchants", "depositLimitEdit"),
                       },
                       {
                         title: t("keyToken"),
                         callback: () => navigate(`/merchants/token/${id}`),
+                        access: getAccess("merchants", "getMerchantKey"),
                       },
                     ]}
                   />
