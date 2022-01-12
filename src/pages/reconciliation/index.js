@@ -27,13 +27,11 @@ const ReconciliationList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
 
-  const [dataList, setListData] = useState({ data: [] });
+  const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
-  const [bankId, setBankId] = useState(null);
 
   const updateData = async (values) => {
-    await setBankId(values);
     await handlePageChange(null, 0, { bankId: values });
   };
 
@@ -140,6 +138,7 @@ const ReconciliationList = () => {
                             actionCustomIcon={[
                               {
                                 icon: <Send />,
+                                title: item.id,
                                 callback: () => startReconciliation(item.id),
                               },
                             ]}
@@ -149,6 +148,7 @@ const ReconciliationList = () => {
                             actionCustomIcon={[
                               {
                                 icon: <Cached />,
+                                title: item.id,
                                 callback: () => checkStatus(item.id),
                               },
                             ]}

@@ -41,6 +41,7 @@ const GroupTable = (props) => {
           ? actionCustomIcon.map((item) =>
               item.access !== false ? (
                 <Button
+                  key={item.title}
                   size={"small"}
                   color={"primary"}
                   onClick={item.callback}

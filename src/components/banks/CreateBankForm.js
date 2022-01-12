@@ -12,18 +12,16 @@ import { useTranslation } from "react-i18next";
 
 const UpdateForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const { t } = useTranslation();
 
   return (
     <Formik
       initialValues={{
         name: "",
-        // depositLimit: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
-        // depositLimit: Yup.string().max(255).required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {

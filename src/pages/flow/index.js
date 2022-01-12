@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   TablePagination,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -31,10 +30,6 @@ const TransactionsFlowList = () => {
   const [dataList, setListData] = useState([]);
   const [page, setPage] = useState(0);
 
-  // useEffect(() => {
-  //   gtm.push({ event: "page_view" });
-  // }, []);
-
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
@@ -47,16 +42,10 @@ const TransactionsFlowList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-
-    await axios
-      .post(`${app.api}/tran_types?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {

@@ -50,8 +50,6 @@ const FlowIdUpdate = () => {
     setConnent((els) => removeElements(elementsToRemove, els));
   };
 
-  const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
-
   const onNodeDragStop = (e, n) => {
     let newCoords = elements.map((item) => {
       if (item.id === n.id) {
@@ -102,7 +100,7 @@ const FlowIdUpdate = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   useEffect(() => {
     getTypes();
@@ -124,11 +122,6 @@ const FlowIdUpdate = () => {
     setElements((els) => {
       return [newNode, ...els];
     });
-  };
-
-  const handleClear = () => {
-    setElements([elements[elements.length - 1]]); // save only main node
-    setConnent([]);
   };
 
   const handleSubmit = async (values) => {

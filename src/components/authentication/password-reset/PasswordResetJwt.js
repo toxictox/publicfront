@@ -1,5 +1,4 @@
-import { useEffect, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Box, Button, FormHelperText, TextField } from "@material-ui/core";
@@ -10,8 +9,6 @@ import { useTranslation } from "react-i18next";
 const PasswordResetJwt = () => {
   const mounted = useMounted();
   const { passwordReset } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const params = useParams();
@@ -55,31 +52,6 @@ const PasswordResetJwt = () => {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit}>
-          {/*{!location.state?.username ? (*/}
-          {/*  <TextField*/}
-          {/*    autoFocus*/}
-          {/*    error={Boolean(touched.email && errors.email)}*/}
-          {/*    fullWidth*/}
-          {/*    helperText={touched.email && errors.email}*/}
-          {/*    label="Email Address"*/}
-          {/*    margin="normal"*/}
-          {/*    name="email"*/}
-          {/*    onBlur={handleBlur}*/}
-          {/*    onChange={handleChange}*/}
-          {/*    type="email"*/}
-          {/*    value={values.email}*/}
-          {/*    variant="outlined"*/}
-          {/*  />*/}
-          {/*) : (*/}
-          {/*  <TextField*/}
-          {/*    disabled*/}
-          {/*    fullWidth*/}
-          {/*    margin="normal"*/}
-          {/*    value={location.state.username}*/}
-          {/*    variant="outlined"*/}
-          {/*  />*/}
-          {/*)}*/}
-
           <TextField
             error={Boolean(touched.password && errors.password)}
             fullWidth

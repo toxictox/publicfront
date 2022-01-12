@@ -7,7 +7,6 @@ import {
   FormHelperText,
   TextField,
   MenuItem,
-  Select,
   Grid,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
@@ -15,16 +14,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import axios from "@lib/axios";
 import { app } from "@root/config";
-import toast from "react-hot-toast";
 
 const CreateModelForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const [condition, setCondition] = useState(null);
   const [conditionData, setConditionData] = useState([]);
   const [gateway, setGateway] = useState([]);
   const [gatewayMethod, setGatewayMethod] = useState([]);
-  const [tranType, setTranType] = useState([]);
   const [rules, setRules] = useState([]);
   const { t } = useTranslation();
   const { state } = useLocation();
@@ -36,10 +33,6 @@ const CreateModelForm = (props) => {
 
     await axios.get(`${app.api}/cascade/rules`).then((response) => {
       setRules(response.data.data);
-    });
-
-    await axios.get(`${app.api}/tran_types`).then((response) => {
-      setTranType(response.data);
     });
   }, []);
 

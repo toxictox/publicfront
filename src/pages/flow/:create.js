@@ -59,8 +59,6 @@ const FlowCreate = () => {
     setConnent((els) => removeElements(elementsToRemove, els));
   };
 
-  const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
-
   const onConnect = (params, e) => {
     let className = "base";
     if (params.sourceHandle === "error") className = "error";
@@ -117,7 +115,7 @@ const FlowCreate = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, state]);
 
   useEffect(() => {
     getTypes();
@@ -139,11 +137,6 @@ const FlowCreate = () => {
     setElements((els) => {
       return [newNode, ...els];
     });
-  };
-
-  const handleClear = () => {
-    setElements([elements[elements.length - 1]]); // save only main node
-    setConnent([]);
   };
 
   const handleSubmit = async (values) => {

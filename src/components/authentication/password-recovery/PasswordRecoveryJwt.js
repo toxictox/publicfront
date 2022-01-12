@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import {
@@ -16,7 +15,6 @@ import { useState } from "react";
 
 const PasswordRecoverJwt = () => {
   const mounted = useMounted();
-  const navigate = useNavigate();
   const { passwordRecovery } = useAuth();
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);

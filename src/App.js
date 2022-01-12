@@ -4,7 +4,6 @@ import { Toaster } from "react-hot-toast";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import "./i18n";
 import RTL from "./components/RTL";
-import SettingsDrawer from "./components/SettingsDrawer";
 import SplashScreen from "./components/SplashScreen";
 import { gtmConfig } from "./config";
 import useAuth from "./hooks/useAuth";

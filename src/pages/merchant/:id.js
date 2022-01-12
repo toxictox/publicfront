@@ -45,14 +45,14 @@ const MerchantId = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   const handleDelete = async (id) => {
     await axios
       .delete(`${app.api}/merchant/${id}`)
       .then(async (response) => {
         let newMerchId =
-          user.merchants[0].merchantId != id
+          user.merchants[0].merchantId !== id
             ? user.merchants[0].merchantId
             : user.merchants[1].merchantId;
 
