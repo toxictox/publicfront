@@ -43,7 +43,7 @@ const TransactionsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   const sendCallback = async () => {
     await axios

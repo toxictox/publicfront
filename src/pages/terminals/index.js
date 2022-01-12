@@ -29,6 +29,7 @@ const TerminalsList = () => {
 
   const [dataList, setListData] = useState({
     data: [],
+    count: 0,
   });
   const [page, setPage] = useState(0);
 
@@ -44,15 +45,10 @@ const TerminalsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    await axios
-      .post(`${app.api}/terminals?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {
@@ -96,7 +92,7 @@ const TerminalsList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow hover key={item.hash}>
+                    <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.tid}</TableCell>
                       <TableCell>{item.gatewayMethod}</TableCell>
