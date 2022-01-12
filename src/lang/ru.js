@@ -16,7 +16,7 @@ const buttons = {
 
 const menu = {
   "Transaction menu": "Транзакции",
-  "Users menu": "Пользователи",
+  "Users menu": "Користувачі",
   "Users inactive menu": "Неативные",
   "Users active menu": "Активные",
   "Role menu": "Роли",
@@ -41,7 +41,7 @@ const text = {
   "Success update": "Запись обновлена",
   "Do you want to remove": "Хотите удалить запись?",
   "Register account": "Регистрация",
-  "Success registration": "Вы успешно разрегестрированы",
+  "Success registration": "Вы успешно зарегистрированы",
   "Success deleted": "Запись удалена",
   "Reset title": "Восстановление пароля",
   "Success recovery send token": "Инструкция по была отправлена на email",
@@ -94,8 +94,8 @@ const text = {
   "Code Item Update": "Обновления кода",
   "Code Item Create": "Создание кода",
   "Transactions Logs Item": "Логи транзакций",
-
   "Reconciliation List": "Сверка",
+
   dateStart: "Период с",
   dateEnd: "Период по",
   tranTypeId: "Тип операции",
@@ -136,11 +136,19 @@ const text = {
 
   "Export List": "Экспорт файлов",
   "Bin List": "Bin",
-  "Invitation link": "Ссылка для приглашения пользователя",
+  "Invitation link": "Ссылка для приглашения пользователей",
+
+  "Success tab": "Успешные",
+  "Failed tab": "Отклоненные",
+  "Conversion tab": "Конверсия",
+
+  "Password was successfully changed": "Пароль был успешно изменен",
+  "Reset success send":
+    "Инструкция по восстановлению пароля была отправлена на указанный email",
 };
 
 const fields = {
-  uuid: "Id",
+  uuid: "ID",
   name: "Название",
   createOn: "Создано",
   merchant: "Мерчант",
@@ -172,6 +180,12 @@ const fields = {
   bank: "Банк",
   "name gateway field": "Название шлюза",
   "Select value": "Выбрать значение",
+  "Set deposit limit": "Установить",
+  "Increase deposit limit": "Увеличить",
+  "Decrease deposit limit": "Уменьшить",
+  "Comment show": "Комментарий",
+  Loading: "Загрузка",
+  "Upload file": "Загрузить файл",
 };
 
 const server = {
@@ -191,7 +205,6 @@ const validationForm = {
 };
 
 export const ru = {
-  "Welcome to React": "привет реакт",
   "Forgot password": "Забыли пароль?",
   "Create new account": "Создать аккаунт",
   "Login text": "Авторизация",
