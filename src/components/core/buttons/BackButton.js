@@ -17,7 +17,7 @@ const BackButton = (props) => {
           spacing={1}
           sx={{ mt: 0 }}
         >
-          <Grid sx={12} item>
+          <Grid xs={12} item>
             <Button
               className={classes.button}
               variant="contained"

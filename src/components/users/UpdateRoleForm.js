@@ -22,7 +22,7 @@ import { useParams } from "react-router-dom";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const { t } = useTranslation();
   const { id } = useParams();
   const [listPermission, setListPermission] = useState([]);

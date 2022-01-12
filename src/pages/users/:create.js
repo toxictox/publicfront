@@ -1,8 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Box, Container, Card, CardHeader, Divider } from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
@@ -12,12 +10,9 @@ import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
 const UserIdUpdate = () => {
-  const mounted = useMounted();
   const { settings } = useSettings();
-  const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [dataList, setListData] = useState([]);
 
   const handleSubmit = async (values) => {
     try {
@@ -52,7 +47,7 @@ const UserIdUpdate = () => {
             <Card sx={{ mt: 2 }}>
               <CardHeader title={t("User Item Create")} />
               <Divider />
-              <CreateForm data={dataList} callback={handleSubmit} />
+              <CreateForm callback={handleSubmit} />
             </Card>
           </Box>
         </Container>
