@@ -7,21 +7,12 @@ import {
   TextField,
   Grid,
 } from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { app } from "@root/config";
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
-  const { login } = useAuth();
   const { t } = useTranslation();
-  const [banks, setBanks] = useState([]);
-  const [tran, setTran] = useState([]);
-  const [tranType, setTranType] = useState([]);
-  const [respCode, setRespCode] = useState([]);
 
   return (
     <Formik

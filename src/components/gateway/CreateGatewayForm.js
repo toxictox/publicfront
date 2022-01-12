@@ -7,25 +7,26 @@ import {
   FormHelperText,
   TextField,
   MenuItem,
-  Select,
   Grid,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import axios from "@lib/axios";
 import { app } from "@root/config";
-import toast from "react-hot-toast";
 
 const CreateGatewayForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const [banks, setBanks] = useState([]);
   const { t } = useTranslation();
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/banks`).then((response) => {
-      setBanks(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/banks`).then((response) => {
+        setBanks(response.data.data);
+      });
+    };
+    getData();
   }, []);
   return (
     <Formik
@@ -33,15 +34,12 @@ const CreateGatewayForm = (props) => {
         name: "",
         endpoint: "",
         env: "",
-        // bank: "",
         bankId: "",
-        // depositLimit: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         endpoint: Yup.string().max(255).required(t("required")),
         env: Yup.string().max(255).required(t("required")),
-        // bank: Yup.string().max(255).required(t("required")),
         bankId: Yup.string().max(255),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {

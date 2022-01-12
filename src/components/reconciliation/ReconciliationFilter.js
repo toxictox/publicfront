@@ -24,15 +24,18 @@ const TransactionFilter = (props) => {
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
 
-  useEffect(async () => {
-    await axios
-      .get(`${app.api}/filter/banks`)
-      .then((response) => {
-        setBanksList(response.data.data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(`${app.api}/filter/banks`)
+        .then((response) => {
+          setBanksList(response.data.data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    };
+    getData();
   }, []);
 
   return (

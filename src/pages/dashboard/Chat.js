@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Box } from '@material-ui/core';
-import { ChatSidebar, ChatThread } from '../../components/dashboard/chat';
-import gtm from '../../lib/gtm';
-import { getThreads } from '../../slices/chat';
-import { useDispatch } from '../../store';
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import { Box } from "@material-ui/core";
+import { ChatSidebar, ChatThread } from "../../components/dashboard/chat";
+import gtm from "../../lib/gtm";
+import { getThreads } from "../../slices/chat";
+import { useDispatch } from "../../store";
 
 const Chat = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    gtm.push({ event: 'page_view' });
+    gtm.push({ event: "page_view" });
   }, []);
 
   useEffect(() => {
     dispatch(getThreads());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -24,9 +24,9 @@ const Chat = () => {
       </Helmet>
       <Box
         sx={{
-          backgroundColor: 'background.default',
-          display: 'flex',
-          height: '100%'
+          backgroundColor: "background.default",
+          display: "flex",
+          height: "100%",
         }}
       >
         <ChatSidebar />

@@ -7,7 +7,6 @@ import {
   FormHelperText,
   TextField,
   FormControl,
-  FormLabel,
   FormControlLabel,
   Checkbox,
   FormGroup,
@@ -25,15 +24,18 @@ const CreateForm = (props) => {
   const { t } = useTranslation();
   const [listPermission, setListPermission] = useState([]);
 
-  useEffect(async () => {
-    const response = await axios
-      .get(`${app.api}/permission/list`)
-      .then((response) => response.data);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios
+        .get(`${app.api}/permission/list`)
+        .then((response) => response.data);
 
-    if (mounted.current) {
-      setListPermission(response);
-    }
-  }, []);
+      if (mounted.current) {
+        setListPermission(response);
+      }
+    };
+    getData();
+  }, [mounted]);
 
   return (
     <Formik

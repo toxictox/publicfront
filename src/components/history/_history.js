@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import {
   TablePagination,
   TableRow,
   TableCell,
-  Button,
   Typography,
 } from "@material-ui/core";
 import { toLocaleDateTime } from "@lib/date";
@@ -26,6 +25,7 @@ const DepositHistory = ({ reload, action }) => {
   const { id } = useParams();
   const [dataList, setDataList] = useState({
     data: [],
+    count: 0,
   });
   const [page, setPage] = useState(0);
 
@@ -41,15 +41,10 @@ const DepositHistory = ({ reload, action }) => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted, reload]);
+  }, [mounted, reload, id, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    await axios
-      .post(`${app.api}/${action}/deposit/hist/?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setDataList(response.data);
-      });
   };
 
   useEffect(() => {
@@ -74,7 +69,7 @@ const DepositHistory = ({ reload, action }) => {
         {dataList.data.map(function (item) {
           return (
             <>
-              <TableRow hover key={item.id}>
+              <TableRow hover key={item.createOn}>
                 {action !== "bank" ? <TableCell>{item.bank}</TableCell> : null}
 
                 <TableCell>{item.amount}</TableCell>

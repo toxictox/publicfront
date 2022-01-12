@@ -67,8 +67,8 @@ const TransactionsList = () => {
               <CardHeader title={t("Transactions Logs Item")} />
               <Divider />
               <TableStatic header={["createOn", "message", "data"]}>
-                {dataList.data.map((item) => (
-                  <TableRow hover key={item.id}>
+                {dataList.data.map((item, i) => (
+                  <TableRow hover key={i}>
                     <TableCell width={200}>
                       {toLocaleDateTime(item.createOn)}
                     </TableCell>

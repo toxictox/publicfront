@@ -26,14 +26,17 @@ const CreateModelForm = (props) => {
   const { t } = useTranslation();
   const { state } = useLocation();
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/gateways`).then((response) => {
-      setGateway(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/gateways`).then((response) => {
+        setGateway(response.data.data);
+      });
 
-    await axios.get(`${app.api}/cascade/rules`).then((response) => {
-      setRules(response.data.data);
-    });
+      await axios.get(`${app.api}/cascade/rules`).then((response) => {
+        setRules(response.data.data);
+      });
+    };
+    getData();
   }, []);
 
   const addCondition = (e) => {

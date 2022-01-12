@@ -22,14 +22,17 @@ const UpdateBankForm = (props) => {
   const [gatewayMethod, setGatewayMethod] = useState([]);
   const [merchantList, setMerchantList] = useState([]);
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/merchants`).then((response) => {
-      setMerchantList(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/merchants`).then((response) => {
+        setMerchantList(response.data.data);
+      });
 
-    await axios.get(`${app.api}/filter/gateway/methods`).then((response) => {
-      setGatewayMethod(response.data.data);
-    });
+      await axios.get(`${app.api}/filter/gateway/methods`).then((response) => {
+        setGatewayMethod(response.data.data);
+      });
+    };
+    getData();
   }, []);
 
   return (

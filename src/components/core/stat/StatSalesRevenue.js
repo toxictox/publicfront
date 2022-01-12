@@ -1,11 +1,5 @@
 import Chart from "react-apexcharts";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  MenuItem,
-  TextField,
-} from "@material-ui/core";
+import { Card, CardContent, CardHeader } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import axios from "@lib/axios";
@@ -17,10 +11,13 @@ const FinanceSalesRevenue = (props) => {
 
   const [chart, setChart] = useState({});
 
-  useEffect(async () => {
-    await axios
-      .get(`${app.api}/board/trx/chart/7`)
-      .then((response) => setChart(response.data));
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(`${app.api}/board/trx/chart/7`)
+        .then((response) => setChart(response.data));
+    };
+    getData();
   }, []);
 
   const getDataFromResponse = () => {

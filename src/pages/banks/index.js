@@ -30,6 +30,7 @@ const BanksList = () => {
 
   const [dataList, setListData] = useState({
     data: [],
+    count: 0,
   });
   const [page, setPage] = useState(0);
 
@@ -45,15 +46,10 @@ const BanksList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    await axios
-      .post(`${app.api}/banks?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {
@@ -96,7 +92,7 @@ const BanksList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow hover key={item.hash}>
+                    <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.depositLimit}</TableCell>
                       <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>

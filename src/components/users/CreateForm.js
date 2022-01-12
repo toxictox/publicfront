@@ -25,17 +25,20 @@ const UpdateForm = (props) => {
   const { t } = useTranslation();
   const [listPermission, setListPermission] = useState([]);
 
-  useEffect(async () => {
-    const response = await axios
-      .post(`${app.api}/user/get/roles`, {
-        hash: auth.user.hash,
-      })
-      .then((response) => response.data);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios
+        .post(`${app.api}/user/get/roles`, {
+          hash: auth.user.hash,
+        })
+        .then((response) => response.data);
 
-    if (mounted.current) {
-      setListPermission(response);
-    }
-  }, []);
+      if (mounted.current) {
+        setListPermission(response);
+      }
+    };
+    getData();
+  }, [mounted, auth.user.hash]);
 
   return (
     <Formik

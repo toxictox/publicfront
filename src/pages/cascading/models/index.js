@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, Fragment } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -36,7 +36,6 @@ const CascadingModelsList = () => {
   const { user } = useAuth();
 
   const [dataList, setListData] = useState([]);
-  const [merchantId, setMerchantId] = useState(user.merchantId);
   const [tranTypesId, setTranTypesId] = useState(0);
   const [tranTypes, setTranTypes] = useState([]);
 
@@ -54,7 +53,7 @@ const CascadingModelsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, user.merchantId]);
 
   const handleChangeSwitch = (id, val) => {
     setListData(
@@ -129,19 +128,6 @@ const CascadingModelsList = () => {
     }
   };
 
-  // const handleChangeMerchant = async (e) => {
-  //   setMerchantId(e.target.value);
-  //   if (e.target.value !== 0 && e.target.value !== "") {
-  //     await axios
-  //       .post(`${app.api}/merchant/tran_types`, {
-  //         merchantId: e.target.value,
-  //       })
-  //       .then((response) => setTranTypes(response.data));
-  //   } else {
-  //     setTranTypes([]);
-  //   }
-  // };
-
   const handleRemoveItem = async (id) => {
     await axios
       .delete(`${app.api}/cascade/model/${id}`)
@@ -180,14 +166,14 @@ const CascadingModelsList = () => {
               <CardHeader
                 title={t("Cascading Models List")}
                 action={
-                  merchantId &&
+                  user.merchantId &&
                   tranTypesId !== undefined &&
                   tranTypesId !== 0 ? (
                     <CreateButton
                       action={() =>
                         navigate("/cascading/create", {
                           state: {
-                            merchantId: merchantId,
+                            merchantId: user.merchantId,
                             tranTypesId: tranTypesId,
                           },
                         })

@@ -113,7 +113,7 @@ export const AuthProvider = (props) => {
     };
 
     initialize();
-  }, []);
+  }, [navigate]);
 
   const login = async (email, password) => {
     await axios

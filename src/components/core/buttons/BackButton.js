@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ButtonGroup, Button, Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Backspace } from "@material-ui/icons";
 import { useStyles } from "./style/buttons.style";
