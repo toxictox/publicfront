@@ -1,4 +1,3 @@
-import createSvgIcon from "@material-ui/core/utils/createSvgIcon";
 import { experimentalStyled } from "@material-ui/core/styles";
 
 const LogoRoot = experimentalStyled("svg")``;

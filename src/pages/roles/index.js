@@ -30,9 +30,8 @@ const TransactionsList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [merchantId, setMerchantId] = useState(0);
   const [dataList, setListData] = useState({ roles: [] });
-  const [page, setPage] = useState(0);
+
   const { user } = useAuth();
 
   const handleDelete = async (id) => {
@@ -52,9 +51,7 @@ const TransactionsList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .post(`${app.api}/role/get`, {
-          merchantId: user.merchantId,
-        })
+        .post(`${app.api}/role/get`)
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -64,30 +61,6 @@ const TransactionsList = () => {
       console.error(err);
     }
   }, [mounted]);
-
-  const handleChangeMerchant = async (e) => {
-    setMerchantId(e.target.value);
-    if (e.target.value !== 0 && e.target.value !== "") {
-      await axios
-        .post(`${app.api}/role/get`, {
-          merchantId: e.target.value,
-        })
-        .then((response) => setListData(response.data));
-    } else {
-      setListData({
-        roles: [],
-      });
-    }
-  };
-
-  const handlePageChange = async (e, newPage) => {
-    setPage(newPage);
-    await axios
-      .post(`${app.api}/users?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
-  };
 
   useEffect(() => {
     getOrders();
@@ -113,13 +86,7 @@ const TransactionsList = () => {
                 action={
                   user.merchantId ? (
                     <CreateButton
-                      action={() =>
-                        navigate("/roles/create", {
-                          state: {
-                            merchantId: merchantId,
-                          },
-                        })
-                      }
+                      action={() => navigate("/roles/create")}
                       text={t("Create button")}
                     />
                   ) : null
@@ -130,7 +97,7 @@ const TransactionsList = () => {
               <TableStatic header={["name", ""]}>
                 {dataList.roles.map(function (item) {
                   return (
-                    <TableRow hover key={item.id}>
+                    <TableRow hover key={item.roleId}>
                       <TableCell>{item.roleName}</TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
@@ -153,14 +120,6 @@ const TransactionsList = () => {
                 })}
               </TableStatic>
             </Card>
-            {/*<TablePagination*/}
-            {/*  component="div"*/}
-            {/*  count={dataList.count}*/}
-            {/*  onPageChange={handlePageChange}*/}
-            {/*  page={page}*/}
-            {/*  rowsPerPage={25}*/}
-            {/*  rowsPerPageOptions={[25]}*/}
-            {/*/>*/}
           </Box>
         </Container>
       </Box>

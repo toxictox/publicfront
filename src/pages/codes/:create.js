@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Box, Container, Card, CardHeader, Divider } from "@material-ui/core";
 import useSettings from "@hooks/useSettings";
@@ -13,7 +13,6 @@ const RoleCreate = () => {
   const { settings } = useSettings();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { state } = useLocation();
 
   const handleSubmit = async (values) => {
     try {

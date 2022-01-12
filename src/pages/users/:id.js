@@ -40,7 +40,7 @@ const UserId = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   useEffect(() => {
     getItem();
@@ -55,7 +55,7 @@ const UserId = () => {
         sx={{
           backgroundColor: "background.default",
           minHeight: "100%",
-          py: 2,
+          pt: 2,
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>

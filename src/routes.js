@@ -3,8 +3,6 @@ import { Navigate } from "react-router-dom";
 import AuthGuard from "@comp/AuthGuard";
 import ACLGuard from "@comp/ACLGuard";
 import BlogLayout from "./components/blog/BlogLayout";
-import BrowseLayout from "./components/BrowseLayout";
-import MainLayout from "./components/MainLayout";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DocsLayout from "./components/docs/DocsLayout";
 import GuestGuard from "./components/GuestGuard";
@@ -25,44 +23,6 @@ const Loadable = (Component) => (props) => (
 
 // Browse pages
 if (process.env.NODE_ENV === "development") {
-  const Browse = Loadable(lazy(() => import("./pages/browse/Browse")));
-  const BrowseButtons = Loadable(
-    lazy(() => import("./pages/browse/BrowseButtons"))
-  );
-  const BrowseCharts = Loadable(
-    lazy(() => import("./pages/browse/BrowseCharts"))
-  );
-  const BrowseColors = Loadable(
-    lazy(() => import("./pages/browse/BrowseColors"))
-  );
-  const BrowseDetailLists = Loadable(
-    lazy(() => import("./pages/browse/BrowseDetailLists"))
-  );
-  const BrowseForms = Loadable(
-    lazy(() => import("./pages/browse/BrowseForms"))
-  );
-  const BrowseGridLists = Loadable(
-    lazy(() => import("./pages/browse/BrowseGridLists"))
-  );
-  const BrowseGroupedLists = Loadable(
-    lazy(() => import("./pages/browse/BrowseGroupedLists"))
-  );
-  const BrowseInputs = Loadable(
-    lazy(() => import("./pages/browse/BrowseInputs"))
-  );
-  const BrowseModals = Loadable(
-    lazy(() => import("./pages/browse/BrowseModals"))
-  );
-  const BrowseQuickStats = Loadable(
-    lazy(() => import("./pages/browse/BrowseQuickStats"))
-  );
-  const BrowseTables = Loadable(
-    lazy(() => import("./pages/browse/BrowseTables"))
-  );
-  const BrowseTypography = Loadable(
-    lazy(() => import("./pages/browse/BrowseTypography"))
-  );
-
   // Blog pages
 
   const BlogPostCreate = Loadable(
@@ -135,13 +95,6 @@ if (process.env.NODE_ENV === "development") {
   const SocialProfile = Loadable(
     lazy(() => import("./pages/dashboard/SocialProfile"))
   );
-
-  // Other pages
-
-  const Checkout = Loadable(lazy(() => import("./pages/Checkout")));
-  const Contact = Loadable(lazy(() => import("./pages/Contact")));
-  const Home = Loadable(lazy(() => import("./pages/Home")));
-  const Pricing = Loadable(lazy(() => import("./pages/Pricing")));
 
   dashboard = {
     path: "dashboard",
@@ -365,7 +318,6 @@ const ServerError = Loadable(lazy(() => import("@pages/ServerError")));
 
 // New pages
 const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
-const AccountPage = Loadable(lazy(() => import("@pages/account/Home")));
 
 // users
 const UsersPage = Loadable(lazy(() => import("@pages/users")));
@@ -493,8 +445,6 @@ const ReconciliationList = Loadable(
 
 // export list
 const ExportIndexPage = Loadable(lazy(() => import("@pages/export/index")));
-
-const Home = Loadable(lazy(() => import("./pages/Home")));
 
 const routes = [
   process.env.NODE_ENV === "development" ? docs : {},

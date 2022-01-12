@@ -43,7 +43,7 @@ const Update = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   const openTab = (id, action) => {
     setTab({

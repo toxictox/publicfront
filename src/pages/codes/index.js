@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
   Container,
   Card,
-  Link,
   CardHeader,
   Divider,
   TableRow,
@@ -21,9 +20,7 @@ import { GroupTable, CreateButton } from "@comp/core/buttons";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import { showConfirm } from "@slices/dialog";
-import { useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
+
 import useAuth from "@hooks/useAuth";
 import CodesFilter from "@comp/codes/CodesFilter";
 
@@ -32,8 +29,7 @@ const CodesList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [dataList, setListData] = useState({ data: [] });
+  const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
   const { user } = useAuth();
@@ -55,15 +51,6 @@ const CodesList = () => {
   const filter = (values) => {
     handlePageChange(null, 0, values);
   };
-
-  // const handlePageChange = async (e, newPage) => {
-  //   setPage(newPage);
-  //   await axios
-  //     .post(`${app.api}/codes?page=${newPage}&count=${25}`)
-  //     .then((response) => {
-  //       setListData(response.data);
-  //     });
-  // };
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
@@ -112,7 +99,7 @@ const CodesList = () => {
               <CodesFilter callback={filter} />
               <Divider />
               <TableStatic
-                header={[, "external", "langEn", "langRu", "langUk", ""]}
+                header={["external", "langEn", "langRu", "langUk", ""]}
               >
                 {dataList.data.map(function (item) {
                   return (

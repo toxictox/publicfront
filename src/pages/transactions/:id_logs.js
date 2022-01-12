@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams, useNavigate, Link as RouterLink } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -17,7 +17,7 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
-import { BackButton, GroupTable } from "@comp/core/buttons";
+import { BackButton } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
 
 const TransactionsList = () => {
@@ -42,7 +42,7 @@ const TransactionsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   useEffect(() => {
     getItem();

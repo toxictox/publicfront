@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -30,6 +30,7 @@ const GatewayList = () => {
 
   const [dataList, setListData] = useState({
     data: [],
+    count: 0,
   });
   const [page, setPage] = useState(0);
 
@@ -45,15 +46,10 @@ const GatewayList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    await axios
-      .post(`${app.api}/gateways?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {
@@ -90,7 +86,7 @@ const GatewayList = () => {
               >
                 {dataList.data.map(function (item) {
                   return (
-                    <TableRow hover key={item.hash}>
+                    <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.endpoint}</TableCell>
                       <TableCell>{item.env}</TableCell>

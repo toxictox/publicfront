@@ -10,7 +10,6 @@ import {
   TableRow,
   Card,
 } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 
@@ -20,8 +19,7 @@ import { GetFilterDataFromStore, GetFilterPageFromStore } from "@lib/filter";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useDispatch } from "@store";
-import { setFilterParams, setFilterPage } from "@slices/filter";
-import { CreateButton, GroupTable } from "@comp/core/buttons";
+import { setFilterPage } from "@slices/filter";
 import { TableStatic } from "@comp/core/tables";
 import { useTranslation } from "react-i18next";
 
@@ -30,11 +28,11 @@ const TransactionsList = () => {
   const { settings } = useSettings();
   const [dataList, setListData] = useState({
     data: [],
+    count: 0,
   });
 
-  const filterList = GetFilterDataFromStore("bin");
-
   const [page, setPage] = useState(GetFilterPageFromStore("bin"));
+  const filterList = GetFilterDataFromStore("bin");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -54,27 +52,11 @@ const TransactionsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
-
-  const filter = (values) => {
-    handlePageChange(null, 0, values);
-  };
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
     dispatch(setFilterPage({ path: "bin", page: newPage }));
-
-    await axios
-      .get(
-        `${app.api}/bin/table?page=${newPage}&count=${25}`,
-        values !== undefined ? values : filterList
-      )
-      .then(async (response) => {
-        if (values !== undefined) {
-          dispatch(setFilterParams({ path: "bin", params: { ...values } }));
-        }
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {

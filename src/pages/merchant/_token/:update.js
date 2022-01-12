@@ -30,7 +30,7 @@ const Update = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   const handleSubmit = async (values) => {
     try {

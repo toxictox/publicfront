@@ -43,7 +43,7 @@ const GatewayId = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   useEffect(() => {
     getItem();

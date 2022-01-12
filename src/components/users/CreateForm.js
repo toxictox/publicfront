@@ -21,7 +21,7 @@ import useAuth from "@hooks/useAuth";
 const UpdateForm = (props) => {
   const mounted = useMounted();
   const auth = useAuth();
-  const { data, callback } = props;
+  const { callback } = props;
   const { t } = useTranslation();
   const [listPermission, setListPermission] = useState([]);
 
@@ -36,16 +36,6 @@ const UpdateForm = (props) => {
       setListPermission(response);
     }
   }, []);
-
-  // const handleChangeCheckbox = (val) => {
-  //   let copy = checked.slice(0);
-  //   if (copy.includes(+val)) {
-  //     copy.splice(copy.indexOf(+val), 1);
-  //   } else {
-  //     copy.push(+val);
-  //   }
-  //   setChecked(copy);
-  // };
 
   return (
     <Formik

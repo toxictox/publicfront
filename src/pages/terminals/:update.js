@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import UpdateForm from "@comp/terminals/UpdateBankForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
-import { useDispatch } from "react-redux";
+
 const BankIdUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -30,7 +30,7 @@ const BankIdUpdate = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   const handleSubmit = async (values) => {
     try {

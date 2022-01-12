@@ -21,7 +21,7 @@ import { app } from "@root/config";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const { t } = useTranslation();
   const [listPermission, setListPermission] = useState([]);
 

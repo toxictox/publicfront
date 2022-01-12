@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -34,8 +34,9 @@ const UserList = () => {
   });
   const [page, setPage] = useState(0);
 
-  const [linkToken, setLinkToken] = useState(
-    state !== null && state.link !== undefined ? state.link : undefined
+  const linkToken = useMemo(
+    () => (state !== null && state.link !== undefined ? state.link : undefined),
+    [state]
   );
 
   const createInviteLink = () => {
@@ -54,15 +55,10 @@ const UserList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, page]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
-    await axios
-      .post(`${app.api}/users?page=${newPage}&count=${25}`)
-      .then((response) => {
-        setListData(response.data);
-      });
   };
 
   useEffect(() => {
@@ -143,7 +139,7 @@ const UserList = () => {
             </Card>
             <TablePagination
               component="div"
-              count={dataList.count}
+              count={dataList.count ? dataList.count : 0}
               onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}

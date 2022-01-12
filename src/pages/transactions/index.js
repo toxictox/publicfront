@@ -19,6 +19,7 @@ const TransactionsList = () => {
   const { settings } = useSettings();
   const [dataList, setListData] = useState({
     data: [],
+    count: 0,
   });
 
   const filterList = GetFilterDataFromStore("transactions");
