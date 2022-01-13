@@ -8,7 +8,6 @@ import {
   TextField,
   Grid,
 } from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -20,30 +19,31 @@ import { SelectCheckbox } from "@comp/core/forms";
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
-  const { login } = useAuth();
   const { t } = useTranslation();
   const [banks, setBanks] = useState([]);
-  const [tran, setTran] = useState([]);
   const [tranType, setTranType] = useState([]);
   const [merchant, setMerchant] = useState([]);
   const [respCode, setRespCode] = useState([]);
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/filter/banks`).then((response) => {
-      setBanks(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/filter/banks`).then((response) => {
+        setBanks(response.data.data);
+      });
 
-    await axios.get(`${app.api}/filter/tran_types`).then((response) => {
-      setTranType(response.data);
-    });
+      await axios.get(`${app.api}/filter/tran_types`).then((response) => {
+        setTranType(response.data);
+      });
 
-    await axios.get(`${app.api}/filter/merchants`).then((response) => {
-      setMerchant(response.data.data);
-    });
+      await axios.get(`${app.api}/filter/merchants`).then((response) => {
+        setMerchant(response.data.data);
+      });
 
-    await axios.get(`${app.api}/filter/codes`).then((response) => {
-      setRespCode(response.data.data);
-    });
+      await axios.get(`${app.api}/filter/codes`).then((response) => {
+        setRespCode(response.data.data);
+      });
+    };
+    getData();
   }, []);
 
   return (

@@ -6,7 +6,6 @@ import {
   FormHelperText,
   TextField,
   Grid,
-  MenuItem,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
@@ -24,18 +23,21 @@ const TransactionFilter = (props) => {
   const [tranType, setTranType] = useState([]);
   const [respCode, setRespCode] = useState([]);
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/filter/banks`).then((response) => {
-      setBanks(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/filter/banks`).then((response) => {
+        setBanks(response.data.data);
+      });
 
-    await axios.get(`${app.api}/filter/tran_types`).then((response) => {
-      setTranType(response.data);
-    });
+      await axios.get(`${app.api}/filter/tran_types`).then((response) => {
+        setTranType(response.data);
+      });
 
-    await axios.get(`${app.api}/filter/codes`).then((response) => {
-      setRespCode(response.data.data);
-    });
+      await axios.get(`${app.api}/filter/codes`).then((response) => {
+        setRespCode(response.data.data);
+      });
+    };
+    getData();
   }, []);
 
   const dataForFields =
@@ -146,7 +148,7 @@ const TransactionFilter = (props) => {
                   name="tranTypeId"
                   onBlur={handleBlur}
                   value={
-                    values.tranTypeId != undefined ? values.tranTypeId : []
+                    values.tranTypeId !== undefined ? values.tranTypeId : []
                   }
                   sx={{ m: 0 }}
                   onChange={(e) => {
@@ -164,7 +166,7 @@ const TransactionFilter = (props) => {
                   label={t("bankId")}
                   name="bankId"
                   onBlur={handleBlur}
-                  value={values.bankId != undefined ? values.bankId : []}
+                  value={values.bankId !== undefined ? values.bankId : []}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue("bankId", e.target.value);

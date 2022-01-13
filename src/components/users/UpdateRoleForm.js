@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   FormHelperText,
-  TextField,
   FormControl,
   FormControlLabel,
   Checkbox,
@@ -29,24 +28,27 @@ const CreateForm = (props) => {
   const [checked, setChecked] = useState([]);
   const auth = useAuth();
 
-  useEffect(async () => {
-    const responseList = await axios
-      .post(`${app.api}/user/get/roles`, {
-        hash: auth.user.hash,
-      })
-      .then((response) => response.data);
+  useEffect(() => {
+    const getData = async () => {
+      const responseList = await axios
+        .post(`${app.api}/user/get/roles`, {
+          hash: auth.user.hash,
+        })
+        .then((response) => response.data);
 
-    const responseChecked = await axios
-      .post(`${app.api}/user/active/roles`, {
-        hash: id,
-      })
-      .then((response) => response.data);
+      const responseChecked = await axios
+        .post(`${app.api}/user/active/roles`, {
+          hash: id,
+        })
+        .then((response) => response.data);
 
-    if (mounted.current) {
-      setChecked(responseChecked.roles);
-      setListPermission(responseList);
-    }
-  }, []);
+      if (mounted.current) {
+        setChecked(responseChecked.roles);
+        setListPermission(responseList);
+      }
+    };
+    getData();
+  }, [mounted, auth.user.hash, id]);
 
   const handleChangeCheckbox = (val) => {
     let copy = checked.slice(0);

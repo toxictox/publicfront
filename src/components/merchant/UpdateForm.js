@@ -20,10 +20,13 @@ const UpdateBankForm = (props) => {
   const [timezoneData, setTimezoneData] = useState([]);
   const { t } = useTranslation();
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/timezone`).then((response) => {
-      setTimezoneData(response.data.data);
-    });
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/timezone`).then((response) => {
+        setTimezoneData(response.data.data);
+      });
+    };
+    getData();
   }, []);
 
   return (

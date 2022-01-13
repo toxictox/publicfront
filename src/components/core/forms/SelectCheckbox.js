@@ -41,7 +41,6 @@ const SelectCheckbox = (props) => {
     onBlur,
     onChange,
     value,
-    renderValue,
     onSelectAll,
     labelId,
     items,
@@ -79,7 +78,7 @@ const SelectCheckbox = (props) => {
         fullWidth
         select
         label={label}
-        margin="normal"
+        // margin="normal"
         name={name}
         onBlur={onBlur}
         value={value}

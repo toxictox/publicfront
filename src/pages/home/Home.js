@@ -22,10 +22,13 @@ const Home = () => {
 
   const [total, setTotal] = useState({});
 
-  useEffect(async () => {
-    await axios
-      .get(`${app.api}/board/totals/7`)
-      .then((response) => setTotal(response.data));
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(`${app.api}/board/totals/7`)
+        .then((response) => setTotal(response.data));
+    };
+    getData();
   }, []);
 
   return (

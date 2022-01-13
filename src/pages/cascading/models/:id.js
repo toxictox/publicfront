@@ -40,7 +40,7 @@ const CascadingModelId = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, id]);
 
   useEffect(() => {
     getItem();
@@ -73,7 +73,7 @@ const CascadingModelId = () => {
                           <TableCell>{t(i)}</TableCell>
                           <TableCell>{dataList[i].toString()}</TableCell>
                         </>
-                      ) : i == "ruleCondition" &&
+                      ) : i === "ruleCondition" &&
                         dataList[i] !== null &&
                         dataList[i] !== undefined ? (
                         <>

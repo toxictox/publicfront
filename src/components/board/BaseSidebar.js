@@ -174,21 +174,27 @@ const BaseSidebar = (props) => {
       });
   };
 
-  useEffect(async () => {
-    if (openMobile && onMobileClose) {
-      await onMobileClose();
-    }
+  useEffect(() => {
+    const getData = async () => {
+      if (openMobile && onMobileClose) {
+        await onMobileClose();
+      }
+    };
+    getData();
   }, [location.pathname]);
 
-  useEffect(async () => {
-    await axios
-      .get(`${app.api}/board/depositBalance`)
-      .then((response) => {
-        setBalance(response.data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+  useEffect(() => {
+    const getBalance = async () => {
+      await axios
+        .get(`${app.api}/board/depositBalance`)
+        .then((response) => {
+          setBalance(response.data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    };
+    getBalance();
   }, []);
 
   const content = (

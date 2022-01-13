@@ -7,7 +7,6 @@ import {
   OutlinedInput,
   FormControl,
   Typography,
-  Stack,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
 import { useTranslation } from "react-i18next";
@@ -42,8 +41,7 @@ const SelectCheckboxCodes = (props) => {
     onBlur,
     onChange,
     value,
-    renderValue,
-    onSelectChange,
+
     labelId,
     items,
   } = props;
@@ -85,14 +83,14 @@ const SelectCheckboxCodes = (props) => {
         renderValue={setRenderValue}
         onChange={(e) => {
           let data = [];
-          if (e.target.value[e.target.value.length - 1] == "success") {
+          if (e.target.value[e.target.value.length - 1] === "success") {
             items.forEach((item) =>
               item.internal >= 1000 && item.internal < 2000
                 ? data.push(item.id)
                 : null
             );
             onChange(data);
-          } else if (e.target.value[e.target.value.length - 1] == "failed") {
+          } else if (e.target.value[e.target.value.length - 1] === "failed") {
             items.forEach((item) =>
               item.internal >= 2000 ? data.push(item.id) : null
             );

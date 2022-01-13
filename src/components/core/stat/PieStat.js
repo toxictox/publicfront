@@ -1,28 +1,8 @@
 import Chart from "react-apexcharts";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { app } from "@root/config";
+import { Card, CardContent, CardHeader } from "@material-ui/core";
 
 const PieStat = (props) => {
-  const theme = useTheme();
   const { title, data } = props;
-
-  const [chart, setChart] = useState({});
-
-  useEffect(async () => {
-    await axios
-      .get(`${app.api}/board/trx/chart/7`)
-      .then((response) => setChart(response.data));
-  }, []);
 
   const chartOptions = {
     chart: {
@@ -34,19 +14,6 @@ const PieStat = (props) => {
       position: "bottom",
       height: 50,
     },
-    // responsive: [
-    //   {
-    //     breakpoint: 480,
-    //     options: {
-    //       chart: {
-    //         width: 200,
-    //       },
-    //       legend: {
-    //         position: "bottom",
-    //       },
-    //     },
-    //   },
-    // ],
   };
 
   return (

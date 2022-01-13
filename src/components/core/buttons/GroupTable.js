@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import { ButtonGroup, Button } from "@material-ui/core";
 import { Edit, HighlightOff, Visibility } from "@material-ui/icons";
-import useAuth from "@hooks/useAuth";
 
 const GroupTable = (props) => {
-  const { user } = useAuth();
   const {
     actionUpdate,
     actionDelete,

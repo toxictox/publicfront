@@ -1,74 +1,9 @@
 import Chart from "react-apexcharts";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { Avatar, Box, Card, Divider, Typography } from "@material-ui/core";
 import { alpha, useTheme } from "@material-ui/core/styles";
-import ArrowRightIcon from "@icons/ArrowRight";
+
 import ChevronDownIcon from "@icons/ChevronDown";
 import ChevronUpIcon from "@icons/ChevronUp";
-
-const LineChart = () => {
-  const theme = useTheme();
-
-  const chartOptions = {
-    chart: {
-      background: "transparent",
-      toolbar: {
-        show: false,
-      },
-      zoom: {
-        enabled: false,
-      },
-    },
-    colors: ["#7783DB"],
-    dataLabels: {
-      enabled: false,
-    },
-    grid: {
-      show: false,
-    },
-    stroke: {
-      width: 3,
-    },
-    theme: {
-      mode: theme.palette.mode,
-    },
-    tooltip: {
-      enabled: false,
-    },
-    xaxis: {
-      labels: {
-        show: false,
-      },
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    yaxis: {
-      show: false,
-    },
-  };
-
-  const chartSeries = [{ data: [0, 60, 30, 60, 0, 30, 10, 30, 0] }];
-
-  return (
-    <Chart
-      options={chartOptions}
-      series={chartSeries}
-      type="line"
-      width={120}
-    />
-  );
-};
 
 const BarChart = () => {
   const theme = useTheme();
@@ -153,7 +88,7 @@ const StatBox = (props) => {
         <BarChart />
       </Box>
 
-      {status != undefined ? (
+      {status !== undefined ? (
         <>
           <Divider />
           <Box

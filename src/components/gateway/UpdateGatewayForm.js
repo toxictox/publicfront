@@ -7,16 +7,12 @@ import {
   FormHelperText,
   TextField,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
   Grid,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import axios from "@lib/axios";
 import { app } from "@root/config";
-import toast from "react-hot-toast";
 
 const UpdateGatewayForm = (props) => {
   const mounted = useMounted();
@@ -24,13 +20,16 @@ const UpdateGatewayForm = (props) => {
   const [banks, setBanks] = useState([]);
   const { t } = useTranslation();
 
-  useEffect(async () => {
-    await axios.get(`${app.api}/banks`).then((response) => {
-      if (mounted.current) {
-        setBanks(response.data.data);
-      }
-    });
-  }, [setBanks]);
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`${app.api}/banks`).then((response) => {
+        if (mounted.current) {
+          setBanks(response.data.data);
+        }
+      });
+    };
+    getData();
+  }, [setBanks, mounted]);
 
   return (
     <Formik

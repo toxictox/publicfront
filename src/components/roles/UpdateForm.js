@@ -25,15 +25,18 @@ const CreateForm = (props) => {
   const [listPermission, setListPermission] = useState([]);
   const [checked, setChecked] = useState(data.permissions);
 
-  useEffect(async () => {
-    const response = await axios
-      .get(`${app.api}/permission/list`)
-      .then((response) => response.data);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios
+        .get(`${app.api}/permission/list`)
+        .then((response) => response.data);
 
-    if (mounted.current) {
-      setListPermission(response);
-    }
-  }, []);
+      if (mounted.current) {
+        setListPermission(response);
+      }
+    };
+    getData();
+  }, [mounted]);
 
   const handleChangeCheckbox = (val) => {
     let copy = checked.slice(0);

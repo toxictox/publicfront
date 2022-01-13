@@ -1,18 +1,12 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import {
-  Box,
-  Button,
-  FormHelperText,
-  TextField,
-  Grid,
-} from "@material-ui/core";
+import { Box, FormHelperText, TextField, Grid } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 
 const TitleFlowFormUpdate = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { data } = props;
   const { t } = useTranslation();
 
   return (

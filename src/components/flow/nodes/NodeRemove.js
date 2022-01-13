@@ -1,12 +1,6 @@
 import React from "react";
-import { useStoreState, useStoreActions } from "react-flow-renderer";
-import {
-  getBezierPath,
-  getEdgeCenter,
-  getMarkerEnd,
-} from "react-flow-renderer";
 
-const foreignObjectSize = 40;
+import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
 
 const onEdgeClick = (evt, id) => {
   evt.stopPropagation();
@@ -22,7 +16,7 @@ export default function CustomEdge({
   sourcePosition,
   targetPosition,
   style = {},
-  data,
+
   arrowHeadType,
   markerEndId,
 }) {
@@ -35,12 +29,6 @@ export default function CustomEdge({
     targetPosition,
   });
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  const [edgeCenterX, edgeCenterY] = getEdgeCenter({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-  });
 
   return (
     <>

@@ -1,26 +1,29 @@
-import { useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { DragDropContext } from 'react-beautiful-dnd';
-import toast from 'react-hot-toast';
-import { Box, Breadcrumbs, Link, Typography } from '@material-ui/core';
-import { KanbanColumn, KanbanColumnAdd } from '../../components/dashboard/kanban';
-import ChevronRightIcon from '../../icons/ChevronRight';
-import gtm from '../../lib/gtm';
-import { getBoard, moveCard } from '../../slices/kanban';
-import { useDispatch, useSelector } from '../../store';
+import { useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { DragDropContext } from "react-beautiful-dnd";
+import toast from "react-hot-toast";
+import { Box, Breadcrumbs, Link, Typography } from "@material-ui/core";
+import {
+  KanbanColumn,
+  KanbanColumnAdd,
+} from "../../components/dashboard/kanban";
+import ChevronRightIcon from "../../icons/ChevronRight";
+import gtm from "../../lib/gtm";
+import { getBoard, moveCard } from "../../slices/kanban";
+import { useDispatch, useSelector } from "../../store";
 
 const Kanban = () => {
   const dispatch = useDispatch();
   const { columns } = useSelector((state) => state.kanban);
 
   useEffect(() => {
-    gtm.push({ event: 'page_view' });
+    gtm.push({ event: "page_view" });
   }, []);
 
   useEffect(() => {
     dispatch(getBoard());
-  }, []);
+  }, [dispatch]);
 
   const handleDragEnd = async ({ source, destination, draggableId }) => {
     try {
@@ -30,8 +33,10 @@ const Kanban = () => {
       }
 
       // Card has not been moved
-      if (source.droppableId === destination.droppableId
-        && source.index === destination.index) {
+      if (
+        source.droppableId === destination.droppableId &&
+        source.index === destination.index
+      ) {
         return;
       }
 
@@ -40,13 +45,15 @@ const Kanban = () => {
         await dispatch(moveCard(draggableId, destination.index));
       } else {
         // Moved to another column
-        await dispatch(moveCard(draggableId, destination.index, destination.droppableId));
+        await dispatch(
+          moveCard(draggableId, destination.index, destination.droppableId)
+        );
       }
 
-      toast.success('Card moved!');
+      toast.success("Card moved!");
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong!');
+      toast.error("Something went wrong!");
     }
   };
 
@@ -57,18 +64,15 @@ const Kanban = () => {
       </Helmet>
       <Box
         sx={{
-          backgroundColor: 'background.default',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          overflow: 'hidden'
+          backgroundColor: "background.default",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          overflow: "hidden",
         }}
       >
         <Box sx={{ p: 3 }}>
-          <Typography
-            color="textPrimary"
-            variant="h5"
-          >
+          <Typography color="textPrimary" variant="h5">
             Kanban
           </Typography>
           <Breadcrumbs
@@ -84,10 +88,7 @@ const Kanban = () => {
             >
               Dashboard
             </Link>
-            <Typography
-              color="textSecondary"
-              variant="subtitle2"
-            >
+            <Typography color="textSecondary" variant="subtitle2">
               Kanban
             </Typography>
           </Breadcrumbs>
@@ -95,25 +96,22 @@ const Kanban = () => {
         <DragDropContext onDragEnd={handleDragEnd}>
           <Box
             sx={{
-              display: 'flex',
+              display: "flex",
               flexGrow: 1,
               flexShrink: 1,
-              overflowX: 'auto',
-              overflowY: 'hidden'
+              overflowX: "auto",
+              overflowY: "hidden",
             }}
           >
             <Box
               sx={{
-                display: 'flex',
+                display: "flex",
                 px: 1,
-                py: 3
+                py: 3,
               }}
             >
               {columns.allIds.map((columnId) => (
-                <KanbanColumn
-                  columnId={columnId}
-                  key={columnId}
-                />
+                <KanbanColumn columnId={columnId} key={columnId} />
               ))}
               <KanbanColumnAdd />
             </Box>

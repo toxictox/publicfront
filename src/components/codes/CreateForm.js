@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
-  const { data, callback } = props;
+  const { callback } = props;
   const { t } = useTranslation();
 
   return (
