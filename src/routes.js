@@ -578,7 +578,7 @@ const routes = [
         children: [
           {
             element: (
-              <ACLGuard can={"getPermissionsList"}>
+              <ACLGuard can={"read"}>
                 <RolesList />
               </ACLGuard>
             ),
@@ -586,7 +586,7 @@ const routes = [
           {
             path: "create",
             element: (
-              <ACLGuard can={"getRole"}>
+              <ACLGuard can={"create"}>
                 <CreateRole />
               </ACLGuard>
             ),
@@ -594,7 +594,7 @@ const routes = [
           {
             path: "id/:id",
             element: (
-              <ACLGuard can={"updateRole"}>
+              <ACLGuard can={"details"}>
                 <UpdateRole />
               </ACLGuard>
             ),
@@ -765,7 +765,6 @@ const routes = [
             path: "create",
             element: (
               <ACLGuard can={"create"}>
-                {" "}
                 <TerminalsCreate />
               </ACLGuard>
             ),

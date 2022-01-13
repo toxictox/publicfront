@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { GroupTable, BackButton } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 
 const UserId = () => {
   const mounted = useMounted();
@@ -25,6 +26,7 @@ const UserId = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -66,7 +68,10 @@ const UserId = () => {
                 title={t("User Item")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/users/id/${id}/update`)}
+                    actionUpdate={{
+                      access: getAccess("users", "update"),
+                      callback: () => navigate(`/users/id/${id}/update`),
+                    }}
                   />
                 }
               />

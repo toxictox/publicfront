@@ -32,7 +32,7 @@ const TransactionsList = () => {
   const dispatch = useDispatch();
   const [dataList, setListData] = useState({ roles: [] });
 
-  const { user } = useAuth();
+  const { user, getAccess } = useAuth();
 
   const handleDelete = async (id) => {
     await axios
@@ -84,7 +84,7 @@ const TransactionsList = () => {
               <CardHeader
                 title={t("Roles List")}
                 action={
-                  user.merchantId ? (
+                  user.merchantId && getAccess("roles", "create") ? (
                     <CreateButton
                       action={() => navigate("/roles/create")}
                       text={t("Create button")}
@@ -101,17 +101,22 @@ const TransactionsList = () => {
                       <TableCell>{item.roleName}</TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() =>
-                            navigate(`/roles/id/${item.roleId}`)
-                          }
-                          actionDelete={() => {
-                            dispatch(
-                              showConfirm({
-                                title: t("Do you want to remove"),
-                                isOpen: true,
-                                okCallback: () => handleDelete(item.roleId),
-                              })
-                            );
+                          actionView={{
+                            access: getAccess("roles", "details"),
+                            callback: () =>
+                              navigate(`/roles/id/${item.roleId}`),
+                          }}
+                          actionDelete={{
+                            access: getAccess("roles", "delete"),
+                            callback: () => {
+                              dispatch(
+                                showConfirm({
+                                  title: t("Do you want to remove"),
+                                  isOpen: true,
+                                  okCallback: () => handleDelete(item.roleId),
+                                })
+                              );
+                            },
                           }}
                         />
                       </TableCell>

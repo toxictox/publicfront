@@ -17,11 +17,13 @@ import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
 import axios from "@lib/axios";
 import { app } from "@root/config";
+import useAuth from "@hooks/useAuth";
 
 const CreateForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
+  const { getAccess } = useAuth();
   const [listPermission, setListPermission] = useState([]);
   const [checked, setChecked] = useState(data.permissions);
 
@@ -149,19 +151,21 @@ const CreateForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
-                <Box sx={{ mt: 2 }}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                  >
-                    {t("Create button")}
-                  </Button>
-                </Box>
-              </Grid>
+              {getAccess("roles", "update") ? (
+                <Grid item xs={12}>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      color="primary"
+                      disabled={isSubmitting}
+                      type="submit"
+                      variant="contained"
+                      size="large"
+                    >
+                      {t("update button")}
+                    </Button>
+                  </Box>
+                </Grid>
+              ) : null}
             </Grid>
           </Box>
 
