@@ -691,11 +691,19 @@ const routes = [
           },
           {
             path: "/create",
-            element: <TransactionFlowCreate />,
+            element: (
+              <ACLGuard can={"create"}>
+                <TransactionFlowCreate />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <TransactionFlowUpdate />,
+            element: (
+              <ACLGuard can={"read"}>
+                <TransactionFlowUpdate />
+              </ACLGuard>
+            ),
           },
         ],
       },
@@ -780,7 +788,11 @@ const routes = [
           },
           {
             path: "token/:id",
-            element: <TerminalsUpdateToken />,
+            element: (
+              <ACLGuard can={"getTerminalKey"}>
+                <TerminalsUpdateToken />
+              </ACLGuard>
+            ),
           },
         ],
       },

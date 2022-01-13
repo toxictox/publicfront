@@ -22,11 +22,12 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import ReconciliationFilter from "@comp/reconciliation/ReconciliationFilter";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 
 const ReconciliationList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
-
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
@@ -137,6 +138,10 @@ const ReconciliationList = () => {
                           <GroupTable
                             actionCustomIcon={[
                               {
+                                access: getAccess(
+                                  "reconciliation",
+                                  "makeReconciliation"
+                                ),
                                 icon: <Send />,
                                 title: item.id,
                                 callback: () => startReconciliation(item.id),

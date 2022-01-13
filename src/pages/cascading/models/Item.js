@@ -8,12 +8,13 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { showConfirm } from "@slices/dialog";
+import useAuth from "@hooks/useAuth";
 
 const CascadingModelsListItem = ({ item, switchStatus, removeItem }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { getAccess } = useAuth();
   const handleChangeSwitch = async (e, id) => {
     await axios
       .patch(`${app.api}/cascade/model/status/${id}`, {
@@ -62,15 +63,21 @@ const CascadingModelsListItem = ({ item, switchStatus, removeItem }) => {
 
       <TableCell align={"right"}>
         <GroupTable
-          actionView={() => navigate(`/cascading/id/${item.id}`)}
-          actionDelete={() => {
-            dispatch(
-              showConfirm({
-                title: t("Do you want to remove"),
-                isOpen: true,
-                okCallback: removeItem,
-              })
-            );
+          actionView={{
+            access: getAccess("cascading", "details"),
+            callback: () => navigate(`/cascading/id/${item.id}`),
+          }}
+          actionDelete={{
+            access: getAccess("cascading", "delete"),
+            callback: () => {
+              dispatch(
+                showConfirm({
+                  title: t("Do you want to remove"),
+                  isOpen: true,
+                  okCallback: removeItem,
+                })
+              );
+            },
           }}
         />
       </TableCell>

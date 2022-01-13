@@ -21,12 +21,14 @@ import { toLocaleDateTime } from "@lib/date";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
+import useAuth from "@hooks/useAuth";
 
 const GatewayList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getAccess } = useAuth();
 
   const [dataList, setListData] = useState({
     data: [],
@@ -74,10 +76,12 @@ const GatewayList = () => {
               <CardHeader
                 title={t("Gateway List")}
                 action={
-                  <CreateButton
-                    action={() => navigate("/gateways/create")}
-                    text={t("Create button")}
-                  />
+                  getAccess("gateways", "create") ? (
+                    <CreateButton
+                      action={() => navigate("/gateways/create")}
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
               <Divider />
@@ -95,7 +99,10 @@ const GatewayList = () => {
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/gateways/id/${item.id}`)}
+                          actionView={{
+                            access: getAccess("gateways", "details"),
+                            callback: () => navigate(`/gateways/id/${item.id}`),
+                          }}
                         />
                       </TableCell>
                     </TableRow>
