@@ -21,6 +21,7 @@ import { showConfirm } from "@slices/dialog";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 
 const BankId = () => {
   const mounted = useMounted();
@@ -28,6 +29,7 @@ const BankId = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -79,18 +81,25 @@ const BankId = () => {
                 title={t("Terminal Item Id")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/terminals/id/${id}/update`)}
-                    actionDelete={() => {
-                      dispatch(
-                        showConfirm({
-                          title: t("Do you want to remove"),
-                          isOpen: true,
-                          okCallback: () => handleDelete(id),
-                        })
-                      );
+                    actionUpdate={{
+                      access: getAccess("terminals", "update"),
+                      callback: () => navigate(`/terminals/id/${id}/update`),
+                    }}
+                    actionDelete={{
+                      access: getAccess("terminals", "delete"),
+                      callback: () => {
+                        dispatch(
+                          showConfirm({
+                            title: t("Do you want to remove"),
+                            isOpen: true,
+                            okCallback: () => handleDelete(id),
+                          })
+                        );
+                      },
                     }}
                     actionCustom={[
                       {
+                        access: getAccess("terminals", "getTerminalKey"),
                         title: t("keyToken"),
                         callback: () => navigate(`/terminals/token/${id}`),
                       },

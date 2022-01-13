@@ -21,6 +21,7 @@ import { toLocaleDateTime } from "@lib/date";
 import DepositForm from "@pages/merchant/_deposit/_form";
 import toast from "react-hot-toast";
 import DepositHistory from "@comp/history/_history";
+import useAuth from "@hooks/useAuth";
 const BankId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -28,6 +29,7 @@ const BankId = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [reload, setReload] = useState(false);
+  const { getAccess } = useAuth();
   const [tab, setTab] = useState({
     open: false,
     action: null,
@@ -108,17 +110,20 @@ const BankId = () => {
                     actionCustom={[
                       {
                         title: t("Set deposit limit"),
+                        access: getAccess("banks", "updateBankDeposit"),
                         color: tab.action === "set" ? "success" : "primary",
                         callback: () => openTab(true, "set"),
                       },
                       {
                         title: t("Increase deposit limit"),
+                        access: getAccess("banks", "updateBankDeposit"),
                         color:
                           tab.action === "increase" ? "success" : "primary",
                         callback: () => openTab(true, "increase"),
                       },
                       {
                         title: t("Decrease deposit limit"),
+                        access: getAccess("banks", "updateBankDeposit"),
                         color:
                           tab.action === "decrease" ? "success" : "primary",
                         callback: () => openTab(true, "decrease"),

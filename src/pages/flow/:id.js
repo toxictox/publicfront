@@ -31,6 +31,7 @@ import ReactFlow, {
 import nodeTypes from "@comp/flow/nodes";
 import TitleFlowFormUpdate from "@comp/flow/forms/update";
 import { useStyles } from "@comp/flow/styles/elements.style";
+import useAuth from "@hooks/useAuth";
 
 const FlowIdUpdate = () => {
   const mounted = useMounted();
@@ -44,6 +45,7 @@ const FlowIdUpdate = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const classes = useStyles();
+  const { getAccess } = useAuth();
 
   const onElementsRemove = (elementsToRemove) => {
     setElements((els) => removeElements(elementsToRemove, els));
@@ -162,6 +164,7 @@ const FlowIdUpdate = () => {
                   <GroupTable
                     actionCustom={[
                       {
+                        access: getAccess("flows", "update"),
                         title: t("Save button"),
                         callback: handleSubmit,
                       },

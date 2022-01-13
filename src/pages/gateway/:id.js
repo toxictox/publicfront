@@ -20,6 +20,7 @@ import { GroupTable, BackButton } from "@comp/core/buttons";
 import { useDispatch } from "react-redux";
 import { showConfirm } from "@slices/dialog";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 
 const GatewayId = () => {
   const mounted = useMounted();
@@ -27,6 +28,7 @@ const GatewayId = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -69,15 +71,20 @@ const GatewayId = () => {
                 title={t("Gateway Item")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/gateways/id/${id}/update`)}
-                    actionDelete={() => {
-                      dispatch(
-                        showConfirm({
-                          title: t("Do you want to remove"),
-                          isOpen: true,
-                          okCallback: () => alert("You dont have permission"),
-                        })
-                      );
+                    actionUpdate={{
+                      access: getAccess("gateways", "update"),
+                      callback: () => navigate(`/gateways/id/${id}/update`),
+                    }}
+                    actionDelete={{
+                      access: getAccess("gateways", "delete"),
+                      callback: () =>
+                        dispatch(
+                          showConfirm({
+                            title: t("Do you want to remove"),
+                            isOpen: true,
+                            okCallback: () => alert("You dont have permission"),
+                          })
+                        ),
                     }}
                   />
                 }

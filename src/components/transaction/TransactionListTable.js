@@ -19,10 +19,13 @@ import { useTranslation } from "react-i18next";
 import TransactionFilter from "@comp/transaction/TransactionFilter";
 import { GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
+
 const TransactionListTable = (props) => {
   const { data, ...other } = props;
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getAccess } = useAuth();
 
   return (
     <>
@@ -82,11 +85,13 @@ const TransactionListTable = (props) => {
                     </TableCell>
 
                     <TableCell align="right">
-                      <GroupTable
-                        actionView={() =>
-                          navigate(`/transactions/${order.uuid}`)
-                        }
-                      />
+                      {getAccess("transactions", "details") ? (
+                        <GroupTable
+                          actionView={() =>
+                            navigate(`/transactions/${order.uuid}`)
+                          }
+                        />
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 );

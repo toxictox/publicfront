@@ -16,7 +16,7 @@ import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
 import { TableStatic } from "@comp/core/tables";
 import { GroupTable, CreateButton } from "@comp/core/buttons";
-
+import useAuth from "@hooks/useAuth";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
@@ -26,6 +26,7 @@ const TransactionsFlowList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getAccess } = useAuth();
 
   const [dataList, setListData] = useState([]);
   const [page, setPage] = useState(0);
@@ -70,10 +71,12 @@ const TransactionsFlowList = () => {
               <CardHeader
                 title={t("Transactions Flow List")}
                 action={
-                  <CreateButton
-                    action={() => navigate("/flows/create")}
-                    text={t("Create button")}
-                  />
+                  getAccess("flows", "create") ? (
+                    <CreateButton
+                      action={() => navigate("/flows/create")}
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
               <Divider />
@@ -87,6 +90,7 @@ const TransactionsFlowList = () => {
                           actionView={() => navigate(`/flows/id/${item.id}`)}
                           actionCustom={[
                             {
+                              access: getAccess("flows", "create"),
                               title: t("Copy button"),
                               callback: (e) => {
                                 e.stopPropagation();

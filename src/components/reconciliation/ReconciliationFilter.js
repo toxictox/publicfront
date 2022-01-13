@@ -17,13 +17,14 @@ import { useEffect, useState } from "react";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import toast from "react-hot-toast";
+import useAuth from "@hooks/useAuth";
 
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
   const { callback, update } = props;
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
-
+  const { getAccess } = useAuth();
   useEffect(() => {
     const getData = async () => {
       await axios
@@ -107,7 +108,8 @@ const TransactionFilter = (props) => {
                 </TextField>
               </Grid>
               <Grid item xs={6}>
-                {values.bankId !== "" ? (
+                {values.bankId !== "" &&
+                getAccess("reconciliation", "upload") ? (
                   <Stack direction="row" spacing={2}>
                     <label htmlFor="contained-button-file">
                       {file ? (

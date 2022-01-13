@@ -22,12 +22,14 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 const UserList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { getAccess } = useAuth();
 
   const [dataList, setListData] = useState({
     data: [],
@@ -89,10 +91,12 @@ const UserList = () => {
               <CardHeader
                 title={t("Users List")}
                 action={
-                  <CreateButton
-                    action={() => navigate("/users/create")}
-                    text={t("Create button")}
-                  />
+                  getAccess("users", "create") ? (
+                    <CreateButton
+                      action={() => navigate("/users/create")}
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
               <Divider />
@@ -122,9 +126,13 @@ const UserList = () => {
                       </TableCell>
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/users/id/${item.hash}`)}
+                          actionView={{
+                            access: getAccess("users", "details"),
+                            callback: () => navigate(`/users/id/${item.hash}`),
+                          }}
                           actionCustom={[
                             {
+                              access: getAccess("users", "getRole"),
                               title: t("role"),
                               callback: () =>
                                 navigate(`/users/id/${item.hash}/role`),

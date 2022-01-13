@@ -578,7 +578,7 @@ const routes = [
         children: [
           {
             element: (
-              <ACLGuard can={"getPermissionsList"}>
+              <ACLGuard can={"read"}>
                 <RolesList />
               </ACLGuard>
             ),
@@ -586,7 +586,7 @@ const routes = [
           {
             path: "create",
             element: (
-              <ACLGuard can={"getRole"}>
+              <ACLGuard can={"create"}>
                 <CreateRole />
               </ACLGuard>
             ),
@@ -594,7 +594,7 @@ const routes = [
           {
             path: "id/:id",
             element: (
-              <ACLGuard can={"updateRole"}>
+              <ACLGuard can={"details"}>
                 <UpdateRole />
               </ACLGuard>
             ),
@@ -691,11 +691,19 @@ const routes = [
           },
           {
             path: "/create",
-            element: <TransactionFlowCreate />,
+            element: (
+              <ACLGuard can={"create"}>
+                <TransactionFlowCreate />
+              </ACLGuard>
+            ),
           },
           {
             path: "id/:id",
-            element: <TransactionFlowUpdate />,
+            element: (
+              <ACLGuard can={"read"}>
+                <TransactionFlowUpdate />
+              </ACLGuard>
+            ),
           },
         ],
       },
@@ -757,7 +765,6 @@ const routes = [
             path: "create",
             element: (
               <ACLGuard can={"create"}>
-                {" "}
                 <TerminalsCreate />
               </ACLGuard>
             ),
@@ -780,7 +787,11 @@ const routes = [
           },
           {
             path: "token/:id",
-            element: <TerminalsUpdateToken />,
+            element: (
+              <ACLGuard can={"getTerminalKey"}>
+                <TerminalsUpdateToken />
+              </ACLGuard>
+            ),
           },
         ],
       },
@@ -861,7 +872,11 @@ const routes = [
 
           {
             path: "token/:id",
-            element: <MerchantTokenUpdate />,
+            element: (
+              <ACLGuard can={"getMerchantKey"}>
+                <MerchantTokenUpdate />
+              </ACLGuard>
+            ),
           },
           {
             path: "deposit/:id",
@@ -910,7 +925,7 @@ const routes = [
           {
             path: ":id/logs",
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={"getTransactionLogs"}>
                 <TransactionLogsPage />
               </ACLGuard>
             ),

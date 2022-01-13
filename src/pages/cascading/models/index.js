@@ -34,7 +34,7 @@ const CascadingModelsList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState([]);
   const [tranTypesId, setTranTypesId] = useState(0);
   const [tranTypes, setTranTypes] = useState([]);
@@ -168,7 +168,8 @@ const CascadingModelsList = () => {
                 action={
                   user.merchantId &&
                   tranTypesId !== undefined &&
-                  tranTypesId !== 0 ? (
+                  tranTypesId !== 0 &&
+                  !getAccess("cascading", "create") ? (
                     <CreateButton
                       action={() =>
                         navigate("/cascading/create", {
@@ -186,53 +187,6 @@ const CascadingModelsList = () => {
               <Divider />
               <Box m={2}>
                 <Grid container spacing={2}>
-                  {/*<Grid item xs={6}>*/}
-                  {/*  <TextField*/}
-                  {/*    fullWidth*/}
-                  {/*    label="merchant"*/}
-                  {/*    name="merchantId"*/}
-                  {/*    onChange={handleChangeMerchant}*/}
-                  {/*    select*/}
-                  {/*    size="small"*/}
-                  {/*    value={merchantId}*/}
-                  {/*    variant="outlined"*/}
-                  {/*  >*/}
-                  {/*    <MenuItem key={-1} value={""}>*/}
-                  {/*      {t("Select value")}*/}
-                  {/*    </MenuItem>*/}
-                  {/*    {merchant.map((item) => (*/}
-                  {/*      <MenuItem key={item.id} value={item.id}>*/}
-                  {/*        {item.name}*/}
-                  {/*      </MenuItem>*/}
-                  {/*    ))}*/}
-                  {/*  </TextField>*/}
-                  {/*</Grid>*/}
-                  {/*{merchantId !== "" &&*/}
-                  {/*merchantId !== 0 &&*/}
-                  {/*merchantId !== undefined ? (*/}
-                  {/*  <Grid item xs={6}>*/}
-                  {/*    <TextField*/}
-                  {/*      fullWidth*/}
-                  {/*      label="tranTypesId"*/}
-                  {/*      name="tranTypesId"*/}
-                  {/*      onChange={handleChangeTranTypes}*/}
-                  {/*      select*/}
-                  {/*      size="small"*/}
-                  {/*      value={tranTypesId}*/}
-                  {/*      variant="outlined"*/}
-                  {/*    >*/}
-                  {/*      <MenuItem key={-1} value={""}>*/}
-                  {/*        {t("Select value")}*/}
-                  {/*      </MenuItem>*/}
-                  {/*      {tranTypes.map((item) => (*/}
-                  {/*        <MenuItem key={item.id} value={item.id}>*/}
-                  {/*          {item.name}*/}
-                  {/*        </MenuItem>*/}
-                  {/*      ))}*/}
-                  {/*    </TextField>*/}
-                  {/*  </Grid>*/}
-                  {/*) : null}*/}
-
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
@@ -254,15 +208,6 @@ const CascadingModelsList = () => {
                       ))}
                     </TextField>
                   </Grid>
-
-                  {dataList.length === 0 ? (
-                    <Grid item xs={12}>
-                      <Typography variant="body2" gutterBottom>
-                        Выберите мерчанта и тип операции, чтобы подгрузить
-                        список моделей
-                      </Typography>
-                    </Grid>
-                  ) : null}
                 </Grid>
               </Box>
               <TableStaticDrag

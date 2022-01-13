@@ -17,6 +17,7 @@ const UserIdUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const [dataList, setListData] = useState(null);
 
   const getItem = useCallback(async () => {

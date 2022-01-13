@@ -21,12 +21,14 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import { toLocaleDateTime } from "@lib/date";
+import useAuth from "@hooks/useAuth";
 
 const BanksList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getAccess } = useAuth();
 
   const [dataList, setListData] = useState({
     data: [],
@@ -74,10 +76,12 @@ const BanksList = () => {
               <CardHeader
                 title={t("Banks List")}
                 action={
-                  <CreateButton
-                    action={() => navigate("/banks/create")}
-                    text={t("Create button")}
-                  />
+                  getAccess("banks", "create") ? (
+                    <CreateButton
+                      action={() => navigate("/banks/create")}
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
               <Divider />
@@ -100,7 +104,10 @@ const BanksList = () => {
 
                       <TableCell align={"right"}>
                         <GroupTable
-                          actionView={() => navigate(`/banks/id/${item.id}`)}
+                          actionView={{
+                            access: getAccess("banks", "details"),
+                            callback: () => navigate(`/banks/id/${item.id}`),
+                          }}
                         />
                       </TableCell>
                     </TableRow>

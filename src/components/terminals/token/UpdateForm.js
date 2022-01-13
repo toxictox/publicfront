@@ -13,16 +13,18 @@ import { useTranslation } from "react-i18next";
 import { Edit } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { showConfirm } from "@slices/dialog";
+import useAuth from "@hooks/useAuth";
 
 const UpdateForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { getAccess } = useAuth();
   const [privateKey, setPrivateKey] = useState(true);
   const [publicKey, setPublicKey] = useState(true);
   const [clientKey, setClientKey] = useState(true);
-  console.log(data);
+
   return (
     <Formik
       initialValues={{
@@ -80,19 +82,21 @@ const UpdateForm = (props) => {
                   sx={{ m: 0 }}
                   InputProps={{
                     endAdornment: privateKey ? (
-                      <Edit
-                        onClick={() => {
-                          dispatch(
-                            showConfirm({
-                              title: t("Do you want to update token"),
-                              isOpen: true,
-                              okCallback: () => {
-                                setPrivateKey(false);
-                              },
-                            })
-                          );
-                        }}
-                      />
+                      getAccess("terminals", "setTerminalKey") ? (
+                        <Edit
+                          onClick={() => {
+                            dispatch(
+                              showConfirm({
+                                title: t("Do you want to update token"),
+                                isOpen: true,
+                                okCallback: () => {
+                                  setPrivateKey(false);
+                                },
+                              })
+                            );
+                          }}
+                        />
+                      ) : null
                     ) : null,
                   }}
                 />
@@ -117,17 +121,19 @@ const UpdateForm = (props) => {
                   sx={{ m: 0 }}
                   InputProps={{
                     endAdornment: publicKey ? (
-                      <Edit
-                        onClick={() => {
-                          dispatch(
-                            showConfirm({
-                              title: t("Do you want to update token"),
-                              isOpen: true,
-                              okCallback: () => setPublicKey(false),
-                            })
-                          );
-                        }}
-                      />
+                      getAccess("terminals", "setTerminalKey") ? (
+                        <Edit
+                          onClick={() => {
+                            dispatch(
+                              showConfirm({
+                                title: t("Do you want to update token"),
+                                isOpen: true,
+                                okCallback: () => setPublicKey(false),
+                              })
+                            );
+                          }}
+                        />
+                      ) : null
                     ) : null,
                   }}
                 />
@@ -152,17 +158,19 @@ const UpdateForm = (props) => {
                   sx={{ m: 0 }}
                   InputProps={{
                     endAdornment: clientKey ? (
-                      <Edit
-                        onClick={() => {
-                          dispatch(
-                            showConfirm({
-                              title: t("Do you want to update token"),
-                              isOpen: true,
-                              okCallback: () => setClientKey(false),
-                            })
-                          );
-                        }}
-                      />
+                      getAccess("terminals", "setTerminalKey") ? (
+                        <Edit
+                          onClick={() => {
+                            dispatch(
+                              showConfirm({
+                                title: t("Do you want to update token"),
+                                isOpen: true,
+                                okCallback: () => setClientKey(false),
+                              })
+                            );
+                          }}
+                        />
+                      ) : null
                     ) : null,
                   }}
                 />

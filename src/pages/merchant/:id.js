@@ -93,15 +93,21 @@ const MerchantId = () => {
                 title={t("Merchant Item Id")}
                 action={
                   <GroupTable
-                    actionUpdate={() => navigate(`/merchants/id/${id}/update`)}
-                    actionDelete={() => {
-                      dispatch(
-                        showConfirm({
-                          title: t("Do you want to remove"),
-                          isOpen: true,
-                          okCallback: () => handleDelete(id),
-                        })
-                      );
+                    actionUpdate={{
+                      access: getAccess("merchants", "update"),
+                      callback: () => navigate(`/merchants/id/${id}/update`),
+                    }}
+                    actionDelete={{
+                      access: getAccess("merchants", "delete"),
+                      callback: () => {
+                        dispatch(
+                          showConfirm({
+                            title: t("Do you want to remove"),
+                            isOpen: true,
+                            okCallback: () => handleDelete(id),
+                          })
+                        );
+                      },
                     }}
                     actionCustom={[
                       {

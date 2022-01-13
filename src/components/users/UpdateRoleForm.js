@@ -26,13 +26,13 @@ const CreateForm = (props) => {
   const { id } = useParams();
   const [listPermission, setListPermission] = useState([]);
   const [checked, setChecked] = useState([]);
-  const auth = useAuth();
+  const { user, getAccess } = useAuth();
 
   useEffect(() => {
     const getData = async () => {
       const responseList = await axios
         .post(`${app.api}/user/get/roles`, {
-          hash: auth.user.hash,
+          hash: user.hash,
         })
         .then((response) => response.data);
 
@@ -48,7 +48,7 @@ const CreateForm = (props) => {
       }
     };
     getData();
-  }, [mounted, auth.user.hash, id]);
+  }, [mounted, user.hash, id]);
 
   const handleChangeCheckbox = (val) => {
     let copy = checked.slice(0);
@@ -144,19 +144,21 @@ const CreateForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
-                <Box sx={{ mt: 2 }}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                  >
-                    {t("Create button")}
-                  </Button>
-                </Box>
-              </Grid>
+              {getAccess("users", "setRole") ? (
+                <Grid item xs={12}>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      color="primary"
+                      disabled={isSubmitting}
+                      type="submit"
+                      variant="contained"
+                      size="large"
+                    >
+                      {t("Update button")}
+                    </Button>
+                  </Box>
+                </Grid>
+              ) : null}
             </Grid>
           </Box>
 
