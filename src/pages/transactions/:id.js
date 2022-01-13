@@ -21,6 +21,7 @@ import { TableStatic } from "@comp/core/tables/index";
 import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
 import toast from "react-hot-toast";
+import useAuth from "@hooks/useAuth";
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -28,6 +29,7 @@ const TransactionsList = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
   });
@@ -83,6 +85,7 @@ const TransactionsList = () => {
                     actionCustomIcon={[
                       {
                         icon: <Info />,
+                        access: getAccess("transactions", "getTransactionLogs"),
                         callback: () => navigate(`/transactions/${id}/logs`),
                       },
                     ]}

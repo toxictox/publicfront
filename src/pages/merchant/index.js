@@ -22,12 +22,14 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import useAuth from "@hooks/useAuth";
 
 const TerminalsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getAccess } = useAuth();
 
   const [dataList, setDataList] = useState({
     data: [],
@@ -99,10 +101,12 @@ const TerminalsList = () => {
               <CardHeader
                 title={t("Merchant List")}
                 action={
-                  <CreateButton
-                    action={() => navigate("/merchants/create")}
-                    text={t("Create button")}
-                  />
+                  getAccess("merchants", "create") ? (
+                    <CreateButton
+                      action={() => navigate("/merchants/create")}
+                      text={t("Create button")}
+                    />
+                  ) : null
                 }
               />
               <Divider />
@@ -135,11 +139,13 @@ const TerminalsList = () => {
                       </TableCell>
 
                       <TableCell align={"right"}>
-                        <GroupTable
-                          actionView={() =>
-                            navigate(`/merchants/id/${item.id}`)
-                          }
-                        />
+                        {getAccess("merchants", "details") ? (
+                          <GroupTable
+                            actionView={() =>
+                              navigate(`/merchants/id/${item.id}`)
+                            }
+                          />
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   );

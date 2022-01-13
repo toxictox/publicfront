@@ -861,7 +861,11 @@ const routes = [
 
           {
             path: "token/:id",
-            element: <MerchantTokenUpdate />,
+            element: (
+              <ACLGuard can={"getMerchantKey"}>
+                <MerchantTokenUpdate />
+              </ACLGuard>
+            ),
           },
           {
             path: "deposit/:id",
@@ -910,7 +914,7 @@ const routes = [
           {
             path: ":id/logs",
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={"getTransactionLogs"}>
                 <TransactionLogsPage />
               </ACLGuard>
             ),

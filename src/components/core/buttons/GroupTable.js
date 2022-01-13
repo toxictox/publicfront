@@ -29,7 +29,17 @@ const GroupTable = (props) => {
               ) : null
             )
           : null}
-        {actionView !== undefined ? (
+        {actionView !== undefined &&
+        typeof actionView === "object" &&
+        actionView.access !== false ? (
+          <Button
+            size={"small"}
+            color={"primary"}
+            onClick={actionView.callback}
+          >
+            <Visibility />
+          </Button>
+        ) : actionView !== undefined && typeof actionView === "function" ? (
           <Button size={"small"} color={"primary"} onClick={actionView}>
             <Visibility />
           </Button>
@@ -50,12 +60,33 @@ const GroupTable = (props) => {
             )
           : null}
 
-        {actionUpdate !== undefined ? (
+        {actionUpdate !== undefined &&
+        typeof actionUpdate === "object" &&
+        actionUpdate.access !== false ? (
+          <Button
+            size={"small"}
+            color={"primary"}
+            onClick={actionUpdate.callback}
+          >
+            <Edit />
+          </Button>
+        ) : actionUpdate !== undefined && typeof actionUpdate === "function" ? (
           <Button size={"small"} color={"primary"} onClick={actionUpdate}>
             <Edit />
           </Button>
         ) : null}
-        {actionDelete !== undefined ? (
+
+        {actionDelete !== undefined &&
+        typeof actionDelete === "object" &&
+        actionDelete.access !== false ? (
+          <Button
+            size={"small"}
+            color={"secondary"}
+            onClick={actionDelete.callback}
+          >
+            <HighlightOff />
+          </Button>
+        ) : actionDelete !== undefined && typeof actionDelete === "function" ? (
           <Button size={"small"} color={"secondary"} onClick={actionDelete}>
             <HighlightOff />
           </Button>
@@ -73,9 +104,9 @@ GroupTable.defaultProps = {
 };
 
 GroupTable.propTypes = {
-  actionUpdate: PropTypes.func,
-  actionDelete: PropTypes.func,
-  actionView: PropTypes.func,
+  actionUpdate: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  actionDelete: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  actionView: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   actionCustom: PropTypes.array,
 };
 
