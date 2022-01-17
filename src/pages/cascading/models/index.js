@@ -169,7 +169,7 @@ const CascadingModelsList = () => {
                   user.merchantId &&
                   tranTypesId !== undefined &&
                   tranTypesId !== 0 &&
-                  !getAccess("cascading", "create") ? (
+                  getAccess("cascading", "create") ? (
                     <CreateButton
                       action={() =>
                         navigate("/cascading/create", {
