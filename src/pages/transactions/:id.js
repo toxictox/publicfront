@@ -9,6 +9,7 @@ import {
   TableCell,
   CardHeader,
   Divider,
+  Alert,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
@@ -33,6 +34,7 @@ const TransactionsList = () => {
   const [dataList, setListData] = useState({
     data: [],
   });
+  const [status, setStatus] = useState(undefined);
 
   const getItem = useCallback(async () => {
     try {
@@ -52,6 +54,18 @@ const TransactionsList = () => {
       .post(`${app.api}/transactions/callback/${id}`)
       .then((response) => {
         toast.success(t("Success update"));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const sendStatus = async () => {
+    await axios
+      .post(`${app.api}/transactions/status/${id}`)
+      .then((response) => {
+        toast.success(t("Success update"));
+        setStatus(() => response.data);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -78,6 +92,12 @@ const TransactionsList = () => {
           <BackButton action={() => navigate("/transactions")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
+              {status ? (
+                <Alert color={"success"} sx={{ m: 2 }}>
+                  {status.description}
+                </Alert>
+              ) : null}
+              <Divider />
               <CardHeader
                 title={t("Transactions Item")}
                 action={
@@ -93,6 +113,10 @@ const TransactionsList = () => {
                       {
                         title: "callback",
                         callback: () => sendCallback(),
+                      },
+                      {
+                        title: "status",
+                        callback: () => sendStatus(),
                       },
                     ]}
                   />
