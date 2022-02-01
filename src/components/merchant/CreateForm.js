@@ -19,12 +19,22 @@ const CreateForm = (props) => {
   const mounted = useMounted();
   const { callback } = props;
   const [timezoneData, setTimezoneData] = useState([]);
+  const [cityTerminal, setCityTerminal] = useState([]);
+  const [cityMerchant, setCityMerchant] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
     const getData = async () => {
       await axios.get(`${app.api}/timezone`).then((response) => {
         setTimezoneData(response.data.data);
+      });
+
+      await axios.get(`${app.api}/filter/city/terminals`).then((response) => {
+        setCityTerminal(response.data.data);
+      });
+
+      await axios.get(`${app.api}/filter/city/merchants`).then((response) => {
+        setCityMerchant(response.data.data);
       });
     };
     getData();
@@ -37,6 +47,8 @@ const CreateForm = (props) => {
         timezoneId: "",
         percentFee: "",
         minAmountFee: "",
+        cityTerminalId: "",
+        cityMerchantId: "",
         fixAmountFee: 0,
       }}
       validationSchema={Yup.object().shape({
@@ -164,6 +176,66 @@ const CreateForm = (props) => {
                   size="small"
                   sx={{ m: 0 }}
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(
+                    touched.cityTerminalId && errors.cityTerminalId
+                  )}
+                  fullWidth
+                  helperText={touched.cityTerminalId && errors.cityTerminalId}
+                  label={t("cityTerminalId")}
+                  margin="normal"
+                  name="cityTerminalId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  select
+                  value={values.cityTerminalId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {cityTerminal.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(
+                    touched.cityMerchantId && errors.cityMerchantId
+                  )}
+                  fullWidth
+                  helperText={touched.cityMerchantId && errors.cityMerchantId}
+                  label={t("cityMerchantId")}
+                  margin="normal"
+                  name="cityMerchantId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  select
+                  value={values.cityMerchantId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                >
+                  <MenuItem key={-1} value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {cityMerchant.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={12}>
