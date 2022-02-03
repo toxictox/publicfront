@@ -37,18 +37,7 @@ const TransactionListTable = (props) => {
         <Scrollbar>
           <Box sx={{ minWidth: false }}>
             <TableStatic
-              header={[
-                "createOn",
-                "merchant",
-                "tranId",
-                "tranType",
-                "pan",
-                "amount",
-                "fee",
-                "gateway",
-                "respCode",
-                "",
-              ]}
+              header={["createOn", "uuid", "tranId", "amount", "respCode", ""]}
             >
               {data.map((order) => {
                 return (
@@ -57,7 +46,7 @@ const TransactionListTable = (props) => {
                       <Link
                         color="textPrimary"
                         component={RouterLink}
-                        to={`/city24/transactions/${order.uuid}`}
+                        to={`/city24/transactions/id/${order.uuid}`}
                         underline="none"
                         variant="subtitle2"
                       ></Link>
@@ -65,21 +54,9 @@ const TransactionListTable = (props) => {
                         {toLocaleDateTime(order.createOn)}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ width: 450 }}>{order.merchant}</TableCell>
+                    <TableCell sx={{ width: 450 }}>{order.uuid}</TableCell>
                     <TableCell>{order.tranId}</TableCell>
-                    <TableCell>
-                      <Typography
-                        color="textPrimary"
-                        variant="subtitle2"
-                        align={"center"}
-                      >
-                        {order.tranType}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{order.pan}</TableCell>
                     <TableCell>{order.amount}</TableCell>
-                    <TableCell>{order.fee}</TableCell>
-                    <TableCell>{order.gateway}</TableCell>
                     <TableCell sx={{ color: order.respCodeColor }}>
                       {order.respCode} {order.respMessage}
                     </TableCell>
@@ -88,7 +65,7 @@ const TransactionListTable = (props) => {
                       {getAccess("transactions", "details") ? (
                         <GroupTable
                           actionView={() =>
-                            navigate(`/city24/transactions/${order.uuid}`)
+                            navigate(`/city24/transactions/id/${order.uuid}`)
                           }
                         />
                       ) : null}

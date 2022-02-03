@@ -442,6 +442,9 @@ const CodesItemСreate = Loadable(lazy(() => import("./pages/codes/:create")));
 const City24TransactionsIndex = Loadable(
   lazy(() => import("./pages/city24/transactions/index"))
 );
+const City24TransactionsId = Loadable(
+  lazy(() => import("./pages/city24/transactions/:id"))
+);
 
 // Reconciliation
 const ReconciliationList = Loadable(
@@ -654,6 +657,10 @@ const routes = [
               {
                 path: "",
                 element: <City24TransactionsIndex />,
+              },
+              {
+                path: "id/:id",
+                element: <City24TransactionsId />,
               },
             ],
           },

@@ -16,7 +16,7 @@ const buttons = {
 
 const menu = {
   "Transaction menu": "Транзакції",
-  "Users menu": "Пользователи",
+  "Users menu": "Користувачі",
   "Role menu": "Ролі",
   "User Item": "Інформація про користувача",
   "Banks menu": "Банки",
