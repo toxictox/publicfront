@@ -438,6 +438,14 @@ const CodesItemId = Loadable(lazy(() => import("./pages/codes/:id")));
 const CodesItemUpdate = Loadable(lazy(() => import("./pages/codes/:update")));
 const CodesItemСreate = Loadable(lazy(() => import("./pages/codes/:create")));
 
+// city24
+const City24TransactionsIndex = Loadable(
+  lazy(() => import("./pages/city24/transactions/index"))
+);
+const City24TransactionsId = Loadable(
+  lazy(() => import("./pages/city24/transactions/:id"))
+);
+
 // Reconciliation
 const ReconciliationList = Loadable(
   lazy(() => import("./pages/reconciliation/index"))
@@ -636,6 +644,52 @@ const routes = [
                 <CodesItemUpdate />
               </ACLGuard>
             ),
+          },
+        ],
+      },
+
+      {
+        path: "city24",
+        children: [
+          {
+            path: "transactions",
+            children: [
+              {
+                path: "",
+                element: <City24TransactionsIndex />,
+              },
+              {
+                path: "id/:id",
+                element: <City24TransactionsId />,
+              },
+            ],
+          },
+          {
+            path: "merchants",
+            children: [
+              {
+                path: "",
+                element: <City24TransactionsIndex />,
+              },
+            ],
+          },
+          {
+            path: "terminals",
+            children: [
+              {
+                path: "",
+                element: <City24TransactionsIndex />,
+              },
+            ],
+          },
+          {
+            path: "keys",
+            children: [
+              {
+                path: "",
+                element: <City24TransactionsIndex />,
+              },
+            ],
           },
         ],
       },
