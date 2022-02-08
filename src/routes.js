@@ -446,6 +446,37 @@ const City24TransactionsId = Loadable(
   lazy(() => import("./pages/city24/transactions/:id"))
 );
 
+const City24MerchantsIndex = Loadable(
+  lazy(() => import("./pages/city24/merchant"))
+);
+const City24MerchantId = Loadable(
+  lazy(() => import("./pages/city24/merchant/:id"))
+);
+
+const City24MerchantCreate = Loadable(
+  lazy(() => import("./pages/city24/merchant/:create"))
+);
+
+const City24MerchantUpdate = Loadable(
+  lazy(() => import("./pages/city24/merchant/:update"))
+);
+
+const City24TerminalsIndex = Loadable(
+  lazy(() => import("./pages/city24/terminals"))
+);
+
+const City24TerminalId = Loadable(
+  lazy(() => import("./pages/city24/terminals/:id"))
+);
+
+const City24TerminalCreate = Loadable(
+  lazy(() => import("./pages/city24/terminals/:create"))
+);
+
+const City24TerminalUpdate = Loadable(
+  lazy(() => import("./pages/city24/terminals/:update"))
+);
+
 // Reconciliation
 const ReconciliationList = Loadable(
   lazy(() => import("./pages/reconciliation/index"))
@@ -669,7 +700,19 @@ const routes = [
             children: [
               {
                 path: "",
-                element: <City24TransactionsIndex />,
+                element: <City24MerchantsIndex />,
+              },
+              {
+                path: "id/:id",
+                element: <City24MerchantId />,
+              },
+              {
+                path: "create",
+                element: <City24MerchantCreate />,
+              },
+              {
+                path: "id/:id/update",
+                element: <City24MerchantUpdate />,
               },
             ],
           },
@@ -678,7 +721,19 @@ const routes = [
             children: [
               {
                 path: "",
-                element: <City24TransactionsIndex />,
+                element: <City24TerminalsIndex />,
+              },
+              {
+                path: "id/:id",
+                element: <City24TerminalId />,
+              },
+              {
+                path: "create",
+                element: <City24TerminalCreate />,
+              },
+              {
+                path: "id/:id/update",
+                element: <City24TerminalUpdate />,
               },
             ],
           },

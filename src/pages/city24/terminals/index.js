@@ -37,7 +37,12 @@ const TerminalsList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/terminals?page=${page}&count=${25}`)
+        .get(`${app.api}/terminals/city`, {
+          params: {
+            page: page,
+            count: 25,
+          },
+        })
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -76,30 +81,18 @@ const TerminalsList = () => {
                 action={
                   getAccess("terminals", "create") ? (
                     <CreateButton
-                      action={() => navigate("/terminals/create")}
+                      action={() => navigate("/city24/terminals/create")}
                       text={t("Create button")}
                     />
                   ) : null
                 }
               />
               <Divider />
-              <TableStatic
-                header={[
-                  "name",
-                  "tid",
-                  "gatewayMethod",
-                  "merchant",
-                  "createOn",
-                  "",
-                ]}
-              >
+              <TableStatic header={["name", "createOn", ""]}>
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.tid}</TableCell>
-                      <TableCell>{item.gatewayMethod}</TableCell>
-                      <TableCell>{item.merchant}</TableCell>
                       <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
 
                       <TableCell align={"right"}>
@@ -107,7 +100,7 @@ const TerminalsList = () => {
                           actionView={{
                             access: getAccess("terminals", "details"),
                             callback: () =>
-                              navigate(`/terminals/id/${item.id}`),
+                              navigate(`/city24/terminals/id/${item.id}`),
                           }}
                         />
                       </TableCell>
