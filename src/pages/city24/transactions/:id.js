@@ -23,9 +23,11 @@ import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
 import toast from "react-hot-toast";
 import useAuth from "@hooks/useAuth";
-
+import { showConfirm } from "@slices/dialog";
+import { useDispatch } from "react-redux";
 const TransactionsList = () => {
   const mounted = useMounted();
+  const dispatch = useDispatch();
   const { settings } = useSettings();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,10 +64,52 @@ const TransactionsList = () => {
 
   const sendStatus = async () => {
     await axios
-      .post(`${app.api}/transactions/status/${id}`)
+      .post(`${app.api}/transactions/city/status/${id}`)
       .then((response) => {
-        toast.success(t("Success update"));
-        setStatus(() => response.data);
+        dispatch(
+          showConfirm({
+            title: t("city24.status"),
+            text: response.data.respMessage.xml,
+            isOpen: true,
+          })
+        );
+        //setStatus(() => response.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const sendCancel = async () => {
+    await axios
+      .post(`${app.api}/transactions/city/cancel/${id}`)
+      .then((response) => {
+        dispatch(
+          showConfirm({
+            title: t("city24.cancel"),
+            text: response.data.respMessage.xml,
+            isOpen: true,
+          })
+        );
+        //setStatus(() => response.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
+  const sendRegister = async () => {
+    await axios
+      .post(`${app.api}/transactions/city/status/${id}`)
+      .then((response) => {
+        dispatch(
+          showConfirm({
+            title: t("city24.register"),
+            text: response.data.respMessage.xml,
+            isOpen: true,
+          })
+        );
+        //setStatus(() => response.data);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -104,16 +148,16 @@ const TransactionsList = () => {
                   <GroupTable
                     actionCustom={[
                       {
-                        title: "register",
-                        callback: () => alert("testing"),
+                        title: t("city24.register"),
+                        callback: () => sendRegister(),
                       },
                       {
-                        title: "cancel",
-                        callback: () => alert("testing"),
+                        title: t("city24.cancel"),
+                        callback: () => sendCancel(),
                       },
                       {
-                        title: "status",
-                        callback: () => alert("testing"),
+                        title: t("city24.status"),
+                        callback: () => sendStatus(),
                       },
                     ]}
                   />
