@@ -74,7 +74,7 @@ const TerminalId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/terminals/city")} />
+          <BackButton action={() => navigate("/city24/terminals")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
@@ -84,7 +84,7 @@ const TerminalId = () => {
                     actionUpdate={{
                       access: getAccess("terminals", "update"),
                       callback: () =>
-                        navigate(`/terminals/city/id/${id}/update`),
+                        navigate(`/city24/terminals/id/${id}/update`),
                     }}
                     actionDelete={{
                       access: getAccess("terminals", "delete"),

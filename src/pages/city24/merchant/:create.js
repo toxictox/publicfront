@@ -17,7 +17,7 @@ const UserIdUpdate = () => {
   const handleSubmit = async (values) => {
     try {
       await axios
-        .post(`${app.api}/merchants/city`, { ...values })
+        .post(`${app.api}/merchant/city`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
           navigate(`/city24/merchants`);

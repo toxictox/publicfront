@@ -15,34 +15,38 @@ import axios from "@lib/axios";
 import { app } from "@root/config";
 import { fields } from "@lib/validate";
 
-const CreateMerchantForm = (props) => {
+const UpdateForm = (props) => {
   const mounted = useMounted();
-  const { callback } = props;
+  const { callback, data } = props;
   const { t } = useTranslation();
 
   return (
     <Formik
       initialValues={{
-        terminalId: "",
-        extId: "",
-        memberId: "",
-        okpo: "",
-        merchantName: "",
-        contractNumber: "",
-        contractDate: "",
-        mfo: "",
-        accountNumber: "",
+        terminalId: data.terminalId,
+        extId: data.extId,
+        memberId: data.memberId,
+        terminalType: data.terminalType,
+        cityCode: data.cityCode,
+        cityName: data.cityName,
+        regionName: data.regionName,
+        street: data.street,
+        house: data.house,
+        comment: data.comment,
+        isActive: data.isActive,
       }}
       validationSchema={Yup.object().shape({
         terminalId: Yup.string().required(t("required")),
         extId: Yup.string().required(t("required")),
         memberId: Yup.string().required(t("required")),
-        okpo: Yup.string().required(t("required")),
-        merchantName: Yup.string().required(t("required")),
-        contractNumber: Yup.string().required(t("required")),
-        contractDate: Yup.string().required(t("required")),
-        mfo: Yup.string().required(t("required")),
-        accountNumber: Yup.string().required(t("required")),
+        terminalType: Yup.string().required(t("required")),
+        cityCode: Yup.string().required(t("required")),
+        cityName: Yup.string().required(t("required")),
+        regionName: Yup.string().required(t("required")),
+        street: Yup.string().required(t("required")),
+        house: Yup.string().required(t("required")),
+        comment: Yup.string().required(t("required")),
+        isActive: Yup.number().typeError(t("field number")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -129,16 +133,16 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.okpo && errors.okpo)}
+                  error={Boolean(touched.terminalType && errors.terminalType)}
                   fullWidth
-                  helperText={touched.okpo && errors.okpo}
-                  label={t("okpo")}
+                  helperText={touched.terminalType && errors.terminalType}
+                  label={t("terminalType")}
                   margin="normal"
-                  name="okpo"
+                  name="terminalType"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.okpo}
+                  value={values.terminalType}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -147,16 +151,16 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.merchantName && errors.merchantName)}
+                  error={Boolean(touched.cityCode && errors.cityCode)}
                   fullWidth
-                  helperText={touched.merchantName && errors.merchantName}
-                  label={t("merchantName")}
+                  helperText={touched.cityCode && errors.cityCode}
+                  label={t("cityCode")}
                   margin="normal"
-                  name="merchantName"
+                  name="cityCode"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.merchantName}
+                  value={values.cityCode}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -165,18 +169,16 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(
-                    touched.contractNumber && errors.contractNumber
-                  )}
+                  error={Boolean(touched.cityName && errors.cityName)}
                   fullWidth
-                  helperText={touched.contractNumber && errors.contractNumber}
-                  label={t("contractNumber")}
+                  helperText={touched.cityName && errors.cityName}
+                  label={t("cityName")}
                   margin="normal"
-                  name="contractNumber"
+                  name="cityName"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.contractNumber}
+                  value={values.cityName}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -185,16 +187,16 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.contractDate && errors.contractDate)}
+                  error={Boolean(touched.regionName && errors.regionName)}
                   fullWidth
-                  helperText={touched.contractDate && errors.contractDate}
-                  label={t("contractDate")}
+                  helperText={touched.regionName && errors.regionName}
+                  label={t("regionName")}
                   margin="normal"
-                  name="contractDate"
+                  name="regionName"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.contractDate}
+                  value={values.regionName}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -203,16 +205,16 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.mfo && errors.mfo)}
+                  error={Boolean(touched.street && errors.street)}
                   fullWidth
-                  helperText={touched.mfo && errors.mfo}
-                  label={t("mfo")}
+                  helperText={touched.street && errors.street}
+                  label={t("street")}
                   margin="normal"
-                  name="mfo"
+                  name="street"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.mfo}
+                  value={values.street}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
@@ -221,20 +223,59 @@ const CreateMerchantForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.accountNumber && errors.accountNumber)}
+                  error={Boolean(touched.house && errors.house)}
                   fullWidth
-                  helperText={touched.accountNumber && errors.accountNumber}
-                  label={t("accountNumber")}
+                  helperText={touched.house && errors.house}
+                  label={t("house")}
                   margin="normal"
-                  name="accountNumber"
+                  name="house"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="text"
-                  value={values.accountNumber}
+                  value={values.house}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.comment && errors.comment)}
+                  fullWidth
+                  helperText={touched.comment && errors.comment}
+                  label={t("comment")}
+                  margin="normal"
+                  name="comment"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.comment}
+                  variant="outlined"
+                  size="small"
+                  rows={4}
+                  multiline={true}
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.isActive && errors.isActive)}
+                  fullWidth
+                  helperText={touched.isActive && errors.isActive}
+                  label="isActive"
+                  name="isActive"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  select
+                  size="small"
+                  value={values.isActive}
+                  variant="outlined"
+                >
+                  <MenuItem value={1}>{t("Select active")}</MenuItem>
+                  <MenuItem value={0}>{t("Select inactive")}</MenuItem>
+                </TextField>
               </Grid>
 
               <Grid item xs={12}>
@@ -246,7 +287,7 @@ const CreateMerchantForm = (props) => {
                     variant="contained"
                     size="large"
                   >
-                    {t("Create button")}
+                    {t("Update button")}
                   </Button>
                 </Box>
               </Grid>
@@ -264,4 +305,4 @@ const CreateMerchantForm = (props) => {
   );
 };
 
-export default CreateMerchantForm;
+export default UpdateForm;

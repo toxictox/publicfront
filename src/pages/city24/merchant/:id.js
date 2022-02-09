@@ -37,7 +37,7 @@ const MerchantId = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/merchant/${id}`)
+        .get(`${app.api}/merchant/city/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -86,7 +86,7 @@ const MerchantId = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate("/merchants")} />
+          <BackButton action={() => navigate("/city24/merchants")} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
@@ -95,7 +95,8 @@ const MerchantId = () => {
                   <GroupTable
                     actionUpdate={{
                       access: getAccess("merchants", "update"),
-                      callback: () => navigate(`/merchants/id/${id}/update`),
+                      callback: () =>
+                        navigate(`/city24/merchants/id/${id}/update`),
                     }}
                     actionDelete={{
                       access: getAccess("merchants", "delete"),
@@ -109,18 +110,18 @@ const MerchantId = () => {
                         );
                       },
                     }}
-                    actionCustom={[
-                      {
-                        title: t("depositLimit"),
-                        callback: () => navigate(`/merchants/deposit/${id}`),
-                        access: getAccess("merchants", "depositLimitEdit"),
-                      },
-                      {
-                        title: t("keyToken"),
-                        callback: () => navigate(`/merchants/token/${id}`),
-                        access: getAccess("merchants", "getMerchantKey"),
-                      },
-                    ]}
+                    // actionCustom={[
+                    //   {
+                    //     title: t("depositLimit"),
+                    //     callback: () => navigate(`/merchants/deposit/${id}`),
+                    //     access: getAccess("merchants", "depositLimitEdit"),
+                    //   },
+                    //   {
+                    //     title: t("keyToken"),
+                    //     callback: () => navigate(`/merchants/token/${id}`),
+                    //     access: getAccess("merchants", "getMerchantKey"),
+                    //   },
+                    // ]}
                   />
                 }
               />

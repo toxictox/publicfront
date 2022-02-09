@@ -17,21 +17,21 @@ import { fields } from "@lib/validate";
 
 const CreateMerchantForm = (props) => {
   const mounted = useMounted();
-  const { callback } = props;
+  const { callback, data } = props;
   const { t } = useTranslation();
 
   return (
     <Formik
       initialValues={{
-        terminalId: "",
-        extId: "",
-        memberId: "",
-        okpo: "",
-        merchantName: "",
-        contractNumber: "",
-        contractDate: "",
-        mfo: "",
-        accountNumber: "",
+        terminalId: data.terminalId,
+        extId: data.extId,
+        memberId: data.memberId,
+        okpo: data.okpo,
+        merchantName: data.merchantName,
+        contractNumber: data.contractNumber,
+        contractDate: data.contractDate,
+        mfo: data.mfo,
+        accountNumber: data.accountNumber,
       }}
       validationSchema={Yup.object().shape({
         terminalId: Yup.string().required(t("required")),
@@ -246,7 +246,7 @@ const CreateMerchantForm = (props) => {
                     variant="contained"
                     size="large"
                   >
-                    {t("Create button")}
+                    {t("Update button")}
                   </Button>
                 </Box>
               </Grid>

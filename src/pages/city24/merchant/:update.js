@@ -7,7 +7,7 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import UpdateForm from "@comp/terminals/UpdateBankForm";
+import Form from "./includes/UpdateMerchantForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
@@ -22,7 +22,7 @@ const BankIdUpdate = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/terminal/${id}`)
+        .get(`${app.api}/merchant/city/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -35,10 +35,10 @@ const BankIdUpdate = () => {
   const handleSubmit = async (values) => {
     try {
       await axios
-        .patch(`${app.api}/terminal/city/${id}`, { ...values })
+        .patch(`${app.api}/merchant/city/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/city24/terminals/id/${id}`);
+          navigate(`/city24/merchants/id/${id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);
@@ -52,7 +52,7 @@ const BankIdUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Terminals Item Update")}</title>
+        <title>{t("Merchant Item Update")}</title>
       </Helmet>
       <Box
         sx={{
@@ -62,13 +62,13 @@ const BankIdUpdate = () => {
         }}
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
-          <BackButton action={() => navigate(`/city24/terminals/id/${id}`)} />
+          <BackButton action={() => navigate(`/city24/merchants/id/${id}`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Terminals Item Update")} />
+              <CardHeader title={t("Merchant Item Update")} />
               <Divider />
               {dataList !== null ? (
-                <UpdateForm data={dataList} callback={handleSubmit} />
+                <Form data={dataList} callback={handleSubmit} />
               ) : null}
             </Card>
           </Box>
