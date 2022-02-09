@@ -185,6 +185,7 @@ const fields = {
   "Comment show": "Комментарий",
   Loading: "Загрузка",
   "Upload file": "Загрузить файл",
+  cityRespCode: "City24 статус",
 };
 
 const server = {

@@ -47,6 +47,7 @@ const TransactionListTable = (props) => {
                 "fee",
                 "gateway",
                 "respCode",
+                "cityRespCode",
                 "",
               ]}
             >
@@ -82,6 +83,9 @@ const TransactionListTable = (props) => {
                     <TableCell>{order.gateway}</TableCell>
                     <TableCell sx={{ color: order.respCodeColor }}>
                       {order.respCode} {order.respMessage}
+                    </TableCell>
+                    <TableCell sx={{ color: order.cityRespCode }}>
+                      {order.cityRespCode}
                     </TableCell>
 
                     <TableCell align="right">
