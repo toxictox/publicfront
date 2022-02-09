@@ -20,6 +20,10 @@ const fields = [
     name: "respCode",
   },
   {
+    id: "cityRespCode",
+    name: "cityRespCode",
+  },
+  {
     id: "pan",
     name: "pan",
   },

@@ -67,6 +67,7 @@ const ExportFileFilter = (props) => {
           "tranType",
           "merchant",
           "respCode",
+          "cityRespCode",
           "pan",
           "tranId",
           "description",
