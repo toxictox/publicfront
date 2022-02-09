@@ -7,7 +7,7 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import UpdateForm from "@comp/terminals/UpdateBankForm";
+import Form from "./includes/UpdateTerminalForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
@@ -22,7 +22,7 @@ const BankIdUpdate = () => {
   const getItem = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/terminal/${id}`)
+        .get(`${app.api}/terminal/city/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
         setListData(response);
@@ -68,7 +68,7 @@ const BankIdUpdate = () => {
               <CardHeader title={t("Terminals Item Update")} />
               <Divider />
               {dataList !== null ? (
-                <UpdateForm data={dataList} callback={handleSubmit} />
+                <Form data={dataList} callback={handleSubmit} />
               ) : null}
             </Card>
           </Box>
