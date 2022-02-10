@@ -40,9 +40,14 @@ const ReconciliationList = () => {
     setPage(newPage);
     const params = values !== undefined ? values : filterList;
     await axios
-      .get(`${app.api}/reconciliation/files/bank/${params.bankId}`)
+      .get(`${app.api}/reconciliation/files/bank/${params.bankId}`, {
+        params: {
+          page: newPage,
+          count: 25,
+        },
+      })
       .then((response) => {
-        setFilterList(values);
+        setFilterList(params);
         setListData(response.data);
       });
   };
