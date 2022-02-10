@@ -186,6 +186,7 @@ const fields = {
   Loading: "Загрузка",
   "Upload file": "Загрузить файл",
   cityRespCode: "City24 статус",
+  "Request success send": "Запрос успешно отправлен",
 };
 
 const server = {

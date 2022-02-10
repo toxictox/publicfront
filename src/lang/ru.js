@@ -145,6 +145,7 @@ const text = {
   "Password was successfully changed": "Пароль был успешно изменен",
   "Reset success send":
     "Инструкция по восстановлению пароля была отправлена на указанный email",
+  "Request success send": "Запрос успешно отправлен",
 };
 
 const fields = {

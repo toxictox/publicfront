@@ -43,31 +43,45 @@ const TransactionFilter = (props) => {
     <Formik
       initialValues={{
         bankId: "",
+        bankName: "",
       }}
       validationSchema={Yup.object().shape({
         bankId: Yup.string().max(255),
+        bankName: Yup.string().max(255),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const formData = new FormData();
-        formData.append("file", values.file, values.file.name);
-        formData.append("bankId", values.bankId);
-        await axios
-          .post(`${app.api}/reconciliation/file`, formData)
-          .then((response) => {
-            setFile(true);
-            update(response.data);
-            toast.success(t("Success upload"));
-          })
-          .catch((e) => {
-            setFile(true);
-            toast.error(e.response.data.message);
-          });
+        if (values.bankName !== "Pumb") {
+          const formData = new FormData();
+          formData.append("bankId", values.bankId);
+          formData.append("file", values.file, values.file.name);
+          await axios
+            .post(`${app.api}/reconciliation/file`, formData)
+            .then((response) => {
+              setFile(true);
+              update(response.data);
+              toast.success(t("Success upload"));
+            })
+            .catch((e) => {
+              setFile(true);
+              toast.error(e.response.data.message);
+            });
+        } else {
+          await axios
+            .post(`${app.api}/reconciliation/pumb`)
+            .then((response) => {
+              toast.success(t("Request success send"));
+            })
+            .catch((e) => {
+              toast.error(e.response.data.message);
+            });
+        }
       }}
     >
       {({
         errors,
         handleBlur,
         handleSubmit,
+        isSubmitting,
         setFieldValue,
         touched,
         values,
@@ -85,8 +99,9 @@ const TransactionFilter = (props) => {
                   margin="normal"
                   name="bankId"
                   onBlur={handleBlur}
-                  onChange={(e) => {
+                  onChange={(e, elem) => {
                     setFieldValue("bankId", e.target.value);
+                    setFieldValue("bankName", elem.props.children);
                     callback(e.target.value);
                   }}
                   value={values.bankId}
@@ -101,15 +116,21 @@ const TransactionFilter = (props) => {
                     {t("Select value")}
                   </MenuItem>
                   {banksList.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
+                    <MenuItem
+                      key={item.id}
+                      value={item.id}
+                      data-name={item.name}
+                    >
                       {item.name}
                     </MenuItem>
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={6}>
-                {values.bankId !== "" &&
-                getAccess("reconciliation", "upload") ? (
+
+              {values.bankId !== "" &&
+              values.bankName !== "Pumb" &&
+              getAccess("reconciliation", "upload") ? (
+                <Grid item xs={6}>
                   <Stack direction="row" spacing={2}>
                     <label htmlFor="contained-button-file">
                       {file ? (
@@ -140,8 +161,22 @@ const TransactionFilter = (props) => {
                       )}
                     </label>
                   </Stack>
-                ) : null}
-              </Grid>
+                </Grid>
+              ) : null}
+
+              {values.bankId !== "" &&
+              values.bankName === "Pumb" &&
+              getAccess("reconciliation", "upload") ? (
+                <Grid item xs={6}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    //disabled={isSubmitting}
+                  >
+                    {t("Upload file")}
+                  </Button>
+                </Grid>
+              ) : null}
             </Grid>
           </Box>
 
