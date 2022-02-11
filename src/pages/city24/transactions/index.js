@@ -57,7 +57,7 @@ const TransactionsList = () => {
 
     await axios
       .post(
-        `${app.api}/transactions?page=${newPage}&count=${25}`,
+        `${app.api}/transactions/city?page=${newPage}&count=${25}`,
         values !== undefined ? values : filterList
       )
       .then(async (response) => {
