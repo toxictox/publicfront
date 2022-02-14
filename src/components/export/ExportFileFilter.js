@@ -63,6 +63,7 @@ const ExportFileFilter = (props) => {
         bankId: [],
         fields: [
           "createOn",
+          "reconcDate",
           "amount",
           "tranType",
           "merchant",

@@ -4,6 +4,10 @@ const fields = [
     name: "createOn",
   },
   {
+    id: "reconcDate",
+    name: "reconcDate",
+  },
+  {
     id: "amount",
     name: "amount",
   },
