@@ -100,7 +100,7 @@ const TransactionsList = () => {
 
   const sendRegister = async () => {
     await axios
-      .post(`${app.api}/transactions/city/status/${id}`)
+      .post(`${app.api}/transactions/city/register/${id}`)
       .then((response) => {
         dispatch(
           showConfirm({
