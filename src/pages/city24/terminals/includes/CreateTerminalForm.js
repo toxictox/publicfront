@@ -10,30 +10,11 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import { fields } from "@lib/validate";
 
 const UpdateForm = (props) => {
   const mounted = useMounted();
   const { callback } = props;
   const { t } = useTranslation();
-  const [gatewayMethod, setGatewayMethod] = useState([]);
-  const [merchantList, setMerchantList] = useState([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      await axios.get(`${app.api}/terminal/merchants`).then((response) => {
-        setMerchantList(response.data.data);
-      });
-
-      await axios.get(`${app.api}/filter/gateway/methods`).then((response) => {
-        setGatewayMethod(response.data.data);
-      });
-    };
-    getData();
-  }, []);
 
   return (
     <Formik
