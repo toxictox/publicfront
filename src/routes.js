@@ -457,10 +457,6 @@ const City24MerchantCreate = Loadable(
   lazy(() => import("./pages/city24/merchant/:create"))
 );
 
-const City24MerchantUpdate = Loadable(
-  lazy(() => import("./pages/city24/merchant/:update"))
-);
-
 const City24TerminalsIndex = Loadable(
   lazy(() => import("./pages/city24/terminals"))
 );
@@ -471,10 +467,6 @@ const City24TerminalId = Loadable(
 
 const City24TerminalCreate = Loadable(
   lazy(() => import("./pages/city24/terminals/:create"))
-);
-
-const City24TerminalUpdate = Loadable(
-  lazy(() => import("./pages/city24/terminals/:update"))
 );
 
 // Reconciliation
@@ -710,10 +702,6 @@ const routes = [
                 path: "create",
                 element: <City24MerchantCreate />,
               },
-              {
-                path: "id/:id/update",
-                element: <City24MerchantUpdate />,
-              },
             ],
           },
           {
@@ -730,10 +718,6 @@ const routes = [
               {
                 path: "create",
                 element: <City24TerminalCreate />,
-              },
-              {
-                path: "id/:id/update",
-                element: <City24TerminalUpdate />,
               },
             ],
           },
