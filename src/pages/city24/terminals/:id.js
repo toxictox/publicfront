@@ -81,11 +81,6 @@ const TerminalId = () => {
                 title={t("Terminal Item Id")}
                 action={
                   <GroupTable
-                    actionUpdate={{
-                      access: getAccess("terminals", "update"),
-                      callback: () =>
-                        navigate(`/city24/terminals/id/${id}/update`),
-                    }}
                     actionDelete={{
                       access: getAccess("terminals", "delete"),
                       callback: () => {

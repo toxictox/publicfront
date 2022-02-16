@@ -33,6 +33,7 @@ const CreateMerchantForm = (props) => {
         contractDate: "",
         mfo: "",
         accountNumber: "",
+        shortName: "",
         serviceName: "",
         serviceType: "",
         serviceTypeCode: "",
@@ -53,6 +54,7 @@ const CreateMerchantForm = (props) => {
         contractDate: Yup.string().required(t("required")),
         mfo: Yup.string().required(t("required")),
         accountNumber: Yup.string().required(t("required")),
+        shortName: Yup.string().required(t("required")),
         serviceName: Yup.string().required(t("required")),
         postIndex: Yup.string().required(t("required")),
         city: Yup.string().required(t("required")),
@@ -260,6 +262,24 @@ const CreateMerchantForm = (props) => {
                       onChange={handleChange}
                       type="text"
                       value={values.accountNumber}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      error={Boolean(touched.shortName && errors.shortName)}
+                      fullWidth
+                      helperText={touched.shortName && errors.shortName}
+                      label={t("shortName")}
+                      margin="normal"
+                      name="shortName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.shortName}
                       variant="outlined"
                       size="small"
                       sx={{ m: 0 }}

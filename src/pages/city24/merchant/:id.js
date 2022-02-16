@@ -93,11 +93,6 @@ const MerchantId = () => {
                 title={t("Merchant Item Id")}
                 action={
                   <GroupTable
-                    actionUpdate={{
-                      access: getAccess("merchants", "update"),
-                      callback: () =>
-                        navigate(`/city24/merchants/id/${id}/update`),
-                    }}
                     actionDelete={{
                       access: getAccess("merchants", "delete"),
                       callback: () => {
@@ -110,18 +105,6 @@ const MerchantId = () => {
                         );
                       },
                     }}
-                    // actionCustom={[
-                    //   {
-                    //     title: t("depositLimit"),
-                    //     callback: () => navigate(`/merchants/deposit/${id}`),
-                    //     access: getAccess("merchants", "depositLimitEdit"),
-                    //   },
-                    //   {
-                    //     title: t("keyToken"),
-                    //     callback: () => navigate(`/merchants/token/${id}`),
-                    //     access: getAccess("merchants", "getMerchantKey"),
-                    //   },
-                    // ]}
                   />
                 }
               />

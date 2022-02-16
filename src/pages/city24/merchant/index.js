@@ -115,11 +115,12 @@ const MerchantsList = () => {
                 }
               />
               <Divider />
-              <TableStatic header={["name", "createOn", , ""]}>
+              <TableStatic header={["name", "accountNumber", "createOn", ""]}>
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.accountNumber}</TableCell>
                       <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
 
                       <TableCell align={"right"}>
