@@ -35,6 +35,7 @@ const CreateMerchantForm = (props) => {
         accountNumber: "",
         serviceName: "",
         serviceType: "",
+        serviceTypeCode: "",
         tranDest: "",
         postIndex: "",
         city: "",
@@ -59,6 +60,7 @@ const CreateMerchantForm = (props) => {
         building: Yup.string().required(t("required")),
         office: Yup.string().required(t("required")),
         serviceType: Yup.string().required(t("required")),
+        serviceTypeCode: Yup.string().required(t("required")),
         tranDest: Yup.string().required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -298,6 +300,28 @@ const CreateMerchantForm = (props) => {
                       onChange={handleChange}
                       type="text"
                       value={values.serviceType}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      error={Boolean(
+                        touched.serviceTypeCode && errors.serviceTypeCode
+                      )}
+                      fullWidth
+                      helperText={
+                        touched.serviceTypeCode && errors.serviceTypeCode
+                      }
+                      label={t("serviceTypeCode")}
+                      margin="normal"
+                      name="serviceTypeCode"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.serviceTypeCode}
                       variant="outlined"
                       size="small"
                       sx={{ m: 0 }}
