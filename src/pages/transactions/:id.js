@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import ReactPDF, { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   Box,
   Container,
@@ -13,7 +14,7 @@ import {
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
-import { Info } from "@material-ui/icons";
+import { Info, PictureAsPdf } from "@material-ui/icons";
 
 import axios from "@lib/axios";
 import { app } from "@root/config";
@@ -21,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
+import { TransactionPdf } from "./includes";
 import toast from "react-hot-toast";
 import useAuth from "@hooks/useAuth";
 
@@ -107,6 +109,36 @@ const TransactionsList = () => {
                         icon: <Info />,
                         access: getAccess("transactions", "getTransactionLogs"),
                         callback: () => navigate(`/transactions/${id}/logs`),
+                      },
+                      {
+                        icon: (
+                          <PDFDownloadLink
+                            document={<TransactionPdf />}
+                            fileName="somename.pdf"
+                          >
+                            {({ blob, url, loading, error }) =>
+                              loading ? "Loading document..." : <PictureAsPdf />
+                            }
+                          </PDFDownloadLink>
+                        ),
+                        access: getAccess("transactions", "getTransactionLogs"),
+                        // callback: () => (
+                        //   <PDFDownloadLink
+                        //     document={<TransactionPdf />}
+                        //     fileName="invoice"
+                        //     style={{ textDecoration: "none" }}
+                        //   ></PDFDownloadLink>
+                        // ),
+                        callback: () => (
+                          <PDFDownloadLink
+                            document={<TransactionPdf />}
+                            fileName="somename.pdf"
+                          >
+                            {({ blob, url, loading, error }) =>
+                              loading ? "Loading document..." : "Download now!"
+                            }
+                          </PDFDownloadLink>
+                        ),
                       },
                     ]}
                     actionCustom={[
