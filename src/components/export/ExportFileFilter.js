@@ -147,7 +147,7 @@ const ExportFileFilter = (props) => {
                   name="dateEnd"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="date"
+                  type="datetime-local"
                   value={values.dateEnd}
                   variant="outlined"
                   size="small"
