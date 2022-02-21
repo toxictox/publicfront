@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import ReactPDF, { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import {
   Box,
   Container,
@@ -112,19 +112,19 @@ const TransactionsList = () => {
                         access: getAccess("transactions", "getTransactionLogs"),
                         callback: () => navigate(`/transactions/${id}/logs`),
                       },
-                      // {
-                      //   title: `p${id}`,
-                      //   icon: (
-                      //     <PDFDownloadLink
-                      //       document={<TransactionPdf />}
-                      //       fileName="somename.pdf"
-                      //     >
-                      //       <PictureAsPdf />
-                      //     </PDFDownloadLink>
-                      //   ),
-                      //   callback: () => {},
-                      //   access: getAccess("transactions", "getTransactionLogs"),
-                      // },
+                      {
+                        title: `p${id}`,
+                        icon: (
+                          <PDFDownloadLink
+                            document={<TransactionPdf />}
+                            fileName="somename.pdf"
+                          >
+                            <PictureAsPdf />
+                          </PDFDownloadLink>
+                        ),
+                        callback: () => {},
+                        access: getAccess("transactions", "getTransactionLogs"),
+                      },
                     ]}
                     actionCustom={[
                       {
@@ -154,10 +154,6 @@ const TransactionsList = () => {
                   );
                 })}
               </TableStatic>
-              <Divider />
-              <PDFViewer height="100%" style={{ border: "none" }} width="100%">
-                <TransactionPdf />
-              </PDFViewer>
             </Card>
           </Box>
         </Container>
