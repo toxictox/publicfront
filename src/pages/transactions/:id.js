@@ -122,23 +122,6 @@ const TransactionsList = () => {
                           </PDFDownloadLink>
                         ),
                         access: getAccess("transactions", "getTransactionLogs"),
-                        // callback: () => (
-                        //   <PDFDownloadLink
-                        //     document={<TransactionPdf />}
-                        //     fileName="invoice"
-                        //     style={{ textDecoration: "none" }}
-                        //   ></PDFDownloadLink>
-                        // ),
-                        callback: () => (
-                          <PDFDownloadLink
-                            document={<TransactionPdf />}
-                            fileName="somename.pdf"
-                          >
-                            {({ blob, url, loading, error }) =>
-                              loading ? "Loading document..." : "Download now!"
-                            }
-                          </PDFDownloadLink>
-                        ),
                       },
                     ]}
                     actionCustom={[
