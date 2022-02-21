@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-// import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   Box,
   Container,
@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 import { TableStatic } from "@comp/core/tables/index";
 import { BackButton, GroupTable } from "@comp/core/buttons";
 import { toLocaleDateTime } from "@lib/date";
-// import { TransactionPdf } from "./includes";
+import { TransactionPdf } from "./includes";
 import toast from "react-hot-toast";
 import useAuth from "@hooks/useAuth";
 
@@ -107,22 +107,25 @@ const TransactionsList = () => {
                     actionCustomIcon={[
                       {
                         icon: <Info />,
+                        title: `l${id}`,
                         access: getAccess("transactions", "getTransactionLogs"),
                         callback: () => navigate(`/transactions/${id}/logs`),
                       },
-                      // {
-                      //   icon: (
-                      //     <PDFDownloadLink
-                      //       document={<TransactionPdf />}
-                      //       fileName="somename.pdf"
-                      //     >
-                      //       {({ blob, url, loading, error }) =>
-                      //         loading ? "Loading document..." : <PictureAsPdf />
-                      //       }
-                      //     </PDFDownloadLink>
-                      //   ),
-                      //   access: getAccess("transactions", "getTransactionLogs"),
-                      // },
+                      {
+                        title: `p${id}`,
+                        icon: (
+                          <PDFDownloadLink
+                            document={<TransactionPdf />}
+                            fileName="somename.pdf"
+                          >
+                            {({ blob, url, loading, error }) =>
+                              loading ? "Loading document..." : <PictureAsPdf />
+                            }
+                          </PDFDownloadLink>
+                        ),
+                        callback: () => {},
+                        access: getAccess("transactions", "getTransactionLogs"),
+                      },
                     ]}
                     actionCustom={[
                       {
