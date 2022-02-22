@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import ReactPDF, { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import {
   Box,
   Container,
@@ -34,9 +34,7 @@ const TransactionsList = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { getAccess } = useAuth();
-  const [dataList, setListData] = useState({
-    data: [],
-  });
+  const [dataList, setListData] = useState({});
   const [status, setStatus] = useState(undefined);
 
   const getItem = useCallback(async () => {
@@ -93,6 +91,9 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? "xl" : false}>
           <BackButton action={() => navigate("/transactions")} />
+          {/*<PDFViewer height="800" style={{ border: "none" }} width="100%">*/}
+          {/*  <TransactionPdf data={dataList} />*/}
+          {/*</PDFViewer>*/}
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               {status ? (
@@ -116,8 +117,10 @@ const TransactionsList = () => {
                         title: `p${id}`,
                         icon: (
                           <PDFDownloadLink
-                            document={<TransactionPdf />}
-                            fileName="somename.pdf"
+                            document={<TransactionPdf data={dataList} />}
+                            fileName={`${toLocaleDateTime(new Date())}-${
+                              dataList.tranId
+                            }.pdf`}
                           >
                             <PictureAsPdf />
                           </PDFDownloadLink>
