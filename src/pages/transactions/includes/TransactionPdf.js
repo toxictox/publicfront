@@ -102,7 +102,7 @@ const MyDocument = (props) => {
             )}`}</Text>
             <Text>{`від ${getRequestTime()}`}</Text>
           </View>
-          <Text>{`ТОВ «_____________»`}</Text>
+          <Text>{`ТОВ «${data.businessName}»`}</Text>
         </View>
         <View style={styles.content}>
           <Text style={styles.center}>{"Шановні партнери!"}</Text>
@@ -120,10 +120,16 @@ const MyDocument = (props) => {
             }
           </Text>
           <Text style={styles.p}>
-            {`Між нашими Товариствами було укладено Договір про організацію переказу грошових коштів №____від_______.`}
+            {`Між нашими Товариствами було укладено Договір про організацію переказу грошових коштів № ${
+              data.contractNumber
+            } від ${
+              data.contractDate !== undefined
+                ? toLocaleDateTime(data.contractDate)
+                : ""
+            }.`}
           </Text>
           <Text style={styles.p}>
-            {`Відповідно до зазначеного Договору було успішно перераховано кошти на платіжну картку клієнта від ТОВ «___________________»: `}
+            {`Відповідно до зазначеного Договору було успішно перераховано кошти на платіжну картку клієнта від ТОВ «${data.businessName}»: `}
           </Text>
           <Text style={styles.p}>
             {`${

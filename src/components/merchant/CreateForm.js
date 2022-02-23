@@ -50,11 +50,17 @@ const CreateForm = (props) => {
         cityTerminalId: "",
         cityMerchantId: "",
         fixAmountFee: 0,
+        businessName: "",
+        contractNumber: "",
+        contractDate: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
         description: Yup.string().max(255),
         fixAmountFee: Yup.string(),
+        businessName: Yup.string(),
+        contractNumber: Yup.string(),
+        contractDate: Yup.string(),
         percentFee: Yup.string().matches(fields.decimal, t("field float")),
         minAmountFee: Yup.number().typeError(t("field number")),
         timezoneId: Yup.string().max(255).required(t("required")),
@@ -120,6 +126,63 @@ const CreateForm = (props) => {
                   value={values.description}
                   variant="outlined"
                   size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.businessName && errors.businessName)}
+                  fullWidth
+                  helperText={touched.businessName && errors.businessName}
+                  label={t("businessName")}
+                  margin="normal"
+                  name="businessName"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.businessName}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(
+                    touched.contractNumber && errors.contractNumber
+                  )}
+                  fullWidth
+                  helperText={touched.contractNumber && errors.contractNumber}
+                  label={t("contractNumber")}
+                  margin="normal"
+                  name="contractNumber"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.contractNumber}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.contractDate && errors.contractDate)}
+                  fullWidth
+                  helperText={touched.contractDate && errors.contractDate}
+                  label={t("contractDate")}
+                  margin="normal"
+                  name="contractDate"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="datetime-local"
+                  value={values.contractDate}
+                  variant="outlined"
+                  size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   sx={{ m: 0 }}
                 />
               </Grid>
