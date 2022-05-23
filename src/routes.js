@@ -1,103 +1,104 @@
-import { Suspense, lazy } from "react";
-import { Navigate } from "react-router-dom";
-import AuthGuard from "@comp/AuthGuard";
-import ACLGuard from "@comp/ACLGuard";
-import BlogLayout from "./components/blog/BlogLayout";
-import DashboardLayout from "./components/dashboard/DashboardLayout";
-import DocsLayout from "./components/docs/DocsLayout";
-import GuestGuard from "./components/GuestGuard";
-import LoadingScreen from "./components/LoadingScreen";
+import { Suspense, lazy } from 'react';
+import { Navigate } from 'react-router-dom';
+import AuthGuard from '@comp/AuthGuard';
+import ACLGuard from '@comp/ACLGuard';
+import BlogLayout from './components/blog/BlogLayout';
+import DashboardLayout from './components/dashboard/DashboardLayout';
+import DocsLayout from './components/docs/DocsLayout';
+import GuestGuard from './components/GuestGuard';
+import LoadingScreen from './components/LoadingScreen';
 
 // new
-import BaseLayout from "@comp/board/BaseLayout";
+import BaseLayout from '@comp/board/BaseLayout';
 
 let dashboard = {},
   docs = {},
   blog = {};
 
-const Loadable = (Component) => (props) => (
-  <Suspense fallback={<LoadingScreen />}>
-    <Component {...props} />
-  </Suspense>
-);
+const Loadable = (Component) => (props) =>
+  (
+    <Suspense fallback={<LoadingScreen />}>
+      <Component {...props} />
+    </Suspense>
+  );
 
 // Browse pages
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === 'development') {
   // Blog pages
 
   const BlogPostCreate = Loadable(
-    lazy(() => import("./pages/blog/BlogPostCreate"))
+    lazy(() => import('./pages/blog/BlogPostCreate'))
   );
   const BlogPostDetails = Loadable(
-    lazy(() => import("./pages/blog/BlogPostDetails"))
+    lazy(() => import('./pages/blog/BlogPostDetails'))
   );
   const BlogPostList = Loadable(
-    lazy(() => import("./pages/blog/BlogPostList"))
+    lazy(() => import('./pages/blog/BlogPostList'))
   );
 
   // Dashboard pages
 
-  const Account = Loadable(lazy(() => import("./pages/dashboard/Account")));
-  const Analytics = Loadable(lazy(() => import("./pages/dashboard/Analytics")));
-  const Calendar = Loadable(lazy(() => import("./pages/dashboard/Calendar")));
-  const Chat = Loadable(lazy(() => import("./pages/dashboard/Chat")));
+  const Account = Loadable(lazy(() => import('./pages/dashboard/Account')));
+  const Analytics = Loadable(lazy(() => import('./pages/dashboard/Analytics')));
+  const Calendar = Loadable(lazy(() => import('./pages/dashboard/Calendar')));
+  const Chat = Loadable(lazy(() => import('./pages/dashboard/Chat')));
   const CustomerDetails = Loadable(
-    lazy(() => import("./pages/dashboard/CustomerDetails"))
+    lazy(() => import('./pages/dashboard/CustomerDetails'))
   );
   const CustomerEdit = Loadable(
-    lazy(() => import("./pages/dashboard/CustomerEdit"))
+    lazy(() => import('./pages/dashboard/CustomerEdit'))
   );
   const CustomerList = Loadable(
-    lazy(() => import("./pages/dashboard/CustomerList"))
+    lazy(() => import('./pages/dashboard/CustomerList'))
   );
-  const Finance = Loadable(lazy(() => import("./pages/dashboard/Finance")));
+  const Finance = Loadable(lazy(() => import('./pages/dashboard/Finance')));
   const InvoiceDetails = Loadable(
-    lazy(() => import("./pages/dashboard/InvoiceDetails"))
+    lazy(() => import('./pages/dashboard/InvoiceDetails'))
   );
   const InvoiceList = Loadable(
-    lazy(() => import("./pages/dashboard/InvoiceList"))
+    lazy(() => import('./pages/dashboard/InvoiceList'))
   );
-  const Kanban = Loadable(lazy(() => import("./pages/dashboard/Kanban")));
-  const Mail = Loadable(lazy(() => import("./pages/dashboard/Mail")));
+  const Kanban = Loadable(lazy(() => import('./pages/dashboard/Kanban')));
+  const Mail = Loadable(lazy(() => import('./pages/dashboard/Mail')));
   const OrderDetails = Loadable(
-    lazy(() => import("./pages/dashboard/OrderDetails"))
+    lazy(() => import('./pages/dashboard/OrderDetails'))
   );
-  const OrderList = Loadable(lazy(() => import("./pages/dashboard/OrderList")));
-  const Overview = Loadable(lazy(() => import("./pages/dashboard/Overview")));
+  const OrderList = Loadable(lazy(() => import('./pages/dashboard/OrderList')));
+  const Overview = Loadable(lazy(() => import('./pages/dashboard/Overview')));
   const ProductCreate = Loadable(
-    lazy(() => import("./pages/dashboard/ProductCreate"))
+    lazy(() => import('./pages/dashboard/ProductCreate'))
   );
   const ProductList = Loadable(
-    lazy(() => import("./pages/dashboard/ProductList"))
+    lazy(() => import('./pages/dashboard/ProductList'))
   );
 
   // Docs pages
 
-  const Docs = Loadable(lazy(() => import("./pages/Docs")));
+  const Docs = Loadable(lazy(() => import('./pages/Docs')));
 
   // Projects pages
 
   const ProjectBrowse = Loadable(
-    lazy(() => import("./pages/dashboard/ProjectBrowse"))
+    lazy(() => import('./pages/dashboard/ProjectBrowse'))
   );
   const ProjectCreate = Loadable(
-    lazy(() => import("./pages/dashboard/ProjectCreate"))
+    lazy(() => import('./pages/dashboard/ProjectCreate'))
   );
   const ProjectDetails = Loadable(
-    lazy(() => import("./pages/dashboard/ProjectDetails"))
+    lazy(() => import('./pages/dashboard/ProjectDetails'))
   );
 
   // Social pages
 
   const SocialFeed = Loadable(
-    lazy(() => import("./pages/dashboard/SocialFeed"))
+    lazy(() => import('./pages/dashboard/SocialFeed'))
   );
   const SocialProfile = Loadable(
-    lazy(() => import("./pages/dashboard/SocialProfile"))
+    lazy(() => import('./pages/dashboard/SocialProfile'))
   );
 
   dashboard = {
-    path: "dashboard",
+    path: 'dashboard',
     element: (
       <AuthGuard>
         <DashboardLayout />
@@ -105,153 +106,153 @@ if (process.env.NODE_ENV === "development") {
     ),
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Overview />,
       },
       {
-        path: "account",
+        path: 'account',
         element: <Account />,
       },
       {
-        path: "analytics",
+        path: 'analytics',
         element: <Analytics />,
       },
       {
-        path: "calendar",
+        path: 'calendar',
         element: <Calendar />,
       },
       {
-        path: "chat",
+        path: 'chat',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <Chat />,
           },
           {
-            path: "new",
+            path: 'new',
             element: <Chat />,
           },
           {
-            path: ":threadKey",
+            path: ':threadKey',
             element: <Chat />,
           },
         ],
       },
       {
-        path: "customers",
+        path: 'customers',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <CustomerList />,
           },
           {
-            path: ":customerId",
+            path: ':customerId',
             element: <CustomerDetails />,
           },
           {
-            path: ":customerId/edit",
+            path: ':customerId/edit',
             element: <CustomerEdit />,
           },
         ],
       },
       {
-        path: "invoices",
+        path: 'invoices',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <InvoiceList />,
           },
           {
-            path: ":invoiceId",
+            path: ':invoiceId',
             element: <InvoiceDetails />,
           },
         ],
       },
       {
-        path: "kanban",
+        path: 'kanban',
         element: <Kanban />,
       },
       {
-        path: "mail",
+        path: 'mail',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <Navigate to="/dashboard/mail/all" replace />,
           },
           {
-            path: "label/:customLabel",
+            path: 'label/:customLabel',
             element: <Mail />,
           },
           {
-            path: "label/:customLabel/:emailId",
+            path: 'label/:customLabel/:emailId',
             element: <Mail />,
           },
           {
-            path: ":systemLabel",
+            path: ':systemLabel',
             element: <Mail />,
           },
           {
-            path: ":systemLabel/:emailId",
+            path: ':systemLabel/:emailId',
             element: <Mail />,
           },
         ],
       },
       {
-        path: "orders",
+        path: 'orders',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <OrderList />,
           },
           {
-            path: ":orderId",
+            path: ':orderId',
             element: <OrderDetails />,
           },
         ],
       },
       {
-        path: "finance",
+        path: 'finance',
         element: <Finance />,
       },
       {
-        path: "products",
+        path: 'products',
         children: [
           {
-            path: "/",
+            path: '/',
             element: <ProductList />,
           },
           {
-            path: "new",
+            path: 'new',
             element: <ProductCreate />,
           },
         ],
       },
       {
-        path: "projects",
+        path: 'projects',
         children: [
           {
-            path: "browse",
+            path: 'browse',
             element: <ProjectBrowse />,
           },
           {
-            path: "new",
+            path: 'new',
             element: <ProjectCreate />,
           },
           {
-            path: ":projectId",
+            path: ':projectId',
             element: <ProjectDetails />,
           },
         ],
       },
       {
-        path: "social",
+        path: 'social',
         children: [
           {
-            path: "feed",
+            path: 'feed',
             element: <SocialFeed />,
           },
           {
-            path: "profile",
+            path: 'profile',
             element: <SocialProfile />,
           },
         ],
@@ -260,34 +261,34 @@ if (process.env.NODE_ENV === "development") {
   };
 
   blog = {
-    path: "blog",
+    path: 'blog',
     element: <BlogLayout />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <BlogPostList />,
       },
       {
-        path: "new",
+        path: 'new',
         element: <BlogPostCreate />,
       },
       {
-        path: ":postId",
+        path: ':postId',
         element: <BlogPostDetails />,
       },
     ],
   };
 
   docs = {
-    path: "docs",
+    path: 'docs',
     element: <DocsLayout />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Navigate to="/docs/overview/welcome" replace />,
       },
       {
-        path: "*",
+        path: '*',
         element: <Docs />,
       },
     ],
@@ -296,83 +297,79 @@ if (process.env.NODE_ENV === "development") {
 
 // Authentication pages
 
-const Login = Loadable(lazy(() => import("@pages/authentication/Login")));
+const Login = Loadable(lazy(() => import('@pages/authentication/Login')));
 const PasswordRecovery = Loadable(
-  lazy(() => import("@pages/authentication/PasswordRecovery"))
+  lazy(() => import('@pages/authentication/PasswordRecovery'))
 );
 const PasswordReset = Loadable(
-  lazy(() => import("@pages/authentication/PasswordReset"))
+  lazy(() => import('@pages/authentication/PasswordReset'))
 );
-const Register = Loadable(lazy(() => import("@pages/authentication/Register")));
+const Register = Loadable(lazy(() => import('@pages/authentication/Register')));
 const VerifyCode = Loadable(
-  lazy(() => import("@pages/authentication/VerifyCode"))
+  lazy(() => import('@pages/authentication/VerifyCode'))
 );
 
 // Error pages
 
 const AuthorizationRequired = Loadable(
-  lazy(() => import("@pages/AuthorizationRequired"))
+  lazy(() => import('@pages/AuthorizationRequired'))
 );
-const NotFound = Loadable(lazy(() => import("@pages/NotFound")));
-const ServerError = Loadable(lazy(() => import("@pages/ServerError")));
+const NotFound = Loadable(lazy(() => import('@pages/NotFound')));
+const ServerError = Loadable(lazy(() => import('@pages/ServerError')));
 
 // New pages
-const HomeNew = Loadable(lazy(() => import("@pages/home/Home")));
+const HomeNew = Loadable(lazy(() => import('@pages/home/Home')));
 
 // users
-const UsersPage = Loadable(lazy(() => import("@pages/users")));
-const UsersPageInactive = Loadable(lazy(() => import("@pages/users/inactive")));
-const UserItemIdPage = Loadable(lazy(() => import("@pages/users/:id")));
+const UsersPage = Loadable(lazy(() => import('@pages/users')));
+const UsersPageInactive = Loadable(lazy(() => import('@pages/users/inactive')));
+const UserItemIdPage = Loadable(lazy(() => import('@pages/users/id')));
 const UserItemIdUpdatePage = Loadable(
-  lazy(() => import("@pages/users/:update"))
+  lazy(() => import('@pages/users/update'))
 );
 
 const UserRoleUpdatePage = Loadable(
-  lazy(() => import("@pages/users/roles/:update"))
+  lazy(() => import('@pages/users/roles/update'))
 );
 
-const UserCreatePage = Loadable(lazy(() => import("@pages/users/:create")));
+const UserCreatePage = Loadable(lazy(() => import('@pages/users/create')));
 
 // banks
-const BanksPage = Loadable(lazy(() => import("@pages/banks")));
-const BanksPageIdPage = Loadable(lazy(() => import("@pages/banks/:id")));
-const BanksCreatePage = Loadable(lazy(() => import("@pages/banks/:create")));
+const BanksPage = Loadable(lazy(() => import('@pages/banks')));
+const BanksPageIdPage = Loadable(lazy(() => import('@pages/banks/id')));
+const BanksCreatePage = Loadable(lazy(() => import('@pages/banks/create')));
 const BanksPageIdUpdatePage = Loadable(
-  lazy(() => import("@pages/banks/:update"))
+  lazy(() => import('@pages/banks/update'))
 );
 
 // transactions
 const TransactionIndexPage = Loadable(
-  lazy(() => import("@pages/transactions"))
+  lazy(() => import('@pages/transactions'))
 );
 
 const TransactionItemIdPage = Loadable(
-  lazy(() => import("@pages/transactions/:id"))
+  lazy(() => import('@pages/transactions/id'))
 );
 
 const TransactionLogsPage = Loadable(
-  lazy(() => import("@pages/transactions/:id_logs"))
+  lazy(() => import('@pages/transactions/id_logs'))
 );
 
 // gateways
-const GatewayIndexPage = Loadable(lazy(() => import("@pages/gateway")));
-const GatewayCreatePage = Loadable(
-  lazy(() => import("@pages/gateway/:create"))
-);
-const GatewayIdPage = Loadable(lazy(() => import("@pages/gateway/:id")));
-const GatewayIdPagePage = Loadable(
-  lazy(() => import("@pages/gateway/:update"))
-);
+const GatewayIndexPage = Loadable(lazy(() => import('@pages/gateway')));
+const GatewayCreatePage = Loadable(lazy(() => import('@pages/gateway/create')));
+const GatewayIdPage = Loadable(lazy(() => import('@pages/gateway/id')));
+const GatewayIdPagePage = Loadable(lazy(() => import('@pages/gateway/update')));
 
 // bin
-const BinIndexPage = Loadable(lazy(() => import("@pages/bin/index")));
+const BinIndexPage = Loadable(lazy(() => import('@pages/bin/index')));
 
 // transaction flow
-const TransactionFlowList = Loadable(lazy(() => import("@pages/flow")));
+const TransactionFlowList = Loadable(lazy(() => import('@pages/flow')));
 const TransactionFlowCreate = Loadable(
-  lazy(() => import("@pages/flow/:create"))
+  lazy(() => import('@pages/flow/create'))
 );
-const TransactionFlowUpdate = Loadable(lazy(() => import("@pages/flow/:id")));
+const TransactionFlowUpdate = Loadable(lazy(() => import('@pages/flow/id')));
 
 // cascading
 
@@ -381,112 +378,110 @@ const TransactionFlowUpdate = Loadable(lazy(() => import("@pages/flow/:id")));
 // );
 
 const CascadingModelList = Loadable(
-  lazy(() => import("@pages/cascading/models"))
+  lazy(() => import('@pages/cascading/models'))
 );
 const CascadingModelId = Loadable(
-  lazy(() => import("@pages/cascading/models/:id"))
+  lazy(() => import('@pages/cascading/models/id'))
 );
 
 const CascadingCreate = Loadable(
-  lazy(() => import("@pages/cascading/models/:create"))
+  lazy(() => import('@pages/cascading/models/create'))
 );
 
 // merchant
-const MerchantList = Loadable(lazy(() => import("@pages/merchant/index")));
-const MerchantModelId = Loadable(lazy(() => import("@pages/merchant/:id")));
+const MerchantList = Loadable(lazy(() => import('@pages/merchant/index')));
+const MerchantModelId = Loadable(lazy(() => import('@pages/merchant/id')));
 const MerchantModelIdUpdate = Loadable(
-  lazy(() => import("@pages/merchant/:update"))
+  lazy(() => import('@pages/merchant/update'))
 );
 
 const MerchantModelCreate = Loadable(
-  lazy(() => import("@pages/merchant/:create"))
+  lazy(() => import('@pages/merchant/create'))
 );
 
 const MerchantTokenUpdate = Loadable(
-  lazy(() => import("@pages/merchant/_token/:update"))
+  lazy(() => import('@pages/merchant/_token/update'))
 );
 
 const MerchantDepositUpdate = Loadable(
-  lazy(() => import("@pages/merchant/_deposit/:update"))
+  lazy(() => import('@pages/merchant/_deposit/update'))
 );
 
 // terminals
 
-const TerminalsList = Loadable(lazy(() => import("@pages/terminals")));
-const TerminalsModelId = Loadable(lazy(() => import("@pages/terminals/:id")));
-const TerminalsCreate = Loadable(
-  lazy(() => import("@pages/terminals/:create"))
-);
+const TerminalsList = Loadable(lazy(() => import('@pages/terminals')));
+const TerminalsModelId = Loadable(lazy(() => import('@pages/terminals/id')));
+const TerminalsCreate = Loadable(lazy(() => import('@pages/terminals/create')));
 
 const TerminalsItemUpdate = Loadable(
-  lazy(() => import("@pages/terminals/:update"))
+  lazy(() => import('@pages/terminals/update'))
 );
 
 const TerminalsUpdateToken = Loadable(
-  lazy(() => import("@pages/terminals/_token/:update"))
+  lazy(() => import('@pages/terminals/_token/update'))
 );
 
 // roles
 
-const RolesList = Loadable(lazy(() => import("@pages/roles/index")));
-const CreateRole = Loadable(lazy(() => import("@pages/roles/:create")));
-const UpdateRole = Loadable(lazy(() => import("@pages/roles/:update")));
+const RolesList = Loadable(lazy(() => import('@pages/roles/index')));
+const CreateRole = Loadable(lazy(() => import('@pages/roles/create')));
+const UpdateRole = Loadable(lazy(() => import('@pages/roles/update')));
 
 // Codes
-const CodesList = Loadable(lazy(() => import("./pages/codes/index")));
-const CodesItemId = Loadable(lazy(() => import("./pages/codes/:id")));
-const CodesItemUpdate = Loadable(lazy(() => import("./pages/codes/:update")));
-const CodesItemСreate = Loadable(lazy(() => import("./pages/codes/:create")));
+const CodesList = Loadable(lazy(() => import('./pages/codes/index')));
+const CodesItemId = Loadable(lazy(() => import('./pages/codes/id')));
+const CodesItemUpdate = Loadable(lazy(() => import('./pages/codes/update')));
+const CodesItemСreate = Loadable(lazy(() => import('./pages/codes/create')));
 
 // city24
 const City24TransactionsIndex = Loadable(
-  lazy(() => import("./pages/city24/transactions/index"))
+  lazy(() => import('./pages/city24/transactions/index'))
 );
 const City24TransactionsId = Loadable(
-  lazy(() => import("./pages/city24/transactions/:id"))
+  lazy(() => import('./pages/city24/transactions/id'))
 );
 
 const City24MerchantsIndex = Loadable(
-  lazy(() => import("./pages/city24/merchant"))
+  lazy(() => import('./pages/city24/merchant'))
 );
 const City24MerchantId = Loadable(
-  lazy(() => import("./pages/city24/merchant/:id"))
+  lazy(() => import('./pages/city24/merchant/id'))
 );
 
 const City24MerchantCreate = Loadable(
-  lazy(() => import("./pages/city24/merchant/:create"))
+  lazy(() => import('./pages/city24/merchant/create'))
 );
 
 const City24TerminalsIndex = Loadable(
-  lazy(() => import("./pages/city24/terminals"))
+  lazy(() => import('./pages/city24/terminals'))
 );
 
 const City24TerminalId = Loadable(
-  lazy(() => import("./pages/city24/terminals/:id"))
+  lazy(() => import('./pages/city24/terminals/id'))
 );
 
 const City24TerminalCreate = Loadable(
-  lazy(() => import("./pages/city24/terminals/:create"))
+  lazy(() => import('./pages/city24/terminals/create'))
 );
 
 // Reconciliation
 const ReconciliationList = Loadable(
-  lazy(() => import("./pages/reconciliation/index"))
+  lazy(() => import('./pages/reconciliation/index'))
 );
 
 // export list
-const ExportIndexPage = Loadable(lazy(() => import("@pages/export/index")));
+const ExportIndexPage = Loadable(lazy(() => import('@pages/export/index')));
 
 const routes = [
-  process.env.NODE_ENV === "development" ? docs : {},
-  process.env.NODE_ENV === "development" ? dashboard : {},
-  process.env.NODE_ENV === "development" ? blog : {},
+  process.env.NODE_ENV === 'development' ? docs : {},
+  process.env.NODE_ENV === 'development' ? dashboard : {},
+  process.env.NODE_ENV === 'development' ? blog : {},
 
   {
-    path: "authentication",
+    path: 'authentication',
     children: [
       {
-        path: "login",
+        path: 'login',
         element: (
           <GuestGuard>
             <Login />
@@ -494,7 +489,7 @@ const routes = [
         ),
       },
       {
-        path: "password/reset/:token",
+        path: 'password/reset/:token',
         element: (
           <GuestGuard>
             <PasswordReset />
@@ -502,7 +497,7 @@ const routes = [
         ),
       },
       {
-        path: "password/reset",
+        path: 'password/reset',
         element: (
           <GuestGuard>
             <PasswordRecovery />
@@ -510,7 +505,7 @@ const routes = [
         ),
       },
       {
-        path: "register/:token",
+        path: 'register/:token',
         element: (
           <GuestGuard>
             <Register />
@@ -518,7 +513,7 @@ const routes = [
         ),
       },
       {
-        path: "verify-code",
+        path: 'verify-code',
         element: (
           <GuestGuard>
             <VerifyCode />
@@ -529,7 +524,7 @@ const routes = [
   },
 
   {
-    path: "*",
+    path: '*',
     element: (
       <AuthGuard>
         <BaseLayout />
@@ -537,7 +532,7 @@ const routes = [
     ),
     children: [
       {
-        path: "/",
+        path: '/',
         element: (
           <GuestGuard>
             <Login />
@@ -546,57 +541,57 @@ const routes = [
       },
 
       {
-        path: "board",
+        path: 'board',
         element: <HomeNew />,
       },
 
       {
-        path: "users",
+        path: 'users',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <UsersPage />
               </ACLGuard>
             ),
           },
           {
-            path: "/inactive",
+            path: '/inactive',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <UsersPageInactive />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <UserCreatePage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <UserItemIdPage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <UserItemIdUpdatePage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/role",
+            path: 'id/:id/role',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <UserRoleUpdatePage />
               </ACLGuard>
             ),
@@ -605,27 +600,27 @@ const routes = [
       },
 
       {
-        path: "roles",
+        path: 'roles',
         children: [
           {
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <RolesList />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <CreateRole />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <UpdateRole />
               </ACLGuard>
             ),
@@ -634,36 +629,36 @@ const routes = [
       },
 
       {
-        path: "codes",
+        path: 'codes',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <CodesList />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <CodesItemСreate />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <CodesItemId />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <CodesItemUpdate />
               </ACLGuard>
             ),
@@ -672,60 +667,60 @@ const routes = [
       },
 
       {
-        path: "city24",
+        path: 'city24',
         children: [
           {
-            path: "transactions",
+            path: 'transactions',
             children: [
               {
-                path: "",
+                path: '',
                 element: <City24TransactionsIndex />,
               },
               {
-                path: "id/:id",
+                path: 'id/:id',
                 element: <City24TransactionsId />,
               },
             ],
           },
           {
-            path: "merchants",
+            path: 'merchants',
             children: [
               {
-                path: "",
+                path: '',
                 element: <City24MerchantsIndex />,
               },
               {
-                path: "id/:id",
+                path: 'id/:id',
                 element: <City24MerchantId />,
               },
               {
-                path: "create",
+                path: 'create',
                 element: <City24MerchantCreate />,
               },
             ],
           },
           {
-            path: "terminals",
+            path: 'terminals',
             children: [
               {
-                path: "",
+                path: '',
                 element: <City24TerminalsIndex />,
               },
               {
-                path: "id/:id",
+                path: 'id/:id',
                 element: <City24TerminalId />,
               },
               {
-                path: "create",
+                path: 'create',
                 element: <City24TerminalCreate />,
               },
             ],
           },
           {
-            path: "keys",
+            path: 'keys',
             children: [
               {
-                path: "",
+                path: '',
                 element: <City24TransactionsIndex />,
               },
             ],
@@ -734,36 +729,36 @@ const routes = [
       },
 
       {
-        path: "banks",
+        path: 'banks',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <BanksPage />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <BanksCreatePage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <BanksPageIdPage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <BanksPageIdUpdatePage />
               </ACLGuard>
             ),
@@ -772,28 +767,28 @@ const routes = [
       },
 
       {
-        path: "flows",
+        path: 'flows',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <TransactionFlowList />
               </ACLGuard>
             ),
           },
           {
-            path: "/create",
+            path: '/create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <TransactionFlowCreate />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <TransactionFlowUpdate />
               </ACLGuard>
             ),
@@ -802,36 +797,36 @@ const routes = [
       },
 
       {
-        path: "gateways",
+        path: 'gateways',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <GatewayIndexPage />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <GatewayCreatePage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <GatewayIdPage />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <GatewayIdPagePage />
               </ACLGuard>
             ),
@@ -844,44 +839,44 @@ const routes = [
       },
 
       {
-        path: "terminals",
+        path: 'terminals',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <TerminalsList />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <TerminalsCreate />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <TerminalsModelId />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <TerminalsItemUpdate />
               </ACLGuard>
             ),
           },
           {
-            path: "token/:id",
+            path: 'token/:id',
             element: (
-              <ACLGuard can={"getTerminalKey"}>
+              <ACLGuard can={'getTerminalKey'}>
                 <TerminalsUpdateToken />
               </ACLGuard>
             ),
@@ -890,36 +885,36 @@ const routes = [
       },
 
       {
-        path: "cascading",
+        path: 'cascading',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <CascadingModelList />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <CascadingCreate />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <CascadingModelId />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <GatewayIdPagePage />
               </ACLGuard>
             ),
@@ -928,53 +923,53 @@ const routes = [
       },
 
       {
-        path: "merchants",
+        path: 'merchants',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <MerchantList />
               </ACLGuard>
             ),
           },
           {
-            path: "create",
+            path: 'create',
             element: (
-              <ACLGuard can={"create"}>
+              <ACLGuard can={'create'}>
                 <MerchantModelCreate />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id",
+            path: 'id/:id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <MerchantModelId />
               </ACLGuard>
             ),
           },
           {
-            path: "id/:id/update",
+            path: 'id/:id/update',
             element: (
-              <ACLGuard can={"update"}>
+              <ACLGuard can={'update'}>
                 <MerchantModelIdUpdate />
               </ACLGuard>
             ),
           },
 
           {
-            path: "token/:id",
+            path: 'token/:id',
             element: (
-              <ACLGuard can={"getMerchantKey"}>
+              <ACLGuard can={'getMerchantKey'}>
                 <MerchantTokenUpdate />
               </ACLGuard>
             ),
           },
           {
-            path: "deposit/:id",
+            path: 'deposit/:id',
             element: (
-              <ACLGuard can={"depositLimitEdit"}>
+              <ACLGuard can={'depositLimitEdit'}>
                 <MerchantDepositUpdate />
               </ACLGuard>
             ),
@@ -983,12 +978,12 @@ const routes = [
       },
 
       {
-        path: "bin",
+        path: 'bin',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <BinIndexPage />
               </ACLGuard>
             ),
@@ -997,28 +992,28 @@ const routes = [
       },
 
       {
-        path: "transactions",
+        path: 'transactions',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <TransactionIndexPage />
               </ACLGuard>
             ),
           },
           {
-            path: ":id",
+            path: ':id',
             element: (
-              <ACLGuard can={"details"}>
+              <ACLGuard can={'details'}>
                 <TransactionItemIdPage />
               </ACLGuard>
             ),
           },
           {
-            path: ":id/logs",
+            path: ':id/logs',
             element: (
-              <ACLGuard can={"getTransactionLogs"}>
+              <ACLGuard can={'getTransactionLogs'}>
                 <TransactionLogsPage />
               </ACLGuard>
             ),
@@ -1027,12 +1022,12 @@ const routes = [
       },
 
       {
-        path: "export",
+        path: 'export',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <ExportIndexPage />
               </ACLGuard>
             ),
@@ -1041,12 +1036,12 @@ const routes = [
       },
 
       {
-        path: "reconciliation",
+        path: 'reconciliation',
         children: [
           {
-            path: "/",
+            path: '/',
             element: (
-              <ACLGuard can={"read"}>
+              <ACLGuard can={'read'}>
                 <ReconciliationList />
               </ACLGuard>
             ),
@@ -1055,19 +1050,19 @@ const routes = [
       },
 
       {
-        path: "401",
+        path: '401',
         element: <AuthorizationRequired />,
       },
       {
-        path: "404",
+        path: '404',
         element: <NotFound />,
       },
       {
-        path: "500",
+        path: '500',
         element: <ServerError />,
       },
       {
-        path: "*",
+        path: '*',
         element: <NotFound />,
       },
     ],
