@@ -1,5 +1,12 @@
 import { useRef, useState, memo } from 'react';
-import { ListItemIcon, ListItemText, Tooltip, IconButton, Menu, MenuItem } from '@material-ui/core';
+import {
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@material-ui/core';
 import ArchiveIcon from '../icons/Archive';
 import DocumentTextIcon from '../icons/DocumentText';
 import DotsHorizontalIcon from '../icons/DotsHorizontal';
@@ -10,9 +17,9 @@ const MoreMenu = (props) => {
   const anchorRef = useRef(null);
   const [openMenu, setOpenMenu] = useState(false);
 
-  const handleMenuOpen = () => {
-    setOpenMenu(true);
-  };
+  // const handleMenuOpen = () => {
+  //   setOpenMenu(true);
+  // };
 
   const handleMenuClose = () => {
     setOpenMenu(false);
@@ -20,6 +27,8 @@ const MoreMenu = (props) => {
 
   return (
     <>
+      {/*
+      delete points button
       <Tooltip title="More options">
         <IconButton
           onClick={handleMenuOpen}
@@ -28,24 +37,24 @@ const MoreMenu = (props) => {
         >
           <DotsHorizontalIcon fontSize="small" />
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
       <Menu
         anchorEl={anchorRef.current}
         anchorOrigin={{
           horizontal: 'left',
-          vertical: 'top'
+          vertical: 'top',
         }}
         onClose={handleMenuClose}
         open={openMenu}
         PaperProps={{
           sx: {
             maxWidth: '100%',
-            width: 256
-          }
+            width: 256,
+          },
         }}
         transformOrigin={{
           horizontal: 'left',
-          vertical: 'top'
+          vertical: 'top',
         }}
       >
         <MenuItem>
