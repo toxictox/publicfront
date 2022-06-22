@@ -1,10 +1,10 @@
-import { createContext, useEffect, useReducer } from "react";
-import PropTypes from "prop-types";
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { createContext, useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
@@ -51,7 +51,7 @@ const reducer = (state, action) =>
 
 const AuthContext = createContext({
   ...initialState,
-  platform: "JWT",
+  platform: 'JWT',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
@@ -67,32 +67,32 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     const initialize = async () => {
-      if (window.location.pathname === "" || window.location.pathname === "/") {
-        navigate("/board");
+      if (window.location.pathname === '' || window.location.pathname === '/') {
+        navigate('/board');
       }
       try {
-        const accessToken = window.localStorage.getItem("accessToken");
-        const accessId = window.localStorage.getItem("accessId");
+        const accessToken = window.localStorage.getItem('accessToken');
+        const accessId = window.localStorage.getItem('accessId');
         if (accessToken) {
           await axios.get(`${app.api}/user/${accessId}`).then((response) => {
             dispatch({
-              type: "INITIALIZE",
+              type: 'INITIALIZE',
               payload: {
                 isAuthenticated: true,
                 user: {
                   ...response.data,
                   id: response.data.hash,
                   avatar:
-                    "/static/mock-images/avatars/avatar-jane_rotanson.png",
+                    '/static/mock-images/avatars/avatar-jane_rotanson.png',
                   name: `${response.data.firstName} ${response.data.lastName}`,
-                  plan: "Premium",
+                  plan: 'Premium',
                 },
               },
             });
           });
         } else {
           dispatch({
-            type: "INITIALIZE",
+            type: 'INITIALIZE',
             payload: {
               isAuthenticated: false,
               user: null,
@@ -101,14 +101,14 @@ export const AuthProvider = (props) => {
         }
       } catch (err) {
         dispatch({
-          type: "INITIALIZE",
+          type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
             user: null,
           },
         });
 
-        navigate("/board");
+        navigate('/board');
       }
     };
 
@@ -122,9 +122,9 @@ export const AuthProvider = (props) => {
         password: password,
       })
       .then((response) => {
-        localStorage.setItem("accessToken", response.data.token);
-        localStorage.setItem("accessId", response.data.user.hash); //response.data.token
-        localStorage.setItem("merchId", response.data.user.merchantId);
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('accessId', response.data.user.hash); //response.data.token
+        localStorage.setItem('merchId', response.data.user.merchantId);
         window.location.reload();
       })
       .catch((err) => {
@@ -134,8 +134,8 @@ export const AuthProvider = (props) => {
 
   const logout = async () => {
     localStorage.clear();
-    dispatch({ type: "LOGOUT" });
-    setTimeout(() => navigate("/board"), 200);
+    dispatch({ type: 'LOGOUT' });
+    setTimeout(() => navigate('/board'), 200);
     //window.location.reload();
   };
 
@@ -147,8 +147,8 @@ export const AuthProvider = (props) => {
         inviteHash: linkToken,
       })
       .then((response) => {
-        toast.success(t("Success registration"));
-        navigate("/board");
+        toast.success(t('Success registration'));
+        navigate('/board');
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -180,8 +180,8 @@ export const AuthProvider = (props) => {
         password,
       })
       .then((response) => {
-        toast.success(t("Password was successfully changed"));
-        navigate("/board");
+        toast.success(t('Password was successfully changed'));
+        navigate('/board');
       })
       .catch((err) => {
         toast.error(t(err.response.data.message));
@@ -199,7 +199,7 @@ export const AuthProvider = (props) => {
     <AuthContext.Provider
       value={{
         ...state,
-        platform: "JWT",
+        platform: 'JWT',
         login,
         logout,
         register,

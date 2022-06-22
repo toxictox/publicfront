@@ -1,10 +1,10 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { Box, Button, FormHelperText, TextField } from "@material-ui/core";
-import useAuth from "@hooks/useAuth";
-import useMounted from "@hooks/useMounted";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { Box, Button, FormHelperText, TextField } from '@material-ui/core';
+import useAuth from '@hooks/useAuth';
+import useMounted from '@hooks/useMounted';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const RegisterJWT = (props) => {
   const mounted = useMounted();
@@ -15,38 +15,37 @@ const RegisterJWT = (props) => {
   return (
     <Formik
       initialValues={{
-        phone: "",
-        password: "",
-        repassword: "",
+        phone: '',
+        password: '',
+        repassword: '',
       }}
       validationSchema={Yup.object().shape({
         phone: Yup.string()
           .max(255)
           .trim()
-          .matches(/^38(0\d{9})$/, t("Error phone format"))
-          .required(t("required")),
+          .matches(/^38(0\d{9})$/, t('Error phone format'))
+          .required(t('required')),
         password: Yup.string()
           .min(8)
           .trim()
           .matches(
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-            t("Error password format")
+            t('Error password format')
           )
-          .required(t("required")),
+          .required(t('required')),
         repassword: Yup.string()
           .min(8)
-          .oneOf([Yup.ref("password"), null], t("Passwords must match"))
+          .oneOf([Yup.ref('password'), null], t('Passwords must match'))
           .max(60)
-          .required(t("required")),
+          .required(t('required')),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
           if (values.password === values.repassword) {
-            console.log(values, params);
             await register(values.phone, values.password, params.token);
           } else {
             setStatus({ success: false });
-            setErrors({ submit: "asdsdsds" });
+            setErrors({ submit: 'asdsdsds' });
             setSubmitting(false);
           }
 
@@ -126,7 +125,7 @@ const RegisterJWT = (props) => {
               type="submit"
               variant="contained"
             >
-              {t("Register account")}
+              {t('Register account')}
             </Button>
           </Box>
         </form>
