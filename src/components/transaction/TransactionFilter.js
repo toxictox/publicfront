@@ -1,20 +1,20 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
   FormHelperText,
   TextField,
   Grid,
-} from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
+} from '@material-ui/core';
+import useMounted from '@hooks/useMounted';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import axios from '@lib/axios';
 
-import { app } from "@root/config";
-import { GetFilterDataFromStore } from "@lib/filter";
-import { SelectCheckbox, SelectCheckboxCodes } from "@comp/core/forms";
+import { app } from '@root/config';
+import { GetFilterDataFromStore } from '@lib/filter';
+import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -34,6 +34,7 @@ const TransactionFilter = (props) => {
       });
 
       await axios.get(`${app.api}/filter/codes`).then((response) => {
+        console.log(response.data.data);
         setRespCode(response.data.data);
       });
     };
@@ -41,8 +42,8 @@ const TransactionFilter = (props) => {
   }, []);
 
   const dataForFields =
-    GetFilterDataFromStore("transactions") !== undefined
-      ? GetFilterDataFromStore("transactions")
+    GetFilterDataFromStore('transactions') !== undefined
+      ? GetFilterDataFromStore('transactions')
       : {
           respCode: [],
           bankId: [],
@@ -101,7 +102,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.dateStart && errors.dateStart)}
                   fullWidth
                   helperText={touched.dateStart && errors.dateStart}
-                  label={t("createOn")}
+                  label={t('createOn')}
                   margin="normal"
                   name="dateStart"
                   onBlur={handleBlur}
@@ -123,7 +124,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.dateEnd && errors.dateEnd)}
                   fullWidth
                   helperText={touched.dateEnd && errors.dateEnd}
-                  label={t("dateEnd")}
+                  label={t('dateEnd')}
                   margin="normal"
                   name="dateEnd"
                   onBlur={handleBlur}
@@ -144,7 +145,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.tranTypeId && errors.tranTypeId)}
                   labelId="tranTypeId"
                   helperText={touched.tranTypeId && errors.tranTypeId}
-                  label={t("tranTypeId")}
+                  label={t('tranTypeId')}
                   name="tranTypeId"
                   onBlur={handleBlur}
                   value={
@@ -152,7 +153,7 @@ const TransactionFilter = (props) => {
                   }
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("tranTypeId", e.target.value);
+                    setFieldValue('tranTypeId', e.target.value);
                   }}
                   items={tranType}
                 />
@@ -163,13 +164,13 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.bankId && errors.bankId)}
                   labelId="bankId"
                   helperText={touched.bankId && errors.bankId}
-                  label={t("bankId")}
+                  label={t('bankId')}
                   name="bankId"
                   onBlur={handleBlur}
                   value={values.bankId !== undefined ? values.bankId : []}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("bankId", e.target.value);
+                    setFieldValue('bankId', e.target.value);
                   }}
                   items={banks}
                 />
@@ -180,15 +181,15 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.respCode && errors.respCode)}
                   labelId="respCode"
                   helperText={touched.respCode && errors.respCode}
-                  label={t("respCode")}
+                  label={t('respCode')}
                   name="respCode"
                   onBlur={handleBlur}
                   value={values.respCode !== undefined ? values.respCode : []}
                   sx={{ m: 0 }}
                   onChange={(data) => {
-                    setFieldValue("respCode", data);
+                    setFieldValue('respCode', data);
                   }}
-                  fieldText={["external", "langEn"]}
+                  fieldText={['external', 'langEn']}
                   items={respCode}
                 />
               </Grid>
@@ -198,7 +199,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.amountFrom && errors.amountFrom)}
                   fullWidth
                   helperText={touched.amountFrom && errors.amountFrom}
-                  label={t("amountFrom")}
+                  label={t('amountFrom')}
                   margin="normal"
                   name="amountFrom"
                   onBlur={handleBlur}
@@ -216,7 +217,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.amountTo && errors.amountTo)}
                   fullWidth
                   helperText={touched.amountTo && errors.amountTo}
-                  label={t("amountTo")}
+                  label={t('amountTo')}
                   margin="normal"
                   name="amountTo"
                   onBlur={handleBlur}
@@ -234,7 +235,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.pan1 && errors.pan1)}
                   fullWidth
                   helperText={touched.pan1 && errors.pan1}
-                  label={t("card first 6 number")}
+                  label={t('card first 6 number')}
                   margin="normal"
                   name="pan1"
                   onBlur={handleBlur}
@@ -252,7 +253,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.pan2 && errors.pan2)}
                   fullWidth
                   helperText={touched.pan2 && errors.pan2}
-                  label={t("card last 4 number")}
+                  label={t('card last 4 number')}
                   margin="normal"
                   name="pan2"
                   onBlur={handleBlur}
@@ -270,7 +271,7 @@ const TransactionFilter = (props) => {
                   error={Boolean(touched.tranId && errors.tranId)}
                   fullWidth
                   helperText={touched.tranId && errors.tranId}
-                  label={t("tranId")}
+                  label={t('tranId')}
                   margin="normal"
                   name="tranId"
                   onBlur={handleBlur}
@@ -292,7 +293,7 @@ const TransactionFilter = (props) => {
                     variant="contained"
                     size="small"
                   >
-                    {t("Search button")}
+                    {t('Search button')}
                   </Button>
                 </Box>
               </Grid>
