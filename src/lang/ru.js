@@ -12,6 +12,9 @@ const buttons = {
   'Cancel button': 'Отмена',
   'Ok button': 'Ok',
   'Back to Home': 'Вернуться на главную',
+  'status-city': 'Инфо',
+  'cancel-city': 'Отмена',
+  'register-city': 'Зарегистрировать',
 };
 
 const menu = {
