@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState, Fragment } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { useCallback, useEffect, useState, Fragment } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   Box,
   Container,
@@ -10,21 +10,22 @@ import {
   CardHeader,
   Divider,
   Alert,
-} from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
-import useSettings from "@hooks/useSettings";
-import { Info } from "@material-ui/icons";
+} from '@material-ui/core';
+import useMounted from '@hooks/useMounted';
+import useSettings from '@hooks/useSettings';
+import { Info } from '@material-ui/icons';
 
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import { useTranslation } from "react-i18next";
-import { TableStatic } from "@comp/core/tables/index";
-import { BackButton, GroupTable } from "@comp/core/buttons";
-import { toLocaleDateTime } from "@lib/date";
-import toast from "react-hot-toast";
-import useAuth from "@hooks/useAuth";
-import { showConfirm } from "@slices/dialog";
-import { useDispatch } from "react-redux";
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import { useTranslation } from 'react-i18next';
+import { TableStatic } from '@comp/core/tables/index';
+import { BackButton, GroupTable } from '@comp/core/buttons';
+import { toLocaleDateTime } from '@lib/date';
+import toast from 'react-hot-toast';
+import useAuth from '@hooks/useAuth';
+import { showConfirm } from '@slices/dialog';
+import { useDispatch } from 'react-redux';
+
 const TransactionsList = () => {
   const mounted = useMounted();
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const TransactionsList = () => {
     await axios
       .post(`${app.api}/transactions/callback/${id}`)
       .then((response) => {
-        toast.success(t("Success update"));
+        toast.success(t('Success update'));
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -68,7 +69,7 @@ const TransactionsList = () => {
       .then((response) => {
         dispatch(
           showConfirm({
-            title: t("city24.status"),
+            title: t('city24.status'),
             text: response.data.respMessage.xml,
             isOpen: true,
           })
@@ -86,7 +87,7 @@ const TransactionsList = () => {
       .then((response) => {
         dispatch(
           showConfirm({
-            title: t("city24.cancel"),
+            title: t('city24.cancel'),
             text: response.data.respMessage.xml,
             isOpen: true,
           })
@@ -104,7 +105,7 @@ const TransactionsList = () => {
       .then((response) => {
         dispatch(
           showConfirm({
-            title: t("city24.register"),
+            title: t('city24.register'),
             text: response.data.respMessage.xml,
             isOpen: true,
           })
@@ -127,36 +128,36 @@ const TransactionsList = () => {
       </Helmet>
       <Box
         sx={{
-          backgroundColor: "background.default",
-          minHeight: "100%",
+          backgroundColor: 'background.default',
+          minHeight: '100%',
           py: 2,
         }}
       >
-        <Container maxWidth={settings.compact ? "xl" : false}>
+        <Container maxWidth={settings.compact ? 'xl' : false}>
           <BackButton action={() => navigate(-1)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               {status ? (
-                <Alert color={"success"} sx={{ m: 2 }}>
+                <Alert color={'success'} sx={{ m: 2 }}>
                   {status.description}
                 </Alert>
               ) : null}
               <Divider />
               <CardHeader
-                title={t("Transactions Item")}
+                title={t('Transactions Item')}
                 action={
                   <GroupTable
                     actionCustom={[
                       {
-                        title: t("city24.register"),
+                        title: t('register-city'),
                         callback: () => sendRegister(),
                       },
                       {
-                        title: t("city24.cancel"),
+                        title: t('cancel-city'),
                         callback: () => sendCancel(),
                       },
                       {
-                        title: t("city24.status"),
+                        title: t('status-city'),
                         callback: () => sendStatus(),
                       },
                     ]}
@@ -168,11 +169,11 @@ const TransactionsList = () => {
                 {Object.keys(dataList).map(function (i, index) {
                   return (
                     <Fragment key={i}>
-                      {i !== "uuid" ? (
+                      {i !== 'uuid' ? (
                         <TableRow key={i}>
                           <TableCell>{t(i)}</TableCell>
                           <TableCell>
-                            {i === "createOn" || i === "editOn"
+                            {i === 'createOn' || i === 'editOn'
                               ? toLocaleDateTime(dataList[i])
                               : dataList[i]}
                           </TableCell>
