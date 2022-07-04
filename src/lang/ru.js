@@ -152,6 +152,9 @@ const text = {
 };
 
 const fields = {
+  orderBy: 'Сортировать по',
+  sortDescending: 'По убыванию',
+  sortAscending: 'По возрастанию',
   uuid: 'ID',
   name: 'Название',
   createOn: 'Создано',

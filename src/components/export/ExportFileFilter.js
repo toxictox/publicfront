@@ -15,7 +15,11 @@ import axios from '@lib/axios';
 import { formatDate } from '@lib/date';
 import { app } from '@root/config';
 import fields from '@comp/export/fields';
-import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
+import {
+  SelectCheckbox,
+  OrderBySelect,
+  SelectCheckboxCodes,
+} from '@comp/core/forms';
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
@@ -338,6 +342,14 @@ const ExportFileFilter = (props) => {
                   sx={{ m: 0 }}
                 />
               </Grid>
+
+              <OrderBySelect
+                touched={touched}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                errors={errors}
+                values={values}
+              />
 
               <Grid item xs={12}>
                 <Divider />

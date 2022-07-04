@@ -151,6 +151,9 @@ const text = {
 };
 
 const fields = {
+  orderBy: 'Order by',
+  sortAscending: 'Ascending',
+  sortDescending: 'Descending',
   uuid: 'ID',
   name: 'name',
   createOn: 'created by',

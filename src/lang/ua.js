@@ -150,6 +150,9 @@ const text = {
 };
 
 const fields = {
+  sortAscending: 'За зростанням',
+  sortDescending: 'По спаданню',
+  orderBy: 'Сортувати за',
   uuid: 'ID',
   name: 'Назва',
   createOn: 'Створено',

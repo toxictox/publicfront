@@ -11,10 +11,13 @@ import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
-
 import { app } from '@root/config';
 import { GetFilterDataFromStore } from '@lib/filter';
-import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
+import {
+  SelectCheckbox,
+  SelectCheckboxCodes,
+  OrderBySelect,
+} from '@comp/core/forms';
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -283,6 +286,14 @@ const TransactionFilter = (props) => {
                   sx={{ m: 0 }}
                 />
               </Grid>
+
+              <OrderBySelect
+                touched={touched}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                errors={errors}
+                values={values}
+              />
 
               <Grid item xs={12}>
                 <Box sx={{ mt: 2 }}>
