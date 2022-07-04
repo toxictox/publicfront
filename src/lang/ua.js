@@ -12,6 +12,9 @@ const buttons = {
   'Cancel button': 'Скасування',
   'Ok button': 'Ok',
   'Back to Home': 'Повернутися на головну',
+  'status-city': 'Инфо',
+  'cancel-city': 'Скасування',
+  'register-city': 'Зареєструвати',
 };
 
 const menu = {

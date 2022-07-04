@@ -12,6 +12,9 @@ const buttons = {
   'Cancel button': 'Cancel',
   'Ok button': 'Ok',
   'Back to Home': 'To main page',
+  'status-city': 'Info',
+  'cancel-city': 'Cancel',
+  'register-city': 'Register',
 };
 
 const menu = {

@@ -11,7 +11,6 @@ import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
-
 import { app } from '@root/config';
 import { GetFilterDataFromStore } from '@lib/filter';
 import {
@@ -19,6 +18,7 @@ import {
   SelectCheckboxCodes,
   OrderBySelect,
 } from '@comp/core/forms';
+
 const TransactionFilter = (props) => {
   const mounted = useMounted();
   const { t } = useTranslation();
@@ -37,6 +37,7 @@ const TransactionFilter = (props) => {
       });
 
       await axios.get(`${app.api}/filter/codes`).then((response) => {
+        console.log(response.data.data);
         setRespCode(response.data.data);
       });
     };

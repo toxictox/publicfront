@@ -15,7 +15,11 @@ import axios from '@lib/axios';
 import { formatDate } from '@lib/date';
 import { app } from '@root/config';
 import fields from '@comp/export/fields';
-import { SelectCheckbox, OrderBySelect } from '@comp/core/forms';
+import {
+  SelectCheckbox,
+  OrderBySelect,
+  SelectCheckboxCodes,
+} from '@comp/core/forms';
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
@@ -210,11 +214,32 @@ const ExportFileFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
+                <SelectCheckboxCodes
+                  error={Boolean(touched.respCode && errors.respCode)}
+                  labelId="respCodeId"
+                  helperText={touched.respCode && errors.respCode}
+                  label={t('respCode')}
+                  name="respCodeId"
+                  onBlur={handleBlur}
+                  value={
+                    values.respCodeId !== undefined ? values.respCodeId : []
+                  }
+                  sx={{ m: 0 }}
+                  onChange={(data) => {
+                    //setFieldValue('respCode', data);
+                    setFieldValue('respCodeId', data);
+                  }}
+                  fieldText={['external', 'langEn']}
+                  items={respCode}
+                />
+              </Grid>
+
+              {/* <Grid item xs={3}>
                 <SelectCheckbox
                   error={Boolean(touched.respCodeId && errors.respCodeId)}
                   labelId="respCodeId"
                   helperText={touched.respCodeId && errors.respCodeId}
-                  label={t('respCodeId')}
+                  label={t('respCode')}
                   name="respCodeId"
                   onBlur={handleBlur}
                   value={values.respCodeId}
@@ -225,7 +250,7 @@ const ExportFileFilter = (props) => {
                   fieldText={['external', 'langEn']}
                   items={respCode}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={3}>
                 <TextField
