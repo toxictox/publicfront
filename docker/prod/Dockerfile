@@ -5,7 +5,8 @@ ENV REACT_APP_API_URL ${REACT_APP_API_URL}
 WORKDIR /react-app
 COPY ./ /react-app
 
-RUN npm install
+RUN npm cache --force clean
+RUN npm install -f
 RUN npm run build
 
 FROM nginx:1-alpine
