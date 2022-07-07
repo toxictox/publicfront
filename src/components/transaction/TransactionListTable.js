@@ -27,8 +27,6 @@ const TransactionListTable = (props) => {
   const navigate = useNavigate();
   const { getAccess } = useAuth();
 
-  console.log(data);
-
   return (
     <>
       <Card {...other}>
