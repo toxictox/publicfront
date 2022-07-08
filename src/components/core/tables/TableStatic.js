@@ -5,9 +5,10 @@ import {
   TableCell,
   TableHead,
   TableBody,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import './style/TableStatic.scss';
 
-import { useTranslation } from "react-i18next";
 const TableStatic = (props) => {
   const { t } = useTranslation();
 

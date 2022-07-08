@@ -68,8 +68,10 @@ const TransactionListTable = (props) => {
                         {toLocaleDateTime(order.createOn)}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ width: 450 }}>{order.merchant}</TableCell>
-                    <TableCell>{order.tranId}</TableCell>
+                    <TableCell>{order.merchant}</TableCell>
+                    <TableCell className="table-cell--word-wrap">
+                      {order.tranId}
+                    </TableCell>
                     <TableCell>
                       <Typography
                         color="textPrimary"

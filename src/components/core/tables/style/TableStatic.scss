@@ -1,0 +1,17 @@
+.static-table-container {
+  @media (min-width: 600px) {
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.table-static {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-cell {
+  &--word-wrap {
+    word-break: break-word;
+  }
+}
