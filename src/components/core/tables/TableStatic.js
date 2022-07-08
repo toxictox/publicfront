@@ -15,12 +15,19 @@ const TableStatic = (props) => {
   return (
     <>
       <TableContainer>
-        <Table stickyHeader size="small" aria-label="table">
+        <Table
+          stickyHeader
+          size="small"
+          aria-label="table"
+          className="static-table"
+        >
           {props.header !== undefined ? (
             <TableHead>
               <TableRow>
                 {props.header.map((item) => (
-                  <TableCell key={item}>{t(item)}</TableCell>
+                  <TableCell className="static-table__table-cell" key={item}>
+                    {t(item)}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>

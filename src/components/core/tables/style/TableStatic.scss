@@ -5,13 +5,35 @@
   }
 }
 
-.table-static {
-  display: flex;
-  flex-direction: column;
-}
+.static-table {
+  &__table-cell {
+    &--word-wrap {
+      word-break: break-word;
+    }
+    @media (max-width: 1390px) {
+      padding: 6px 6px;
+    }
 
-.table-cell {
-  &--word-wrap {
-    word-break: break-word;
+    @media (max-width: 890px) {
+      padding: 2px 2px;
+    }
+
+    @media (max-width: 795px) {
+      font-size: 0.6rem;
+      & p {
+        font-size: inherit;
+      }
+    }
+    @media (max-width: 536px) {
+      font-size: 0.4rem;
+      & p {
+        font-size: inherit;
+      }
+    }
+  }
+  &__table-cell-id {
+    @media (max-width: 584px) {
+      display: none;
+    }
   }
 }
