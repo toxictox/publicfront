@@ -38,7 +38,6 @@ const TransactionsList = () => {
         .then((response) => response.data);
 
       if (mounted.current) {
-        console.log(response);
         setListData(response);
       }
     } catch (err) {
@@ -47,7 +46,6 @@ const TransactionsList = () => {
   }, [mounted]);
 
   const filter = (values) => {
-    console.log(values);
     handlePageChange(null, 0, values);
   };
 
