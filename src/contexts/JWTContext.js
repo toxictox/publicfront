@@ -5,6 +5,7 @@ import { app } from '@root/config';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
