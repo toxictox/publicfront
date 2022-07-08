@@ -5,21 +5,29 @@ import {
   TableCell,
   TableHead,
   TableBody,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import './style/TableStatic.scss';
 
-import { useTranslation } from "react-i18next";
 const TableStatic = (props) => {
   const { t } = useTranslation();
 
   return (
     <>
       <TableContainer>
-        <Table stickyHeader size="small" aria-label="table">
+        <Table
+          stickyHeader
+          size="small"
+          aria-label="table"
+          className="static-table"
+        >
           {props.header !== undefined ? (
             <TableHead>
               <TableRow>
                 {props.header.map((item) => (
-                  <TableCell key={item}>{t(item)}</TableCell>
+                  <TableCell className="static-table__table-cell" key={item}>
+                    {t(item)}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>

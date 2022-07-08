@@ -7,7 +7,6 @@ export default function ButtonWithLoader(props) {
     textOnLoad = 'Loading',
     textBeforeLoaded = 'Upload file',
   } = props;
-  console.log(props);
   const { t } = useTranslation();
   return (
     <Button variant="contained" disabled={!Boolean(loaded)} component="span">
