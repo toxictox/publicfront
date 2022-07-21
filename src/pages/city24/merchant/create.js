@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { Box, Container, Card, CardHeader, Divider } from "@material-ui/core";
-import useSettings from "@hooks/useSettings";
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import { useTranslation } from "react-i18next";
-import Form from "./includes/CreateMerchantForm";
-import toast from "react-hot-toast";
-import { BackButton } from "@comp/core/buttons";
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { Box, Container, Card, CardHeader, Divider } from '@material-ui/core';
+import useSettings from '@hooks/useSettings';
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import { useTranslation } from 'react-i18next';
+import CreateMerchantForm from './includes/CreateMerchantForm';
+import toast from 'react-hot-toast';
+import { BackButton } from '@comp/core/buttons';
 
 const UserIdUpdate = () => {
   const { settings } = useSettings();
@@ -19,7 +19,7 @@ const UserIdUpdate = () => {
       await axios
         .post(`${app.api}/merchant/city`, { ...values })
         .then((response) => {
-          toast.success(t("Success update"));
+          toast.success(t('Success update'));
           navigate(`/city24/merchants`);
         });
     } catch (err) {
@@ -30,22 +30,22 @@ const UserIdUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Merchant Model Create")}</title>
+        <title>{t('Merchant Model Create')}</title>
       </Helmet>
       <Box
         sx={{
-          backgroundColor: "background.default",
-          minHeight: "100%",
+          backgroundColor: 'background.default',
+          minHeight: '100%',
           py: 2,
         }}
       >
-        <Container maxWidth={settings.compact ? "xl" : false}>
+        <Container maxWidth={settings.compact ? 'xl' : false}>
           <BackButton action={() => navigate(`/city24/merchants`)} />
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
-              <CardHeader title={t("Merchant Model Create")} />
+              <CardHeader title={t('Merchant Model Create')} />
               <Divider />
-              <Form callback={handleSubmit} />
+              <CreateMerchantForm callback={handleSubmit} />
             </Card>
           </Box>
         </Container>
