@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/": ["./src"],
+      "@icons/*": ["./src/icons/*"],
+      "@comp/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@store/*": ["./src/store/*"],
+      "@slices/*": ["./src/slices/*"],
+      "@root/*": ["./src/*"],
+      "react-native": ["react-native-web"]
+    }
+  }
+}
