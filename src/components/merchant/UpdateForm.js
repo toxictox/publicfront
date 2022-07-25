@@ -71,7 +71,7 @@ const UpdateBankForm = (props) => {
         contractNumber: Yup.string(),
         contractDate: Yup.string(),
         timezoneId: Yup.string().max(255).required(t('required')),
-        design: Yup.number().max(2).required(t('required')),
+        design: Yup.number().max(40).required(t('required')),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
