@@ -37,7 +37,6 @@ const TransactionFilter = (props) => {
       });
 
       await axios.get(`${app.api}/filter/codes`).then((response) => {
-        console.log(response.data.data);
         setRespCode(response.data.data);
       });
     };

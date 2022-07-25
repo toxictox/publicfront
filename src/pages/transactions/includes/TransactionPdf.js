@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Page,
   Text,
@@ -6,61 +6,62 @@ import {
   Document,
   StyleSheet,
   Font,
-} from "@react-pdf/renderer";
-import { toLocaleDateTime } from "@lib/date";
+} from '@react-pdf/renderer';
+import { toLocaleDateTime } from '@lib/date';
+
 Font.register({
-  family: "Roboto",
-  src:
-    "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
+  family: 'Roboto',
+  src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf',
 });
+
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    backgroundColor: "#FFF",
-    fontSize: "12px",
-    fontFamily: "Roboto",
-    fontWeight: "normal",
-    alignContent: "flex-start",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#FFF',
+    fontSize: '12px',
+    fontFamily: 'Roboto',
+    fontWeight: 'normal',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
   },
   center: {
-    textAlign: "center",
-    marginBottom: "15px",
+    textAlign: 'center',
+    marginBottom: '15px',
   },
   p: {
-    textIndent: "25px",
-    marginBottom: "15px",
+    textIndent: '25px',
+    marginBottom: '15px',
   },
   header: {
     margin: 10,
-    padding: "10px 30px",
+    padding: '10px 30px',
     flexGrow: 1,
-    display: "flex",
-    flexWrap: "nowrap",
-    flexDirection: "row",
-    flex: "1 0 100%",
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    flex: '1 0 100%',
   },
   subheader: {
     margin: 10,
-    padding: "10px 60px 30px 30px",
+    padding: '10px 60px 30px 30px',
     flexGrow: 1,
-    display: "flex",
-    flexWrap: "nowrap",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: "1 0 100%",
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: '1 0 100%',
   },
   signature: {
     margin: 10,
-    padding: "10px 60px 30px 30px",
+    padding: '10px 60px 30px 30px',
     flexGrow: 1,
-    display: "flex",
-    flexWrap: "nowrap",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: "1 0 100%",
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: '1 0 100%',
   },
 
   content: {
@@ -72,10 +73,10 @@ const styles = StyleSheet.create({
 
 const getDocNumber = (id, date) => {
   if (date !== undefined && id !== undefined) {
-    const newDate = date.split("T")[0].replace(/-/g, "");
+    const newDate = date.split('T')[0].replace(/-/g, '');
     return `${newDate}-${id}`;
   }
-  return "";
+  return '';
 };
 
 const getRequestTime = () => {
@@ -105,18 +106,18 @@ const MyDocument = (props) => {
           <Text>{`ТОВ «${data.businessName}»`}</Text>
         </View>
         <View style={styles.content}>
-          <Text style={styles.center}>{"Шановні партнери!"}</Text>
+          <Text style={styles.center}>{'Шановні партнери!'}</Text>
           <Text style={styles.p}>
-            {"Цим листом виражаємо Вам нашу повагу та повідомляємо наступне:"}
+            {'Цим листом виражаємо Вам нашу повагу та повідомляємо наступне:'}
           </Text>
           <Text style={styles.p}>
             {
-              "ТОВ «ПЕЙТЕК УКРАЇНА» (код ЄДРПОУ 44103264) надає послуги з переказу коштів в національній валюті без відкриття рахунків. "
+              'ТОВ «ПЕЙТЕК УКРАЇНА» (код ЄДРПОУ 44103264) надає послуги з переказу коштів в національній валюті без відкриття рахунків. '
             }
           </Text>
           <Text style={styles.p}>
             {
-              "Для цього Товариство внесене в державний реєстр фінансових установ (Свідоцтво про реєстрацію фінансової установи від 27.08.2021 серії ФК № В0000338, Ліцензія Національного банку України на переказ коштів у національній валюті без відкриття рахунків від 26.11.2021 року)."
+              'Для цього Товариство внесене в державний реєстр фінансових установ (Свідоцтво про реєстрацію фінансової установи від 27.08.2021 серії ФК № В0000338, Ліцензія Національного банку України на переказ коштів у національній валюті без відкриття рахунків від 26.11.2021 року).'
             }
           </Text>
           <Text style={styles.p}>
@@ -125,7 +126,7 @@ const MyDocument = (props) => {
             } від ${
               data.contractDate !== undefined
                 ? toLocaleDateTime(data.contractDate)
-                : ""
+                : ''
             }.`}
           </Text>
           <Text style={styles.p}>
@@ -133,7 +134,7 @@ const MyDocument = (props) => {
           </Text>
           <Text style={styles.p}>
             {`${
-              data.createOn !== undefined ? toLocaleDateTime(data.editOn) : ""
+              data.createOn !== undefined ? toLocaleDateTime(data.editOn) : ''
             } на суму ${data.amount} грн, маска картки ${
               data.pan
             }, номер транзакції в системі ТОВ «ПЕЙТЕК УКРАЇНА» – ${
@@ -147,7 +148,7 @@ const MyDocument = (props) => {
               <Text>{`Директор`}</Text>
               <Text>{`Шевченко Іван`}</Text>
             </View>
-            <Text>{"signature"}</Text>
+            <Text>{'signature'}</Text>
           </View>
         </View>
       </Page>
