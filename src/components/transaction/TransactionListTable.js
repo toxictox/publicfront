@@ -1,6 +1,6 @@
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
   Box,
   Card,
@@ -10,16 +10,16 @@ import {
   TableCell,
   TableRow,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import MoreMenu from "@comp/MoreMenu";
-import Scrollbar from "@comp/Scrollbar";
-import { TableStatic } from "@comp/core/tables/index";
-import { useTranslation } from "react-i18next";
-import TransactionFilter from "@comp/transaction/TransactionFilter";
-import { GroupTable } from "@comp/core/buttons";
-import { toLocaleDateTime } from "@lib/date";
-import useAuth from "@hooks/useAuth";
+import MoreMenu from '@comp/MoreMenu';
+import Scrollbar from '@comp/Scrollbar';
+import { TableStatic } from '@comp/core/tables/index';
+import { useTranslation } from 'react-i18next';
+import TransactionFilter from '@comp/transaction/TransactionFilter';
+import { GroupTable } from '@comp/core/buttons';
+import { toLocaleDateTime } from '@lib/date';
+import useAuth from '@hooks/useAuth';
 
 const TransactionListTable = (props) => {
   const { data, ...other } = props;
@@ -30,7 +30,7 @@ const TransactionListTable = (props) => {
   return (
     <>
       <Card {...other}>
-        <CardHeader action={<MoreMenu />} title={t("Transactions List")} />
+        <CardHeader action={<MoreMenu />} title={t('Transactions List')} />
         <Divider />
         <TransactionFilter callback={props.callback} />
         <Divider />
@@ -38,23 +38,23 @@ const TransactionListTable = (props) => {
           <Box sx={{ minWidth: false }}>
             <TableStatic
               header={[
-                "createOn",
-                "merchant",
-                "tranId",
-                "tranType",
-                "pan",
-                "amount",
-                "fee",
-                "gateway",
-                "respCode",
-                "cityRespCode",
-                "",
+                'createOn',
+                'merchant',
+                'tranId',
+                'tranType',
+                'pan',
+                'amount',
+                'fee',
+                'gateway',
+                'respCode',
+                'cityRespCode',
+                '',
               ]}
             >
               {data.map((order) => {
                 return (
                   <TableRow hover key={order.uuid}>
-                    <TableCell>
+                    <TableCell className="static-table__table-cell">
                       <Link
                         color="textPrimary"
                         component={RouterLink}
@@ -66,30 +66,53 @@ const TransactionListTable = (props) => {
                         {toLocaleDateTime(order.createOn)}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ width: 450 }}>{order.merchant}</TableCell>
-                    <TableCell>{order.tranId}</TableCell>
-                    <TableCell>
+                    <TableCell className="static-table__table-cell">
+                      {order.merchant}
+                    </TableCell>
+                    <TableCell className="static-table__table-cell static-table__table-cell--word-wrap static-table__table-cell-id">
+                      {order.tranId}
+                    </TableCell>
+                    <TableCell className="static-table__table-cell">
                       <Typography
                         color="textPrimary"
                         variant="subtitle2"
-                        align={"center"}
+                        align={'center'}
                       >
                         {order.tranType}
                       </Typography>
                     </TableCell>
-                    <TableCell>{order.pan}</TableCell>
-                    <TableCell>{order.amount}</TableCell>
-                    <TableCell>{order.fee}</TableCell>
-                    <TableCell>{order.gateway}</TableCell>
-                    <TableCell sx={{ color: order.respCodeColor }}>
+                    <TableCell className="static-table__table-cell">
+                      {order.pan}
+                    </TableCell>
+                    <TableCell className="static-table__table-cell">
+                      {order.amount}
+                    </TableCell>
+                    <TableCell className="static-table__table-cell">
+                      {order.fee}
+                    </TableCell>
+                    <TableCell className="static-table__table-cell">
+                      {order.gateway}
+                    </TableCell>
+                    <TableCell
+                      sx={{ color: order.respCodeColor }}
+                      className="static-table__table-cell"
+                    >
                       {order.respCode} {order.respMessage}
                     </TableCell>
-                    <TableCell sx={{ color: order.cityRespCode }}>
-                      {order.cityRespCode}
+                    <TableCell
+                      sx={{
+                        color: order.cityRespCode === '0' ? 'green' : 'red',
+                      }}
+                      className="static-table__table-cell"
+                    >
+                      {order.cityRespCode === '0' ? 'OK' : '-'}
                     </TableCell>
 
-                    <TableCell align="right">
-                      {getAccess("transactions", "details") ? (
+                    <TableCell
+                      align="right"
+                      className="static-table__table-cell"
+                    >
+                      {getAccess('transactions', 'details') ? (
                         <GroupTable
                           actionView={() =>
                             navigate(`/transactions/${order.uuid}`)

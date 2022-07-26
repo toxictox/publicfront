@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { Box, Container, TablePagination } from "@material-ui/core";
+import { useCallback, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Box, Container, TablePagination } from '@material-ui/core';
 
-import useMounted from "@hooks/useMounted";
-import useSettings from "@hooks/useSettings";
+import useMounted from '@hooks/useMounted';
+import useSettings from '@hooks/useSettings';
 
-import gtm from "@lib/gtm";
-import { GetFilterDataFromStore, GetFilterPageFromStore } from "@lib/filter";
-import { TransactionListTable } from "@comp/transaction";
+import gtm from '@lib/gtm';
+import { GetFilterDataFromStore, GetFilterPageFromStore } from '@lib/filter';
+import { TransactionListTable } from '@comp/transaction';
 
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import { useDispatch } from "@store";
-import { setFilterParams, setFilterPage } from "@slices/filter";
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import { useDispatch } from '@store';
+import { setFilterParams, setFilterPage } from '@slices/filter';
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -22,13 +22,13 @@ const TransactionsList = () => {
     count: 0,
   });
 
-  const filterList = GetFilterDataFromStore("transactions");
+  const filterList = GetFilterDataFromStore('transactions');
 
-  const [page, setPage] = useState(GetFilterPageFromStore("transactions"));
+  const [page, setPage] = useState(GetFilterPageFromStore('transactions'));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    gtm.push({ event: "page_view" });
+    gtm.push({ event: 'page_view' });
   }, []);
 
   const getOrders = useCallback(async () => {
@@ -51,7 +51,7 @@ const TransactionsList = () => {
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
-    dispatch(setFilterPage({ path: "transactions", page: newPage }));
+    dispatch(setFilterPage({ path: 'transactions', page: newPage }));
 
     await axios
       .post(
@@ -61,7 +61,7 @@ const TransactionsList = () => {
       .then(async (response) => {
         if (values !== undefined) {
           dispatch(
-            setFilterParams({ path: "transactions", params: { ...values } })
+            setFilterParams({ path: 'transactions', params: { ...values } })
           );
         }
         setListData(response.data);
@@ -79,12 +79,12 @@ const TransactionsList = () => {
       </Helmet>
       <Box
         sx={{
-          backgroundColor: "background.default",
-          minHeight: "100%",
+          backgroundColor: 'background.default',
+          minHeight: '100%',
           py: 2,
         }}
       >
-        <Container maxWidth={settings.compact ? "xl" : false}>
+        <Container maxWidth={settings.compact ? 'xl' : false}>
           <Box sx={{ mt: 1 }}>
             <TransactionListTable data={dataList.data} callback={filter} />
             <TablePagination

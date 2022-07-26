@@ -1,23 +1,21 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   MenuItem,
   FormHelperText,
   TextField,
   Grid,
-  Input,
   Button,
-  Stack,
-  CircularProgress,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import toast from "react-hot-toast";
-import useAuth from "@hooks/useAuth";
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import toast from 'react-hot-toast';
+import useAuth from '@hooks/useAuth';
+//import UploadFilesInput from './coponents/UploadFilesInput';
 
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
@@ -25,6 +23,7 @@ const TransactionFilter = (props) => {
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
   const { getAccess } = useAuth();
+
   useEffect(() => {
     const getData = async () => {
       await axios
@@ -42,39 +41,42 @@ const TransactionFilter = (props) => {
   return (
     <Formik
       initialValues={{
-        bankId: "",
-        bankName: "",
+        bankId: '',
+        bankName: '',
       }}
       validationSchema={Yup.object().shape({
         bankId: Yup.string().max(255),
         bankName: Yup.string().max(255),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        if (values.bankName !== "Pumb") {
-          const formData = new FormData();
-          formData.append("bankId", values.bankId);
-          formData.append("file", values.file, values.file.name);
-          await axios
-            .post(`${app.api}/reconciliation/file`, formData)
-            .then((response) => {
-              setFile(true);
-              update(response.data);
-              toast.success(t("Success upload"));
-            })
-            .catch((e) => {
-              setFile(true);
-              toast.error(e.response.data.message);
-            });
-        } else {
-          await axios
-            .post(`${app.api}/reconciliation/pumb`)
-            .then((response) => {
-              toast.success(t("Request success send"));
-            })
-            .catch((e) => {
-              toast.error(e.response.data.message);
-            });
-        }
+        const bankName = values.bankName.toLowerCase().replace(/\d/gi, '');
+        // if (values.bankName !== 'Pumb') {
+        //   const formData = new FormData();
+        //   formData.append('bankId', values.bankId);
+        //   formData.append('file', values.file, values.file.name);
+        //   await axios
+        //     .post(`${app.api}/reconciliation/file`, formData)
+        //     .then((response) => {
+        //       setFile(true);
+        //       update(response.data);
+        //       toast.success(t('Success upload'));
+        //     })
+        //     .catch((e) => {
+        //       setFile(true);
+        //       toast.error(e.response.data.message);
+        //     });
+        // } else {
+        await axios
+          .post(`${app.api}/reconciliation/${bankName}`)
+          .then((response) => {
+            setFile(true);
+            toast.success(t('Request success send'));
+          })
+          .catch((e) => {
+            setFile(true);
+            toast.error(e.response.data.message || 'Some error occurred');
+          });
+        // }
       }}
     >
       {({
@@ -95,13 +97,13 @@ const TransactionFilter = (props) => {
                   fullWidth
                   select
                   helperText={touched.bankId && errors.bankId}
-                  label={t("bankId")}
+                  label={t('bankId')}
                   margin="normal"
                   name="bankId"
                   onBlur={handleBlur}
                   onChange={(e, elem) => {
-                    setFieldValue("bankId", e.target.value);
-                    setFieldValue("bankName", elem.props.children);
+                    setFieldValue('bankId', e.target.value);
+                    setFieldValue('bankName', elem.props.children);
                     callback(e.target.value);
                   }}
                   value={values.bankId}
@@ -112,8 +114,8 @@ const TransactionFilter = (props) => {
                   }}
                   sx={{ m: 0 }}
                 >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
+                  <MenuItem key={-1} value={''}>
+                    {t('Select value')}
                   </MenuItem>
                   {banksList.map((item) => (
                     <MenuItem
@@ -127,53 +129,27 @@ const TransactionFilter = (props) => {
                 </TextField>
               </Grid>
 
-              {values.bankId !== "" &&
-              values.bankName !== "Pumb" &&
-              getAccess("reconciliation", "upload") ? (
-                <Grid item xs={6}>
-                  <Stack direction="row" spacing={2}>
-                    <label htmlFor="contained-button-file">
-                      {file ? (
-                        <>
-                          <Input
-                            // accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                            id="contained-button-file"
-                            name={"file"}
-                            multiple
-                            type="file"
-                            onChange={(e) => {
-                              setFieldValue("file", e.currentTarget.files[0]);
-                              handleSubmit();
-                              setFile(false);
-                            }}
-                            sx={{ display: "none" }}
-                          />
-                          <Button variant="contained" component="span">
-                            {t("Upload file")}
-                          </Button>
-                        </>
-                      ) : (
-                        <Button variant="contained" disabled={true}>
-                          {t("Loading")}
-                          {"   "}
-                          <CircularProgress color="inherit" size={20} />
-                        </Button>
-                      )}
-                    </label>
-                  </Stack>
-                </Grid>
-              ) : null}
+              {/* {values.bankId !== '' &&
+              values.bankName !== 'Pumb' &&
+              getAccess('reconciliation', 'upload') ? (
+                <UploadFilesInput
+                  file={file}
+                  setFieldValue={setFieldValue}
+                  handleSubmit={handleSubmit}
+                  setFile={setFile}
+                />
+              ) : null} */}
 
-              {values.bankId !== "" &&
-              values.bankName === "Pumb" &&
-              getAccess("reconciliation", "upload") ? (
+              {values.bankId !== '' &&
+              // values.bankName === 'Pumb' &&
+              getAccess('reconciliation', 'upload') ? (
                 <Grid item xs={6}>
                   <Button
                     variant="contained"
                     type="submit"
                     //disabled={isSubmitting}
                   >
-                    {t("Upload file")}
+                    {t('Upload file')}
                   </Button>
                 </Grid>
               ) : null}

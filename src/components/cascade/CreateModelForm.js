@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import * as Yup from "yup";
-import { Formik } from "formik";
+import { useState, useEffect } from 'react';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
@@ -8,12 +8,12 @@ import {
   TextField,
   MenuItem,
   Grid,
-} from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
-import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-import axios from "@lib/axios";
-import { app } from "@root/config";
+} from '@material-ui/core';
+import useMounted from '@hooks/useMounted';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import axios from '@lib/axios';
+import { app } from '@root/config';
 
 const CreateModelForm = (props) => {
   const mounted = useMounted();
@@ -44,8 +44,8 @@ const CreateModelForm = (props) => {
       ...conditionData,
       {
         hash: Date.now(),
-        ruleCond: "",
-        ruleValue: "",
+        ruleCond: '',
+        ruleValue: '',
       },
     ]);
   };
@@ -67,7 +67,7 @@ const CreateModelForm = (props) => {
   };
 
   const getGatewayMethods = async (id) => {
-    if (id !== "" && id !== 0 && id !== undefined) {
+    if (id !== '' && id !== 0 && id !== undefined) {
       await axios.get(`${app.api}/methods/gateway/${id}`).then((response) => {
         setGatewayMethod(response.data);
       });
@@ -90,8 +90,8 @@ const CreateModelForm = (props) => {
       setConditionData([
         {
           hash: Date.now(),
-          ruleCond: "",
-          ruleValue: "",
+          ruleCond: '',
+          ruleValue: '',
         },
       ]);
     } else {
@@ -100,21 +100,19 @@ const CreateModelForm = (props) => {
     }
   };
 
-  console.log("---------conditionData", conditionData, condition);
-
   return (
     <Formik
       initialValues={{
-        gatewayId: "",
-        ruleId: "",
-        gatewayMethodId: "",
+        gatewayId: '',
+        ruleId: '',
+        gatewayMethodId: '',
         merchantId: state.merchantId,
         tranTypeId: state.tranTypesId,
       }}
       validationSchema={Yup.object().shape({
-        gatewayId: Yup.string().max(5).required(t("required")),
+        gatewayId: Yup.string().max(5).required(t('required')),
         ruleId: Yup.string().max(5).nullable(),
-        gatewayMethodId: Yup.string().max(5).required(t("required")),
+        gatewayMethodId: Yup.string().max(5).required(t('required')),
         // ---------------------
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -147,7 +145,7 @@ const CreateModelForm = (props) => {
         <form onSubmit={handleSubmit} {...props}>
           <Box m={2}>
             <Grid container spacing={2}>
-              {values.tranTypeId !== "" ? (
+              {values.tranTypeId !== '' ? (
                 <Grid item xs={12}>
                   <TextField
                     error={Boolean(touched.gatewayId && errors.gatewayId)}
@@ -156,7 +154,7 @@ const CreateModelForm = (props) => {
                     label="gatewayId"
                     name="gatewayId"
                     onChange={(e) => {
-                      setFieldValue("gatewayId", e.target.value);
+                      setFieldValue('gatewayId', e.target.value);
                       getGatewayMethods(e.target.value);
                     }}
                     onBlur={handleBlur}
@@ -165,8 +163,8 @@ const CreateModelForm = (props) => {
                     value={values.gatewayId}
                     variant="outlined"
                   >
-                    <MenuItem key={-1} value={""}>
-                      {t("Select value")}
+                    <MenuItem key={-1} value={''}>
+                      {t('Select value')}
                     </MenuItem>
                     {gateway.map((item) => (
                       <MenuItem key={item.id} value={item.id}>
@@ -177,7 +175,7 @@ const CreateModelForm = (props) => {
                 </Grid>
               ) : null}
 
-              {values.gatewayId !== "" ? (
+              {values.gatewayId !== '' ? (
                 <Grid item xs={12}>
                   <TextField
                     error={Boolean(
@@ -196,8 +194,8 @@ const CreateModelForm = (props) => {
                     value={values.gatewayMethodId}
                     variant="outlined"
                   >
-                    <MenuItem key={-1} value={""}>
-                      {t("Select value")}
+                    <MenuItem key={-1} value={''}>
+                      {t('Select value')}
                     </MenuItem>
                     {gatewayMethod.map((item) => (
                       <MenuItem key={item.id} value={item.id}>
@@ -208,7 +206,7 @@ const CreateModelForm = (props) => {
                 </Grid>
               ) : null}
 
-              {values.gatewayMethodId !== "" ? (
+              {values.gatewayMethodId !== '' ? (
                 <Grid item xs={12}>
                   <TextField
                     error={Boolean(touched.ruleId && errors.ruleId)}
@@ -223,8 +221,8 @@ const CreateModelForm = (props) => {
                     value={values.ruleId}
                     variant="outlined"
                   >
-                    <MenuItem key={-1} value={""}>
-                      {t("Select value")}
+                    <MenuItem key={-1} value={''}>
+                      {t('Select value')}
                     </MenuItem>
                     {rules.map((item) => (
                       <MenuItem key={item.id} value={item.id}>
@@ -261,7 +259,7 @@ const CreateModelForm = (props) => {
                           <Grid item xs={4}>
                             <TextField
                               fullWidth
-                              label={t("ruleCond")}
+                              label={t('ruleCond')}
                               margin="normal"
                               name={`ruleCond`}
                               onChange={(e) => handleChangeRules(e, item.hash)}
@@ -285,7 +283,7 @@ const CreateModelForm = (props) => {
                               error={Boolean(touched.item && errors.item)}
                               fullWidth
                               helperText={touched.item && errors.item}
-                              label={t("ruleValue")}
+                              label={t('ruleValue')}
                               margin="normal"
                               value={item.ruleValue}
                               name={`ruleValue`}
@@ -323,7 +321,7 @@ const CreateModelForm = (props) => {
                     variant="contained"
                     size="large"
                   >
-                    {t("Create button")}
+                    {t('Create button')}
                   </Button>
                 </Box>
               </Grid>

@@ -1,5 +1,5 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
@@ -7,15 +7,19 @@ import {
   Divider,
   TextField,
   Grid,
-} from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { formatDate } from "@lib/date";
-import { app } from "@root/config";
-import fields from "@comp/export/fields";
-import { SelectCheckbox } from "@comp/core/forms";
+} from '@material-ui/core';
+import useMounted from '@hooks/useMounted';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import axios from '@lib/axios';
+import { formatDate } from '@lib/date';
+import { app } from '@root/config';
+import fields from '@comp/export/fields';
+import {
+  SelectCheckbox,
+  OrderBySelect,
+  SelectCheckboxCodes,
+} from '@comp/core/forms';
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
@@ -49,31 +53,31 @@ const ExportFileFilter = (props) => {
   return (
     <Formik
       initialValues={{
-        tranId: "",
+        tranId: '',
         tranTypeId: [],
-        amountFrom: "",
-        amountTo: "",
-        pan1: "",
-        pan2: "",
+        amountFrom: '',
+        amountTo: '',
+        pan1: '',
+        pan2: '',
         dateStart: new Date().toISOString().slice(0, 16),
-        dateEnd: "",
+        dateEnd: '',
         merchantId: [],
         gatewayId: [],
         respCodeId: [],
         bankId: [],
         fields: [
-          "createOn",
-          "reconcDate",
-          "amount",
-          "tranType",
-          "merchant",
-          "respCode",
-          "cityRespCode",
-          "pan",
-          "tranId",
-          "description",
-          "bankFee",
-          "merchantFee",
+          'createOn',
+          'reconcDate',
+          'amount',
+          'tranType',
+          'merchant',
+          'respCode',
+          'cityRespCode',
+          'pan',
+          'tranId',
+          'description',
+          'bankFee',
+          'merchantFee',
         ],
       }}
       validationSchema={Yup.object().shape({
@@ -120,7 +124,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.dateStart && errors.dateStart)}
                   fullWidth
                   helperText={touched.dateStart && errors.dateStart}
-                  label={t("createOn")}
+                  label={t('createOn')}
                   margin="normal"
                   name="dateStart"
                   onBlur={handleBlur}
@@ -142,7 +146,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.dateEnd && errors.dateEnd)}
                   fullWidth
                   helperText={touched.dateEnd && errors.dateEnd}
-                  label={t("dateEnd")}
+                  label={t('dateEnd')}
                   margin="normal"
                   name="dateEnd"
                   onBlur={handleBlur}
@@ -163,13 +167,13 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.tranTypeId && errors.tranTypeId)}
                   labelId="tranTypeId"
                   helperText={touched.tranTypeId && errors.tranTypeId}
-                  label={t("tranTypeId")}
+                  label={t('tranTypeId')}
                   name="tranTypeId"
                   onBlur={handleBlur}
                   value={values.tranTypeId}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("tranTypeId", e.target.value);
+                    setFieldValue('tranTypeId', e.target.value);
                   }}
                   items={tranType}
                 />
@@ -180,13 +184,13 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.merchantId && errors.merchantId)}
                   labelId="merchantId"
                   helperText={touched.merchantId && errors.merchantId}
-                  label={t("merchId")}
+                  label={t('merchId')}
                   name="merchantId"
                   onBlur={handleBlur}
                   value={values.merchantId}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("merchantId", e.target.value);
+                    setFieldValue('merchantId', e.target.value);
                   }}
                   items={merchant}
                 />
@@ -197,42 +201,63 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.bankId && errors.bankId)}
                   labelId="bankId"
                   helperText={touched.bankId && errors.bankId}
-                  label={t("bankId")}
+                  label={t('bankId')}
                   name="bankId"
                   onBlur={handleBlur}
                   value={values.bankId}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("bankId", e.target.value);
+                    setFieldValue('bankId', e.target.value);
                   }}
                   items={banks}
                 />
               </Grid>
 
               <Grid item xs={3}>
+                <SelectCheckboxCodes
+                  error={Boolean(touched.respCode && errors.respCode)}
+                  labelId="respCodeId"
+                  helperText={touched.respCode && errors.respCode}
+                  label={t('respCode')}
+                  name="respCodeId"
+                  onBlur={handleBlur}
+                  value={
+                    values.respCodeId !== undefined ? values.respCodeId : []
+                  }
+                  sx={{ m: 0 }}
+                  onChange={(data) => {
+                    //setFieldValue('respCode', data);
+                    setFieldValue('respCodeId', data);
+                  }}
+                  fieldText={['external', 'langEn']}
+                  items={respCode}
+                />
+              </Grid>
+
+              {/* <Grid item xs={3}>
                 <SelectCheckbox
                   error={Boolean(touched.respCodeId && errors.respCodeId)}
                   labelId="respCodeId"
                   helperText={touched.respCodeId && errors.respCodeId}
-                  label={t("respCodeId")}
+                  label={t('respCode')}
                   name="respCodeId"
                   onBlur={handleBlur}
                   value={values.respCodeId}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("respCodeId", e.target.value);
+                    setFieldValue('respCodeId', e.target.value);
                   }}
-                  fieldText={["external", "langEn"]}
+                  fieldText={['external', 'langEn']}
                   items={respCode}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={3}>
                 <TextField
                   error={Boolean(touched.amountFrom && errors.amountFrom)}
                   fullWidth
                   helperText={touched.amountFrom && errors.amountFrom}
-                  label={t("amountFrom")}
+                  label={t('amountFrom')}
                   margin="normal"
                   name="amountFrom"
                   onBlur={handleBlur}
@@ -250,7 +275,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.amountTo && errors.amountTo)}
                   fullWidth
                   helperText={touched.amountTo && errors.amountTo}
-                  label={t("amountTo")}
+                  label={t('amountTo')}
                   margin="normal"
                   name="amountTo"
                   onBlur={handleBlur}
@@ -268,7 +293,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.pan1 && errors.pan1)}
                   fullWidth
                   helperText={touched.pan1 && errors.pan1}
-                  label={t("card first 6 number")}
+                  label={t('card first 6 number')}
                   margin="normal"
                   name="pan1"
                   onBlur={handleBlur}
@@ -286,7 +311,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.pan2 && errors.pan2)}
                   fullWidth
                   helperText={touched.pan2 && errors.pan2}
-                  label={t("card last 4 number")}
+                  label={t('card last 4 number')}
                   margin="normal"
                   name="pan2"
                   onBlur={handleBlur}
@@ -305,7 +330,7 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.tranId && errors.tranId)}
                   fullWidth
                   helperText={touched.tranId && errors.tranId}
-                  label={t("tranId")}
+                  label={t('tranId')}
                   margin="normal"
                   name="tranId"
                   onBlur={handleBlur}
@@ -318,6 +343,14 @@ const ExportFileFilter = (props) => {
                 />
               </Grid>
 
+              <OrderBySelect
+                touched={touched}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                errors={errors}
+                values={values}
+              />
+
               <Grid item xs={12}>
                 <Divider />
               </Grid>
@@ -327,13 +360,13 @@ const ExportFileFilter = (props) => {
                   error={Boolean(touched.fields && errors.fields)}
                   labelId="respCodeId"
                   helperText={touched.fields && errors.fields}
-                  label={t("fields")}
+                  label={t('fields')}
                   name="fields"
                   onBlur={handleBlur}
                   value={values.fields}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue("fields", e.target.value);
+                    setFieldValue('fields', e.target.value);
                   }}
                   items={fields}
                 />
@@ -348,7 +381,7 @@ const ExportFileFilter = (props) => {
                     variant="contained"
                     size="small"
                   >
-                    {t("Create button")}
+                    {t('Create button')}
                   </Button>
                 </Box>
               </Grid>
