@@ -70,7 +70,7 @@ const CreateForm = (props) => {
         percentFee: Yup.string().matches(fields.decimal, t('field float')),
         minAmountFee: Yup.number().typeError(t('field number')),
         timezoneId: Yup.string().max(255).required(t('required')),
-        design: Yup.number().max(2).required(t('required')),
+        design: Yup.number().max(30).required(t('required')),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
