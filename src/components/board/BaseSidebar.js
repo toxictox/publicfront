@@ -51,16 +51,16 @@ const BaseSidebar = (props) => {
     balance: 0,
   });
   const [creditBalance, setCreditBalance] = useState({
-    creditBalance: 0,
+    test_credit: 0,
   })
   const [debitBalance, setDebitBalance] = useState({
-    debitBalance: 0,
+    test_debit: 0,
   })
   const [creditDelta, setCreditDelta] = useState({
-    creditDelta: 0,
+    test_credit_delta: 0,
   })
   const [debitDelta, setDebitDelta] = useState({
-    debitDelta: 0,
+    test_debit_delta: 0,
   })
 
   const getActiveStatus = (name) => {
@@ -237,10 +237,10 @@ const BaseSidebar = (props) => {
         .get(`${app.api}/board/depositBalance`)
         .then((response) => {
           setBalance(response.data);
-          setCreditBalance(response.data.test_credit)
-          setDebitBalance(response.data.test_debit)
-          setCreditDelta(response.data.test_credit_delta)
-          setDebitDelta(response.data.test_debit_delta)
+          setCreditBalance(response.data);
+          setDebitBalance(response.data);
+          setCreditDelta(response.data);
+          setDebitDelta(response.data);
         })
         .catch((e) => {
           console.error(e);
@@ -314,7 +314,7 @@ const BaseSidebar = (props) => {
                   component="div"
                   sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(creditBalance.creditBalance)} {'\u20B4'}
+                {formatCurrency(creditBalance.test_credit)} {'\u20B4'}
               </Typography>
             </Grid>
           </Grid>
@@ -333,7 +333,7 @@ const BaseSidebar = (props) => {
                   component="div"
                   sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(creditDelta.creditDelta)} {'\u20B4'}
+                {formatCurrency(creditDelta.test_credit_delta)} {'\u20B4'}
               </Typography>
             </Grid>
           </Grid>
@@ -352,7 +352,7 @@ const BaseSidebar = (props) => {
                   component="div"
                   sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(debitBalance.debitBalance)} {'\u20B4'}
+                {formatCurrency(debitBalance.test_debit)} {'\u20B4'}
               </Typography>
             </Grid>
           </Grid>
@@ -371,7 +371,7 @@ const BaseSidebar = (props) => {
                   component="div"
                   sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(debitDelta.debitDelta)} {'\u20B4'}
+                {formatCurrency(debitDelta.test_debit_delta)} {'\u20B4'}
               </Typography>
             </Grid>
           </Grid>
