@@ -50,6 +50,18 @@ const BaseSidebar = (props) => {
   const [balance, setBalance] = useState({
     balance: 0,
   });
+  const [creditBalance, setCreditBalance] = useState({
+    creditBalance: 0,
+  })
+  const [debitBalance, setDebitBalance] = useState({
+    debitBalance: 0,
+  })
+  const [creditDelta, setCreditDelta] = useState({
+    creditDelta: 0,
+  })
+  const [debitDelta, setDebitDelta] = useState({
+    debitDelta: 0,
+  })
 
   const getActiveStatus = (name) => {
     return user.permissions[name] !== undefined;
@@ -225,6 +237,10 @@ const BaseSidebar = (props) => {
         .get(`${app.api}/board/depositBalance`)
         .then((response) => {
           setBalance(response.data);
+          setCreditBalance(response.data.test_credit)
+          setDebitBalance(response.data.test_debit)
+          setCreditDelta(response.data.test_credit_delta)
+          setDebitDelta(response.data.test_debit_delta)
         })
         .catch((e) => {
           console.error(e);
@@ -280,6 +296,82 @@ const BaseSidebar = (props) => {
                 sx={{ textAlign: 'right' }}
               >
                 {formatCurrency(balance.balance)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                CreditBalance
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  component="div"
+                  sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(creditBalance.creditBalance)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                CreditDelta
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  component="div"
+                  sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(creditDelta.creditDelta)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                DebitBalance
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  component="div"
+                  sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(debitBalance.debitBalance)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                DebitDelta
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  component="div"
+                  sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(debitDelta.debitDelta)} {'\u20B4'}
               </Typography>
             </Grid>
           </Grid>
