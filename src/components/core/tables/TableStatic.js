@@ -4,7 +4,7 @@ import {
   TableRow,
   TableCell,
   TableHead,
-  TableBody,
+  TableBody
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import './style/TableStatic.scss';

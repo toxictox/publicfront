@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null,
+  user: null
 };
 
 const handlers = {
@@ -19,7 +19,7 @@ const handlers = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user,
+      user
     };
   },
   LOGIN: (state, action) => {
@@ -28,13 +28,13 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user,
+      user
     };
   },
   LOGOUT: (state) => ({
     ...state,
     isAuthenticated: false,
-    user: null,
+    user: null
   }),
   REGISTER: (state, action) => {
     const { user } = action.payload;
@@ -42,9 +42,9 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user,
+      user
     };
-  },
+  }
 };
 
 const reducer = (state, action) =>
@@ -57,7 +57,7 @@ const AuthContext = createContext({
   logout: () => Promise.resolve(),
   register: () => Promise.resolve(),
   passwordRecovery: () => Promise.resolve(),
-  passwordReset: () => Promise.resolve(),
+  passwordReset: () => Promise.resolve()
 });
 
 export const AuthProvider = (props) => {
@@ -86,9 +86,9 @@ export const AuthProvider = (props) => {
                   avatar:
                     '/static/mock-images/avatars/avatar-jane_rotanson.png',
                   name: `${response.data.firstName} ${response.data.lastName}`,
-                  plan: 'Premium',
-                },
-              },
+                  plan: 'Premium'
+                }
+              }
             });
           });
         } else {
@@ -96,8 +96,8 @@ export const AuthProvider = (props) => {
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: false,
-              user: null,
-            },
+              user: null
+            }
           });
         }
       } catch (err) {
@@ -105,8 +105,8 @@ export const AuthProvider = (props) => {
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
-            user: null,
-          },
+            user: null
+          }
         });
 
         navigate('/board');
@@ -120,7 +120,7 @@ export const AuthProvider = (props) => {
     await axios
       .post(`${app.api}/login`, {
         email: email,
-        password: password,
+        password: password
       })
       .then((response) => {
         localStorage.setItem('accessToken', response.data.token);
@@ -145,7 +145,7 @@ export const AuthProvider = (props) => {
       .post(`${app.api}/registration`, {
         phone,
         password,
-        inviteHash: linkToken,
+        inviteHash: linkToken
       })
       .then((response) => {
         toast.success(t('Success registration'));
@@ -159,7 +159,7 @@ export const AuthProvider = (props) => {
   const passwordRecovery = async (email, cb) => {
     await axios
       .post(`${app.api}/password/forget`, {
-        email,
+        email
       })
       .then((response) => {
         cb(true);
@@ -178,7 +178,7 @@ export const AuthProvider = (props) => {
     await axios
       .post(`${app.api}/password/change/${token}`, {
         email,
-        password,
+        password
       })
       .then((response) => {
         toast.success(t('Password was successfully changed'));
@@ -206,7 +206,7 @@ export const AuthProvider = (props) => {
         register,
         passwordRecovery,
         passwordReset,
-        getAccess,
+        getAccess
       }}
     >
       {children}
@@ -215,7 +215,7 @@ export const AuthProvider = (props) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default AuthContext;
