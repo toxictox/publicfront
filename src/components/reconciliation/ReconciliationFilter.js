@@ -6,7 +6,7 @@ import {
   FormHelperText,
   TextField,
   Grid,
-  Button,
+  Button
 } from '@material-ui/core';
 
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ import axios from '@lib/axios';
 import { app } from '@root/config';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
-//import UploadFilesInput from './coponents/UploadFilesInput';
+import UploadFilesInput from './coponents/UploadFilesInput';
 
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
@@ -42,41 +42,27 @@ const TransactionFilter = (props) => {
     <Formik
       initialValues={{
         bankId: '',
-        bankName: '',
+        bankName: ''
       }}
       validationSchema={Yup.object().shape({
         bankId: Yup.string().max(255),
-        bankName: Yup.string().max(255),
+        bankName: Yup.string().max(255)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const bankName = values.bankName.toLowerCase().replace(/\d/gi, '');
-        // if (values.bankName !== 'Pumb') {
-        //   const formData = new FormData();
-        //   formData.append('bankId', values.bankId);
-        //   formData.append('file', values.file, values.file.name);
-        //   await axios
-        //     .post(`${app.api}/reconciliation/file`, formData)
-        //     .then((response) => {
-        //       setFile(true);
-        //       update(response.data);
-        //       toast.success(t('Success upload'));
-        //     })
-        //     .catch((e) => {
-        //       setFile(true);
-        //       toast.error(e.response.data.message);
-        //     });
-        // } else {
+        const formData = new FormData();
+        formData.append('bankId', values.bankId);
+        formData.append('file', values.file, values.file.name);
         await axios
-          .post(`${app.api}/reconciliation/${bankName}`)
+          .post(`${app.api}/reconciliation/file`, formData)
           .then((response) => {
             setFile(true);
-            toast.success(t('Request success send'));
+            update(response.data);
+            toast.success(t('Success upload'));
           })
           .catch((e) => {
             setFile(true);
-            toast.error(e.response.data.message || 'Some error occurred');
+            toast.error(e.response.data.message);
           });
-        // }
       }}
     >
       {({
@@ -86,7 +72,7 @@ const TransactionFilter = (props) => {
         isSubmitting,
         setFieldValue,
         touched,
-        values,
+        values
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
@@ -110,7 +96,7 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 >
@@ -129,29 +115,13 @@ const TransactionFilter = (props) => {
                 </TextField>
               </Grid>
 
-              {/* {values.bankId !== '' &&
-              values.bankName !== 'Pumb' &&
-              getAccess('reconciliation', 'upload') ? (
+              {values.bankId !== '' && getAccess('reconciliation', 'upload') ? (
                 <UploadFilesInput
                   file={file}
                   setFieldValue={setFieldValue}
                   handleSubmit={handleSubmit}
                   setFile={setFile}
                 />
-              ) : null} */}
-
-              {values.bankId !== '' &&
-              // values.bankName === 'Pumb' &&
-              getAccess('reconciliation', 'upload') ? (
-                <Grid item xs={6}>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    //disabled={isSubmitting}
-                  >
-                    {t('Upload file')}
-                  </Button>
-                </Grid>
               ) : null}
             </Grid>
           </Box>
