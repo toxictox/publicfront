@@ -8,7 +8,7 @@ import {
   MenuItem,
   TextField,
   Typography,
-  Grid,
+  Grid
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import NavSection from './NavSection';
@@ -30,7 +30,7 @@ import {
   PriceCheck,
   DescriptionOutlined,
   Code,
-  Dns,
+  Dns
 } from '@material-ui/icons';
 
 import useAuth from '@hooks/useAuth';
@@ -49,6 +49,10 @@ const BaseSidebar = (props) => {
 
   const [balance, setBalance] = useState({
     balance: 0,
+    test_credit: 0,
+    test_debit: 0,
+    test_credit_delta: 0,
+    test_debit_delta: 0
   });
 
   const getActiveStatus = (name) => {
@@ -62,7 +66,7 @@ const BaseSidebar = (props) => {
           title: t('Dashboard menu'),
           path: '/board',
           icon: <Home fontSize="small" />,
-          active: true,
+          active: true
         },
         {
           title: t('City24'),
@@ -74,33 +78,33 @@ const BaseSidebar = (props) => {
               title: t('Transaction menu'),
               path: '/city24/transactions',
               icon: <Receipt fontSize="small" />,
-              active: getActiveStatus('users'),
+              active: getActiveStatus('users')
             },
             {
               title: t('Merchant menu'),
               path: '/city24/merchants',
               icon: <Storefront fontSize="small" />,
-              active: getActiveStatus('users'),
+              active: getActiveStatus('users')
             },
             {
               title: t('Terminals menu'),
               path: '/city24/terminals',
               icon: <BlurLinear fontSize="small" />,
-              active: getActiveStatus('users'),
+              active: getActiveStatus('users')
             },
             {
               title: t('Keys menu'),
               path: '/city24/keys',
               icon: <Lock fontSize="small" />,
-              active: getActiveStatus('users'),
-            },
-          ],
+              active: getActiveStatus('users')
+            }
+          ]
         },
         {
           title: t('Transaction menu'),
           path: '/transactions',
           icon: <Receipt fontSize="small" />,
-          active: getActiveStatus('transactions'),
+          active: getActiveStatus('transactions')
         },
         {
           title: t('Users menu'),
@@ -112,85 +116,85 @@ const BaseSidebar = (props) => {
               title: t('Users active menu'),
               path: '/users',
               icon: <Group fontSize="small" />,
-              active: getActiveStatus('users'),
+              active: getActiveStatus('users')
             },
             {
               title: t('Users inactive menu'),
               path: '/users/inactive',
               icon: <Group fontSize="small" />,
-              active: getActiveStatus('users'),
-            },
-          ],
+              active: getActiveStatus('users')
+            }
+          ]
         },
 
         {
           title: t('Role menu'),
           path: '/roles',
           icon: <Security fontSize="small" />,
-          active: getActiveStatus('roles'),
+          active: getActiveStatus('roles')
         },
         {
           title: t('Banks menu'),
           path: '/banks',
           icon: <AccountBalance fontSize="small" />,
-          active: getActiveStatus('banks'),
+          active: getActiveStatus('banks')
         },
         {
           title: t('Flow menu'),
           path: '/flows',
           icon: <Timeline fontSize="small" />,
-          active: getActiveStatus('flows'),
+          active: getActiveStatus('flows')
         },
         {
           title: t('Gateway menu'),
           path: '/gateways',
           icon: <CenterFocusWeak fontSize="small" />,
-          active: getActiveStatus('gateways'),
+          active: getActiveStatus('gateways')
         },
         {
           title: t('Cascading menu'),
           path: '/cascading',
           icon: <LinearScale fontSize="small" />,
-          active: getActiveStatus('cascading'),
+          active: getActiveStatus('cascading')
         },
         {
           title: t('Terminals menu'),
           path: '/terminals',
           icon: <BlurLinear fontSize="small" />,
-          active: getActiveStatus('terminals'),
+          active: getActiveStatus('terminals')
         },
         {
           title: t('Merchant menu'),
           path: '/merchants',
           icon: <Storefront fontSize="small" />,
-          active: getActiveStatus('merchants'),
+          active: getActiveStatus('merchants')
         },
         {
           title: t('Reconciliation menu'),
           path: '/reconciliation',
           icon: <PriceCheck fontSize="small" />,
-          active: getActiveStatus('reconciliation'),
+          active: getActiveStatus('reconciliation')
         },
         {
           title: t('Description menu'),
           path: '/export',
           icon: <DescriptionOutlined fontSize="small" />,
-          active: getActiveStatus('export'),
+          active: getActiveStatus('export')
         },
         {
           title: t('Bin menu'),
           path: '/bin',
           icon: <Dns fontSize="small" />,
-          active: getActiveStatus('bin'),
+          active: getActiveStatus('bin')
         },
         {
           title: t('Codes menu'),
           path: '/codes',
           icon: <Code fontSize="small" />,
-          active: getActiveStatus('codes'),
-        },
-      ],
-    },
+          active: getActiveStatus('codes')
+        }
+      ]
+    }
   ];
   const { onMobileClose, openMobile } = props;
   const location = useLocation();
@@ -202,7 +206,7 @@ const BaseSidebar = (props) => {
     setMerchId(e.target.value);
     await axios
       .post(`${app.api}/user/${user.hash}`, {
-        merchantId: e.target.value,
+        merchantId: e.target.value
       })
       .then((response) => {
         localStorage.setItem('accessToken', response.data.token);
@@ -238,7 +242,7 @@ const BaseSidebar = (props) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
+        height: '100%'
       }}
     >
       <Scrollbar options={{ suppressScrollX: true }}>
@@ -260,7 +264,6 @@ const BaseSidebar = (props) => {
                   </MenuItem>
                 );
               })}
-              ))}
             </TextField>
           </Box>
         </Box>
@@ -284,6 +287,82 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                CreditBalance
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.test_credit)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                CreditDelta
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.test_credit_delta)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                DebitBalance
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.test_debit)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                DebitDelta
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.test_debit_delta)} {'\u20B4'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
         <Divider />
         <Box sx={{ p: 2 }}>
           {sections.map((section) => {
@@ -293,8 +372,8 @@ const BaseSidebar = (props) => {
                 pathname={location.pathname}
                 sx={{
                   '& + &': {
-                    mt: 3,
-                  },
+                    mt: 3
+                  }
                 }}
                 {...section}
               />
@@ -317,8 +396,8 @@ const BaseSidebar = (props) => {
             backgroundColor: 'background.paper',
             height: 'calc(100% - 64px) !important',
             top: '64px !Important',
-            width: 280,
-          },
+            width: 280
+          }
         }}
         variant="permanent"
       >
@@ -335,8 +414,8 @@ const BaseSidebar = (props) => {
       PaperProps={{
         sx: {
           backgroundColor: 'background.paper',
-          width: 280,
-        },
+          width: 280
+        }
       }}
       variant="temporary"
     >
@@ -347,7 +426,7 @@ const BaseSidebar = (props) => {
 
 BaseSidebar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool,
+  openMobile: PropTypes.bool
 };
 
 export default BaseSidebar;
