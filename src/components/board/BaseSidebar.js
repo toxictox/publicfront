@@ -179,7 +179,21 @@ const BaseSidebar = (props) => {
           title: t('Description menu'),
           path: '/export',
           icon: <DescriptionOutlined fontSize="small" />,
-          active: getActiveStatus('export')
+          active: getActiveStatus('export'),
+          children: [
+            {
+              title: t('Description menu custom'),
+              path: '/export',
+              icon: <DescriptionOutlined fontSize="small" />,
+              active: getActiveStatus('export')
+            },
+            {
+              title: t('Description menu city24'),
+              path: '/export/city24',
+              icon: <DescriptionOutlined fontSize="small" />,
+              active: getActiveStatus('export')
+            }
+          ]
         },
         {
           title: t('Bin menu'),
