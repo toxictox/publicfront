@@ -95,13 +95,10 @@ const ReconciliationList = () => {
     });
   };
 
-  const getDetailReconcilationInfo = (id, reconciliation_result) => {
-    if (
-      reconciliation_result &&
-      Object.keys(reconciliation_result).laength > 0
-    ) {
+  const getDetailReconcilationInfo = (id, reconciliationResult) => {
+    if (reconciliationResult && Object.keys(reconciliationResult).length > 0) {
       navigate(`/reconciliation/${id}`, {
-        state: { detail: reconciliation_result }
+        state: { detail: reconciliationResult }
       });
     }
   };
@@ -147,7 +144,7 @@ const ReconciliationList = () => {
                         onClick={() => {
                           getDetailReconcilationInfo(
                             item.id,
-                            item.reconciliation_result
+                            item.reconciliationResult
                           );
                         }}
                       >
