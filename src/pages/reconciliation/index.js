@@ -96,7 +96,7 @@ const ReconciliationList = () => {
   };
 
   const getDetailReconcilationInfo = (id, reconciliationResult) => {
-    if (reconciliationResult && Object.keys(reconciliationResult).laength > 0) {
+    if (reconciliationResult && Object.keys(reconciliationResult).length > 0) {
       navigate(`/reconciliation/${id}`, {
         state: { detail: reconciliationResult }
       });
