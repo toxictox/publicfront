@@ -6,9 +6,9 @@ import {
   FormHelperText,
   TextField,
   Grid,
-  Button,
+  Button
 } from '@material-ui/core';
-
+import { setLocalFormValues, getLocalFormValues } from '@utils/localFormValues';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
@@ -17,12 +17,27 @@ import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
 //import UploadFilesInput from './coponents/UploadFilesInput';
 
+const getInitialValues = () => {
+  return (
+    getLocalFormValues('reconcilation') || {
+      bankId: '',
+      bankName: ''
+    }
+  );
+};
+
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
   const { callback, update } = props;
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
   const { getAccess } = useAuth();
+
+  useEffect(() => {
+    if (getLocalFormValues('reconcilation')) {
+      callback(getLocalFormValues('reconcilation').bankId);
+    }
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -40,13 +55,10 @@ const TransactionFilter = (props) => {
 
   return (
     <Formik
-      initialValues={{
-        bankId: '',
-        bankName: '',
-      }}
+      initialValues={getInitialValues()}
       validationSchema={Yup.object().shape({
         bankId: Yup.string().max(255),
-        bankName: Yup.string().max(255),
+        bankName: Yup.string().max(255)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const bankName = values.bankName.toLowerCase().replace(/\d/gi, '');
@@ -86,7 +98,7 @@ const TransactionFilter = (props) => {
         isSubmitting,
         setFieldValue,
         touched,
-        values,
+        values
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
@@ -102,6 +114,10 @@ const TransactionFilter = (props) => {
                   name="bankId"
                   onBlur={handleBlur}
                   onChange={(e, elem) => {
+                    setLocalFormValues('reconcilation', {
+                      bankId: e.target.value,
+                      bankName: elem.props.children
+                    });
                     setFieldValue('bankId', e.target.value);
                     setFieldValue('bankName', elem.props.children);
                     callback(e.target.value);
@@ -110,7 +126,7 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 >
