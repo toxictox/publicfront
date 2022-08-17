@@ -14,7 +14,7 @@ const buttons = {
   'Back to Home': 'Повернутися на головну',
   'status-city': 'Инфо',
   'cancel-city': 'Скасування',
-  'register-city': 'Зареєструвати',
+  'register-city': 'Зареєструвати'
 };
 
 const menu = {
@@ -30,10 +30,12 @@ const menu = {
   'Cascading models menu': 'Моделі',
   'Terminals menu': 'Термінали',
   'Merchant menu': 'Мерчанти',
-  'Description menu': 'Експорт',
+  'Description menu': 'Експорт документів',
+  'Description menu custom': 'Експорт',
+  'Description menu city24': 'Экспорт city24',
   'Codes menu': 'Коди',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Звірка',
+  'Reconciliation menu': 'Звірка'
 };
 
 const text = {
@@ -137,6 +139,8 @@ const text = {
   Balance: 'Баланс',
 
   'Export List': 'Експорт файлів',
+  'City24 Files List': 'Експорт файлов city24',
+  'Download File': 'Завантажити файл',
   'Bin List': 'Bin',
   'Invitation link': 'Посилання для запрошення користувачів',
 
@@ -146,7 +150,7 @@ const text = {
 
   'Password was successfully changed': 'Пароль был успешно изменен',
   'Reset success send':
-    'Инструкция по восстановлению пароля была отправлена на указанный email',
+    'Инструкция по восстановлению пароля была отправлена на указанный email'
 };
 
 const fields = {
@@ -192,14 +196,14 @@ const fields = {
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
   cityRespCode: 'City24 статус',
-  'Request success send': 'Запрос успешно отправлен',
+  'Request success send': 'Запрос успешно отправлен'
 };
 
 const server = {
   'Token error': 'Неправильний ключ',
   '404 error title': 'Сторінку не знайдено',
   '404 error description':
-    'Сторінку не знайдено. Швидше за все вона була видалена або переміщена :(',
+    'Сторінку не знайдено. Швидше за все вона була видалена або переміщена :('
 };
 
 const validationForm = {
@@ -210,7 +214,7 @@ const validationForm = {
     'У паролі має бути щонайменше 8 символів. Використовуйте великі та малі літери, а також цифри та спецсимволи',
   'Error phone format': 'Телефон має бути у форматі 380XXXXXXXXX',
   'field float': 'Поле должно быть целым или дробным числом',
-  'field number': 'Поле должно быть целым числом',
+  'field number': 'Поле должно быть целым числом'
 };
 
 export const ua = {
@@ -222,5 +226,5 @@ export const ua = {
   ...text,
   ...validationForm,
   ...menu,
-  ...server,
+  ...server
 };

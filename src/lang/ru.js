@@ -14,7 +14,7 @@ const buttons = {
   'Back to Home': 'Вернуться на главную',
   'status-city': 'Инфо',
   'cancel-city': 'Отмена',
-  'register-city': 'Зарегистрировать',
+  'register-city': 'Зарегистрировать'
 };
 
 const menu = {
@@ -32,10 +32,12 @@ const menu = {
   'Cascading models menu': 'Модели',
   'Terminals menu': 'Терминалы',
   'Merchant menu': 'Мерчанты',
-  'Description menu': 'Экспорт',
+  'Description menu': 'Экспорт документов',
+  'Description menu custom': 'Экспорт',
+  'Description menu city24': 'Экспорт city24',
   'Codes menu': 'Коды',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Сверка',
+  'Reconciliation menu': 'Сверка'
 };
 
 const text = {
@@ -138,6 +140,8 @@ const text = {
   Balance: 'Баланс',
 
   'Export List': 'Экспорт файлов',
+  'City24 Files List': 'Экспорт файлов city24',
+  'Download File': 'Скачать файл',
   'Bin List': 'Bin',
   'Invitation link': 'Ссылка для приглашения пользователей',
 
@@ -148,7 +152,7 @@ const text = {
   'Password was successfully changed': 'Пароль был успешно изменен',
   'Reset success send':
     'Инструкция по восстановлению пароля была отправлена на указанный email',
-  'Request success send': 'Запрос успешно отправлен',
+  'Request success send': 'Запрос успешно отправлен'
 };
 
 const fields = {
@@ -193,14 +197,14 @@ const fields = {
   'Comment show': 'Комментарий',
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
-  cityRespCode: 'City24 статус',
+  cityRespCode: 'City24 статус'
 };
 
 const server = {
   'Token error': 'Неверный ключ',
   '404 error title': 'Страница не найдена',
   '404 error description':
-    'Страница не найдена. Скорее всего она была удалено или перемещена :(',
+    'Страница не найдена. Скорее всего она была удалено или перемещена :('
 };
 
 const validationForm = {
@@ -209,7 +213,7 @@ const validationForm = {
   'Passwords must match': 'Пароли не совпадают',
   'Error password format':
     'В пароле должно быть минимум 8 символом. Используйте прописные и заглавные буквы,а также цифры и спец. символы',
-  'Error phone format': 'Телефон должен быть в формате 380XXXXXXXXX',
+  'Error phone format': 'Телефон должен быть в формате 380XXXXXXXXX'
 };
 
 export const ru = {
@@ -221,5 +225,5 @@ export const ru = {
   ...text,
   ...validationForm,
   ...menu,
-  ...server,
+  ...server
 };

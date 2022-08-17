@@ -14,7 +14,7 @@ const buttons = {
   'Back to Home': 'To main page',
   'status-city': 'Info',
   'cancel-city': 'Cancel',
-  'register-city': 'Register',
+  'register-city': 'Register'
 };
 
 const menu = {
@@ -30,10 +30,12 @@ const menu = {
   'Cascading models menu': 'Models',
   'Terminals menu': 'Terminals',
   'Merchant menu': 'Merchants',
-  'Description menu': 'Export',
+  'Description menu': 'Export docs',
+  'Description menu custom': 'Export',
+  'Description menu city24': 'Export city24',
   'Codes menu': 'Codes',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Reconciliation',
+  'Reconciliation menu': 'Reconciliation'
 };
 
 const text = {
@@ -137,9 +139,11 @@ const text = {
   Balance: 'Balance',
 
   'Export List': 'Экспорт файлов',
+  'Download File': 'Download File',
+
   'Bin List': 'Bin',
   'Invitation link': 'Ссылка для приглашения пользователя',
-
+  'City24 Files List': 'Export city24 files',
   'Success tab': 'Успешные',
   'Failed tab': 'Отклоненные',
   'Conversion tab': 'Конверсия',
@@ -147,7 +151,7 @@ const text = {
   'Password was successfully changed': 'Пароль был успешно изменен',
   'Reset success send':
     'Инструкция по восстановлению пароля была отправлена на указанный email',
-  'Request success send': 'Request success send',
+  'Request success send': 'Request success send'
 };
 
 const fields = {
@@ -193,13 +197,13 @@ const fields = {
   'Comment show': 'Show comment',
   Loading: 'Loading',
   'Upload file': 'Upload file',
-  cityRespCode: 'City24 status',
+  cityRespCode: 'City24 status'
 };
 
 const server = {
   'Token error': 'Token error',
   '404 error title': 'Page not found',
-  '404 error description': "Sorry, that page can't be found",
+  '404 error description': "Sorry, that page can't be found"
 };
 
 const validationForm = {
@@ -210,7 +214,7 @@ const validationForm = {
   'Passwords must match': 'Passwords must match',
   'Error password format':
     'The password must be at least 8 characters long. Use uppercase and lowercase letters as well as numbers and special characters',
-  'Error phone format': 'Phone must be in 380XXXXXXXXXXX format',
+  'Error phone format': 'Phone must be in 380XXXXXXXXXXX format'
 };
 
 export const en = {
@@ -222,5 +226,5 @@ export const en = {
   ...text,
   ...validationForm,
   ...menu,
-  ...server,
+  ...server
 };
