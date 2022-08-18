@@ -18,6 +18,25 @@ const ReconcilationDetail = () => {
   if (!state) {
     return <Navigate to={`/reconciliation`} />;
   }
+
+  const getReconcilationMissingList = (missingList, recItemKey) => {
+    const recList = missingList || [];
+    return recList.map((missingItem, idx) => (
+      <li className="reconcilation__missing-list-item" key={missingItem + idx}>
+        {recItemKey === 'bank' ? (
+          missingItem
+        ) : (
+          <Link
+            className="reconcilation__link"
+            to={missingRoutes[recItemKey](missingItem)}
+          >
+            {missingItem}
+          </Link>
+        )}
+      </li>
+    ));
+  };
+
   return (
     <div className="reconcilation__container">
       <BackButton action={() => navigate(`/reconciliation`)} />
@@ -30,32 +49,19 @@ const ReconcilationDetail = () => {
             </div>
             <div className="reconcilation__head reconcilation__amount">
               <span className="reconcilation__head-title">Amount:</span>
-              <span>{state.detail[recItemKey].amount}</span>
+              <span>{state.detail[recItemKey].amount || 0}</span>
             </div>
             <div className="reconcilation__head reconcilation__total-count">
               <span className="reconcilation__head-title">Total Count:</span>
-              <span>{state.detail[recItemKey].totalCount}</span>
+              <span>{state.detail[recItemKey].totalCount || 0}</span>
             </div>
           </div>
 
           <ul className="reconcilation__missing-list">
-            {state.detail[recItemKey].missing.map((missingItem, idx) => (
-              <li
-                className="reconcilation__missing-list-item"
-                key={missingItem + idx}
-              >
-                {recItemKey === 'bank' ? (
-                  missingItem
-                ) : (
-                  <Link
-                    className="reconcilation__link"
-                    to={missingRoutes[recItemKey](missingItem)}
-                  >
-                    {missingItem}
-                  </Link>
-                )}
-              </li>
-            ))}
+            {getReconcilationMissingList(
+              state.detail[recItemKey].missing,
+              recItemKey
+            )}
           </ul>
         </div>
       ))}
