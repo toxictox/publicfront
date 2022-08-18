@@ -12,6 +12,12 @@ export const getValidationMerchantSchema = (t) => {
     contractNumber: Yup.string(),
     contractDate: Yup.string(),
     timezoneId: Yup.string().max(255).required(t('required')),
-    design: Yup.number().max(40).required(t('required'))
+    design: Yup.number().max(40).required(t('required')),
+    type: Yup.string().required(t('required')),
+    notificationChannel: Yup.string().required(t('required')),
+    сompany_email: Yup.string()
+      .email(t('email'))
+      .max(255)
+      .required(t('required'))
   });
 };

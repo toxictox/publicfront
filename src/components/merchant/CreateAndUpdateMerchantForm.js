@@ -21,6 +21,8 @@ const CreateAndUpdateMerchantForm = (data) => {
     cityTerminal,
     cityMerchant,
     designId,
+    types,
+    notificationChannels,
     externalProps
   } = data;
 
@@ -47,6 +49,7 @@ const CreateAndUpdateMerchantForm = (data) => {
               sx={{ m: 0 }}
             />
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               error={Boolean(touched.description && errors.description)}
@@ -285,6 +288,89 @@ const CreateAndUpdateMerchantForm = (data) => {
               ))}
             </TextField>
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              error={Boolean(touched.type && errors.type)}
+              fullWidth
+              helperText={touched.type && errors.type}
+              label={t('type_operation')}
+              margin="normal"
+              name="type"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              select
+              value={values.type}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <MenuItem key={-1} value={''}>
+                {t('Select value')}
+              </MenuItem>
+              {types.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              error={Boolean(touched.design && errors.design)}
+              fullWidth
+              helperText={touched.design && errors.design}
+              label={t('notificationChannel')}
+              margin="normal"
+              name="notificationChannel"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              select
+              value={values.notificationChannel}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <MenuItem key={-1} value={''}>
+                {t('Select value')}
+              </MenuItem>
+              {notificationChannels.map((notificationChannel) => (
+                <MenuItem key={notificationChannel} value={notificationChannel}>
+                  {notificationChannel}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          {values.notificationChannel ? (
+            <Grid item xs={12}>
+              <TextField
+                autoFocus
+                error={Boolean(
+                  touched[`сompany_${values.notificationChannel}`] &&
+                    errors[`сompany_${values.notificationChannel}`]
+                )}
+                fullWidth
+                helperText={
+                  touched[`сompany_${values.notificationChannel}`] &&
+                  errors[`сompany_${values.notificationChannel}`]
+                }
+                label={t(`field_${values.notificationChannel}`)}
+                margin="normal"
+                name={`сompany_${values.notificationChannel}`}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="text"
+                value={values[`сompany_${values.notificationChannel}`]}
+                variant="outlined"
+                size="small"
+                sx={{ m: 0 }}
+              />
+            </Grid>
+          ) : null}
 
           <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>

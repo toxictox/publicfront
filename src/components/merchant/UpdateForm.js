@@ -10,8 +10,14 @@ const UpdateBankForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
-  const { timezoneData, cityTerminal, cityMerchant, designId } =
-    UseMerchantFormData();
+  const {
+    timezoneData,
+    cityTerminal,
+    cityMerchant,
+    designId,
+    types,
+    notificationChannels
+  } = UseMerchantFormData();
 
   return (
     <Formik
@@ -55,6 +61,8 @@ const UpdateBankForm = (props) => {
           cityTerminal={cityTerminal}
           cityMerchant={cityMerchant}
           designId={designId}
+          types={types}
+          notificationChannels={notificationChannels}
           externalProps={props}
         />
       )}

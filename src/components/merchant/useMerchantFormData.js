@@ -7,6 +7,8 @@ export const UseMerchantFormData = () => {
   const [cityTerminal, setCityTerminal] = useState([]);
   const [cityMerchant, setCityMerchant] = useState([]);
   const [designId, setDesignId] = useState([]);
+  const types = ['a2c', 'c2a', 'p2p'];
+  const notificationChannels = ['email'];
 
   useEffect(() => {
     const getData = async () => {
@@ -29,5 +31,12 @@ export const UseMerchantFormData = () => {
     getData();
   }, []);
 
-  return { timezoneData, cityTerminal, cityMerchant, designId };
+  return {
+    timezoneData,
+    cityTerminal,
+    cityMerchant,
+    designId,
+    types,
+    notificationChannels
+  };
 };
