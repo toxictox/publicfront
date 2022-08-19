@@ -100,7 +100,10 @@ const text = {
   'Code Item Create': 'Создание кода',
   'Transactions Logs Item': 'Логи транзакций',
   'Reconciliation List': 'Сверка',
-
+  miss_in_bnk: 'Отсутствует в банке',
+  miss_in_pt: 'Отсутствует в paytech',
+  trn_not_registered: 'Не зарегистрировано',
+  miss_in_bnk2: 'Внимание!!!',
   dateStart: 'Период с',
   dateEnd: 'Период по',
   tranTypeId: 'Тип операции',

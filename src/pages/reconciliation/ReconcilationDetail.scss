@@ -33,8 +33,7 @@
     padding: 10px;
   }
   &__missing-list {
-    min-height: 100px;
-    max-height: 200px;
+    height: 200px;
     overflow-y: scroll;
     margin: 0;
     margin-top: 5px;
@@ -52,6 +51,12 @@
   }
   &__missing-list-item {
     padding: 10px;
+    &--attention {
+      color: rgb(226, 59, 59);
+      .reconcilation__link:visited {
+        color: rgb(243, 11, 11);
+      }
+    }
   }
 
   &__head-title {
@@ -65,6 +70,11 @@
     text-decoration: none;
     color: rgb(0, 0, 0);
   }
+
+  &__link:visited {
+    color: rgba(33, 137, 227, 0.3);
+  }
+
   &__link:hover {
     color: rgba(33, 137, 227, 0.7);
   }
