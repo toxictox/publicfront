@@ -99,7 +99,10 @@ const text = {
   'Code Item Create': 'Створення коду',
   'Transactions Logs Item': 'Логи транзакцій',
   'Reconciliation List': 'Звірка',
-
+  miss_in_bnk: 'Відсутня у банку',
+  miss_in_pt: 'Відсутня у paytech',
+  trn_not_registered: 'Не зареєстровано',
+  miss_in_bnk2: 'Увага!!!',
   dateStart: 'Період з',
   dateEnd: 'Період до',
   tranTypeId: 'Тип операції',

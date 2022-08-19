@@ -1,3 +1,4 @@
+import './ReconcilationDetail.scss';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -14,7 +15,7 @@ import useSettings from '@hooks/useSettings';
 import { TableStatic } from '@comp/core/tables';
 import { GroupTable } from '@comp/core/buttons';
 import { Cached, Send } from '@material-ui/icons';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from '@lib/axios';
 import { app } from '@root/config';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +27,6 @@ import useAuth from '@hooks/useAuth';
 const ReconciliationList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
-  let navigate = useNavigate();
   const { getAccess } = useAuth();
   const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
@@ -95,12 +95,19 @@ const ReconciliationList = () => {
     });
   };
 
-  const getDetailReconcilationInfo = (id, reconciliationResult) => {
+  const getDetailReconcilationLink = ({ reconciliationResult, id, name }) => {
     if (reconciliationResult && Object.keys(reconciliationResult).length > 0) {
-      navigate(`/reconciliation/${id}`, {
-        state: { detail: reconciliationResult }
-      });
+      return (
+        <Link
+          className="reconcilation__link"
+          to={`/reconciliation/${id}`}
+          state={{ detail: reconciliationResult }}
+        >
+          {name}
+        </Link>
+      );
     }
+    return name;
   };
 
   return (
@@ -139,16 +146,12 @@ const ReconciliationList = () => {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.id}</TableCell>
-                      <TableCell
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          getDetailReconcilationInfo(
-                            item.id,
-                            item.reconciliationResult
-                          );
-                        }}
-                      >
-                        {item.name}
+                      <TableCell>
+                        {getDetailReconcilationLink({
+                          reconciliationResult: item.reconciliationResult,
+                          id: item.id,
+                          name: item.name
+                        })}
                       </TableCell>
                       <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
                       <TableCell>{toLocaleDateTime(item.editOn)}</TableCell>
