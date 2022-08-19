@@ -99,7 +99,10 @@ const text = {
   'Code Item Create': 'Creating the code',
   'Transactions Logs Item': 'Transaction logs',
   'Reconciliation List': 'Reconciliation',
-
+  miss_in_bnk: 'Missing from the bank',
+  miss_in_pt: 'Missing from the pytech',
+  trn_not_registered: 'Not registered',
+  miss_in_bnk2: 'Attention!!!',
   dateStart: 'Period from',
   dateEnd: 'Period to',
   tranTypeId: 'Type of operation',
