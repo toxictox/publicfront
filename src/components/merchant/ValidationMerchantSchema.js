@@ -15,6 +15,7 @@ export const getValidationMerchantSchema = (t) => {
     design: Yup.number().max(40).required(t('required')),
     type: Yup.string().required(t('required')),
     notificationChannel: Yup.string().required(t('required')),
+    company_id: Yup.number().max(255).required(t('required')),
     сompany_email: Yup.string()
       .email(t('email'))
       .max(255)

@@ -200,7 +200,9 @@ const fields = {
   'Comment show': 'Комментарий',
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
-  cityRespCode: 'City24 статус'
+  cityRespCode: 'City24 статус',
+  company_email: 'Email компании',
+  company_id: 'ID компании'
 };
 
 const server = {

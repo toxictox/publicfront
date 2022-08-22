@@ -16,8 +16,11 @@ const UpdateBankForm = (props) => {
     cityMerchant,
     designId,
     types,
-    notificationChannels
+    notificationChannels,
+    companies
   } = UseMerchantFormData();
+
+  console.log(data);
 
   return (
     <Formik
@@ -57,6 +60,7 @@ const UpdateBankForm = (props) => {
           isSubmitting={isSubmitting}
           touched={touched}
           values={values}
+          companies={companies}
           timezoneData={timezoneData}
           cityTerminal={cityTerminal}
           cityMerchant={cityMerchant}

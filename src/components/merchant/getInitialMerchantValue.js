@@ -12,8 +12,9 @@ export const getInitialMerchantValue = (data = {}) => {
     contractNumber: data.contractNumber || '',
     contractDate: data.contractDate || '',
     design: data.design || '',
-    type: '',
-    notificationChannel: '',
-    сompany_email: ''
+    type: data.type || '',
+    notificationChannel: data.notificationChannel || '',
+    сompany_email: data.company_email || '',
+    company_id: data.company_id || ''
   };
 };

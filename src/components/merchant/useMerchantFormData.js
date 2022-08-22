@@ -6,6 +6,7 @@ export const UseMerchantFormData = () => {
   const [timezoneData, setTimezoneData] = useState([]);
   const [cityTerminal, setCityTerminal] = useState([]);
   const [cityMerchant, setCityMerchant] = useState([]);
+  const [companies, setCompanies] = useState([]);
   const [designId, setDesignId] = useState([]);
   const types = ['a2c', 'c2a', 'p2p'];
   const notificationChannels = ['email'];
@@ -27,6 +28,10 @@ export const UseMerchantFormData = () => {
       await axios.get(`${app.api}/filter/designs`).then((res) => {
         setDesignId(res.data.data);
       });
+
+      await axios.get(`${app.api}/company`).then((res) => {
+        setCompanies(res.data);
+      });
     };
     getData();
   }, []);
@@ -36,6 +41,7 @@ export const UseMerchantFormData = () => {
     cityTerminal,
     cityMerchant,
     designId,
+    companies,
     types,
     notificationChannels
   };

@@ -199,7 +199,9 @@ const fields = {
   'Comment show': 'Show comment',
   Loading: 'Loading',
   'Upload file': 'Upload file',
-  cityRespCode: 'City24 status'
+  cityRespCode: 'City24 status',
+  company_email: 'Company Email',
+  company_id: 'Company ID'
 };
 
 const server = {

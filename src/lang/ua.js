@@ -199,7 +199,9 @@ const fields = {
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
   cityRespCode: 'City24 статус',
-  'Request success send': 'Запрос успешно отправлен'
+  'Request success send': 'Запрос успешно отправлен',
+  company_email: 'Email компанії',
+  company_id: 'ID компанії'
 };
 
 const server = {

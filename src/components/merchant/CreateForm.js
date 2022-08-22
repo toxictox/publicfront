@@ -16,8 +16,10 @@ const CreateForm = (props) => {
     cityMerchant,
     designId,
     types,
-    notificationChannels
+    notificationChannels,
+    companies
   } = UseMerchantFormData();
+
   return (
     <Formik
       initialValues={getInitialMerchantValue()}
@@ -58,6 +60,7 @@ const CreateForm = (props) => {
           values={values}
           timezoneData={timezoneData}
           cityTerminal={cityTerminal}
+          companies={companies}
           cityMerchant={cityMerchant}
           designId={designId}
           types={types}
