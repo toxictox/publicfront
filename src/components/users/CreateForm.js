@@ -1,5 +1,5 @@
-import * as Yup from "yup";
-import { Formik } from "formik";
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
@@ -9,15 +9,16 @@ import {
   FormControl,
   FormGroup,
   FormControlLabel,
-  Checkbox,
-} from "@material-ui/core";
-import useMounted from "@hooks/useMounted";
-import { useTranslation } from "react-i18next";
-import { SimpleAccordion } from "@comp/core/accodrion";
-import { useEffect, useState } from "react";
-import axios from "@lib/axios";
-import { app } from "@root/config";
-import useAuth from "@hooks/useAuth";
+  Checkbox
+} from '@material-ui/core';
+import useMounted from '@hooks/useMounted';
+import { useTranslation } from 'react-i18next';
+import { SimpleAccordion } from '@comp/core/accodrion';
+import { useEffect, useState } from 'react';
+import axios from '@lib/axios';
+import { app } from '@root/config';
+import useAuth from '@hooks/useAuth';
+
 const UpdateForm = (props) => {
   const mounted = useMounted();
   const auth = useAuth();
@@ -29,7 +30,7 @@ const UpdateForm = (props) => {
     const getData = async () => {
       const response = await axios
         .post(`${app.api}/user/get/roles`, {
-          hash: auth.user.hash,
+          hash: auth.user.hash
         })
         .then((response) => response.data);
 
@@ -43,10 +44,10 @@ const UpdateForm = (props) => {
   return (
     <Formik
       initialValues={{
-        email: "",
+        email: ''
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email().max(255).required(t("required")),
+        email: Yup.string().email().max(255).required(t('required'))
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -72,7 +73,7 @@ const UpdateForm = (props) => {
         handleSubmit,
         isSubmitting,
         touched,
-        values,
+        values
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
@@ -83,7 +84,7 @@ const UpdateForm = (props) => {
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label={t("email filed")}
+                  label={t('email filed')}
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
@@ -108,13 +109,13 @@ const UpdateForm = (props) => {
                                 <FormGroup aria-label="position" row>
                                   {item.roles.map((child) => (
                                     <FormControlLabel
-                                      name={"roles"}
+                                      name={'roles'}
                                       key={child.roleId}
                                       value={child.roleId}
                                       control={
                                         <Checkbox
                                           fullWidth
-                                          name={"roles"}
+                                          name={'roles'}
                                           color="primary"
                                           onBlur={handleBlur}
                                           onChange={handleChange}
@@ -129,7 +130,7 @@ const UpdateForm = (props) => {
                                   ))}
                                 </FormGroup>
                               </FormControl>
-                            ),
+                            )
                           };
                         })
                       : null
@@ -146,7 +147,7 @@ const UpdateForm = (props) => {
                     variant="contained"
                     size="large"
                   >
-                    {t("Create button")}
+                    {t('Create button')}
                   </Button>
                 </Box>
               </Grid>

@@ -10,8 +10,16 @@ const CreateForm = (props) => {
   const mounted = useMounted();
   const { callback } = props;
   const { t } = useTranslation();
-  const { timezoneData, cityTerminal, cityMerchant, designId } =
-    UseMerchantFormData();
+  const {
+    timezoneData,
+    cityTerminal,
+    cityMerchant,
+    designId,
+    types,
+    notificationChannels,
+    companies
+  } = UseMerchantFormData();
+
   return (
     <Formik
       initialValues={getInitialMerchantValue()}
@@ -52,8 +60,11 @@ const CreateForm = (props) => {
           values={values}
           timezoneData={timezoneData}
           cityTerminal={cityTerminal}
+          companies={companies}
           cityMerchant={cityMerchant}
           designId={designId}
+          types={types}
+          notificationChannels={notificationChannels}
           externalProps={props}
         />
       )}

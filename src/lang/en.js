@@ -182,6 +182,7 @@ const fields = {
   linkToken: 'key',
   role: 'role',
   'email table': 'Email',
+  field_email: 'Email',
   'role name field': 'role',
   'permissions field': 'permissions',
   'name bank field': 'bank name',
@@ -193,14 +194,17 @@ const fields = {
   bank: 'bank',
   'name gateway field': 'gateway name',
   'Select value': 'select a value',
-
+  type_operation: 'Type of transaction',
+  notificationChannel: 'Notification channel',
   'Set deposit limit': 'Set limit',
   'Increase deposit limit': 'Increase limit',
   'Decrease deposit limit': 'Decrease limit',
   'Comment show': 'Show comment',
   Loading: 'Loading',
   'Upload file': 'Upload file',
-  cityRespCode: 'City24 status'
+  cityRespCode: 'City24 status',
+  company_email: 'Company Email',
+  company_id: 'Company ID'
 };
 
 const server = {

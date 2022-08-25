@@ -181,6 +181,7 @@ const fields = {
   linkToken: 'Ключ',
   role: 'Роль',
   'email table': 'Email',
+  field_email: 'Email',
   'role name field': 'Роль',
   'permissions field': 'Дозволи',
   'name bank field': 'Назва банку',
@@ -192,6 +193,8 @@ const fields = {
   bank: 'Банк',
   'name gateway field': 'Назва шлюзу',
   'Select value': 'Вибрати значення',
+  notificationChannel: 'Канал нотифікації',
+  type_operation: 'Тип операції',
   'Set deposit limit': 'Установить',
   'Increase deposit limit': 'Увеличить',
   'Decrease deposit limit': 'Уменьшить',
@@ -199,7 +202,9 @@ const fields = {
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
   cityRespCode: 'City24 статус',
-  'Request success send': 'Запрос успешно отправлен'
+  'Request success send': 'Запрос успешно отправлен',
+  company_email: 'Email компанії',
+  company_id: 'ID компанії'
 };
 
 const server = {

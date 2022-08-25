@@ -18,9 +18,12 @@ const CreateAndUpdateMerchantForm = (data) => {
     touched,
     values,
     timezoneData,
+    companies,
     cityTerminal,
     cityMerchant,
     designId,
+    types,
+    notificationChannels,
     externalProps
   } = data;
 
@@ -31,11 +34,38 @@ const CreateAndUpdateMerchantForm = (data) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
+              error={Boolean(touched.company_id && errors.company_id)}
+              fullWidth
+              helperText={touched.company_id && errors.company_id}
+              label={`${t('Company')} *`}
+              margin="normal"
+              name="company_id"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              select
+              value={values.company_id}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <MenuItem key={-1} value={''}>
+                {t('Select value')}
+              </MenuItem>
+              {companies.map((company) => (
+                <MenuItem key={company.id} value={company.id}>
+                  {company.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               autoFocus
               error={Boolean(touched.name && errors.name)}
               fullWidth
               helperText={touched.name && errors.name}
-              label={t('name')}
+              label={`${t('name')} *`}
               margin="normal"
               name="name"
               onBlur={handleBlur}
@@ -47,6 +77,7 @@ const CreateAndUpdateMerchantForm = (data) => {
               sx={{ m: 0 }}
             />
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               error={Boolean(touched.description && errors.description)}
@@ -235,7 +266,7 @@ const CreateAndUpdateMerchantForm = (data) => {
               error={Boolean(touched.timezoneId && errors.timezoneId)}
               fullWidth
               helperText={touched.timezoneId && errors.timezoneId}
-              label={t('timezoneId')}
+              label={`${t('timezoneId')} *`}
               margin="normal"
               name="timezoneId"
               onBlur={handleBlur}
@@ -263,7 +294,7 @@ const CreateAndUpdateMerchantForm = (data) => {
               error={Boolean(touched.design && errors.design)}
               fullWidth
               helperText={touched.design && errors.design}
-              label={t('design')}
+              label={`${t('design')} *`}
               margin="normal"
               name="design"
               onBlur={handleBlur}
@@ -285,6 +316,89 @@ const CreateAndUpdateMerchantForm = (data) => {
               ))}
             </TextField>
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              error={Boolean(touched.type && errors.type)}
+              fullWidth
+              helperText={touched.type && errors.type}
+              label={`${t('type_operation')} *`}
+              margin="normal"
+              name="type"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              select
+              value={values.type}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <MenuItem key={-1} value={''}>
+                {t('Select value')}
+              </MenuItem>
+              {types.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              error={Boolean(touched.design && errors.design)}
+              fullWidth
+              helperText={touched.design && errors.design}
+              label={`${t('notificationChannel')} *`}
+              margin="normal"
+              name="notificationChannel"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              select
+              value={values.notificationChannel}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <MenuItem key={-1} value={''}>
+                {t('Select value')}
+              </MenuItem>
+              {notificationChannels.map((notificationChannel) => (
+                <MenuItem key={notificationChannel} value={notificationChannel}>
+                  {notificationChannel}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
+          {values.notificationChannel ? (
+            <Grid item xs={12}>
+              <TextField
+                autoFocus
+                error={Boolean(
+                  touched[`сompany_${values.notificationChannel}`] &&
+                    errors[`сompany_${values.notificationChannel}`]
+                )}
+                fullWidth
+                helperText={
+                  touched[`сompany_${values.notificationChannel}`] &&
+                  errors[`сompany_${values.notificationChannel}`]
+                }
+                label={t(`field_${values.notificationChannel}`) + ' *'}
+                margin="normal"
+                name={`сompany_${values.notificationChannel}`}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="text"
+                value={values[`сompany_${values.notificationChannel}`]}
+                variant="outlined"
+                size="small"
+                sx={{ m: 0 }}
+              />
+            </Grid>
+          ) : null}
 
           <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>
