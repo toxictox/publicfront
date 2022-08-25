@@ -142,6 +142,7 @@ const text = {
   Balance: 'Баланс',
 
   'Export List': 'Експорт файлів',
+  generated_reports_list: 'Список доступних файлів',
   'City24 Files List': 'Експорт файлов city24',
   'Download File': 'Завантажити файл',
   'Bin List': 'Bin',

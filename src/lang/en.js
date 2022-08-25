@@ -143,6 +143,7 @@ const text = {
 
   'Export List': 'Экспорт файлов',
   'Download File': 'Download File',
+  generated_reports_list: 'List of available files',
 
   'Bin List': 'Bin',
   'Invitation link': 'Ссылка для приглашения пользователя',

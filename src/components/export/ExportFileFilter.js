@@ -6,7 +6,8 @@ import {
   FormHelperText,
   Divider,
   TextField,
-  Grid,
+  MenuItem,
+  Grid
 } from '@material-ui/core';
 import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
@@ -14,16 +15,13 @@ import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
 import { formatDate } from '@lib/date';
 import { app } from '@root/config';
-import fields from '@comp/export/fields';
-import {
-  SelectCheckbox,
-  OrderBySelect,
-  SelectCheckboxCodes,
-} from '@comp/core/forms';
+import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
+import { useReports } from './useReports';
 
 const ExportFileFilter = (props) => {
   const mounted = useMounted();
   const { t } = useTranslation();
+  const { availableReports } = useReports();
   const [banks, setBanks] = useState([]);
   const [tranType, setTranType] = useState([]);
   const [merchant, setMerchant] = useState([]);
@@ -53,43 +51,25 @@ const ExportFileFilter = (props) => {
   return (
     <Formik
       initialValues={{
-        tranId: '',
+        reportType: 'default',
         tranTypeId: [],
-        amountFrom: '',
-        amountTo: '',
-        pan1: '',
-        pan2: '',
         dateStart: new Date().toISOString().slice(0, 16),
         dateEnd: '',
         merchantId: [],
-        gatewayId: [],
         respCodeId: [],
-        bankId: [],
-        fields: [
-          'createOn',
-          'reconcDate',
-          'amount',
-          'tranType',
-          'merchant',
-          'respCode',
-          'cityRespCode',
-          'pan',
-          'tranId',
-          'description',
-          'bankFee',
-          'merchantFee',
-        ],
+        bankId: []
       }}
       validationSchema={Yup.object().shape({
-        pan1: Yup.string().min(6).max(6),
-        pan2: Yup.string().min(4).max(4),
+        dateEnd: Yup.string().required(t('required'))
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        const { reportType, ...restValues } = values;
+
         try {
-          await props.callback({
-            ...values,
-            dateStart: formatDate(values.dateStart),
-            dateEnd: formatDate(values.dateEnd),
+          await props.callback(reportType, {
+            ...restValues,
+            dateStart: formatDate(restValues.dateStart),
+            dateEnd: formatDate(restValues.dateEnd)
           });
 
           if (mounted.current) {
@@ -113,11 +93,43 @@ const ExportFileFilter = (props) => {
         setFieldValue,
         isSubmitting,
         touched,
-        values,
+        values
       }) => (
-        <form noValidate onSubmit={handleSubmit} {...props}>
+        <form noValidate onSubmit={handleSubmit}>
           <Box m={2}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched.reportType && errors.reportType)}
+                  fullWidth
+                  helperText={touched.reportType && errors.reportType}
+                  label={t('reportType')}
+                  margin="normal"
+                  name="reportType"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  select
+                  value={values.reportType}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                >
+                  <MenuItem key={-1} value={''}>
+                    {t('Select value')}
+                  </MenuItem>
+                  {availableReports.map((report) => (
+                    <MenuItem key={report} value={report}>
+                      {report}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+
               <Grid item xs={6}>
                 <TextField
                   autoFocus
@@ -134,7 +146,7 @@ const ExportFileFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 />
@@ -156,7 +168,7 @@ const ExportFileFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 />
@@ -231,144 +243,6 @@ const ExportFileFilter = (props) => {
                   }}
                   fieldText={['external', 'langEn']}
                   items={respCode}
-                />
-              </Grid>
-
-              {/* <Grid item xs={3}>
-                <SelectCheckbox
-                  error={Boolean(touched.respCodeId && errors.respCodeId)}
-                  labelId="respCodeId"
-                  helperText={touched.respCodeId && errors.respCodeId}
-                  label={t('respCode')}
-                  name="respCodeId"
-                  onBlur={handleBlur}
-                  value={values.respCodeId}
-                  sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue('respCodeId', e.target.value);
-                  }}
-                  fieldText={['external', 'langEn']}
-                  items={respCode}
-                />
-              </Grid> */}
-
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.amountFrom && errors.amountFrom)}
-                  fullWidth
-                  helperText={touched.amountFrom && errors.amountFrom}
-                  label={t('amountFrom')}
-                  margin="normal"
-                  name="amountFrom"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.amountFrom}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.amountTo && errors.amountTo)}
-                  fullWidth
-                  helperText={touched.amountTo && errors.amountTo}
-                  label={t('amountTo')}
-                  margin="normal"
-                  name="amountTo"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.amountTo}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.pan1 && errors.pan1)}
-                  fullWidth
-                  helperText={touched.pan1 && errors.pan1}
-                  label={t('card first 6 number')}
-                  margin="normal"
-                  name="pan1"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.pan1}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.pan2 && errors.pan2)}
-                  fullWidth
-                  helperText={touched.pan2 && errors.pan2}
-                  label={t('card last 4 number')}
-                  margin="normal"
-                  name="pan2"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.pan2}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  autoFocus
-                  error={Boolean(touched.tranId && errors.tranId)}
-                  fullWidth
-                  helperText={touched.tranId && errors.tranId}
-                  label={t('tranId')}
-                  margin="normal"
-                  name="tranId"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.tranId}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <OrderBySelect
-                touched={touched}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                errors={errors}
-                values={values}
-              />
-
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-
-              <Grid item xs={12}>
-                <SelectCheckbox
-                  error={Boolean(touched.fields && errors.fields)}
-                  labelId="respCodeId"
-                  helperText={touched.fields && errors.fields}
-                  label={t('fields')}
-                  name="fields"
-                  onBlur={handleBlur}
-                  value={values.fields}
-                  sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue('fields', e.target.value);
-                  }}
-                  items={fields}
                 />
               </Grid>
 

@@ -182,7 +182,7 @@ const BaseSidebar = (props) => {
           active: getActiveStatus('export'),
           children: [
             {
-              title: t('Description menu custom'),
+              title: t('generated_reports_list'),
               path: '/export',
               icon: <DescriptionOutlined fontSize="small" />,
               active: getActiveStatus('export')
