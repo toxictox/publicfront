@@ -10,12 +10,11 @@ import {
   TableCell,
   CardHeader,
   Divider,
-  Alert,
+  Alert
 } from '@material-ui/core';
 import useMounted from '@hooks/useMounted';
 import useSettings from '@hooks/useSettings';
 import { Info, PictureAsPdf } from '@material-ui/icons';
-
 import axios from '@lib/axios';
 import { app } from '@root/config';
 import { useTranslation } from 'react-i18next';
@@ -62,6 +61,17 @@ const TransactionsList = () => {
       });
   };
 
+  const regTransaction = () => {
+    axios
+      .post(`${app.api}/transactions/city/register/${id}`)
+      .then(() => {
+        toast.success(t('Success update'));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   const sendStatus = async () => {
     await axios
       .post(`${app.api}/transactions/status/${id}`)
@@ -72,6 +82,27 @@ const TransactionsList = () => {
       .catch((err) => {
         toast.error(err.response.data.message);
       });
+  };
+
+  const getActionCustom = (status, statusCity) => {
+    const actions = [
+      {
+        title: 'callback',
+        callback: () => sendCallback()
+      },
+      {
+        title: 'status',
+        callback: () => sendStatus()
+      }
+    ];
+    if (status === '1000' && statusCity !== 0) {
+      const addTransaction = {
+        title: t('register-city'),
+        callback: () => regTransaction()
+      };
+      actions.unshift(addTransaction);
+    }
+    return actions;
   };
 
   useEffect(() => {
@@ -87,7 +118,7 @@ const TransactionsList = () => {
         sx={{
           backgroundColor: 'background.default',
           minHeight: '100%',
-          py: 2,
+          py: 2
         }}
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
@@ -112,7 +143,7 @@ const TransactionsList = () => {
                         icon: <Info />,
                         title: `l${id}`,
                         access: getAccess('transactions', 'getTransactionLogs'),
-                        callback: () => navigate(`/transactions/${id}/logs`),
+                        callback: () => navigate(`/transactions/${id}/logs`)
                       },
                       {
                         title: `p${id}`,
@@ -127,19 +158,13 @@ const TransactionsList = () => {
                           </PDFDownloadLink>
                         ),
                         callback: () => {},
-                        access: getAccess('transactions', 'getTransactionLogs'),
-                      },
+                        access: getAccess('transactions', 'getTransactionLogs')
+                      }
                     ]}
-                    actionCustom={[
-                      {
-                        title: 'callback',
-                        callback: () => sendCallback(),
-                      },
-                      {
-                        title: 'status',
-                        callback: () => sendStatus(),
-                      },
-                    ]}
+                    actionCustom={getActionCustom(
+                      dataList.respCode,
+                      dataList.cityRespCode
+                    )}
                   />
                 }
               />
