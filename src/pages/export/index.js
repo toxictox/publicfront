@@ -54,9 +54,9 @@ const ExportList = () => {
       });
   };
 
-  const buttonClickHandler = (fileName) => {
+  const buttonClickHandler = (fileId) => {
     axios
-      .get(`${app.api}/report/${fileName}`, { responseType: 'blob' })
+      .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
       .then((res) => {
         const { data, headers } = res;
         getCsvFileHelper({ data, headers });
@@ -95,7 +95,7 @@ const ExportList = () => {
                           variant={'contained'}
                           size={'small'}
                           onClick={() => {
-                            buttonClickHandler(report.fileName);
+                            buttonClickHandler(report.id);
                           }}
                         >
                           {t('Download File')}
