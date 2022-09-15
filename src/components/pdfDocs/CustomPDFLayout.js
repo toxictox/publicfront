@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const CustomPDFLayout = ({
   children,
-  contractNumber,
+  docNumber,
   contractDate,
   businessName,
 }) => {
@@ -57,7 +57,7 @@ const CustomPDFLayout = ({
             <Image src={colonticul} style={styles.img} />
           </View>
           <CustomPDFHeader
-            contractNumber={contractNumber}
+            docNumber={docNumber}
             contractDate={contractDate}
             businessName={businessName}
           />

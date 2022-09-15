@@ -150,9 +150,7 @@ const TransactionsList = () => {
                         icon: (
                           <PDFDownloadLink
                             document={<CustomTransactionPDF data={dataList} />}
-                            fileName={`${toLocaleDateTime(new Date())}-${
-                              dataList.tranId
-                            }.pdf`}
+                            fileName={`${dataList.trxReference.docNumber}.pdf`}
                           >
                             <PictureAsPdf />
                           </PDFDownloadLink>

@@ -2,24 +2,22 @@ import CustomPDFLayout from './../CustomPDFLayout';
 import BodyPDFTransaction from './BodyPDFTransaction';
 import moment from 'moment';
 
-const getDateAndTime = (date) => {
-  return date ? moment(date).format('DD.MM.YYYY hh:mm:ss') : '';
-};
 const CustomTransactionPDF = ({ data }) => {
   return (
     <CustomPDFLayout
-      contractNumber={data.contractNumber}
-      contractDate={getDateAndTime(data.contractDate)}
-      businessName={data.businessName}
+      contractNumber={data.trxReference.contractNumber}
+      contractDate={data.trxReference.contractDate}
+      businessName={data.trxReference.businessName}
+      docNumber={data.trxReference.docNumber}
     >
       <BodyPDFTransaction
-        contractNumber={data.contractNumber}
-        contractDate={getDateAndTime(data.contractDate)}
-        businessName={data.businessName}
-        createOn={getDateAndTime(data.createOn)}
-        amount={data.amount}
-        pan={data.pan}
-        tranId={data.tranId}
+        contractNumber={data.trxReference.contractNumber}
+        contractDate={data.trxReference.contractDate}
+        businessName={data.trxReference.businessName}
+        createOn={data.trxReference.createOn}
+        amount={data.trxReference.amount}
+        pan={data.trxReference.pan}
+        tranId={data.trxReference.trxUuid}
       />
     </CustomPDFLayout>
   );
