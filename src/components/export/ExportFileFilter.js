@@ -13,7 +13,7 @@ import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
-import { formatDate } from '@lib/date';
+import { formatDate, toLocaleDateTime } from '@lib/date';
 import { app } from '@root/config';
 import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
 import { useReports } from './useReports';
@@ -64,12 +64,11 @@ const ExportFileFilter = (props) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const { reportType, ...restValues } = values;
-
         try {
           await props.callback(reportType, {
             ...restValues,
-            dateStart: formatDate(restValues.dateStart),
-            dateEnd: formatDate(restValues.dateEnd)
+            dateStart: toLocaleDateTime(restValues.dateStart),
+            dateEnd: toLocaleDateTime(restValues.dateEnd)
           });
 
           if (mounted.current) {
@@ -132,7 +131,6 @@ const ExportFileFilter = (props) => {
 
               <Grid item xs={6}>
                 <TextField
-                  autoFocus
                   error={Boolean(touched.dateStart && errors.dateStart)}
                   fullWidth
                   helperText={touched.dateStart && errors.dateStart}
@@ -154,7 +152,6 @@ const ExportFileFilter = (props) => {
 
               <Grid item xs={6}>
                 <TextField
-                  autoFocus
                   error={Boolean(touched.dateEnd && errors.dateEnd)}
                   fullWidth
                   helperText={touched.dateEnd && errors.dateEnd}
