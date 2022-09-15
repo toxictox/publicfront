@@ -147,14 +147,19 @@ const TransactionsList = () => {
                       },
                       {
                         title: `p${id}`,
-                        icon: (
-                          <PDFDownloadLink
-                            document={<CustomTransactionPDF data={dataList} />}
-                            fileName={`${dataList.trxReference.docNumber}.pdf`}
-                          >
-                            <PictureAsPdf />
-                          </PDFDownloadLink>
-                        ),
+                        icon:
+                          Object.keys(dataList).length > 0 ? (
+                            <PDFDownloadLink
+                              document={
+                                <CustomTransactionPDF data={dataList} />
+                              }
+                              fileName={`${dataList.trxReference.docNumber}.pdf`}
+                            >
+                              <PictureAsPdf />
+                            </PDFDownloadLink>
+                          ) : (
+                            ''
+                          ),
                         callback: () => {},
                         access: getAccess('transactions', 'getTransactionLogs')
                       }
@@ -168,18 +173,20 @@ const TransactionsList = () => {
               />
               <Divider />
               <TableStatic>
-                {Object.keys(dataList).map(function (i, index) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
-                      <TableCell>
-                        {i === 'createOn' || i === 'editOn'
-                          ? toLocaleDateTime(dataList[i])
-                          : dataList[i]}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {dataList.trxReference &&
+                  Object.keys(dataList.trxReference).map(function (i, index) {
+                    console.log(dataList[i]);
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{t(i)}</TableCell>
+                        <TableCell>
+                          {i === 'createOn' || i === 'editOn'
+                            ? toLocaleDateTime(dataList[i])
+                            : dataList[i]}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               </TableStatic>
             </Card>
           </Box>
