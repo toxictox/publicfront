@@ -1,6 +1,5 @@
 import CustomPDFLayout from './../CustomPDFLayout';
 import BodyPDFTransaction from './BodyPDFTransaction';
-import moment from 'moment';
 
 const CustomTransactionPDF = ({ data }) => {
   return (
@@ -18,6 +17,7 @@ const CustomTransactionPDF = ({ data }) => {
         amount={data.trxReference.amount}
         pan={data.trxReference.pan}
         tranId={data.trxReference.trxUuid}
+        uuid={data.uuid}
       />
     </CustomPDFLayout>
   );
