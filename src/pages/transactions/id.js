@@ -21,11 +21,11 @@ import { useTranslation } from 'react-i18next';
 import { TableStatic } from '@comp/core/tables/index';
 import { BackButton, GroupTable } from '@comp/core/buttons';
 import { toLocaleDateTime } from '@lib/date';
-import { TransactionPdf } from './includes';
+// import { TransactionPdf } from './includes';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
 import CustomTransactionPDF from '@comp/pdfDocs/CustomTransactionPDF';
-import { InvoicePDF } from '@comp/dashboard/invoice';
+// import { InvoicePDF } from '@comp/dashboard/invoice';
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -123,9 +123,11 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
           <BackButton action={() => navigate('/transactions')} />
-          {/* <PDFViewer height="800" style={{ border: 'none' }} width="100%">
-            <CustomTransactionPDF data={dataList} />
-          </PDFViewer> */}
+          {/* {Object.keys(dataList).length > 0 ? (
+            <PDFViewer height="800" style={{ border: 'none' }} width="100%">
+              <CustomTransactionPDF data={dataList} />
+            </PDFViewer>
+          ) : null} */}
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               {status ? (
@@ -147,16 +149,19 @@ const TransactionsList = () => {
                       },
                       {
                         title: `p${id}`,
-                        icon: (
-                          <PDFDownloadLink
-                            document={<CustomTransactionPDF data={dataList} />}
-                            fileName={`${toLocaleDateTime(new Date())}-${
-                              dataList.tranId
-                            }.pdf`}
-                          >
-                            <PictureAsPdf />
-                          </PDFDownloadLink>
-                        ),
+                        icon:
+                          Object.keys(dataList).length > 0 ? (
+                            <PDFDownloadLink
+                              document={
+                                <CustomTransactionPDF data={dataList} />
+                              }
+                              fileName={`${dataList.trxReference.docNumber}.pdf`}
+                            >
+                              <PictureAsPdf />
+                            </PDFDownloadLink>
+                          ) : (
+                            ''
+                          ),
                         callback: () => {},
                         access: getAccess('transactions', 'getTransactionLogs')
                       }
@@ -170,18 +175,19 @@ const TransactionsList = () => {
               />
               <Divider />
               <TableStatic>
-                {Object.keys(dataList).map(function (i, index) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
-                      <TableCell>
-                        {i === 'createOn' || i === 'editOn'
-                          ? toLocaleDateTime(dataList[i])
-                          : dataList[i]}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {dataList.trxReference &&
+                  Object.keys(dataList.trxReference).map(function (i, index) {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{t(i)}</TableCell>
+                        <TableCell>
+                          {i === 'createOn' || i === 'editOn'
+                            ? toLocaleDateTime(dataList[i])
+                            : dataList[i]}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               </TableStatic>
             </Card>
           </Box>

@@ -5,7 +5,7 @@ import {
   Document,
   StyleSheet,
   Font,
-  Image,
+  Image
 } from '@react-pdf/renderer';
 import colonticul from './img/colonticul.jpg';
 import CustomPDFHeader from './CustomPDFHeader';
@@ -13,7 +13,7 @@ import CustomSignature from './CustomSignature';
 
 Font.register({
   family: 'Roboto',
-  src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf',
+  src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf'
 });
 
 Font.registerHyphenationCallback((word) => [word]);
@@ -25,29 +25,29 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     fontFamily: 'Roboto',
     fontSize: '12px',
-    fontWeight: 'normal',
+    fontWeight: 'normal'
   },
   container: {
     marginTop: '75.8px',
     marginRight: '57px',
     marginBottom: '75.8px',
-    marginLeft: '114px',
+    marginLeft: '50px'
   },
   'img-container': {
     position: 'absolute',
-    top: '-50px',
+    top: '-50px'
   },
   img: {
     width: '100%',
-    objectFit: 'contain',
-  },
+    objectFit: 'contain'
+  }
 });
 
 const CustomPDFLayout = ({
   children,
-  contractNumber,
+  docNumber,
   contractDate,
-  businessName,
+  businessName
 }) => {
   return (
     <Document style={styles.document}>
@@ -57,7 +57,7 @@ const CustomPDFLayout = ({
             <Image src={colonticul} style={styles.img} />
           </View>
           <CustomPDFHeader
-            contractNumber={contractNumber}
+            docNumber={docNumber}
             contractDate={contractDate}
             businessName={businessName}
           />

@@ -20,8 +20,6 @@ const UpdateBankForm = (props) => {
     companies
   } = UseMerchantFormData();
 
-  console.log(data);
-
   return (
     <Formik
       initialValues={getInitialMerchantValue(data)}

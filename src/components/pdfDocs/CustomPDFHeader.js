@@ -18,10 +18,10 @@ const { head, alignEnd, alignCenter, hugeMarginBottom } = StyleSheet.create({
   },
 });
 
-const CustomPDFHeader = ({ contractNumber, contractDate, businessName }) => {
+const CustomPDFHeader = ({ docNumber, contractDate, businessName }) => {
   return (
     <View style={head}>
-      <Text>{`Вих. № ${contractNumber}`}</Text>
+      <Text>{`Вих. № ${docNumber}`}</Text>
       <Text>Від {contractDate} </Text>
       <Text style={[alignEnd, hugeMarginBottom]}>ТОВ «{businessName}» </Text>
       <Text style={[alignCenter, { marginBottom: '15px' }]}>
