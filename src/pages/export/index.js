@@ -38,6 +38,14 @@ const ExportList = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
+  const getFilesByID = (fileId) =>
+    axios
+      .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
+      .then((res) => {
+        const { data, headers } = res;
+        getCsvFileHelper({ data, headers });
+      });
+
   const createFile = async (reportPath, values) => {
     await axios
       .post(
@@ -48,20 +56,16 @@ const ExportList = () => {
         }
       )
       .then((response) => {
-        const { data, headers } = response;
-        getCsvFileHelper({ data, headers });
+        const { data } = response;
+        return getFilesByID(data.id);
+      })
+      .then(() => {
         setFilterList(values);
       });
   };
 
   const buttonClickHandler = (fileId) => {
-    axios
-      .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
-      .then((res) => {
-        const { data, headers } = res;
-        getCsvFileHelper({ data, headers });
-      })
-      .catch((error) => console.log(error));
+    getFilesByID(fileId).catch((error) => console.log(error));
   };
 
   return (
@@ -92,9 +96,11 @@ const ExportList = () => {
                       <TableCell>{report.createdAat}</TableCell>
                       <TableCell align="right">
                         <Button
+                          type="button"
                           variant={'contained'}
                           size={'small'}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             buttonClickHandler(report.id);
                           }}
                         >
