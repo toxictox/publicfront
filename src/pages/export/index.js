@@ -55,10 +55,10 @@ const ExportList = () => {
           responseType: 'blob'
         }
       )
-      .then((response) => {
-        const { data } = response;
-        return getFilesByID(data.id);
-      })
+      // .then((response) => {
+      //   const { data } = response;
+      //   return getFilesByID(data.id);
+      // })
       .then(() => {
         setFilterList(values);
       });
