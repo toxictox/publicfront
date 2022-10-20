@@ -84,6 +84,21 @@ const TransactionsList = () => {
       });
   };
 
+  const deleteTransaction = () => {
+    axios
+      .post(
+        `${app.api}/merchant/trans/update?key=$2y$12$kfCtPRzJfNmZsC.UhyK/WeRgB.I9OqWcODNi8FFGGGZE7HoJKThT2&`,
+        { tranId: [dataList.tranId] }
+      )
+      .then((response) => {
+        toast.success(t('Success update'));
+        setStatus(() => response.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   const getActionCustom = (status, statusCity) => {
     const actions = [
       {
@@ -91,8 +106,12 @@ const TransactionsList = () => {
         callback: () => sendCallback()
       },
       {
-        title: 'status',
+        title: t('status'),
         callback: () => sendStatus()
+      },
+      {
+        title: t('cancel-city'),
+        callback: () => deleteTransaction()
       }
     ];
     if (status === '1000' && statusCity !== 0) {
