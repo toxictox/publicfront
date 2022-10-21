@@ -87,7 +87,7 @@ const TransactionsList = () => {
   const deleteTransaction = () => {
     axios
       .post(
-        `${app.api}/merchant/trans/update?key=$2y$12$kfCtPRzJfNmZsC.UhyK/WeRgB.I9OqWcODNi8FFGGGZE7HoJKThT2&`,
+        `${app.api}/merchant/trans/update?key=$2y$12$kfCtPRzJfNmZsC.UhyK/WeRgB.I9OqWcODNi8FFGGGZE7HoJKThT2&status=${dataList.respCode}`,
         { tranId: [dataList.tranId] }
       )
       .then((response) => {
