@@ -108,10 +108,6 @@ const TransactionsList = () => {
       {
         title: t('status'),
         callback: () => sendStatus()
-      },
-      {
-        title: t('cancel-city'),
-        callback: () => deleteTransaction()
       }
     ];
     if (status === '1000' && statusCity !== 0) {
@@ -120,6 +116,12 @@ const TransactionsList = () => {
         callback: () => regTransaction()
       };
       actions.unshift(addTransaction);
+    }
+    if (status === '5500') {
+      actions.push({
+        title: t('cancel-city'),
+        callback: () => deleteTransaction()
+      });
     }
     return actions;
   };
