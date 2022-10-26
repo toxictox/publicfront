@@ -38,13 +38,17 @@ const ExportList = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  const getFilesByID = (fileId) =>
-    axios
-      .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
-      .then((res) => {
-        const { data, headers } = res;
-        getCsvFileHelper({ data, headers });
-      });
+  // const getFilesByID = (fileId) =>
+  //   axios
+  //     .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
+  //     .then((res) => {
+  //       const { data, headers } = res;
+  //       getCsvFileHelper({ data, headers });
+  //     });
+
+  const getFileByLink = (linkUrl) => {
+    window.open(linkUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const createFile = async (reportPath, values) => {
     await axios
@@ -64,8 +68,8 @@ const ExportList = () => {
       });
   };
 
-  const buttonClickHandler = (fileId) => {
-    getFilesByID(fileId).catch((error) => console.log(error));
+  const buttonClickHandler = (link) => {
+    getFileByLink(link);
   };
 
   return (
@@ -101,7 +105,7 @@ const ExportList = () => {
                           size={'small'}
                           onClick={(e) => {
                             e.stopPropagation();
-                            buttonClickHandler(report.id);
+                            buttonClickHandler(report.link);
                           }}
                         >
                           {t('Download File')}
