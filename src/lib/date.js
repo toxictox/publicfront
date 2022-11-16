@@ -9,7 +9,7 @@ const formatDate = (val) => {
 };
 
 const getMomentDate = (date) => {
-  return moment.utc(moment(date)).format('yyyy-MM-DD HH:mm:ss');
+  return moment.utc(moment(date)).format('yyyy-MM-DD HH:mm');
 };
 
 const toLocaleDateTime = (val, withoutTime = false) => {
