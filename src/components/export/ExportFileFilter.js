@@ -13,7 +13,7 @@ import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
-import { formatDate, toLocaleDateTime, getCurrentDate } from '@lib/date';
+import { getMomentDate, getCurrentDate } from '@lib/date';
 import { app } from '@root/config';
 import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
 import { useReports } from './useReports';
@@ -67,8 +67,8 @@ const ExportFileFilter = (props) => {
         try {
           await props.callback(reportType, {
             ...restValues,
-            dateStart: toLocaleDateTime(restValues.dateStart, true),
-            dateEnd: toLocaleDateTime(restValues.dateEnd, true)
+            dateStart: getMomentDate(restValues.dateStart),
+            dateEnd: getMomentDate(restValues.dateEnd)
           });
 
           if (mounted.current) {
@@ -139,7 +139,7 @@ const ExportFileFilter = (props) => {
                   name="dateStart"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="date"
+                  type="datetime-local"
                   value={values.dateStart}
                   variant="outlined"
                   size="small"
@@ -160,7 +160,7 @@ const ExportFileFilter = (props) => {
                   name="dateEnd"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="date"
+                  type="datetime-local"
                   value={values.dateEnd}
                   variant="outlined"
                   size="small"

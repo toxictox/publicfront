@@ -1,10 +1,15 @@
 import { format } from 'date-fns';
+import moment from 'moment';
 
 const formatDate = (val) => {
   if (val !== undefined && val !== '') {
     return new Date(val).toISOString().replace(/T/, ' ').replace(/\..+/, '');
   }
   return '';
+};
+
+const getMomentDate = (date) => {
+  return moment.utc(moment(date)).format('yyyy-MM-DD HH:mm:ss');
 };
 
 const toLocaleDateTime = (val, withoutTime = false) => {
@@ -17,6 +22,18 @@ const toLocaleDateTime = (val, withoutTime = false) => {
   return '';
 };
 
-export const getCurrentDate = () => format(new Date(), 'yyyy-MM-dd');
+const toLocaleDateTimeWithTimeZone = (val) => {
+  if (val !== undefined && val !== '') {
+    return format(new Date(val), 'yyyy-MM-dd HH:mm:ss XXXXX');
+  }
+  return '';
+};
 
-export { formatDate, toLocaleDateTime };
+export const getCurrentDate = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
+export {
+  formatDate,
+  toLocaleDateTime,
+  toLocaleDateTimeWithTimeZone,
+  getMomentDate
+};
