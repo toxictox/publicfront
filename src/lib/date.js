@@ -9,7 +9,7 @@ const formatDate = (val) => {
 };
 
 const getMomentDate = (date) => {
-  return moment.utc(moment(date)).format('yyyy-MM-DD HH:mm');
+  return moment.utc(moment(date)).format('yyyy-MM-DD HH:mm:ss');
 };
 
 const toLocaleDateTime = (val, withoutTime = false) => {
@@ -29,7 +29,8 @@ const toLocaleDateTimeWithTimeZone = (val) => {
   return '';
 };
 
-export const getCurrentDate = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+export const getCurrentDate = (value) =>
+  format(value ? new Date(value) : new Date(), 'yyyy-MM-dd HH:mm:ss');
 
 export {
   formatDate,
