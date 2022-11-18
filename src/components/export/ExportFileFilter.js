@@ -54,7 +54,7 @@ const ExportFileFilter = (props) => {
         reportType: 'default',
         tranTypeId: [],
         dateStart: getCurrentDate(),
-        dateEnd: '',
+        dateEnd: getCurrentDate(),
         merchantId: [],
         respCodeId: [],
         bankId: []
@@ -93,179 +93,181 @@ const ExportFileFilter = (props) => {
         isSubmitting,
         touched,
         values
-      }) => (
-        <form noValidate onSubmit={handleSubmit}>
-          <Box m={2}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.reportType && errors.reportType)}
-                  fullWidth
-                  helperText={touched.reportType && errors.reportType}
-                  label={t('reportType')}
-                  margin="normal"
-                  name="reportType"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  select
-                  value={values.reportType}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                >
-                  <MenuItem key={-1} value={''}>
-                    {t('Select value')}
-                  </MenuItem>
-                  {availableReports.map((report) => (
-                    <MenuItem key={report} value={report}>
-                      {report}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-
-              <Grid item xs={6}>
-                <TextField
-                  error={Boolean(touched.dateStart && errors.dateStart)}
-                  fullWidth
-                  helperText={touched.dateStart && errors.dateStart}
-                  label={t('createOn')}
-                  margin="normal"
-                  name="dateStart"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="datetime-local"
-                  value={values.dateStart}
-                  variant="outlined"
-                  size="small"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={6}>
-                <TextField
-                  error={Boolean(touched.dateEnd && errors.dateEnd)}
-                  fullWidth
-                  helperText={touched.dateEnd && errors.dateEnd}
-                  label={t('dateEnd')}
-                  margin="normal"
-                  name="dateEnd"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="datetime-local"
-                  value={values.dateEnd}
-                  variant="outlined"
-                  size="small"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <SelectCheckbox
-                  error={Boolean(touched.tranTypeId && errors.tranTypeId)}
-                  labelId="tranTypeId"
-                  helperText={touched.tranTypeId && errors.tranTypeId}
-                  label={t('tranTypeId')}
-                  name="tranTypeId"
-                  onBlur={handleBlur}
-                  value={values.tranTypeId}
-                  sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue('tranTypeId', e.target.value);
-                  }}
-                  items={tranType}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <SelectCheckbox
-                  error={Boolean(touched.merchantId && errors.merchantId)}
-                  labelId="merchantId"
-                  helperText={touched.merchantId && errors.merchantId}
-                  label={t('merchId')}
-                  name="merchantId"
-                  onBlur={handleBlur}
-                  value={values.merchantId}
-                  sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue('merchantId', e.target.value);
-                  }}
-                  items={merchant}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <SelectCheckbox
-                  error={Boolean(touched.bankId && errors.bankId)}
-                  labelId="bankId"
-                  helperText={touched.bankId && errors.bankId}
-                  label={t('bankId')}
-                  name="bankId"
-                  onBlur={handleBlur}
-                  value={values.bankId}
-                  sx={{ m: 0 }}
-                  onChange={(e) => {
-                    setFieldValue('bankId', e.target.value);
-                  }}
-                  items={banks}
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <SelectCheckboxCodes
-                  error={Boolean(touched.respCode && errors.respCode)}
-                  labelId="respCodeId"
-                  helperText={touched.respCode && errors.respCode}
-                  label={t('respCode')}
-                  name="respCodeId"
-                  onBlur={handleBlur}
-                  value={
-                    values.respCodeId !== undefined ? values.respCodeId : []
-                  }
-                  sx={{ m: 0 }}
-                  onChange={(data) => {
-                    //setFieldValue('respCode', data);
-                    setFieldValue('respCodeId', data);
-                  }}
-                  fieldText={['external', 'langEn']}
-                  items={respCode}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box sx={{ mt: 2 }}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    type="submit"
-                    variant="contained"
+      }) => {
+        return (
+          <form noValidate onSubmit={handleSubmit}>
+            <Box m={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    error={Boolean(touched.reportType && errors.reportType)}
+                    fullWidth
+                    helperText={touched.reportType && errors.reportType}
+                    label={t('reportType')}
+                    margin="normal"
+                    name="reportType"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="text"
+                    select
+                    value={values.reportType}
+                    variant="outlined"
                     size="small"
+                    sx={{ m: 0 }}
                   >
-                    {t('Create button')}
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
+                    <MenuItem key={-1} value={''}>
+                      {t('Select value')}
+                    </MenuItem>
+                    {availableReports.map((report) => (
+                      <MenuItem key={report} value={report}>
+                        {report}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
 
-          {errors.submit && (
-            <Box sx={{ mt: 3 }}>
-              <FormHelperText error>{errors.submit}</FormHelperText>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    error={Boolean(touched.dateStart && errors.dateStart)}
+                    fullWidth
+                    helperText={touched.dateStart && errors.dateStart}
+                    label={t('createOn')}
+                    margin="normal"
+                    name="dateStart"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="datetime-local"
+                    value={values.dateStart}
+                    variant="outlined"
+                    size="small"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    sx={{ m: 0 }}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    error={Boolean(touched.dateEnd && errors.dateEnd)}
+                    fullWidth
+                    helperText={touched.dateEnd && errors.dateEnd}
+                    label={t('dateEnd')}
+                    margin="normal"
+                    name="dateEnd"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="datetime-local"
+                    value={values.dateEnd}
+                    variant="outlined"
+                    size="small"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    sx={{ m: 0 }}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <SelectCheckbox
+                    error={Boolean(touched.tranTypeId && errors.tranTypeId)}
+                    labelId="tranTypeId"
+                    helperText={touched.tranTypeId && errors.tranTypeId}
+                    label={t('tranTypeId')}
+                    name="tranTypeId"
+                    onBlur={handleBlur}
+                    value={values.tranTypeId}
+                    sx={{ m: 0 }}
+                    onChange={(e) => {
+                      setFieldValue('tranTypeId', e.target.value);
+                    }}
+                    items={tranType}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <SelectCheckbox
+                    error={Boolean(touched.merchantId && errors.merchantId)}
+                    labelId="merchantId"
+                    helperText={touched.merchantId && errors.merchantId}
+                    label={t('merchId')}
+                    name="merchantId"
+                    onBlur={handleBlur}
+                    value={values.merchantId}
+                    sx={{ m: 0 }}
+                    onChange={(e) => {
+                      setFieldValue('merchantId', e.target.value);
+                    }}
+                    items={merchant}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <SelectCheckbox
+                    error={Boolean(touched.bankId && errors.bankId)}
+                    labelId="bankId"
+                    helperText={touched.bankId && errors.bankId}
+                    label={t('bankId')}
+                    name="bankId"
+                    onBlur={handleBlur}
+                    value={values.bankId}
+                    sx={{ m: 0 }}
+                    onChange={(e) => {
+                      setFieldValue('bankId', e.target.value);
+                    }}
+                    items={banks}
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <SelectCheckboxCodes
+                    error={Boolean(touched.respCode && errors.respCode)}
+                    labelId="respCodeId"
+                    helperText={touched.respCode && errors.respCode}
+                    label={t('respCode')}
+                    name="respCodeId"
+                    onBlur={handleBlur}
+                    value={
+                      values.respCodeId !== undefined ? values.respCodeId : []
+                    }
+                    sx={{ m: 0 }}
+                    onChange={(data) => {
+                      //setFieldValue('respCode', data);
+                      setFieldValue('respCodeId', data);
+                    }}
+                    fieldText={['external', 'langEn']}
+                    items={respCode}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      color="primary"
+                      disabled={isSubmitting}
+                      type="submit"
+                      variant="contained"
+                      size="small"
+                    >
+                      {t('Create button')}
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
-          )}
-        </form>
-      )}
+
+            {errors.submit && (
+              <Box sx={{ mt: 3 }}>
+                <FormHelperText error>{errors.submit}</FormHelperText>
+              </Box>
+            )}
+          </form>
+        );
+      }}
     </Formik>
   );
 };

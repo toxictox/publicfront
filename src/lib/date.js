@@ -29,7 +29,8 @@ const toLocaleDateTimeWithTimeZone = (val) => {
   return '';
 };
 
-export const getCurrentDate = () => format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+export const getCurrentDate = (value) =>
+  format(value ? new Date(value) : new Date(), 'yyyy-MM-dd HH:mm:ss');
 
 export {
   formatDate,
