@@ -296,7 +296,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.balance)} {'\u20B4'}
+                {formatCurrency(balance.balance, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -315,7 +315,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_credit)} {'\u20B4'}
+                {formatCurrency(balance.test_credit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -334,7 +334,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_credit_delta)} {'\u20B4'}
+                {formatCurrency(balance.test_credit_delta, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -353,7 +353,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_debit)} {'\u20B4'}
+                {formatCurrency(balance.test_debit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -372,7 +372,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_debit_delta)} {'\u20B4'}
+                {formatCurrency(balance.test_debit_delta, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>

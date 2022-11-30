@@ -1,6 +1,6 @@
-export const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('ru', {
+export const formatCurrency = (amount, currency = 'KZT') => {
+  return `${new Intl.NumberFormat('ru', {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount || 0);
+    maximumFractionDigits: 2
+  }).format(amount || 0)} ${currency}`;
 };
