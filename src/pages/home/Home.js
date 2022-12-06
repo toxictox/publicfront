@@ -7,7 +7,7 @@ import {
   StatBox,
   StatSalesRevenue,
   PieStat,
-  StackedChart,
+  StackedChart
 } from '@comp/core/stat/index';
 import axios from '@lib/axios';
 import { app } from '@root/config';
@@ -41,7 +41,7 @@ const Home = () => {
         sx={{
           backgroundColor: 'background.default',
           minHeight: '100%',
-          py: 2,
+          py: 2
         }}
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
@@ -51,7 +51,7 @@ const Home = () => {
                 <Grid item md={4} sm={4} xs={12}>
                   <StatBox
                     title={t('Success tab')}
-                    value={`${formatCurrency(total.successAmount)} грн`}
+                    value={`${formatCurrency(total.successAmount)}`}
                     description={`Количество ${total.successCount}`}
                     status={true}
                   />
@@ -59,7 +59,7 @@ const Home = () => {
                 <Grid item md={4} sm={4} xs={12}>
                   <StatBox
                     title={t('Failed tab')}
-                    value={`${formatCurrency(total.failedAmount)} грн`}
+                    value={`${formatCurrency(total.failedAmount)}`}
                     description={`Количество ${total.failedCount}`}
                     status={false}
                   />
