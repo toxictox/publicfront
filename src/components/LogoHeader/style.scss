@@ -1,0 +1,13 @@
+.img-box {
+  width: 194px;
+  height: 52px;
+  display: block;
+  padding: 5px 0 5px 0;
+  @media (max-width: 1281px) {
+    display: none;
+  }
+}
+
+.img-item {
+  width: 100%;
+}
