@@ -17,14 +17,10 @@ const RegisterJWT = (props) => {
       initialValues={{
         phone: '',
         password: '',
-        repassword: '',
+        repassword: ''
       }}
       validationSchema={Yup.object().shape({
-        phone: Yup.string()
-          .max(255)
-          .trim()
-          .matches(/^38(0\d{9})$/, t('Error phone format'))
-          .required(t('required')),
+        phone: Yup.string().max(255).trim().required(t('required')),
         password: Yup.string()
           .min(8)
           .trim()
@@ -37,7 +33,7 @@ const RegisterJWT = (props) => {
           .min(8)
           .oneOf([Yup.ref('password'), null], t('Passwords must match'))
           .max(60)
-          .required(t('required')),
+          .required(t('required'))
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -67,7 +63,7 @@ const RegisterJWT = (props) => {
         handleSubmit,
         isSubmitting,
         touched,
-        values,
+        values
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <TextField
