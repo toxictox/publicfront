@@ -167,25 +167,25 @@ const TransactionsList = () => {
                         title: `l${id}`,
                         access: getAccess('transactions', 'getTransactionLogs'),
                         callback: () => navigate(`/transactions/${id}/logs`)
-                      },
-                      {
-                        title: `p${id}`,
-                        icon:
-                          Object.keys(dataList).length > 0 ? (
-                            <PDFDownloadLink
-                              document={
-                                <CustomTransactionPDF data={dataList} />
-                              }
-                              fileName={`${dataList.trxReference.docNumber}.pdf`}
-                            >
-                              <PictureAsPdf />
-                            </PDFDownloadLink>
-                          ) : (
-                            ''
-                          ),
-                        callback: () => {},
-                        access: getAccess('transactions', 'getTransactionLogs')
                       }
+                      // {
+                      //   title: `p${id}`,
+                      //   icon:
+                      //     Object.keys(dataList).length > 0 ? (
+                      //       <PDFDownloadLink
+                      //         document={
+                      //           <CustomTransactionPDF data={dataList} />
+                      //         }
+                      //         fileName={`${dataList.trxReference.docNumber}.pdf`}
+                      //       >
+                      //         <PictureAsPdf />
+                      //       </PDFDownloadLink>
+                      //     ) : (
+                      //       ''
+                      //     ),
+                      //   callback: () => {},
+                      //   access: getAccess('transactions', 'getTransactionLogs')
+                      // }
                     ]}
                     actionCustom={getActionCustom(
                       dataList.respCode,
