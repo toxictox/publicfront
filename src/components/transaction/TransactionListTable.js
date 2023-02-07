@@ -9,7 +9,7 @@ import {
   Link,
   TableCell,
   TableRow,
-  Typography,
+  Typography
 } from '@material-ui/core';
 
 import MoreMenu from '@comp/MoreMenu';
@@ -47,8 +47,7 @@ const TransactionListTable = (props) => {
                 'fee',
                 'gateway',
                 'respCode',
-                'cityRespCode',
-                '',
+                ''
               ]}
             >
               {data.map((order) => {
@@ -99,14 +98,6 @@ const TransactionListTable = (props) => {
                     >
                       {order.respCode} {order.respMessage}
                     </TableCell>
-                    <TableCell
-                      sx={{
-                        color: order.cityRespCode === '0' ? 'green' : 'red',
-                      }}
-                      className="static-table__table-cell"
-                    >
-                      {order.cityRespCode === '0' ? 'OK' : '-'}
-                    </TableCell>
 
                     <TableCell
                       align="right"
@@ -132,7 +123,7 @@ const TransactionListTable = (props) => {
 };
 
 TransactionListTable.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired
 };
 
 export default TransactionListTable;
