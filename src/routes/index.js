@@ -7,7 +7,6 @@ import { usersRoute } from '@root/routes/usersRoute';
 import BaseLayout from '@comp/board/BaseLayout';
 import { rolesRoute } from '@root/routes/rolesRoute';
 import { codesRoute } from '@root/routes/codesRoute';
-import { city24Route } from '@root/routes/city24Route';
 import { banksRoute } from '@root/routes/banksRoute';
 import { flowsRoute } from '@root/routes/flowsRoute';
 import { gatewaysRoute } from '@root/routes/gatewaysRoute';
@@ -53,7 +52,6 @@ const routes = [
       usersRoute,
       rolesRoute,
       codesRoute,
-      city24Route,
       banksRoute,
       flowsRoute,
       gatewaysRoute,

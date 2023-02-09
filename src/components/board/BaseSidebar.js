@@ -69,38 +69,6 @@ const BaseSidebar = (props) => {
           active: true
         },
         {
-          title: t('City24'),
-          path: '/city24',
-          icon: <LocalConvenienceStore fontSize="small" />,
-          active: getActiveStatus('users'),
-          children: [
-            {
-              title: t('Transaction menu'),
-              path: '/city24/transactions',
-              icon: <Receipt fontSize="small" />,
-              active: getActiveStatus('users')
-            },
-            {
-              title: t('Merchant menu'),
-              path: '/city24/merchants',
-              icon: <Storefront fontSize="small" />,
-              active: getActiveStatus('users')
-            },
-            {
-              title: t('Terminals menu'),
-              path: '/city24/terminals',
-              icon: <BlurLinear fontSize="small" />,
-              active: getActiveStatus('users')
-            },
-            {
-              title: t('Keys menu'),
-              path: '/city24/keys',
-              icon: <Lock fontSize="small" />,
-              active: getActiveStatus('users')
-            }
-          ]
-        },
-        {
           title: t('Transaction menu'),
           path: '/transactions',
           icon: <Receipt fontSize="small" />,
@@ -184,12 +152,6 @@ const BaseSidebar = (props) => {
             {
               title: t('generated_reports_list'),
               path: '/export',
-              icon: <DescriptionOutlined fontSize="small" />,
-              active: getActiveStatus('export')
-            },
-            {
-              title: t('Description menu city24'),
-              path: '/export/city24',
               icon: <DescriptionOutlined fontSize="small" />,
               active: getActiveStatus('export')
             }
