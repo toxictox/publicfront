@@ -6,8 +6,6 @@ export const getInitialMerchantValue = (data = {}) => {
     percentFee: data.percentFee || '',
     minAmountFee: data.minAmountFee || '',
     fixAmountFee: data.fixAmountFee || 0,
-    cityTerminalId: data.cityTerminalId || '',
-    cityMerchantId: data.cityMerchantId || '',
     businessName: data.businessName || '',
     contractNumber: data.contractNumber || '',
     contractDate: data.contractDate || '',

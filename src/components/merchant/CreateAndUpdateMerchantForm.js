@@ -19,8 +19,6 @@ const CreateAndUpdateMerchantForm = (data) => {
     values,
     timezoneData,
     companies,
-    cityTerminal,
-    cityMerchant,
     designId,
     types,
     notificationChannels,
@@ -203,62 +201,6 @@ const CreateAndUpdateMerchantForm = (data) => {
               size="small"
               sx={{ m: 0 }}
             />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              error={Boolean(touched.cityTerminalId && errors.cityTerminalId)}
-              fullWidth
-              helperText={touched.cityTerminalId && errors.cityTerminalId}
-              label={t('cityTerminalId')}
-              margin="normal"
-              name="cityTerminalId"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              select
-              value={values.cityTerminalId}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            >
-              <MenuItem key={-1} value={''}>
-                {t('Select value')}
-              </MenuItem>
-              {cityTerminal.map((item) => (
-                <MenuItem key={item.id} value={item.id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              error={Boolean(touched.cityMerchantId && errors.cityMerchantId)}
-              fullWidth
-              helperText={touched.cityMerchantId && errors.cityMerchantId}
-              label={t('cityMerchantId')}
-              margin="normal"
-              name="cityMerchantId"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              select
-              value={values.cityMerchantId}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            >
-              <MenuItem key={-1} value={''}>
-                {t('Select value')}
-              </MenuItem>
-              {cityMerchant.map((item) => (
-                <MenuItem key={item.id} value={item.id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </TextField>
           </Grid>
 
           <Grid item xs={12}>
