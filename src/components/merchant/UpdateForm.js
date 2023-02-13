@@ -12,8 +12,6 @@ const UpdateBankForm = (props) => {
   const { t } = useTranslation();
   const {
     timezoneData,
-    cityTerminal,
-    cityMerchant,
     designId,
     types,
     notificationChannels,
@@ -60,8 +58,6 @@ const UpdateBankForm = (props) => {
           values={values}
           companies={companies}
           timezoneData={timezoneData}
-          cityTerminal={cityTerminal}
-          cityMerchant={cityMerchant}
           designId={designId}
           types={types}
           notificationChannels={notificationChannels}
