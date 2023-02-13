@@ -12,7 +12,7 @@ export const getInitialMerchantValue = (data = {}) => {
     design: data.design || '',
     type: data.type || '',
     notificationChannel: data.notificationChannel || '',
-    сompany_email: data.company_email || '',
+    company_email: data.company_email || '',
     company_id: data.company_id || ''
   };
 };
