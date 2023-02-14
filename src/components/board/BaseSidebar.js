@@ -49,10 +49,12 @@ const BaseSidebar = (props) => {
 
   const [balance, setBalance] = useState({
     balance: 0,
-    test_credit: 0,
-    test_debit: 0,
-    test_credit_delta: 0,
-    test_debit_delta: 0
+    hold: 0,
+    available: 0,
+    day_credit: 0,
+    day_debit: 0,
+    month_credit: 0,
+    month_debit: 0
   });
 
   const getActiveStatus = (name) => {
@@ -263,11 +265,12 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
+
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                CreditBalance
+                {t('Hold Funds')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -277,7 +280,27 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_credit, '\u20B8')}
+                {formatCurrency(balance.hold, '\u20B8')}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                {t('Available Funds')}
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.available, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -286,7 +309,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                CreditDelta
+                {t('Day Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -296,7 +319,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_credit_delta, '\u20B8')}
+                {formatCurrency(balance.day_credit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -305,7 +328,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                DebitBalance
+                {t('Day Debit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -315,7 +338,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_debit, '\u20B8')}
+                {formatCurrency(balance.day_debit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -324,7 +347,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                DebitDelta
+                {t('Month Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -334,7 +357,26 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.test_debit_delta, '\u20B8')}
+                {formatCurrency(balance.month_credit, '\u20B8')}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle1" gutterBottom component="div">
+                {t('Month Debit')}
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                component="div"
+                sx={{ textAlign: 'right' }}
+              >
+                {formatCurrency(balance.month_debit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
