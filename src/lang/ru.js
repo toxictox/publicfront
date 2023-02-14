@@ -141,6 +141,12 @@ const text = {
   Settings: 'Настройки',
   Logout: 'Выйти',
   Balance: 'Баланс',
+  'Hold Funds': 'В обработке',
+  'Available Funds': 'Доступно для выдачи',
+  'Day Credit': 'Сумма выдачи за сегодня',
+  'Day Debit': 'Сумма погашений за сегодня',
+  'Month Credit': 'Сумма выдачи за месяц',
+  'Month Debit': 'Сумма погашений за месяц',
 
   'Export List': 'Экспорт файлов',
   generated_reports_list: 'Список доступных файлов',
