@@ -54,7 +54,11 @@ const BaseSidebar = (props) => {
     day_credit: 0,
     day_debit: 0,
     month_credit: 0,
-    month_debit: 0
+    month_debit: 0,
+    month_transaction_debit: 0,
+    month_transaction_credit: 0,
+    day_transaction_credit: 0,
+    day_transaction_debit: 0,
   });
 
   const getActiveStatus = (name) => {
@@ -309,7 +313,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                {t('Day Credit')}
+                {t('Day Transactions Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -319,7 +323,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_credit, '\u20B8')}
+                {formatCurrency(balance.day_transaction_credit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -328,7 +332,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                {t('Day Debit')}
+                {t('Day Transactions Debit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -338,7 +342,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_debit, '\u20B8')}
+                {formatCurrency(balance.day_transaction_credit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -347,7 +351,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                {t('Month Credit')}
+                {t('Month Transactions Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -357,7 +361,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_credit, '\u20B8')}
+                {formatCurrency(balance.month_transaction_credit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -366,7 +370,7 @@ const BaseSidebar = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography variant="subtitle1" gutterBottom component="div">
-                {t('Month Debit')}
+                {t('Month Transactions Debit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
@@ -376,7 +380,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_debit, '\u20B8')}
+                {formatCurrency(balance.month_transaction_debit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
