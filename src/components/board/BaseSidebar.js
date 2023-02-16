@@ -342,7 +342,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_transaction_credit, '\u20B8')}
+                {formatCurrency(balance.day_transaction_debit, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
