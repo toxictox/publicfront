@@ -14,7 +14,8 @@ const buttons = {
   'Back to Home': 'Вернуться на главную',
   'status-city': 'Инфо',
   'cancel-city': 'Отмена',
-  'register-city': 'Зарегистрировать'
+  'register-city': 'Зарегистрировать',
+  'Create transaction': 'Создать транзакцию',
 };
 
 const menu = {
@@ -162,7 +163,11 @@ const text = {
   'Password was successfully changed': 'Пароль был успешно изменен',
   'Reset success send':
     'Инструкция по восстановлению пароля была отправлена на указанный email',
-  'Request success send': 'Запрос успешно отправлен'
+  'Request success send': 'Запрос успешно отправлен',
+  'Error!': 'Ошибка!',
+  'An error occurred during creating transaction. Please try again later.': 'При создании ссылки произашла ошибка. Попробуйте позже.',
+  'Transaction frame ready': 'Ссылка для оплаты создана',
+  'Link copied': 'Скопировано',
 };
 
 const fields = {
@@ -212,7 +217,13 @@ const fields = {
   'Upload file': 'Загрузить файл',
   cityRespCode: 'City24 статус',
   company_email: 'Email компании',
-  company_id: 'ID компании'
+  company_id: 'ID компании',
+  'TranId': 'ID транзакции',
+  'Description': 'Описание',
+  'Agreement number': 'Номер договора',
+  'Fee': 'Комиссия',
+  'Amount': 'Сумма',
+  'Payment link': 'Ссылка для оплаты',
 };
 
 const server = {

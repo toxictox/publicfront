@@ -17,6 +17,7 @@ import Scrollbar from '@comp/Scrollbar';
 import { TableStatic } from '@comp/core/tables/index';
 import { useTranslation } from 'react-i18next';
 import TransactionFilter from '@comp/transaction/TransactionFilter';
+import TransactionCreateModal from '@comp/transaction/TransactionCreateModal';
 import { GroupTable } from '@comp/core/buttons';
 import { toLocaleDateTime } from '@lib/date';
 import useAuth from '@hooks/useAuth';
@@ -30,7 +31,8 @@ const TransactionListTable = (props) => {
   return (
     <>
       <Card {...other}>
-        <CardHeader action={<MoreMenu />} title={t('Transactions List')} />
+        <CardHeader avatar={<TransactionCreateModal />} action={<MoreMenu />} title={t('Transactions List')} />
+        
         <Divider />
         <TransactionFilter callback={props.callback} />
         <Divider />
