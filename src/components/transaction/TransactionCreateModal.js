@@ -102,8 +102,7 @@ const TransactionCreateModal = (props) => {
         type: 'c2a',
         description: values.description,
         options: {
-          agreementId: values.agreementId,
-          merchant: merchant.merchantName
+          agreementId: values.agreementId
         }
       }
     )
