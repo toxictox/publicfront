@@ -99,7 +99,6 @@ const TransactionCreateModal = (props) => {
         tranId: values.tranId,
         fee: values.fee * moneyScale,
         amount: values.amount * moneyScale,
-        lang: 'ru',
         type: 'c2a',
         description: values.description,
         options: {
