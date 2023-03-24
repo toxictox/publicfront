@@ -79,7 +79,7 @@ const TransactionCreateModal = (props) => {
     fee: 0,
     amount: 100,
     description: '',
-    agreementId: '',
+    agreementId: 0,
   };
 
   const copyLinkToClipboard = () => {
@@ -90,7 +90,7 @@ const TransactionCreateModal = (props) => {
   const handleSubmit = async (values, { setErrors, setStatus, setSubmitting }) => {
     setIsError(false);
     const merchant = user.merchants.find(merch => merch.merchantId == merchId);
-    console.log(merchant);
+
     await axios
     .post(
       `${app.api}/transactions/frame/`,
@@ -117,10 +117,11 @@ const TransactionCreateModal = (props) => {
 
   const validationSchema = 
     Yup.object().shape({
-      tranId: Yup.string().max(255),
+      tranId: Yup.string().max(255).required('Required'),
       description: Yup.string().max(255),
-      amount: Yup.number().min(100),
-      fee: Yup.number().min(0)
+      amount: Yup.number().min(1, 'Should be 1 or greater').required('Required'),
+      fee: Yup.number().min(0, 'Should be 0 or greater').required('Required'),
+      agreementId: Yup.number().min(0, 'Should be 0 or greater').required('Required')
     });
 
   const form = (
@@ -154,8 +155,8 @@ const TransactionCreateModal = (props) => {
               onBlur={handleBlur}
               onChange={handleChange}
               margin="normal"
-              error={Boolean(touched.tranId && errors.tranId)}
-              helperText={touched.tranId && errors.tranId}
+              error={Boolean(errors.tranId)}
+              helperText={errors.tranId}
             />
             <TextField 
               label={t('Description')}
@@ -165,8 +166,8 @@ const TransactionCreateModal = (props) => {
               onBlur={handleBlur}
               onChange={handleChange}
               margin="normal"
-              error={Boolean(touched.description && errors.description)}
-              helperText={touched.description && errors.description}
+              error={Boolean(errors.description)}
+              helperText={errors.description}
             />
             <TextField 
               label={t('Agreement number')}
@@ -176,8 +177,9 @@ const TransactionCreateModal = (props) => {
               onBlur={handleBlur}
               onChange={handleChange}
               margin="normal"
-              error={Boolean(touched.agreementId && errors.agreementId)}
-              helperText={touched.agreementId && errors.agreementId}
+              type="number"
+              error={Boolean(errors.agreementId)}
+              helperText={errors.agreementId}
             />
             <TextField 
               label={t('Fee')}
@@ -188,8 +190,8 @@ const TransactionCreateModal = (props) => {
               onChange={handleChange}
               margin="normal"
               type="number"
-              error={Boolean(touched.fee && errors.fee)}
-              helperText={touched.fee && errors.fee}
+              error={Boolean(errors.fee)}
+              helperText={errors.fee}
               InputProps={{
                 startAdornment: <InputAdornment position="start">&#8376;</InputAdornment>,
               }}
@@ -203,8 +205,8 @@ const TransactionCreateModal = (props) => {
               onChange={handleChange}
               margin="normal"
               type="number"
-              error={Boolean(touched.amount && errors.amount)}
-              helperText={touched.amount && errors.amount}
+              error={Boolean(errors.amount)}
+              helperText={errors.amount}
               InputProps={{
                 startAdornment: <InputAdornment position="start">&#8376;</InputAdornment>,
               }}
@@ -213,7 +215,7 @@ const TransactionCreateModal = (props) => {
               <Box sx={{ mt: 2 }}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !Boolean(Object.keys(errors).length === 0)}
                   type="submit"
                   variant="contained"
                   size="small"
