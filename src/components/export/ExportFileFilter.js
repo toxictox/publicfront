@@ -13,7 +13,7 @@ import useMounted from '@hooks/useMounted';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
-import { getMomentDate, getCurrentDate } from '@lib/date';
+import { getCurrentDate, toLocaleDateTime } from '@lib/date';
 import { app } from '@root/config';
 import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
 import { useReports } from './useReports';
@@ -67,8 +67,8 @@ const ExportFileFilter = (props) => {
         try {
           await props.callback(reportType, {
             ...restValues,
-            dateStart: getMomentDate(restValues.dateStart),
-            dateEnd: getMomentDate(restValues.dateEnd)
+            dateStart: toLocaleDateTime(restValues.dateStart, true),
+            dateEnd: toLocaleDateTime(restValues.dateEnd, true)
           });
 
           if (mounted.current) {
