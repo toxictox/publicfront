@@ -67,8 +67,8 @@ const ExportFileFilter = (props) => {
         try {
           await props.callback(reportType, {
             ...restValues,
-            dateStart: toLocaleDateTime(restValues.dateStart, true),
-            dateEnd: toLocaleDateTime(restValues.dateEnd, true)
+            dateStart: toLocaleDateTime(restValues.dateStart),
+            dateEnd: toLocaleDateTime(restValues.dateEnd)
           });
 
           if (mounted.current) {
