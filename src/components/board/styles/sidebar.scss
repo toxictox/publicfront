@@ -1,0 +1,17 @@
+.balanse {
+  align-items: center;
+  & > .balanse__item {
+    padding-top: 0.7rem;
+  }
+  & > .balanse__item:last-child {
+    padding-top: 0.5rem;
+    padding-left: 0;
+  }
+  &__title {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  &__amount {
+    font-size: 0.75rem;
+  }
+}

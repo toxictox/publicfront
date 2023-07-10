@@ -37,6 +37,7 @@ import useAuth from '@hooks/useAuth';
 import axios from '@lib/axios';
 import { app } from '@root/config';
 import { formatCurrency } from '@utils/formatCurrency';
+import './styles/sidebar.scss';
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
@@ -253,15 +254,15 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" component="div" className="balanse__title">
                 {t('Balance')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
                 component="div"
+                className="balanse__amount"
                 sx={{ textAlign: 'right' }}
               >
                 {formatCurrency(balance.balance, '\u20B8')}
@@ -273,15 +274,15 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" component="div" className="balanse__title">
                 {t('Hold Funds')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
                 component="div"
+                className="balanse__amount"
                 sx={{ textAlign: 'right' }}
               >
                 {formatCurrency(balance.hold, '\u20B8')}
@@ -293,14 +294,14 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" component="div" className="balanse__title">
                 {t('Available Funds')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
+                className="balanse__amount"
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
@@ -312,14 +313,14 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" className="balanse__title" component="div">
                 {t('Day Transactions Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
+                className="balanse__amount"
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
@@ -331,14 +332,14 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" className="balanse__title" component="div">
                 {t('Day Transactions Debit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
+                className="balanse__amount"
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
@@ -350,14 +351,14 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" className="balanse__title" component="div">
                 {t('Month Transactions Credit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
+                className="balanse__amount"
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
@@ -369,14 +370,14 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" gutterBottom component="div">
+              <Typography variant="subtitle1" className="balanse__title" component="div">
                 {t('Month Transactions Debit')}
               </Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
-                gutterBottom
+                className="balanse__amount"
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
