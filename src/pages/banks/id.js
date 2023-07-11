@@ -22,6 +22,7 @@ import DepositForm from "@pages/merchant/_deposit/_form";
 import toast from "react-hot-toast";
 import DepositHistory from "@comp/history/_history";
 import useAuth from "@hooks/useAuth";
+import BankOperationList from "@comp/banks/BankOperationList";
 const BankId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -168,6 +169,14 @@ const BankId = () => {
               <CardHeader title={t("Bank Deposit History")} />
               <Divider />
               <DepositHistory reload={reload} action={"bank"} />
+            </Card>
+          </Box>
+
+          <Box sx={{ minWidth: 700 }}>
+            <Card sx={{ mt: 2 }}>
+              <CardHeader title={t("Bank Operations")} />
+              <Divider />
+              <BankOperationList reload={reload} bankId={id} />
             </Card>
           </Box>
         </Container>
