@@ -33,7 +33,7 @@ const BankOperationList = ({ reload, bankId }) => {
     count: 0,
   });
   const [page, setPage] = useState(0);
-  const [count, setCount] = useState(25);
+  const [count, setCount] = useState(5);
 
   const [merchId, setMerchId] = React.useState(
     localStorage.getItem('merchId') !== null
@@ -42,7 +42,7 @@ const BankOperationList = ({ reload, bankId }) => {
   );
 
   const getOperations = useCallback(async () => {
-    const merchant = user.merchants.find(merch => merch.merchantId == merchId);
+    const merchant = user.merchants.find(merch => merch.merchantId = merchId);
 
     axios.get(`${app.api}/bank/${bankId}/operation`, {
       params: {
@@ -74,20 +74,19 @@ const BankOperationList = ({ reload, bankId }) => {
     <>
       <TableStatic
         header={[
-          "amount",
-          "createOn",
-          "type",
-          "comment",
           "bankRef",
+          "createOn",
+          "comment",
+          "type",
+          "amount",
         ]}
       >
         {dataList.items.map(function (item) {
           return (
             <>
               <TableRow hover key={item.id}>
-                <TableCell>{item.amount}</TableCell>
+                <TableCell>{item.bankRef}</TableCell>
                 <TableCell>{toLocaleDateTime(item.date.date)}</TableCell>
-                <TableCell>{item.type === "DEBIT" ? t("Debit operation"): t("Credit operation")}</TableCell>
                 <TableCell>
                   <Typography
                     variant="contained"
@@ -111,7 +110,8 @@ const BankOperationList = ({ reload, bankId }) => {
                     {t("Comment show")}
                   </Typography>
                 </TableCell>
-                <TableCell>{item.bankRef}</TableCell>
+                <TableCell>{item.type === "DEBIT" ? t("Debit operation"): t("Credit operation")}</TableCell>
+                <TableCell>{item.amount}</TableCell>
               </TableRow>
             </>
           );
