@@ -23,6 +23,7 @@ import toast from "react-hot-toast";
 import DepositHistory from "@comp/history/_history";
 import useAuth from "@hooks/useAuth";
 import BankOperationList from "@comp/banks/BankOperationList";
+import BankStatementList from "@comp/banks/BankStatementList";
 const BankId = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
@@ -179,6 +180,15 @@ const BankId = () => {
               <BankOperationList reload={reload} bankId={id} />
             </Card>
           </Box>
+
+
+          {getAccess('statements', 'read') ? (
+            <Box sx={{ minWidth: 700 }}>
+              <Card sx={{ mt: 2 }}>
+                <BankStatementList reload={reload} bankId={id} />
+              </Card>
+            </Box>
+          ) : null}
         </Container>
       </Box>
     </>
