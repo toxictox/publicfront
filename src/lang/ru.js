@@ -168,6 +168,20 @@ const text = {
   'An error occurred during creating transaction. Please try again later.': 'При создании ссылки произашла ошибка. Попробуйте позже.',
   'Transaction frame ready': 'Ссылка для оплаты создана',
   'Link copied': 'Скопировано',
+  'Status done': 'Обработано',
+  'Status pending': 'В обработке',
+  'Status failed': 'Ошибка',
+  'Status loaded': 'Загружено',
+  'result': 'Результат',
+  'Result show': 'Результат',
+  'No result': 'Не готово',
+  'createdBy': 'Автор',
+  'Bank statements': 'Выписки',
+  'Bank Operations': 'Операции',
+  'type': 'Тип',
+  'bankRef': 'Реф',
+  'Debit operation': 'Выплата',
+  'Credit operation': 'Пополнение',
 };
 
 const fields = {
