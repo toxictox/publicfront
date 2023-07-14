@@ -171,7 +171,21 @@ const text = {
   status_new: 'Новый',
   status_processing: 'В обработке',
   status_finished: 'Готов',
-  status_failed: 'Ошбика',
+  status_failed: 'Ошибка',
+  'Status done': 'Обработано',
+  'Status pending': 'В обработке',
+  'Status failed': 'Ошибка',
+  'Status loaded': 'Загружено',
+  'result': 'Результат',
+  'Result show': 'Результат',
+  'No result': 'Не готово',
+  'createdBy': 'Автор',
+  'Bank statements': 'Выписки',
+  'Bank Operations': 'Операции',
+  'type': 'Тип',
+  'bankRef': 'Реф',
+  'Debit operation': 'Выплата',
+  'Credit operation': 'Пополнение',
 };
 
 const fields = {
