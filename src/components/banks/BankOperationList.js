@@ -44,7 +44,7 @@ const BankOperationList = ({ reload, bankId }) => {
   const getOperations = useCallback(async () => {
     const merchant = user.merchants.find(merch => merch.merchantId = merchId);
 
-    axios.get(`${app.api}/bank/${bankId}/operation/`, {
+    axios.get(`${app.api}/bank/${bankId}/operation`, {
       params: {
         page: page + 1,
         count: count,
