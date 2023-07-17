@@ -52,7 +52,7 @@ const BankStatementList = ({ reload, bankId }) => {
   };
 
   const getOperations = useCallback(async () => {
-    axios.get(`${app.api}/bank/${bankId}/statement`, {
+    axios.get(`${app.api}/bank/${bankId}/statement/`, {
       params: {
         page: page + 1,
         count: count,
