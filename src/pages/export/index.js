@@ -8,7 +8,8 @@ import {
   Divider,
   TableRow,
   TableCell,
-  Button
+  Button,
+  Typography
 } from '@material-ui/core';
 import useSettings from '@hooks/useSettings';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,7 @@ import axios from '@lib/axios';
 import { app } from '@root/config';
 import { getCsvFileHelper } from '@utils/getCsvFileHelper';
 import { TableStatic } from '@comp/core/tables';
+import { red, green, blue } from '@material-ui/core/colors';
 
 const ExportList = () => {
   const { t } = useTranslation();
@@ -72,6 +74,20 @@ const ExportList = () => {
     getFileByLink(link);
   };
 
+  const statuses =  {
+    1: 'status_new',
+    2: 'status_processing',
+    3: 'status_finished',
+    4: 'status_failed',
+  };
+
+  const statusColors = {
+    1: blue[800],
+    2: blue[800],
+    3: green[800],
+    4: red[800],
+  };
+
   return (
     <>
       <Helmet>
@@ -97,11 +113,17 @@ const ExportList = () => {
                     <TableRow hover key={report.id}>
                       <TableCell>{idx}</TableCell>
                       <TableCell>{report.fileName}</TableCell>
+                      <TableCell>
+                        <Typography color={statusColors[report.status]}>
+                          {t(statuses[report.status])}
+                        </Typography>
+                      </TableCell>
                       <TableCell>{report.createdAat}</TableCell>
                       <TableCell align="right">
                         <Button
                           type="button"
                           variant={'contained'}
+                          disabled={report.status != 3}
                           size={'small'}
                           onClick={(e) => {
                             e.stopPropagation();
