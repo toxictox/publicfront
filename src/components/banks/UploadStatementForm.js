@@ -23,7 +23,7 @@ export default function UploadStatementForm(props) {
         formData.append('file', file, file.name);
         console.log(app);
         axios
-          .post(`${app.api}/bank/${bankId}/statement/`, formData)
+          .post(`${app.api}/bank/${bankId}/statement`, formData)
           .then((response) => {
             toast.success(t('Success upload'));
             onUpload();
