@@ -43,6 +43,7 @@ const TransactionListTable = (props) => {
                 'createOn',
                 'merchant',
                 'tranId',
+                'orderId',
                 'tranType',
                 'pan',
                 'amount',
@@ -73,6 +74,9 @@ const TransactionListTable = (props) => {
                     <TableCell className="static-table__table-cell static-table__table-cell--word-wrap static-table__table-cell-id">
                       {order.tranId}
                     </TableCell>
+                      <TableCell className="static-table__table-cell static-table__table-cell--word-wrap static-table__table-cell-id">
+                      {order.orderId}
+                      </TableCell>
                     <TableCell className="static-table__table-cell">
                       <Typography
                         color="textPrimary"
