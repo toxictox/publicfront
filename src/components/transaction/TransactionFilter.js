@@ -57,6 +57,7 @@ const TransactionFilter = (props) => {
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
         tranTypeId: Yup.array(),
+        orderId: Yup.string().max(255),
         amountFrom: Yup.string().max(25),
         amountTo: Yup.string().max(25),
         dateStart: Yup.string().max(255),
@@ -285,6 +286,23 @@ const TransactionFilter = (props) => {
                   sx={{ m: 0 }}
                 />
               </Grid>
+                <Grid item xs={3}>
+                    <TextField
+                        error={Boolean(touched.orderId && errors.orderId)}
+                        fullWidth
+                        helperText={touched.orderId && errors.orderId}
+                        label={t('orderId')}
+                        margin="normal"
+                        name="orderId"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        type="text"
+                        value={values.orderId}
+                        variant="outlined"
+                        size="small"
+                        sx={{ m: 0 }}
+                    />
+                </Grid>
 
               <OrderBySelect
                 touched={touched}

@@ -115,6 +115,7 @@ const text = {
   'card first 6 number': 'Первые 6 цифр карты',
   'card last 4 number': 'Последние 4 цифры карты',
   tranId: 'ID транзакции',
+  orderId: 'ID кредита',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
   amount: 'Сумма',
