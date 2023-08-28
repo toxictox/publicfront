@@ -343,6 +343,24 @@ const CreateAndUpdateMerchantForm = (data) => {
           ) : null}
 
           <Grid item xs={12}>
+            <TextField
+              error={Boolean(touched.overdraftLimit && errors.overdraftLimit)}
+              fullWidth
+              helperText={touched.overdraftLimit && errors.overdraftLimit}
+              label={t('overdraftLimit')}
+              margin="normal"
+              name="overdraftLimit"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="text"
+              value={values.overdraftLimit}
+              variant="outlined"
+              size="small"
+              sx={{ m: 0 }}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>
               <Button
                 color="primary"

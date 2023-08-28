@@ -13,6 +13,7 @@ export const getInitialMerchantValue = (data = {}) => {
     type: data.type || '',
     notificationChannel: data.notificationChannel || '',
     company_email: data.company_email || '',
-    company_id: data.company_id || ''
+    company_id: data.company_id || '',
+    overdraftLimit: data.overdraftLimit || 0,
   };
 };
