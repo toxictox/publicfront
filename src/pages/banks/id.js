@@ -108,29 +108,6 @@ const BankId = () => {
                 action={
                   <GroupTable
                     actionUpdate={() => navigate(`/banks/id/${id}/update`)}
-                    // actionDelete={() => console.log("delete action")}
-                    actionCustom={[
-                      {
-                        title: t("Set deposit limit"),
-                        access: getAccess("banks", "updateBankDeposit"),
-                        color: tab.action === "set" ? "success" : "primary",
-                        callback: () => openTab(true, "set"),
-                      },
-                      {
-                        title: t("Increase deposit limit"),
-                        access: getAccess("banks", "updateBankDeposit"),
-                        color:
-                          tab.action === "increase" ? "success" : "primary",
-                        callback: () => openTab(true, "increase"),
-                      },
-                      {
-                        title: t("Decrease deposit limit"),
-                        access: getAccess("banks", "updateBankDeposit"),
-                        color:
-                          tab.action === "decrease" ? "success" : "primary",
-                        callback: () => openTab(true, "decrease"),
-                      },
-                    ]}
                   />
                 }
               />
