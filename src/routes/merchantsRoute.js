@@ -20,6 +20,10 @@ const MerchantDepositUpdate = Loadable(
   lazy(() => import('@pages/merchant/_deposit/update'))
 );
 
+const MerchantOverdraftIndex = Loadable(
+  lazy(() => import('@pages/merchant/_overdraft/index'))
+);
+
 export const merchantsRoute = {
   path: 'merchants',
   children: [
@@ -70,6 +74,12 @@ export const merchantsRoute = {
         <ACLGuard can={'depositLimitEdit'}>
           <MerchantDepositUpdate />
         </ACLGuard>
+      ),
+    },
+    {
+      path: ':id/overdraft',
+      element: (
+        <MerchantOverdraftIndex />
       ),
     },
   ],
