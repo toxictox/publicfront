@@ -111,6 +111,11 @@ const MerchantId = () => {
                     }}
                     actionCustom={[
                       {
+                        title: t("Overdrafts"),
+                        callback: () => navigate(`/merchants/${id}/overdraft`),
+                        access: getAccess("merchants", "depositLimitEdit"),
+                      },
+                      {
                         title: t("depositLimit"),
                         callback: () => navigate(`/merchants/deposit/${id}`),
                         access: getAccess("merchants", "depositLimitEdit"),

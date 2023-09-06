@@ -78,6 +78,7 @@ const TransactionsList = () => {
       .then((response) => {
         toast.success(t('Success update'));
         setStatus(() => response.data);
+        getItem();
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -110,19 +111,6 @@ const TransactionsList = () => {
         callback: () => sendStatus()
       }
     ];
-    if (status === '1000' && statusCity !== 0) {
-      const addTransaction = {
-        title: t('register-city'),
-        callback: () => regTransaction()
-      };
-      actions.unshift(addTransaction);
-    }
-    if (status === '5500') {
-      actions.push({
-        title: t('cancel-city'),
-        callback: () => deleteTransaction()
-      });
-    }
     return actions;
   };
 

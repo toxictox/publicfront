@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -8,7 +8,8 @@ import {
   MenuItem,
   TextField,
   Typography,
-  Grid
+  Grid,
+  Tooltip,
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import NavSection from './NavSection';
@@ -22,8 +23,6 @@ import {
   CenterFocusWeak,
   LinearScale,
   Home,
-  Lock,
-  LocalConvenienceStore,
   BlurLinear,
   Storefront,
   Security,
@@ -32,6 +31,7 @@ import {
   Code,
   Dns
 } from '@material-ui/icons';
+import {red} from '@material-ui/core/colors';
 
 import useAuth from '@hooks/useAuth';
 import axios from '@lib/axios';
@@ -61,6 +61,26 @@ const BaseSidebar = (props) => {
     day_transaction_credit: 0,
     day_transaction_debit: 0,
   });
+
+  const [overdrafts, setOverdrafts] = useState([]);
+  const [overdraftsSum, setOverdraftsSum] = useState(0);
+
+  useEffect(() => {
+    const getOverdrafts = async () => {
+      await axios
+        .get(`${app.api}/merchant/${merchId}/overdraft/totals`)
+        .then((response) => {
+          setOverdrafts(response.data);
+          setOverdraftsSum(response.data.reduce((sum, val) => {
+            return sum + Math.abs(val.amount);
+          }, 0));
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    };
+    getOverdrafts();
+  }, []);
 
   const getActiveStatus = (name) => {
     return user.permissions[name] !== undefined;
@@ -251,6 +271,43 @@ const BaseSidebar = (props) => {
           </Box>
         </Box>
         <Divider />
+        { overdraftsSum > 0 &&
+          <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography 
+                  color={red[800]}
+                  variant="subtitle1"
+                  component="div"
+                  className="balanse__title"
+                >
+                  {t('Overdraft')}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Tooltip
+                  title={
+                    <Fragment>
+                      {overdrafts.map((item) => {
+                          return <Typography color="inherit">{item.bank}: {formatCurrency(item.amount / 100, '\u20B8')}</Typography>
+                      })}
+                    </Fragment>
+                  }
+                >
+                  <Typography
+                    color={red[800]}
+                    variant="subtitle2"
+                    component="div"
+                    className="balanse__amount"
+                    sx={{ textAlign: 'right' }}
+                  >
+                    {formatCurrency(overdraftsSum / 100, '\u20B8')}
+                  </Typography>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </Box>
+        }
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -271,6 +328,7 @@ const BaseSidebar = (props) => {
           </Grid>
         </Box>
 
+        { Number(balance.hold) > 0 &&
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -290,6 +348,7 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
+        }
 
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>

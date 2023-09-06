@@ -187,6 +187,10 @@ const text = {
   'bankRef': 'Реф',
   'Debit operation': 'Выплата',
   'Credit operation': 'Пополнение',
+  'Merchant Overdraft History': 'История овердрафта',
+  'transaction': 'Транзакция',
+  'Overdrafts': 'Овердрафты',
+  'Overdraft': 'Овердрафт',
 };
 
 const fields = {
