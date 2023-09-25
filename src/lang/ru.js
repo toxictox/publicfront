@@ -201,7 +201,7 @@ const text = {
   'Default rule': 'Нет ограничений',
   'No date restrictions': 'Нет ограничений по дате',
   'Fee Rules': 'Правила подсчета комиссии',
-  'No fee rules has been defined for this terminal yet. Add your first rule': 'Для данного терминала нет правил подсчета комиссии. Создайте первое правило',
+  'NoFeeRulesDefined': 'Для данного терминала нет правил подсчета комиссии. Создайте первое правило',
   'Successfully updated': 'Изменено успешно',
   'Successfully created': 'Создано успешно',
 };

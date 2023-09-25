@@ -191,7 +191,7 @@ const List = ({ reload, terminalId }) => {
                 :
                 <CardContent>
                   <Typography>
-                    {t("No fee rules has been defined for this terminal yet. Add your first rule")}&nbsp;
+                    {t('NoFeeRulesDefined', "No fee rules has been defined for this terminal yet. Add your first rule")}&nbsp;
                     <IconButton
                       type="button"
                       color="primary"
