@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { ButtonGroup, Button } from "@material-ui/core";
-import { Edit, HighlightOff, Visibility } from "@material-ui/icons";
+import { Edit, HighlightOff, Visibility, AddCircle } from "@material-ui/icons";
 
 const GroupTable = (props) => {
   const {
+    actionCreate,
     actionUpdate,
     actionDelete,
     actionView,
@@ -29,6 +30,24 @@ const GroupTable = (props) => {
               ) : null
             )
           : null}
+
+
+        {actionCreate !== undefined &&
+        typeof actionCreate === "object" &&
+        actionCreate.access !== false ? (
+          <Button
+            size={"small"}
+            color={"primary"}
+            onClick={actionCreate.callback}
+          >
+            <AddCircle />
+          </Button>
+        ) : actionCreate !== undefined && typeof actionCreate === "function" ? (
+          <Button size={"small"} color={"primary"} onClick={actionCreate}>
+            <AddCircle />
+          </Button>
+        ) : null}
+
         {actionView !== undefined &&
         typeof actionView === "object" &&
         actionView.access !== false ? (

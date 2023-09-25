@@ -191,6 +191,19 @@ const text = {
   'transaction': 'Транзакция',
   'Overdrafts': 'Овердрафты',
   'Overdraft': 'Овердрафт',
+  'Start date': 'Дата начала',
+  'Card Issuer Bank Name': 'Название банка эммитнта',
+  'Terminal fee rules': 'Правила подсчета комиссии банка',
+  'Create rule': 'Новое правило',
+  'Edit rule': 'Редактирование',
+  'Leave empty to create default rule': 'Если оставить дату пустой, то будет созданно правило по умолчанию',
+  'Leave empty to create wildcard rule': 'Если оставить название банка пустым, то будет созданно правило по умолчанию',
+  'Default rule': 'Нет ограничений',
+  'No date restrictions': 'Нет ограничений по дате',
+  'Fee Rules': 'Правила подсчета комиссии',
+  'No fee rules has been defined for this terminal yet. Add your first rule': 'Для данного терминала нет правил подсчета комиссии. Создайте первое правило',
+  'Successfully updated': 'Изменено успешно',
+  'Successfully created': 'Создано успешно',
 };
 
 const fields = {

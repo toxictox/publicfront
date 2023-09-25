@@ -14,6 +14,10 @@ const TerminalsUpdateToken = Loadable(
   lazy(() => import('@pages/terminals/_token/update'))
 );
 
+const FeeRulesPage = Loadable(
+  lazy(() => import('@pages/terminals/_bankFeeRule/index'))
+);
+
 export const terminalsRoute = {
   path: 'terminals',
   children: [
@@ -54,6 +58,14 @@ export const terminalsRoute = {
       element: (
         <ACLGuard can={'getTerminalKey'}>
           <TerminalsUpdateToken />
+        </ACLGuard>
+      ),
+    },
+    {
+      path: '/:id/fee',
+      element: (
+        <ACLGuard can={'read'}>
+          <FeeRulesPage />
         </ACLGuard>
       ),
     },
