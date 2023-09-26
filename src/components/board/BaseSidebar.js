@@ -65,21 +65,28 @@ const BaseSidebar = (props) => {
   const [overdrafts, setOverdrafts] = useState([]);
   const [overdraftsSum, setOverdraftsSum] = useState(0);
 
+  const getOverdrafts = async () => {
+    await axios
+      .get(`${app.api}/merchant/${merchId}/overdraft/totals`)
+      .then((response) => {
+        setOverdrafts(response.data);
+        setOverdraftsSum(response.data.reduce((sum, val) => {
+          return sum + Math.abs(val.amount);
+        }, 0));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   useEffect(() => {
-    const getOverdrafts = async () => {
-      await axios
-        .get(`${app.api}/merchant/${merchId}/overdraft/totals`)
-        .then((response) => {
-          setOverdrafts(response.data);
-          setOverdraftsSum(response.data.reduce((sum, val) => {
-            return sum + Math.abs(val.amount);
-          }, 0));
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    };
+    const intervalCall = setInterval(() => {
+      getOverdrafts();
+    }, 30000);
     getOverdrafts();
+    return () => {
+      clearInterval(intervalCall);
+    };
   }, []);
 
   const getActiveStatus = (name) => {
@@ -226,18 +233,25 @@ const BaseSidebar = (props) => {
     getData();
   }, [location.pathname]);
 
+  const getBalance = async () => {
+    await axios
+      .get(`${app.api}/board/depositBalance`)
+      .then((response) => {
+        setBalance(response.data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   useEffect(() => {
-    const getBalance = async () => {
-      await axios
-        .get(`${app.api}/board/depositBalance`)
-        .then((response) => {
-          setBalance(response.data);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    };
+    const intervalCall = setInterval(() => {
+      getBalance();
+    }, 30000);
     getBalance();
+    return () => {
+      clearInterval(intervalCall);
+    };
   }, []);
 
   const content = (

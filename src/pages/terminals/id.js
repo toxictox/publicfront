@@ -99,6 +99,11 @@ const BankId = () => {
                     }}
                     actionCustom={[
                       {
+                        access: getAccess("terminals", "read"),
+                        title: t("Fee Rules"),
+                        callback: () => navigate(`/terminals/${id}/fee`),
+                      },
+                      {
                         access: getAccess("terminals", "getTerminalKey"),
                         title: t("keyToken"),
                         callback: () => navigate(`/terminals/token/${id}`),
