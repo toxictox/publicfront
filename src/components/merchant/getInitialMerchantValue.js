@@ -3,9 +3,6 @@ export const getInitialMerchantValue = (data = {}) => {
     name: data.name || '',
     description: data.description || '',
     timezoneId: data.timezone || '',
-    percentFee: data.percentFee || '',
-    minAmountFee: data.minAmountFee || '',
-    fixAmountFee: data.fixAmountFee || 0,
     businessName: data.businessName || '',
     contractNumber: data.contractNumber || '',
     contractDate: data.contractDate || '',
@@ -14,6 +11,5 @@ export const getInitialMerchantValue = (data = {}) => {
     notificationChannel: data.notificationChannel || '',
     company_email: data.company_email || '',
     company_id: data.company_id || '',
-    overdraftLimit: data.overdraftLimit || 0,
   };
 };

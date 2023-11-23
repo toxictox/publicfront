@@ -151,60 +151,6 @@ const CreateAndUpdateMerchantForm = (data) => {
 
           <Grid item xs={12}>
             <TextField
-              error={Boolean(touched.fixAmountFee && errors.fixAmountFee)}
-              fullWidth
-              helperText={touched.fixAmountFee && errors.fixAmountFee}
-              label={t('fixAmountFee')}
-              margin="normal"
-              name="fixAmountFee"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              value={values.fixAmountFee}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              error={Boolean(touched.percentFee && errors.percentFee)}
-              fullWidth
-              helperText={touched.percentFee && errors.percentFee}
-              label={t('percentFee')}
-              margin="normal"
-              name="percentFee"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              value={values.percentFee}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              error={Boolean(touched.minAmountFee && errors.minAmountFee)}
-              fullWidth
-              helperText={touched.minAmountFee && errors.minAmountFee}
-              label={t('minAmountFee')}
-              margin="normal"
-              name="minAmountFee"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              value={values.minAmountFee}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
               error={Boolean(touched.timezoneId && errors.timezoneId)}
               fullWidth
               helperText={touched.timezoneId && errors.timezoneId}
@@ -341,24 +287,6 @@ const CreateAndUpdateMerchantForm = (data) => {
               />
             </Grid>
           ) : null}
-
-          <Grid item xs={12}>
-            <TextField
-              error={Boolean(touched.overdraftLimit && errors.overdraftLimit)}
-              fullWidth
-              helperText={touched.overdraftLimit && errors.overdraftLimit}
-              label={t('overdraftLimit')}
-              margin="normal"
-              name="overdraftLimit"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="text"
-              value={values.overdraftLimit}
-              variant="outlined"
-              size="small"
-              sx={{ m: 0 }}
-            />
-          </Grid>
 
           <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>

@@ -235,7 +235,7 @@ const BaseSidebar = (props) => {
 
   const getBalance = async () => {
     await axios
-      .get(`${app.api}/board/depositBalance`)
+      .get(`${app.api}/merchant/${merchId}/balance`)
       .then((response) => {
         setBalance(response.data);
       })
@@ -336,7 +336,7 @@ const BaseSidebar = (props) => {
                 className="balanse__amount"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.balance, '\u20B8')}
+                {formatCurrency(balance.balance / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -357,7 +357,7 @@ const BaseSidebar = (props) => {
                 className="balanse__amount"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.hold, '\u20B8')}
+                {formatCurrency(balance.hold / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -378,7 +378,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.available, '\u20B8')}
+                {formatCurrency(balance.available / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -397,7 +397,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_transaction_credit, '\u20B8')}
+                {formatCurrency(balance.day_transaction_credit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -416,7 +416,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_transaction_debit, '\u20B8')}
+                {formatCurrency(balance.day_transaction_debit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -435,7 +435,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_transaction_credit, '\u20B8')}
+                {formatCurrency(balance.month_transaction_credit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -454,7 +454,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_transaction_debit, '\u20B8')}
+                {formatCurrency(balance.month_transaction_debit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>

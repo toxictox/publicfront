@@ -35,7 +35,7 @@ const BankIdUpdate = () => {
   const handleSubmit = async (values) => {
     try {
       await axios
-        .patch(`${app.api}/terminal/${id}`, { ...values })
+        .put(`${app.api}/terminal/${id}`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
           navigate(`/terminals/id/${id}`);
