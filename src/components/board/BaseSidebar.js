@@ -397,7 +397,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_transaction_credit / 100, '\u20B8')}
+                {formatCurrency(balance.dayTransactionCredit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -416,7 +416,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.day_transaction_debit / 100, '\u20B8')}
+                {formatCurrency(balance.dayTransactionDebit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -435,7 +435,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_transaction_credit / 100, '\u20B8')}
+                {formatCurrency(balance.monthTransactionCredit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
@@ -454,7 +454,7 @@ const BaseSidebar = (props) => {
                 component="div"
                 sx={{ textAlign: 'right' }}
               >
-                {formatCurrency(balance.month_transaction_debit / 100, '\u20B8')}
+                {formatCurrency(balance.monthTransactionDebit / 100, '\u20B8')}
               </Typography>
             </Grid>
           </Grid>
