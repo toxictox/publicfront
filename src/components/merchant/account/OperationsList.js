@@ -133,7 +133,7 @@ const OperationsList = ({ accountId, merchantId }) => {
                         <>
                           <TableRow hover key={item.id}>
                             <TableCell>{item.id}</TableCell>
-                            <TableCell>{formatAmount(item.amount)}</TableCell>
+                            <TableCell>{formatAmount(item.amount / 100)}</TableCell>
                             <TableCell>{item.type}</TableCell>
                             <TableCell>{item.description}</TableCell>
                           </TableRow>

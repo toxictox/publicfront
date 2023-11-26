@@ -48,6 +48,10 @@ const AccountId = () => {
     });
   }, [mounted, merchantId, accountId]);
 
+  const formatAmount = (number) => {
+    return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'KZT' }).format(number);
+  };
+
   useEffect(() => {
     getItem();
   }, [getItem]);
@@ -88,6 +92,14 @@ const AccountId = () => {
                 <TableRow>
                   <TableCell>{t("Name")}</TableCell>
                   <TableCell>{account.name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>{t("Balance")}</TableCell>
+                  <TableCell>{formatAmount(account.balance / 100)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>{t("Overdarft Limit")}</TableCell>
+                  <TableCell>{formatAmount(account.overdraftLimit / 100)}</TableCell>
                 </TableRow>
               </TableStatic>
             </Card>

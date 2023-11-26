@@ -95,7 +95,7 @@ const TransferModalForm = ({source, open, merchant, onClose, onUpdate, ...props}
       data: {
         source: values.source,
         target: values.target,
-        amount: values.amount
+        amount: Math.floor(values.amount * 100)
       }
     })
     .then(async (response) => {

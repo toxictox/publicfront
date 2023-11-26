@@ -65,7 +65,7 @@ const AccountModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props
   {
     id: entity.id,
     name: entity.name,
-    overdraftLimit: entity.overdraftLimit
+    overdraftLimit: entity.overdraftLimit / 100
   }
   :
   {
@@ -82,7 +82,7 @@ const AccountModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props
       url:  `${app.api}/merchant/${merchantId}/account` + (values.id ? `/${values.id}` : ''),
       data: {
         name: values.name,
-        overdraftLimit: values.overdraftLimit,
+        overdraftLimit: Math.floor(values.overdraftLimit * 100),
       }
     })
     .then(async (response) => {
