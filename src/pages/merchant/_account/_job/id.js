@@ -35,7 +35,7 @@ const AccountJobId = () => {
 
   const getItem = useCallback(async () => {
     const response = await axios
-    .get(`${app.api}/merchant/${merchantId}/account_job/${merchantId}`)
+    .get(`${app.api}/merchant/${merchantId}/account_job/${jobId}`)
     .then((response) => setJob(response.data))
     .catch((err) => {
         if (err.response.status === 404) {
@@ -51,7 +51,7 @@ const AccountJobId = () => {
 
   const execute = async () => {
     await axios
-      .post(`${app.api}/merchant/${merchantId}/account_job/${merchantId}/execute`)
+      .post(`${app.api}/merchant/${merchantId}/account_job/${jobId}/execute`)
       .then((response) => {
         toast.success(t('Success update'));
       })
