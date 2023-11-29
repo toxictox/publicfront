@@ -120,8 +120,8 @@ const AccountJobIndex = () => {
                   "id",
                   "name",
                   "accounts",
-                  "enabled",
                   "fee",
+                  "enabled",
                   "cronExpression",
                   ""
                 ]}
@@ -133,7 +133,7 @@ const AccountJobIndex = () => {
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.sourceName + "->" + item.targetName}</TableCell>
-                        <TableCell>{formatAmount(item.fee / 100)}</TableCell>
+                        <TableCell>{item.fee + "%"}</TableCell>
                         <TableCell>{item.enabled ? "Enabled" : "Disabled"}</TableCell>
                         <TableCell>{item.cronExpression}</TableCell>
                         <TableCell

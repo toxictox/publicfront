@@ -101,8 +101,8 @@ const AccountCronJobHistory = ({ merchant, job }) => {
                         <>
                           <TableRow hover key={item.id}>
                             <TableCell>{item.executedOn}</TableCell>
-                            <TableCell>{formatAmount(item.balance)}</TableCell>
-                            <TableCell>{formatAmount(item.amount)}</TableCell>
+                            <TableCell>{formatAmount(item.balance / 100)}</TableCell>
+                            <TableCell>{formatAmount(item.amount / 100)}</TableCell>
                           </TableRow>
                         </>
                       );
