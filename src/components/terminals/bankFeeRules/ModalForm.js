@@ -84,7 +84,7 @@ const ModalForm = ({entity, open, terminalId, onClose, onUpdate, ...props}) => {
 
     await axios
     .post(
-      values.id ? `${app.api}/terminal/${terminalId}/fee/${values.id}` : `${app.api}/terminal/${terminalId}/fee`,
+      values.id ? `${app.api}/terminal/${terminalId}/fee/${values.id}` : `${app.api}/terminal/${terminalId}/fee/`,
       {
         fee: values.fee,
         startDate: values.startDate,

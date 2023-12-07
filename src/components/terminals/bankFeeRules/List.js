@@ -61,7 +61,7 @@ const List = ({ reload, terminalId }) => {
   };
 
   const getOperations = useCallback(async () => {
-    axios.get(`${app.api}/terminal/${terminalId}/fee`, {
+    axios.get(`${app.api}/terminal/${terminalId}/fee/`, {
       params: {
         page: page + 1,
         count: count,
