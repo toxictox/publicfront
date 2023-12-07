@@ -37,6 +37,19 @@ const TerminalsList = () => {
   });
   const [page, setPage] = useState(0);
 
+  const [isModalFormOpen, setModalFormOpen] = useState(false);
+  const [editableItem, setEditableItem] = useState(null);
+
+  const openForm = (item) => {
+    setModalFormOpen(true);
+    setEditableItem(item);
+  };
+
+  const closeForm = () => {
+    setModalFormOpen(false);
+    setEditableItem(null);
+  };
+
   const handleChangeSwitch = async (e, id) => {
     await axios
       .patch(`${app.api}/merchant/status/${id}`, {

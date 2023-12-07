@@ -21,6 +21,23 @@ const UpdateForm = (props) => {
   const { t } = useTranslation();
   const [gatewayMethod, setGatewayMethod] = useState([]);
   const [merchantList, setMerchantList] = useState([]);
+  const [accountList, setAccountList] = useState({
+    items: []
+  });
+
+  const getAccounts = (merchant) => {
+    if (merchant) {
+      axios.get(`${app.api}/merchant/${merchant}/account`,
+        {
+          params: {
+            count: 100
+          }
+        }
+      ).then((response) => {
+        setAccountList(response.data);
+      });
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -40,24 +57,16 @@ const UpdateForm = (props) => {
       initialValues={{
         name: "",
         tid: "",
-        gatewayMethodId: "",
-        merchantId: "",
-        endpoint: "",
-        wsdlUrl: "",
-        percentFee: "",
-        minAmountFee: "",
-        fixAmountFee: 0,
+        gatewayMethod: "",
+        merchant: "",
+        account: "",
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().max(255).required(t("required")),
+        name: Yup.string().min(3).max(255).required(t("required")),
         tid: Yup.string().max(255),
         endpoint: Yup.string().max(255),
-        wsdlUrl: Yup.string().max(255),
-        gatewayMethodId: Yup.string().max(5).required(t("required")),
-        merchantId: Yup.string().required(t("required")),
-        fixAmountFee: Yup.string(),
-        percentFee: Yup.string().matches(fields.decimal, t("field float")),
-        minAmountFee: Yup.number().typeError(t("field number")),
+        gatewayMethod: Yup.string().max(5).required(t("required")),
+        merchant: Yup.string().required(t("required")),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -127,17 +136,17 @@ const UpdateForm = (props) => {
               <Grid item xs={12}>
                 <TextField
                   error={Boolean(
-                    touched.gatewayMethodId && errors.gatewayMethodId
+                    touched.gatewayMethod && errors.gatewayMethod
                   )}
                   fullWidth
-                  helperText={touched.gatewayMethodId && errors.gatewayMethodId}
-                  label="gatewayMethodId"
-                  name="gatewayMethodId"
+                  helperText={touched.gatewayMethod && errors.gatewayMethod}
+                  label="gatewayMethod"
+                  name="gatewayMethod"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   select
                   size="small"
-                  value={values.gatewayMethodId}
+                  value={values.gatewayMethod}
                   variant="outlined"
                 >
                   <MenuItem key={-1} value={""}>
@@ -153,17 +162,21 @@ const UpdateForm = (props) => {
 
               <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.merchantId && errors.merchantId)}
+                  error={Boolean(touched.merchant && errors.merchant)}
                   fullWidth
-                  helperText={touched.merchantId && errors.merchantId}
-                  label="merchantId"
-                  name="merchantId"
-                  onChange={handleChange}
+                  helperText={touched.merchant && errors.merchant}
+                  label="merchant"
+                  name="merchant"
                   onBlur={handleBlur}
                   select
                   size="small"
-                  value={values.merchantId}
+                  value={values.merchant}
                   variant="outlined"
+                  onChange={(e, f) => {
+                    handleChange(e, f);
+                    values.account = "";
+                    getAccounts(f.props.value);
+                  }}
                 >
                   <MenuItem key={-1} value={""}>
                     {t("Select value")}
@@ -176,95 +189,34 @@ const UpdateForm = (props) => {
                 </TextField>
               </Grid>
 
-              <Grid item xs={12}>
+              {values.merchant ?
+                <Grid item xs={12}>
                 <TextField
-                  error={Boolean(touched.endpoint && errors.endpoint)}
+                  error={Boolean(touched.account && errors.account)}
                   fullWidth
-                  helperText={touched.endpoint && errors.endpoint}
-                  label={t("endpoint")}
-                  margin="normal"
-                  name="endpoint"
-                  onBlur={handleBlur}
+                  helperText={touched.account && errors.account}
+                  label="account"
+                  name="account"
                   onChange={handleChange}
-                  type="text"
-                  value={values.endpoint}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.wsdlUrl && errors.wsdlUrl)}
-                  fullWidth
-                  helperText={touched.wsdlUrl && errors.wsdlUrl}
-                  label={t("wsdlUrl")}
-                  margin="normal"
-                  name="wsdlUrl"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.wsdlUrl}
-                  variant="outlined"
+                  select
                   size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.fixAmountFee && errors.fixAmountFee)}
-                  fullWidth
-                  helperText={touched.fixAmountFee && errors.fixAmountFee}
-                  label={t("fixAmountFee")}
-                  margin="normal"
-                  name="fixAmountFee"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.fixAmountFee}
+                  value={values.account}
                   variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
+                >
+                  <MenuItem value={""}>
+                    {t("Select value")}
+                  </MenuItem>
+                  {accountList.items.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.percentFee && errors.percentFee)}
-                  fullWidth
-                  helperText={touched.percentFee && errors.percentFee}
-                  label={t("percentFee")}
-                  margin="normal"
-                  name="percentFee"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.percentFee}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.minAmountFee && errors.minAmountFee)}
-                  fullWidth
-                  helperText={touched.minAmountFee && errors.minAmountFee}
-                  label={t("minAmountFee")}
-                  margin="normal"
-                  name="minAmountFee"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.minAmountFee}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
-              </Grid>
+              :
+              <></>
+              }
 
               <Grid item xs={12}>
                 <Box sx={{ mt: 2 }}>
