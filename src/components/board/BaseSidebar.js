@@ -322,26 +322,6 @@ const BaseSidebar = (props) => {
             </Grid>
           </Box>
         }
-        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="subtitle1" component="div" className="balanse__title">
-                {t('Balance')}
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              <Typography
-                variant="subtitle2"
-                component="div"
-                className="balanse__amount"
-                sx={{ textAlign: 'right' }}
-              >
-                {formatCurrency(balance.balance / 100, '\u20B8')}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-
         { Number(balance.hold) > 0 &&
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
