@@ -56,7 +56,7 @@ const Home = () => {
                     status={true}
                   />
                 </Grid>
-                <Grid item md={4} sm={4} xs={12}>
+                <Grid item md={8} sm={8} xs={12}>
                   <StatBox
                     title={t('Failed tab')}
                     value={`${formatCurrency(total.failedAmount)}`}
@@ -64,13 +64,13 @@ const Home = () => {
                     status={false}
                   />
                 </Grid>
-                <Grid item md={4} sm={4} xs={12}>
+         {/*       <Grid item md={4} sm={4} xs={12}>
                   <StatBox
                     title={t('Conversion tab')}
                     value={`${total.conversion} %`}
                     description={`Количество ${total.reverseCount}`}
                   />
-                </Grid>
+                </Grid>*/}
                 <Grid item md={12} sm={12} xs={12}>
                   <StatSalesRevenue title={'Аналитика транзакций'} />
                 </Grid>
