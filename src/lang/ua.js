@@ -51,6 +51,7 @@ const text = {
   'Success recovery send token': 'Інструкцію надіслано на email',
 
   'Transactions List': 'Список транзакцій',
+  'Transactions Confirmation': 'Справка транзакций',
   'Transactions Item': 'Інформація про транзакцію',
 
   'Users List': 'Список користувачів',

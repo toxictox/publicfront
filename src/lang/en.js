@@ -14,7 +14,8 @@ const buttons = {
   'Back to Home': 'To main page',
   'status-city': 'Info',
   'cancel-city': 'Cancel',
-  'register-city': 'Register'
+  'register-city': 'Register',
+  'Create transaction confirmation': 'Create transaction confirmations'
 };
 
 const menu = {
@@ -51,6 +52,7 @@ const text = {
   'Success recovery send token': 'Instructions sent to email',
 
   'Transactions List': 'Transactions list',
+  'Transactions Confirmation': 'Transactions Confirmation',
   'Transactions Item': 'Transaction info',
 
   'Users List': 'Users list',

@@ -16,6 +16,7 @@ const buttons = {
   'cancel-city': 'Отмена',
   'register-city': 'Зарегистрировать',
   'Create transaction': 'Создать транзакцию',
+  'Create transaction confirmation': 'Создать справку о транзакциях',
 };
 
 const menu = {
@@ -53,6 +54,7 @@ const text = {
   'Success recovery send token': 'Инструкция по была отправлена на email',
 
   'Transactions List': 'Список транзакций',
+  'Transactions Confirmation': 'Справка транзакций',
   'Transactions Item': 'Информация о транзакции',
 
   'Users List': 'Список пользователей',
