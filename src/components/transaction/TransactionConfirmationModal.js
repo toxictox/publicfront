@@ -77,7 +77,9 @@ const TransactionConfirmationModal = (props) => {
       `${app.api}/merchant/${merchId}/document/transaction_confirmation_certificate`,
       {
         tranId: values.tranId.split("\n")
-      }
+      }, {
+          responseType: 'blob'
+        }
     )
     .then(async (response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -86,6 +88,7 @@ const TransactionConfirmationModal = (props) => {
       link.setAttribute('download', 'file.pdf');
       document.body.appendChild(link);
       link.click();
+      link.remove();
       setIsSubmitted(true);
     })
     .catch(async (error) => {
