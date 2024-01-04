@@ -71,11 +71,12 @@ const TransactionConfirmationModal = (props) => {
 
   const handleSubmit = async (values, { setErrors, setStatus, setSubmitting }) => {
     setIsError(false);
+
     await axios
     .post(
-      `${app.api}/merchant/${merchId}/document/transaction_confirmation_certificate/`,
+      `${app.api}/merchant/${merchId}/document/transaction_confirmation_certificate`,
       {
-        tranId: values.tranId
+        tranId: values.tranId.split(" ")
       }
     )
     .then(async (response) => {
