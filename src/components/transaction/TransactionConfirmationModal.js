@@ -90,7 +90,7 @@ const TransactionConfirmationModal = (props) => {
 
   const validationSchema = 
     Yup.object().shape({
-      tranId: Yup.array().required('Required')
+      tranId: Yup.string().max(255).required('Required')
     });
 
   const form = (
