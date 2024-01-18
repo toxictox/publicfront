@@ -8,6 +8,7 @@ import useSettings from '@hooks/useSettings';
 import gtm from '@lib/gtm';
 import { GetFilterDataFromStore, GetFilterPageFromStore } from '@lib/filter';
 import { TransactionListTable } from '@comp/transaction';
+import useAuth from '@hooks/useAuth';
 
 import axios from '@lib/axios';
 import { app } from '@root/config';
@@ -17,10 +18,18 @@ import { setFilterParams, setFilterPage } from '@slices/filter';
 const TransactionsList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
+  const { user } = useAuth();
   const [dataList, setListData] = useState({
     data: [],
     count: 0,
   });
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  const [merchId, setMerchId] = useState(
+    localStorage.getItem('merchId') !== null
+      ? localStorage.getItem('merchId')
+      : user.merchantId
+  );
 
   const filterList = GetFilterDataFromStore('transactions');
 
@@ -34,7 +43,16 @@ const TransactionsList = () => {
   const getOrders = useCallback(async () => {
     try {
       const response = await axios
-        .post(`${app.api}/transactions?page=${page}&count=${25}`, filterList)
+        .get(`${app.api}/transactions`,
+        {
+          params: {
+            page: page + 1,
+            count: rowsPerPage,
+            merchant: merchId,
+            ...filterList
+          }
+        }
+        )
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -43,10 +61,14 @@ const TransactionsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted]);
+  }, [mounted, rowsPerPage]);
 
   const filter = (values) => {
     handlePageChange(null, 0, values);
+  };
+
+  const handleRowsPerPageChange = async (e, newValue) => {
+    setRowsPerPage(newValue.props.value);
   };
 
   const handlePageChange = async (e, newPage, values) => {
@@ -54,9 +76,16 @@ const TransactionsList = () => {
     dispatch(setFilterPage({ path: 'transactions', page: newPage }));
 
     await axios
-      .post(
-        `${app.api}/transactions?page=${newPage}&count=${25}`,
-        values !== undefined ? values : filterList
+      .get(
+        `${app.api}/transactions`,
+        {
+          params: {
+            page: page + 1,
+            count: rowsPerPage,
+            merchant: merchId,
+            ...values !== undefined ? values : filterList
+          }
+        }
       )
       .then(async (response) => {
         if (values !== undefined) {
@@ -92,8 +121,9 @@ const TransactionsList = () => {
               count={dataList.count}
               onPageChange={handlePageChange}
               page={page}
-              rowsPerPage={25}
-              rowsPerPageOptions={[25]}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              rowsPerPageOptions={[25, 50, 100]}
             />
           </Box>
         </Container>
