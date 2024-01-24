@@ -48,7 +48,7 @@ const TransactionFilter = (props) => {
       ? GetFilterDataFromStore('transactions')
       : {
           respCode: [],
-          bankId: [],
+          banks: [],
         };
   return (
     <Formik
@@ -56,16 +56,18 @@ const TransactionFilter = (props) => {
       enableReinitialize={true}
       validationSchema={Yup.object().shape({
         tranId: Yup.string().max(255),
-        tranTypeId: Yup.array(),
+        tranTypes: Yup.array(),
         orderId: Yup.string().max(255),
         amountFrom: Yup.string().max(25),
         amountTo: Yup.string().max(25),
-        dateStart: Yup.string().max(255),
-        dateEnd: Yup.string().max(255),
-        gatewayId: Yup.string().max(255),
-        bankId: Yup.array(),
+        dateFrom: Yup.string().max(255),
+        dateTo: Yup.string().max(255),
+        gatewayRefNo: Yup.string().max(255),
+        banks: Yup.array(),
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
+        rrn: Yup.string(),
+        gatewayRefNo: Yup.string(),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
@@ -102,16 +104,16 @@ const TransactionFilter = (props) => {
               <Grid item xs={6}>
                 <TextField
                   autoFocus
-                  error={Boolean(touched.dateStart && errors.dateStart)}
+                  error={Boolean(touched.dateFrom && errors.dateFrom)}
                   fullWidth
-                  helperText={touched.dateStart && errors.dateStart}
+                  helperText={touched.dateFrom && errors.dateFrom}
                   label={t('createOn')}
                   margin="normal"
-                  name="dateStart"
+                  name="dateFrom"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="datetime-local"
-                  value={values.dateStart}
+                  value={values.dateFrom}
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
@@ -124,16 +126,16 @@ const TransactionFilter = (props) => {
               <Grid item xs={6}>
                 <TextField
                   autoFocus
-                  error={Boolean(touched.dateEnd && errors.dateEnd)}
+                  error={Boolean(touched.dateTo && errors.dateTo)}
                   fullWidth
-                  helperText={touched.dateEnd && errors.dateEnd}
+                  helperText={touched.dateTo && errors.dateTo}
                   label={t('dateEnd')}
                   margin="normal"
-                  name="dateEnd"
+                  name="dateTo"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="datetime-local"
-                  value={values.dateEnd}
+                  value={values.dateTo}
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
@@ -145,18 +147,18 @@ const TransactionFilter = (props) => {
 
               <Grid item xs={3}>
                 <SelectCheckbox
-                  error={Boolean(touched.tranTypeId && errors.tranTypeId)}
-                  labelId="tranTypeId"
-                  helperText={touched.tranTypeId && errors.tranTypeId}
+                  error={Boolean(touched.tranTypes && errors.tranTypes)}
+                  labelId="tranTypes"
+                  helperText={touched.tranTypes && errors.tranTypes}
                   label={t('tranTypeId')}
-                  name="tranTypeId"
+                  name="tranTypes"
                   onBlur={handleBlur}
                   value={
-                    values.tranTypeId !== undefined ? values.tranTypeId : []
+                    values.tranTypes !== undefined ? values.tranTypes : []
                   }
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue('tranTypeId', e.target.value);
+                    setFieldValue('tranTypes', e.target.value);
                   }}
                   items={tranType}
                 />
@@ -164,16 +166,16 @@ const TransactionFilter = (props) => {
 
               <Grid item xs={3}>
                 <SelectCheckbox
-                  error={Boolean(touched.bankId && errors.bankId)}
-                  labelId="bankId"
-                  helperText={touched.bankId && errors.bankId}
+                  error={Boolean(touched.banks && errors.banks)}
+                  labelId="banks"
+                  helperText={touched.banks && errors.banks}
                   label={t('bankId')}
-                  name="bankId"
+                  name="banks"
                   onBlur={handleBlur}
-                  value={values.bankId !== undefined ? values.bankId : []}
+                  value={values.banks !== undefined ? values.banks : []}
                   sx={{ m: 0 }}
                   onChange={(e) => {
-                    setFieldValue('bankId', e.target.value);
+                    setFieldValue('banks', e.target.value);
                   }}
                   items={banks}
                 />
@@ -194,6 +196,24 @@ const TransactionFilter = (props) => {
                   }}
                   fieldText={['external', 'langEn']}
                   items={respCode}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  error={Boolean(touched.tranId && errors.tranId)}
+                  fullWidth
+                  helperText={touched.tranId && errors.tranId}
+                  label={t('tranId')}
+                  margin="normal"
+                  name="tranId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.tranId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
                 />
               </Grid>
 
@@ -270,39 +290,58 @@ const TransactionFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                <TextField
-                  error={Boolean(touched.tranId && errors.tranId)}
-                  fullWidth
-                  helperText={touched.tranId && errors.tranId}
-                  label={t('tranId')}
-                  margin="normal"
-                  name="tranId"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.tranId}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
-                />
+                  <TextField
+                      error={Boolean(touched.orderId && errors.orderId)}
+                      fullWidth
+                      helperText={touched.orderId && errors.orderId}
+                      label={t('orderId')}
+                      margin="normal"
+                      name="orderId"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.orderId}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                  />
               </Grid>
-                <Grid item xs={3}>
-                    <TextField
-                        error={Boolean(touched.orderId && errors.orderId)}
-                        fullWidth
-                        helperText={touched.orderId && errors.orderId}
-                        label={t('orderId')}
-                        margin="normal"
-                        name="orderId"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        type="text"
-                        value={values.orderId}
-                        variant="outlined"
-                        size="small"
-                        sx={{ m: 0 }}
-                    />
-                </Grid>
+
+              <Grid item xs={3}>
+                  <TextField
+                      error={Boolean(touched.rrn && errors.rrn)}
+                      fullWidth
+                      helperText={touched.rrn && errors.rrn}
+                      label={t('rrn')}
+                      margin="normal"
+                      name="rrn"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.rrn}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                  />
+              </Grid>
+
+              <Grid item xs={3}>
+                  <TextField
+                      error={Boolean(touched.gatewayRefNo && errors.gatewayRefNo)}
+                      fullWidth
+                      helperText={touched.gatewayRefNo && errors.gatewayRefNo}
+                      label={t('gatewayRefNo')}
+                      margin="normal"
+                      name="gatewayRefNo"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.gatewayRefNo}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                  />
+              </Grid>
 
               <OrderBySelect
                 touched={touched}
