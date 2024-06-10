@@ -103,23 +103,23 @@ const ServerMaintenanceScheduleId = () => {
               <Divider />
               <TableStatic>
                 <TableRow>
-                    <TableCell>{t("Id")}</TableCell>
+                    <TableCell>{t("id")}</TableCell>
                     <TableCell>{schedule.id}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>{t("Frequency")}</TableCell>
+                  <TableCell>{t("frequency")}</TableCell>
                   <TableCell>{schedule.frequency}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>{t("Status")}</TableCell>
+                  <TableCell>{t("status")}</TableCell>
                   <TableCell>{schedule.status}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>{t("Started At")}</TableCell>
+                  <TableCell>{t("startedAt")}</TableCell>
                   <TableCell>{toLocaleDateTime(schedule.startedAt)}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>{t("Finished At")}</TableCell>
+                  <TableCell>{t("finishedAt")}</TableCell>
                   <TableCell>{toLocaleDateTime(schedule.finishedAt)}</TableCell>
                 </TableRow>
                 <TableRow>

@@ -96,7 +96,7 @@ const ServerMaintenanceScheduleIndex = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Server Maintenance schedule")}</title>
+        <title>{t("Server maintenance schedule")}</title>
       </Helmet>
       <Box
         sx={{
@@ -119,7 +119,7 @@ const ServerMaintenanceScheduleIndex = () => {
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               <CardHeader
-                title={t("Server Maintenance schedule")}
+                title={t("Server maintenance schedule")}
                 action={
                   <GroupTable
                     actionCreate={{

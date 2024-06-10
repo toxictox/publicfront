@@ -262,6 +262,13 @@ const fields = {
   'Fee': 'Комиссия',
   'Amount': 'Сумма',
   'Payment link': 'Ссылка для оплаты',
+  frequency: 'Период',
+  startedAt: 'Начало',
+  finishedAt: 'Конец',
+  status: 'Статус',
+  'Server maintenance schedule': 'Расписание серверных работ',
+  'Create schedule': 'Создать расписание',
+  'Edit schedule': 'Редактировать расписание'
 };
 
 const server = {
