@@ -118,6 +118,7 @@ const text = {
   'card last 4 number': 'Последние 4 цифры карты',
   tranId: 'ID транзакции',
   orderId: 'ID кредита',
+  clientId: 'ID клиента',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
   amount: 'Сумма',
