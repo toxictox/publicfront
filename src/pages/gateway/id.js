@@ -86,6 +86,13 @@ const GatewayId = () => {
                           })
                         ),
                     }}
+                    actionCustom={[
+                      {
+                        title: t("Server maintenance schedule"),
+                        callback: () => navigate(`/gateways/id/${id}/server_maintenance_schedule/`),
+                        access: getAccess("gateways", "update"),
+                      }
+                    ]}
                   />
                 }
               />

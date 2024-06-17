@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 import Loadable from '@root/routes/Loadable';
 import ACLGuard from '@comp/ACLGuard';
+import ServerMaintenanceScheduleIndex from '@pages/gateway/_server_maintenance_schedule';
+import ServerMaintenanceScheduleId from '@pages/gateway/_server_maintenance_schedule/id';
 
 const GatewayIndexPage = Loadable(lazy(() => import('@pages/gateway')));
 const GatewayCreatePage = Loadable(lazy(() => import('@pages/gateway/create')));
@@ -40,6 +42,18 @@ export const gatewaysRoute = {
         <ACLGuard can={'update'}>
           <GatewayIdPagePage />
         </ACLGuard>
+      ),
+    },
+    {
+      path: 'id/:id/server_maintenance_schedule/',
+      element: (
+        <ServerMaintenanceScheduleIndex />
+      ),
+    },
+    {
+      path: 'id/:id/server_maintenance_schedule/:scheduleId',
+      element: (
+        <ServerMaintenanceScheduleId />
       ),
     },
     // {
