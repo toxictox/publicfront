@@ -115,6 +115,10 @@ const ServerMaintenanceScheduleId = () => {
                   <TableCell>{schedule.status}</TableCell>
                 </TableRow>
                 <TableRow>
+                  <TableCell>{t("tranTypeId")}</TableCell>
+                  <TableCell>{schedule.tranTypes}</TableCell>
+                </TableRow>
+                <TableRow>
                   <TableCell>{t("startedAt")}</TableCell>
                   <TableCell>{toLocaleDateTime(schedule.startedAt)}</TableCell>
                 </TableRow>
