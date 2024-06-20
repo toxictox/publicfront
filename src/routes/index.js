@@ -23,6 +23,7 @@ import { error404Route } from '@root/routes/error404Route';
 import { error500Route } from '@root/routes/error500Route';
 import { notFoundRoute } from '@root/routes/notFoundRoute';
 import { dashboard, docs, blog } from './developRoutes';
+import { finMonRoute } from './finMonRoute';
 
 const Login = Loadable(lazy(() => import('@pages/authentication/Login')));
 
@@ -66,6 +67,7 @@ const routes = [
       error404Route,
       error500Route,
       notFoundRoute,
+      finMonRoute,
     ],
   },
 ];

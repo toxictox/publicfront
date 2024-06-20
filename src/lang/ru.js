@@ -36,10 +36,11 @@ const menu = {
   'Merchant menu': 'Мерчанты',
   'Description menu': 'Экспорт документов',
   'Description menu custom': 'Экспорт',
-  'Description menu city24': 'Экспорт city24',
   'Codes menu': 'Коды',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Сверка'
+  'Reconciliation menu': 'Сверка',
+  'Catalogs menu': 'Справочники',
+  'Sanctions List':'Санкционные списки',
 };
 
 const text = {
@@ -262,6 +263,15 @@ const fields = {
   'Fee': 'Комиссия',
   'Amount': 'Сумма',
   'Payment link': 'Ссылка для оплаты',
+  'docRef': 'Номер документ',
+  'document reference': 'Номер документ',
+  'source': 'Источник',
+  'extra': 'Дополнительно',
+  'first name': 'Имя',
+  'last name': 'Фамилия',
+  'notes': 'Заметки',
+  'Excluded': 'Исключенно',
+  'Critical': 'Обязательно',
 };
 
 const server = {

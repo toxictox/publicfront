@@ -29,7 +29,9 @@ import {
   PriceCheck,
   DescriptionOutlined,
   Code,
-  Dns
+  Dns,
+  GridOn,
+  VpnLock
 } from '@material-ui/icons';
 import {red} from '@material-ui/core/colors';
 
@@ -192,17 +194,30 @@ const BaseSidebar = (props) => {
           ]
         },
         {
-          title: t('Bin menu'),
-          path: '/bin',
-          icon: <Dns fontSize="small" />,
-          active: getActiveStatus('bin')
+          title: t('Catalogs menu'),
+          icon: <GridOn fontSize="small" />,
+          active: true,
+          children: [
+            {
+              title: t('Sanctions List'),
+              path: '/sanctions',
+              icon: <VpnLock fontSize="small" />,
+              active: true,
+            },
+            {
+              title: t('Bin menu'),
+              path: '/bin',
+              icon: <Dns fontSize="small" />,
+              active: getActiveStatus('bin')
+            },
+            {
+              title: t('Codes menu'),
+              path: '/codes',
+              icon: <Code fontSize="small" />,
+              active: getActiveStatus('codes')
+            }
+          ]
         },
-        {
-          title: t('Codes menu'),
-          path: '/codes',
-          icon: <Code fontSize="small" />,
-          active: getActiveStatus('codes')
-        }
       ]
     }
   ];
