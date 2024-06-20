@@ -119,6 +119,7 @@ const text = {
   'card last 4 number': 'Последние 4 цифры карты',
   tranId: 'ID транзакции',
   orderId: 'ID кредита',
+  clientId: 'ID клиента',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
   amount: 'Сумма',
@@ -272,6 +273,13 @@ const fields = {
   'notes': 'Заметки',
   'Excluded': 'Исключенно',
   'Critical': 'Обязательно',
+  frequency: 'Период',
+  startedAt: 'Начало',
+  finishedAt: 'Конец',
+  status: 'Статус',
+  'Server maintenance schedule': 'Расписание серверных работ',
+  'Create schedule': 'Создать расписание',
+  'Edit schedule': 'Редактировать расписание'
 };
 
 const server = {

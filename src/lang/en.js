@@ -211,7 +211,11 @@ const fields = {
   'Upload file': 'Upload file',
   cityRespCode: 'City24 status',
   company_email: 'Company Email',
-  company_id: 'Company ID'
+  company_id: 'Company ID',
+  frequency: 'frequency',
+  startedAt: 'started At',
+  finishedAt: 'finished At',
+  status: 'status',
 };
 
 const server = {
