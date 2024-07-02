@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import {
   Box,
   Container,
@@ -21,11 +20,8 @@ import { useTranslation } from 'react-i18next';
 import { TableStatic } from '@comp/core/tables/index';
 import { BackButton, GroupTable } from '@comp/core/buttons';
 import { toLocaleDateTime } from '@lib/date';
-// import { TransactionPdf } from './includes';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
-import CustomTransactionPDF from '@comp/pdfDocs/CustomTransactionPDF';
-// import { InvoicePDF } from '@comp/dashboard/invoice';
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -132,11 +128,6 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
           <BackButton action={() => navigate('/transactions')} />
-          {/* {Object.keys(dataList).length > 0 ? (
-            <PDFViewer height="800" style={{ border: 'none' }} width="100%">
-              <CustomTransactionPDF data={dataList} />
-            </PDFViewer>
-          ) : null} */}
           <Box sx={{ minWidth: 700 }}>
             <Card sx={{ mt: 2 }}>
               {status ? (
@@ -156,24 +147,6 @@ const TransactionsList = () => {
                         access: getAccess('transactions', 'getTransactionLogs'),
                         callback: () => navigate(`/transactions/${id}/logs`)
                       }
-                      // {
-                      //   title: `p${id}`,
-                      //   icon:
-                      //     Object.keys(dataList).length > 0 ? (
-                      //       <PDFDownloadLink
-                      //         document={
-                      //           <CustomTransactionPDF data={dataList} />
-                      //         }
-                      //         fileName={`${dataList.trxReference.docNumber}.pdf`}
-                      //       >
-                      //         <PictureAsPdf />
-                      //       </PDFDownloadLink>
-                      //     ) : (
-                      //       ''
-                      //     ),
-                      //   callback: () => {},
-                      //   access: getAccess('transactions', 'getTransactionLogs')
-                      // }
                     ]}
                     actionCustom={getActionCustom(
                       dataList.respCode,
@@ -199,6 +172,27 @@ const TransactionsList = () => {
                   })}
               </TableStatic>
             </Card>
+
+            {dataList.geoData &&
+              <Card sx={{ mt: 2 }}>
+                <CardHeader
+                  title={t('IP Geo data')}
+                />
+                <Divider />
+                <TableStatic>
+                  {Object.keys(dataList.geoData).map(function (index) {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{t(index)}</TableCell>
+                          <TableCell>
+                            {dataList.geoData[index]}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableStatic>
+              </Card>
+            }
           </Box>
         </Container>
       </Box>

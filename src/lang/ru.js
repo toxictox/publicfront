@@ -269,7 +269,24 @@ const fields = {
   status: 'Статус',
   'Server maintenance schedule': 'Расписание серверных работ',
   'Create schedule': 'Создать расписание',
-  'Edit schedule': 'Редактировать расписание'
+  'Edit schedule': 'Редактировать расписание',
+  gatewayRefNo: 'Ref банка',
+  holder: 'Владелец карты',
+  customerId: 'Id клиента',
+  ip: 'IP адрес',
+  cardHash: 'Хеш карты',
+  country: 'Страна',
+  city: 'Город',
+  email: 'Email',
+  panHash: 'Хеш карты',
+  clientIp: 'ip клиента',
+  customerEmail: 'Email клиента',
+  cardHolder: 'Card holder',
+  respMessage: 'Описание статуса',
+  timezone: 'Часовой пояс',
+  region: 'Регион',
+  country_code: 'Код страны',
+  country_code3: 'Код страны',
 };
 
 const server = {
