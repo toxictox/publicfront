@@ -5,6 +5,7 @@ import AccountIndex from '@pages/merchant/_account';
 import AccountId from '@pages/merchant/_account/id';
 import AccountJobIndex from '@pages/merchant/_account/_job';
 import AccountJobId from '@pages/merchant/_account/_job/id';
+import MerchantFeeRuleIndex from '@pages/merchant/_fee';
 
 const MerchantList = Loadable(lazy(() => import('@pages/merchant/index')));
 const MerchantModelId = Loadable(lazy(() => import('@pages/merchant/id')));
@@ -108,6 +109,12 @@ export const merchantsRoute = {
       path: ':merchantId/account_job/:jobId',
       element: (
         <AccountJobId />
+      ),
+    },
+    {
+      path: ':id/fee/',
+      element: (
+        <MerchantFeeRuleIndex />
       ),
     },
   ],
