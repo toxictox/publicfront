@@ -297,6 +297,7 @@ const fields = {
   region: 'Регион',
   country_code: 'Код страны',
   country_code3: 'Код страны',
+  knownHolders: 'Держатели карты'
 };
 
 const server = {
