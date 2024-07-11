@@ -22,6 +22,7 @@ import { BackButton, GroupTable } from '@comp/core/buttons';
 import { toLocaleDateTime } from '@lib/date';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
+import HoldersList from '@comp/transaction/HoldersList';
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -172,6 +173,9 @@ const TransactionsList = () => {
                   })}
               </TableStatic>
             </Card>
+            {getAccess('transactions', 'viewExtraInfo') &&
+              <HoldersList transactionId={id}/>
+            }
 
             {dataList.geoData &&
               <Card sx={{ mt: 2 }}>
