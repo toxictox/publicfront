@@ -78,7 +78,7 @@ export const AuthProvider = (props) => {
             isAuthenticated: true,
             user: {
               id: user.sub,
-              avatar: '/static/mock-images/avatars/avatar-jane_rotanson.png',
+              avatar: '/static/mock-images/avatars/user.png',
               email: user.attributes.email,
               name: 'Jane Rotanson',
               plan: 'Premium'
@@ -112,7 +112,7 @@ export const AuthProvider = (props) => {
       payload: {
         user: {
           id: user.attributes.sub,
-          avatar: '/static/mock-images/avatars/avatar-jane_rotanson.png',
+          avatar: '/static/mock-images/avatars/user.png',
           email: user.attributes.email,
           name: 'Jane Rotanson',
           plan: 'Premium'
