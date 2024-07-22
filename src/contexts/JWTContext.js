@@ -84,7 +84,7 @@ export const AuthProvider = (props) => {
                   ...response.data,
                   id: response.data.hash,
                   avatar:
-                    '/static/mock-images/avatars/avatar-jane_rotanson.png',
+                    '/static/mock-images/avatars/user.png',
                   name: `${response.data.firstName} ${response.data.lastName}`,
                   plan: 'Premium'
                 }
@@ -118,7 +118,7 @@ export const AuthProvider = (props) => {
 
   const login = async (email, password) => {
     await axios
-      .post(`${app.api}/login`, {
+      .post(`${app.api}/login_check`, {
         email: email,
         password: password
       })
