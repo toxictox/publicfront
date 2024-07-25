@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>home page</title>
+        <title>Главная страница</title>
       </Helmet>
       <Box
         sx={{
