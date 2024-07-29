@@ -130,6 +130,12 @@ export const AuthProvider = (props) => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
+
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.reload();
+          }, 3000
+        );
       });
   };
 
