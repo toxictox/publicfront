@@ -121,7 +121,15 @@ export const AuthProvider = (props) => {
       .post(`${app.api}/login_check`, {
         email: email,
         password: password
-      })
+      }, {transformRequest: (data, headers) => {
+        delete headers.common.Authorization;
+
+        return JSON.stringify(data);
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => {
         localStorage.setItem('accessToken', response.data.token);
         localStorage.setItem('accessId', response.data.user.hash); //response.data.token
@@ -130,12 +138,6 @@ export const AuthProvider = (props) => {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-
-        setTimeout(() => {
-          localStorage.clear();
-          window.location.reload();
-          }, 3000
-        );
       });
   };
 
