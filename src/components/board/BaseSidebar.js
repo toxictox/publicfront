@@ -282,7 +282,7 @@ const BaseSidebar = (props) => {
           <Box>
             <TextField
               fullWidth
-              label="merchId"
+              label={t('merchId')}
               onChange={handleChangeMerch}
               select
               size="small"

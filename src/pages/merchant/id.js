@@ -111,6 +111,11 @@ const MerchantId = () => {
                     }}
                     actionCustom={[
                       {
+                        title: t("Invoice"),
+                        callback: () => navigate(`/merchants/${id}/invoice/`),
+                        access: getAccess("merchants", "update"),
+                      },
+                      {
                         title: t("Fee"),
                         callback: () => navigate(`/merchants/${id}/fee/`),
                         access: getAccess("merchants", "update"),
