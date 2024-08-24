@@ -107,7 +107,16 @@ const ExportList = () => {
               <ExportFileFilter callback={createFile} />
               <CardHeader title={t('generated_reports_list')} />
               <Divider></Divider>
-              <TableStatic>
+              <TableStatic
+                header={[
+                  "id",
+                  "filename",
+                  "status",
+                  "createdAt",
+                  "generation duration",
+                  "",
+                ]}
+              >
                 {generatedReports.map(function (report, idx) {
                   return (
                     <TableRow hover key={report.id}>
@@ -119,6 +128,7 @@ const ExportList = () => {
                         </Typography>
                       </TableCell>
                       <TableCell>{report.createdAat}</TableCell>
+                      <TableCell>{report.time}</TableCell>
                       <TableCell align="right">
                         <Button
                           type="button"

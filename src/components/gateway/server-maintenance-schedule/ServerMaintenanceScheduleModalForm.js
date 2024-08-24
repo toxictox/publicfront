@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
@@ -19,6 +19,7 @@ import {
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 import { useTranslation } from 'react-i18next';
+import { SelectCheckbox } from '@comp/core/forms';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,9 +42,19 @@ const ServerMaintenanceScheduleModalForm = ({entity, open, gatewayId, onClose, o
   const [isOpen, setIsOpen] = React.useState(open);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+  const [tranType, setTranType] = useState([]);
 
   React.useEffect(() => {
     setIsOpen(open);
+    const getData = async () => {
+      await axios.get(`${app.api}/filter/tran_types`).then((response) => {
+        setTranType(response.data);
+      })
+    }
+
+    if (tranType.length === 0) {
+      getData();
+    }
   }, [open]);
 
   const handleOpen = () => {
@@ -64,14 +75,16 @@ const ServerMaintenanceScheduleModalForm = ({entity, open, gatewayId, onClose, o
     id: entity.id,
     frequency: entity.frequency,
     startedAt: entity.startedAt,
-    finishedAt: entity.finishedAt
+    finishedAt: entity.finishedAt,
+    tranTypeIds: typeof entity.tranTypeIds !== 'undefined' ? entity.tranTypeIds : []
   }
   :
   {
     id: null,
     frequency: 'once',
     startedAt: '',
-    finishedAt: ''
+    finishedAt: '',
+    tranTypeIds: tranType.map((type) => type.id)
   };
 
   const handleSubmit = async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -85,6 +98,7 @@ const ServerMaintenanceScheduleModalForm = ({entity, open, gatewayId, onClose, o
         frequency: values.frequency,
         startedAt: values.startedAt,
         finishedAt: values.finishedAt,
+        tranTypeIds: values.tranTypeIds,
       }
     })
     .then(async (response) => {
@@ -106,7 +120,8 @@ const ServerMaintenanceScheduleModalForm = ({entity, open, gatewayId, onClose, o
         t("Frequency must match")
       ),
       startedAt: Yup.string().required(t('required')),
-      finishedAt: Yup.string().required(t('required'))
+      finishedAt: Yup.string().required(t('required')),
+      tranTypeIds: Yup.array().min(1, t('required')),
     });
 
   const form = (
@@ -178,9 +193,23 @@ const ServerMaintenanceScheduleModalForm = ({entity, open, gatewayId, onClose, o
               value={values.finishedAt}
               variant="outlined"
               size="small"
+              sx={{ mb: 3 }}
               InputLabelProps={{
                 shrink: true
               }}
+            />
+            <SelectCheckbox
+              error={Boolean(touched.tranTypeIds && errors.tranTypeIds)}
+              labelId="tranTypeId"
+              helperText={touched.tranTypeIds && errors.tranTypeIds}
+              label={t('tranTypeId')}
+              name="tranTypeIds"
+              onBlur={handleBlur}
+              value={values.tranTypeIds}
+              onChange={(e) => {
+                setFieldValue('tranTypeIds', e.target.value);
+              }}
+              items={tranType}
             />
             <Grid item xs={12}>
               <Box sx={{ mt: 2 }}>

@@ -43,7 +43,7 @@ const CascadingModelsList = () => {
     try {
       const response = await axios
         .post(`${app.api}/cascade/tran_types`, {
-          merchantId: user.merchantId,
+          merchantId: localStorage.getItem('merchId'),
         })
         .then((response) => response.data);
 
@@ -119,7 +119,7 @@ const CascadingModelsList = () => {
     if (e.target.value !== 0 && e.target.value !== "") {
       await axios
         .post(`${app.api}/cascade/models`, {
-          merchantId: user.merchantId,
+          merchantId: localStorage.getItem('merchId'),
           tranTypeId: e.target.value,
         })
         .then((response) => setListData(response.data));

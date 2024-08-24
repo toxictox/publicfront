@@ -137,6 +137,7 @@ const ServerMaintenanceScheduleIndex = () => {
                   "id",
                   "frequency",
                   "status",
+                  "tranTypeId",
                   "startedAt",
                   "finishedAt",
                   "createOn",
@@ -151,6 +152,7 @@ const ServerMaintenanceScheduleIndex = () => {
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{item.frequency}</TableCell>
                         <TableCell>{item.status}</TableCell>
+                        <TableCell>{item.tranTypes}</TableCell>
                         <TableCell>{toLocaleDateTime(item.startedAt)}</TableCell>
                         <TableCell>{toLocaleDateTime(item.finishedAt)}</TableCell>
                         <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>

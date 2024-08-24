@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import useAuth from "@hooks/useAuth";
-import CogIcon from "@icons/Cog";
+import CogIacon from "@icons/Cog";
 import UserIcon from "@icons/User";
 
 const AccountPopover = () => {
@@ -78,37 +78,8 @@ const AccountPopover = () => {
           <Typography color="textPrimary" variant="subtitle2">
             {user.name}
           </Typography>
-          <Typography color="textSecondary" variant="subtitle2">
-            Devias
-          </Typography>
         </Box>
         <Divider />
-        <Box sx={{ mt: 2 }}>
-          <MenuItem component={RouterLink} to="/dashboard/social/profile">
-            <ListItemIcon>
-              <UserIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography color="textPrimary" variant="subtitle2">
-                  Profile
-                </Typography>
-              }
-            />
-          </MenuItem>
-          <MenuItem component={RouterLink} to="/dashboard/account">
-            <ListItemIcon>
-              <CogIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography color="textPrimary" variant="subtitle2">
-                  Settings
-                </Typography>
-              }
-            />
-          </MenuItem>
-        </Box>
         <Box sx={{ p: 2 }}>
           <Button
             color="primary"

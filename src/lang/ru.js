@@ -36,10 +36,11 @@ const menu = {
   'Merchant menu': 'Мерчанты',
   'Description menu': 'Экспорт документов',
   'Description menu custom': 'Экспорт',
-  'Description menu city24': 'Экспорт city24',
   'Codes menu': 'Коды',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Сверка'
+  'Reconciliation menu': 'Сверка',
+  'Catalogs menu': 'Справочники',
+  'Sanctions List':'Санкционные списки',
 };
 
 const text = {
@@ -118,6 +119,7 @@ const text = {
   'card last 4 number': 'Последние 4 цифры карты',
   tranId: 'ID транзакции',
   orderId: 'ID кредита',
+  clientId: 'ID клиента',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
   amount: 'Сумма',
@@ -262,13 +264,40 @@ const fields = {
   'Fee': 'Комиссия',
   'Amount': 'Сумма',
   'Payment link': 'Ссылка для оплаты',
+  'docRef': 'Номер документ',
+  'document reference': 'Номер документ',
+  'source': 'Источник',
+  'extra': 'Дополнительно',
+  'first name': 'Имя',
+  'last name': 'Фамилия',
+  'notes': 'Заметки',
+  'Excluded': 'Исключенно',
+  'Critical': 'Обязательно',
   frequency: 'Период',
   startedAt: 'Начало',
   finishedAt: 'Конец',
   status: 'Статус',
   'Server maintenance schedule': 'Расписание серверных работ',
   'Create schedule': 'Создать расписание',
-  'Edit schedule': 'Редактировать расписание'
+  'Edit schedule': 'Редактировать расписание',
+  gatewayRefNo: 'Ref банка',
+  holder: 'Владелец карты',
+  customerId: 'Id клиента',
+  ip: 'IP адрес',
+  cardHash: 'Хеш карты',
+  country: 'Страна',
+  city: 'Город',
+  email: 'Email',
+  panHash: 'Хеш карты',
+  clientIp: 'ip клиента',
+  customerEmail: 'Email клиента',
+  cardHolder: 'Card holder',
+  respMessage: 'Описание статуса',
+  timezone: 'Часовой пояс',
+  region: 'Регион',
+  country_code: 'Код страны',
+  country_code3: 'Код страны',
+  knownHolders: 'Держатели карты'
 };
 
 const server = {
