@@ -17,6 +17,7 @@ const buttons = {
   'register-city': 'Зарегистрировать',
   'Create transaction': 'Создать транзакцию',
   'Create transaction confirmation': 'Создать справку о транзакциях',
+  'Create': 'Создать'
 };
 
 const menu = {
@@ -208,6 +209,11 @@ const text = {
   'NoFeeRulesDefined': 'Для данного терминала нет правил подсчета комиссии. Создайте первое правило',
   'Successfully updated': 'Изменено успешно',
   'Successfully created': 'Создано успешно',
+  'Hide deleted': 'Скрыть удаленные',
+  'Show deleted': 'Показать удаленные',
+  'Deleted': 'Удаленно',
+  'Sanctions White List': 'Белый список санкций',
+  'Create sanctions white list entities': 'Добавить исключение',
 };
 
 const fields = {
@@ -297,7 +303,8 @@ const fields = {
   region: 'Регион',
   country_code: 'Код страны',
   country_code3: 'Код страны',
-  knownHolders: 'Держатели карты'
+  knownHolders: 'Держатели карты',
+  documentRef: 'Номер документа'
 };
 
 const server = {
