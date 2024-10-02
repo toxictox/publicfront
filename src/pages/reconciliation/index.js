@@ -21,7 +21,6 @@ import './ReconcilationDetail.scss';
 const ReconciliationList = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
-  const { getAccess } = useAuth();
   const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
@@ -29,17 +28,6 @@ const ReconciliationList = () => {
     await handlePageChange(null, 0, { bankId: values });
   };
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const data = await fetchReconciliationData();
-    //     console.log(data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // fetchData();
-  }, []);
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
@@ -57,62 +45,11 @@ const ReconciliationList = () => {
       });
   };
 
-  // const checkStatus = async (id) => {
-  //   await axios
-  //     .get(`${app.api}/reconciliation/file/${id}`)
-  //     .then((response) => {
-  //       setListData({
-  //         ...dataList,
-  //         data: dataList.data.map((item) => {
-  //           if (item.id === id) return response.data;
-  //           else return item;
-  //         })
-  //       });
-  //       toast.success(t('Success update'));
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.response.data.message);
-  //     });
-  // };
-
-  // const startReconciliation = async (id) => {
-  //   await axios
-  //     .post(`${app.api}/reconciliation/make/${id}`)
-  //     .then((response) => {
-  //       setListData({
-  //         ...dataList,
-  //         data: dataList.data.map((item) => {
-  //           if (item.id === id) return response.data;
-  //           else return item;
-  //         })
-  //       });
-  //       toast.success(t('Success update'));
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.response.data.message);
-  //     });
-  // };
-
   const updateList = async (response) => {
     setListData({
       dataList,
       data: [response, ...dataList.data]
     });
-  };
-
-  const getDetailReconcilationLink = ({ reconciliationResult, id, name }) => {
-    if (reconciliationResult && Object.keys(reconciliationResult).length > 0) {
-      return (
-        <Link
-          className="reconcilation__link"
-          to={`/reconciliation/${id}`}
-          state={{ detail: reconciliationResult }}
-        >
-          {name}
-        </Link>
-      );
-    }
-    return name;
   };
 
   return (

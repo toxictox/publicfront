@@ -36,6 +36,7 @@ const FilterDialog = ({ open, onClose, banks, merchants, statuses }) => {
         values.statuses
       );
       onClose();
+      console.log(response);
     } catch (error) {}
   };
 
