@@ -1,45 +1,45 @@
-import { useEffect, useState, Fragment } from 'react';
-import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {
   Box,
   Divider,
   Drawer,
+  Grid,
   MenuItem,
   TextField,
-  Typography,
-  Grid,
   Tooltip,
-} from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import NavSection from './NavSection';
-import Scrollbar from './Scrollbar';
-import { useTranslation } from 'react-i18next';
+  Typography,
+} from '@material-ui/core'
+import { red } from '@material-ui/core/colors'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import {
-  Group,
-  Receipt,
   AccountBalance,
-  Timeline,
-  CenterFocusWeak,
-  LinearScale,
-  Home,
   BlurLinear,
-  Storefront,
-  Security,
-  PriceCheck,
-  DescriptionOutlined,
+  CenterFocusWeak,
   Code,
+  DescriptionOutlined,
   Dns,
   GridOn,
+  Group,
+  Home,
+  LinearScale,
+  PriceCheck,
+  Receipt,
+  Security,
+  Storefront,
+  Timeline,
   VpnLock
-} from '@material-ui/icons';
-import {red} from '@material-ui/core/colors';
+} from '@material-ui/icons'
+import PropTypes from 'prop-types'
+import { Fragment, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
+import NavSection from './NavSection'
+import Scrollbar from './Scrollbar'
 
-import useAuth from '@hooks/useAuth';
-import axios from '@lib/axios';
-import { app } from '@root/config';
-import { formatCurrency } from '@utils/formatCurrency';
-import './styles/sidebar.scss';
+import useAuth from '@hooks/useAuth'
+import axios from '@lib/axios'
+import { app } from '@root/config'
+import { formatCurrency } from '@utils/formatCurrency'
+import './styles/sidebar.scss'
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
@@ -177,7 +177,21 @@ const BaseSidebar = (props) => {
           title: t('Reconciliation menu'),
           path: '/reconciliation',
           icon: <PriceCheck fontSize="small" />,
-          active: getActiveStatus('reconciliation')
+          active: getActiveStatus('reconciliation'),
+          children: [
+            {
+              title: t('reconciliationResult'),
+              path: '/reconciliation/report',
+              icon: <DescriptionOutlined fontSize="small" />,
+              active: getActiveStatus('reconciliation')
+            },
+            // {
+            //   title: t('2'),
+            //   path: '/reconciliation',
+            //   icon: <DescriptionOutlined fontSize="small" />,
+            //   active: getActiveStatus('reconciliation')
+            // }
+          ]
         },
         {
           title: t('Description menu'),

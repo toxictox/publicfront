@@ -1,28 +1,22 @@
-import './ReconcilationDetail.scss';
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { fetchReconciliationData } from '@comp/reconciliation/helper';
+import ReconciliationFilter from '@comp/reconciliation/ReconciliationFilter';
+import useAuth from '@hooks/useAuth';
+import useSettings from '@hooks/useSettings';
+import axios from '@lib/axios';
 import {
   Box,
-  Container,
   Card,
   CardHeader,
+  Container,
   Divider,
-  TableRow,
-  TableCell,
   TablePagination
 } from '@material-ui/core';
-import useSettings from '@hooks/useSettings';
-import { TableStatic } from '@comp/core/tables';
-import { GroupTable } from '@comp/core/buttons';
-import { Cached, Send } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
-import axios from '@lib/axios';
 import { app } from '@root/config';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
-import ReconciliationFilter from '@comp/reconciliation/ReconciliationFilter';
-import { toLocaleDateTime } from '@lib/date';
-import useAuth from '@hooks/useAuth';
+import { Link } from 'react-router-dom';
+import './ReconcilationDetail.scss';
 
 const ReconciliationList = () => {
   const { settings } = useSettings();
@@ -31,10 +25,21 @@ const ReconciliationList = () => {
   const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
-
   const updateData = async (values) => {
     await handlePageChange(null, 0, { bankId: values });
   };
+
+  useEffect(() => {
+    // const fetchData = async () => {
+    //   try {
+    //     const data = await fetchReconciliationData();
+    //     console.log(data);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // fetchData();
+  }, []);
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
@@ -52,41 +57,41 @@ const ReconciliationList = () => {
       });
   };
 
-  const checkStatus = async (id) => {
-    await axios
-      .get(`${app.api}/reconciliation/file/${id}`)
-      .then((response) => {
-        setListData({
-          ...dataList,
-          data: dataList.data.map((item) => {
-            if (item.id === id) return response.data;
-            else return item;
-          })
-        });
-        toast.success(t('Success update'));
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+  // const checkStatus = async (id) => {
+  //   await axios
+  //     .get(`${app.api}/reconciliation/file/${id}`)
+  //     .then((response) => {
+  //       setListData({
+  //         ...dataList,
+  //         data: dataList.data.map((item) => {
+  //           if (item.id === id) return response.data;
+  //           else return item;
+  //         })
+  //       });
+  //       toast.success(t('Success update'));
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.response.data.message);
+  //     });
+  // };
 
-  const startReconciliation = async (id) => {
-    await axios
-      .post(`${app.api}/reconciliation/make/${id}`)
-      .then((response) => {
-        setListData({
-          ...dataList,
-          data: dataList.data.map((item) => {
-            if (item.id === id) return response.data;
-            else return item;
-          })
-        });
-        toast.success(t('Success update'));
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+  // const startReconciliation = async (id) => {
+  //   await axios
+  //     .post(`${app.api}/reconciliation/make/${id}`)
+  //     .then((response) => {
+  //       setListData({
+  //         ...dataList,
+  //         data: dataList.data.map((item) => {
+  //           if (item.id === id) return response.data;
+  //           else return item;
+  //         })
+  //       });
+  //       toast.success(t('Success update'));
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.response.data.message);
+  //     });
+  // };
 
   const updateList = async (response) => {
     setListData({
@@ -129,7 +134,7 @@ const ReconciliationList = () => {
               <Divider />
               <ReconciliationFilter callback={updateData} update={updateList} />
               <Divider />
-              <TableStatic
+              {/* <TableStatic
                 header={[
                   'id',
                   'name',
@@ -189,7 +194,7 @@ const ReconciliationList = () => {
                     </TableRow>
                   );
                 })}
-              </TableStatic>
+              </TableStatic> */}
             </Card>
             {dataList.count ? (
               <TablePagination
