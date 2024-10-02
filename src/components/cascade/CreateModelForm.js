@@ -28,7 +28,7 @@ const CreateModelForm = (props) => {
 
   useEffect(() => {
     const getData = async () => {
-      await axios.get(`${app.api}/gateways`).then((response) => {
+      await axios.get(`${app.api}/gateways?count=100`).then((response) => {
         setGateway(response.data.data);
       });
 

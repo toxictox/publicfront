@@ -219,6 +219,12 @@ const BaseSidebar = (props) => {
               active: true,
             },
             {
+              title: t('Sanctions White List'),
+              path: '/sanctions/exceptions',
+              icon: <VpnLock fontSize="small" />,
+              active: true,
+            },
+            {
               title: t('Bin menu'),
               path: '/bin',
               icon: <Dns fontSize="small" />,
