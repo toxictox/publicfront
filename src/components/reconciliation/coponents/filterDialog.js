@@ -20,7 +20,7 @@ import {
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { getFile, getResults, initialValues } from '../helper';
+import { getResults, initialValues } from '../helper';
 
 const FilterDialog = ({
   open,
@@ -29,7 +29,7 @@ const FilterDialog = ({
   merchants,
   statuses,
   types,
-  dialogType,
+  setFilterData,
   page,
   count,
   onFilterResults
@@ -38,30 +38,19 @@ const FilterDialog = ({
 
   const handleSubmit = async (values) => {
     try {
-      if (dialogType === 'download') {
-        const response = await getFile(
-          values.resolved,
-          values.startDate,
-          values.endDate,
-          values.merchants,
-          values.bankId,
-          values.statuses,
-          values.jobs
-        );
-      } else {
-        const response = await getResults(
-          page + 1,
-          count,
-          values.resolved,
-          values.startDate,
-          values.endDate,
-          values.merchants,
-          values.bankId,
-          values.statuses,
-          values.jobs
-        );
-        onFilterResults(response)
-      }
+      const response = await getResults(
+        page + 1,
+        count,
+        values.resolved,
+        values.startDate,
+        values.endDate,
+        values.merchants,
+        values.bankId,
+        values.statuses,
+        values.jobs
+      );
+      setFilterData(values)
+      onFilterResults(response);
       onClose();
     } catch (error) {}
   };

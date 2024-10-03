@@ -1,6 +1,8 @@
 import { TableStatic } from '@comp/core/tables';
 import FilterDialog from '@comp/reconciliation/coponents/filterDialog';
+import { getFile } from '@comp/reconciliation/helper';
 import useSettings from '@hooks/useSettings';
+import { toLocaleDateTime } from '@lib/date';
 import {
   Box,
   Button,
@@ -24,7 +26,6 @@ import {
   getTypes,
   resolved
 } from './helper';
-import { toLocaleDateTime } from '@lib/date'
 
 const ReconciliationPage1 = () => {
   const { settings } = useSettings();
@@ -41,6 +42,7 @@ const ReconciliationPage1 = () => {
   const navigate = useNavigate();
   const [dialogType, setDialogType] = useState(null);
   const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
+  const [filterData, setFilterData] = useState();
 
   const handleOpenDialogConfirm = () => {
     setOpenDialogConfirm(true);
@@ -128,9 +130,18 @@ const ReconciliationPage1 = () => {
     duplicate: 'Дубликат'
   };
 
-  const handleOpenDownloadDialog = () => {
-    setDialogType('download');
-    setOpenDialog(true);
+  const downloadFile = async () => {
+    try {
+      const response = await getFile(
+        filterData.resolved,
+        filterData.startDate,
+        filterData.endDate,
+        filterData.merchants,
+        filterData.bankId,
+        filterData.statuses,
+        filterData.jobs
+      );
+    } catch (error) {}
   };
 
   const handleOpenFilterDialog = () => {
@@ -154,19 +165,21 @@ const ReconciliationPage1 = () => {
         <Container maxWidth={settings.compact ? 'xl' : false}>
           <Button
             variant="contained"
-            sx={{ marginBottom: '20px' }}
-            onClick={handleOpenDownloadDialog}
-          >
-            {t('Download File')}
-          </Button>
-
-          <Button
-            variant="contained"
-            sx={{ marginBottom: '20px', marginLeft: '20px' }}
+            sx={{ marginBottom: '20px', marginRight: '20px' }}
             onClick={handleOpenFilterDialog}
           >
             {t('Filter')}
           </Button>
+
+          {filterData && (
+            <Button
+              onClick={downloadFile}
+              variant="contained"
+              sx={{ marginBottom: '20px' }}
+            >
+              {t('Download File')}
+            </Button>
+          )}
 
           <Box sx={{ minWidth: 700 }}>
             <Card>
@@ -262,6 +275,7 @@ const ReconciliationPage1 = () => {
             page={page}
             count={rowsPerPage}
             onFilterResults={handleFilterResults}
+            setFilterData={setFilterData}
           />
         </Container>
       </Box>
