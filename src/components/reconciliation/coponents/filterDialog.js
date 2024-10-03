@@ -22,7 +22,7 @@ import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { getFile, initialValues } from '../helper';
 
-const FilterDialog = ({ open, onClose, banks, merchants, statuses }) => {
+const FilterDialog = ({ open, onClose, banks, merchants, statuses, types }) => {
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
@@ -33,7 +33,8 @@ const FilterDialog = ({ open, onClose, banks, merchants, statuses }) => {
         values.endDate,
         values.merchants,
         values.bankId,
-        values.statuses
+        values.statuses,
+        values.jobs
       );
       onClose();
       console.log(response);
@@ -88,6 +89,25 @@ const FilterDialog = ({ open, onClose, banks, merchants, statuses }) => {
                       setFieldValue('merchants', e.target.value);
                     }}
                     items={merchants.data}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <SelectCheckbox
+                    error={Boolean(touched.jobs && errors.jobs)}
+                    labelId="jobs"
+                    helperText={touched.jobs && errors.jobs}
+                    label={t('Reconciliation type')}
+                    name="jobs"
+                    onBlur={handleBlur}
+                    value={
+                      values.jobs !== undefined ? values.jobs : []
+                    }
+                    sx={{ m: 0 }}
+                    onChange={(e) => {
+                      setFieldValue('jobs', e.target.value);
+                    }}
+                    items={types.items}
                   />
                 </Grid>
 

@@ -9,7 +9,8 @@ export const initialValues = {
   startDate: null,
   endDate: null,
   merchants: [],
-  statuses: []
+  statuses: [],
+  jobs: []
 };
 
 export const validationSchema = Yup.object({
@@ -63,19 +64,21 @@ export const getFile = async (
   endDate,
   merchants,
   banks,
-  statuses
+  statuses,
+  jobs
 ) => {
   const merchantParams = merchants
     .map((merchant) => `merchants[]=${merchant}`)
     .join('&');
   const bankParams = banks.map((bank) => `banks[]=${bank}`).join('&');
+  const typesParams = jobs.map((job) => `jobs[]=${job}`).join('&');
   const statusParams = statuses
     .map((status) => `statuses[]=${status}`)
     .join('&');
 
   axios
     .get(
-      `${app.api}/reconciliation/results/report?resolved=${resolved}&startDate=${startDate}&endDate=${endDate}&${merchantParams}&${bankParams}&${statusParams}`,
+      `${app.api}/reconciliation/results/report?resolved=${resolved}&startDate=${startDate}&endDate=${endDate}&${merchantParams}&${bankParams}&${statusParams}&${typesParams}`,
       { responseType: 'blob' }
     )
     .then((res) => {

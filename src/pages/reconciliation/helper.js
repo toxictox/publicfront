@@ -20,7 +20,10 @@ export const getStatuses = async () => {
   const response = await axios.get(`${app.api}/reconciliation/results/statuses`);
   return response.data;
 };
-
+export const getTypes = async () => {
+  const response = await axios.get(`${app.api}/reconciliation/job`);
+  return response.data;
+};
 export const resolved = async (id) => {
   const response = await axios.post(
     `${app.api}/reconciliation/results/${id}/resolve`

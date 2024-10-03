@@ -19,6 +19,7 @@ import {
   getMerchants,
   getResults,
   getStatuses,
+  getTypes,
   resolved
 } from './helper';
 import FilterDialog from '@comp/reconciliation/coponents/filterDialog'
@@ -29,6 +30,7 @@ const ReconciliationPage1 = () => {
   const [banks, setBanks] = useState([]);
   const [merchants, setMerchants] = useState([]);
   const [statuses, setStatuses] = useState([]);
+  const [types, setTypes] = useState([]);
   const { t } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -44,12 +46,13 @@ const ReconciliationPage1 = () => {
 
     const fetchAllData = async () => {
       try {
-        const [reportResults, bankResults, merchantResults, statusesResults] =
+        const [reportResults, bankResults, merchantResults, statusesResults, typesResult] =
           await Promise.all([
             getResults(page + 1),
             getBanks(),
             getMerchants(),
-            getStatuses()
+            getStatuses(),
+            getTypes()
           ]);
 
         if (isMounted) {
@@ -57,6 +60,7 @@ const ReconciliationPage1 = () => {
           setBanks(bankResults);
           setMerchants(merchantResults);
           setStatuses(statusesResults);
+          setTypes(typesResult);
           setTotalRows(reportResults?.count || 0);
         }
       } catch (error) {
@@ -209,6 +213,7 @@ const ReconciliationPage1 = () => {
             banks={banks}
             merchants={merchants}
             statuses={statuses}
+            types={types}
           />
         </Container>
       </Box>
