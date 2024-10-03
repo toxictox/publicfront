@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import ConfirmationDialog from './confirmDialog';
 import {
   getBanks,
@@ -39,7 +38,6 @@ const ReconciliationPage1 = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalRows, setTotalRows] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
-  const navigate = useNavigate();
   const [dialogType, setDialogType] = useState(null);
   const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
   const [filterData, setFilterData] = useState();
@@ -57,7 +55,7 @@ const ReconciliationPage1 = () => {
     handleCloseDialog();
   };
   const handleRedirect = (tranId) => {
-    navigate(`/transactions/${tranId}`);
+    window.open(`/transactions/${tranId}`, '_blank');
   };
   useEffect(() => {
     let isMounted = true;
