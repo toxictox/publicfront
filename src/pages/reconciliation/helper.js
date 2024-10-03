@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getResults = async (page, count) => {
   const response = await axios.get(
-    `${app.api}/reconciliation/results?page=${page}&count=5`
+    `${app.api}/reconciliation/results?page=${page}&count=${count}`
   );
   return response.data;
 };

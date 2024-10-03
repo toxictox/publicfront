@@ -1,4 +1,5 @@
 import { TableStatic } from '@comp/core/tables';
+import FilterDialog from '@comp/reconciliation/coponents/filterDialog';
 import useSettings from '@hooks/useSettings';
 import {
   Box,
@@ -14,6 +15,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import ConfirmationDialog from './confirmDialog';
 import {
   getBanks,
   getMerchants,
@@ -22,7 +24,7 @@ import {
   getTypes,
   resolved
 } from './helper';
-import FilterDialog from '@comp/reconciliation/coponents/filterDialog'
+import { toLocaleDateTime } from '@lib/date'
 
 const ReconciliationPage1 = () => {
   const { settings } = useSettings();
@@ -37,7 +39,21 @@ const ReconciliationPage1 = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
+  const [dialogType, setDialogType] = useState(null);
+  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
 
+  const handleOpenDialogConfirm = () => {
+    setOpenDialogConfirm(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialogConfirm(false);
+  };
+
+  const handleConfirm = (id) => {
+    handleResolve(id);
+    handleCloseDialog();
+  };
   const handleRedirect = (tranId) => {
     navigate(`/transactions/${tranId}`);
   };
@@ -46,14 +62,19 @@ const ReconciliationPage1 = () => {
 
     const fetchAllData = async () => {
       try {
-        const [reportResults, bankResults, merchantResults, statusesResults, typesResult] =
-          await Promise.all([
-            getResults(page + 1),
-            getBanks(),
-            getMerchants(),
-            getStatuses(),
-            getTypes()
-          ]);
+        const [
+          reportResults,
+          bankResults,
+          merchantResults,
+          statusesResults,
+          typesResult
+        ] = await Promise.all([
+          getResults(page + 1, rowsPerPage),
+          getBanks(),
+          getMerchants(),
+          getStatuses(),
+          getTypes()
+        ]);
 
         if (isMounted) {
           setReportData(reportResults);
@@ -106,8 +127,19 @@ const ReconciliationPage1 = () => {
     resp_code: 'Статус (код)',
     duplicate: 'Дубликат'
   };
-  const handleOpenDialog = () => {
+
+  const handleOpenDownloadDialog = () => {
+    setDialogType('download');
     setOpenDialog(true);
+  };
+
+  const handleOpenFilterDialog = () => {
+    setDialogType('filter');
+    setOpenDialog(true);
+  };
+
+  const handleFilterResults = (results) => {
+    setReportData(results);
   };
 
   return (
@@ -123,9 +155,17 @@ const ReconciliationPage1 = () => {
           <Button
             variant="contained"
             sx={{ marginBottom: '20px' }}
-            onClick={handleOpenDialog}
+            onClick={handleOpenDownloadDialog}
           >
             {t('Download File')}
+          </Button>
+
+          <Button
+            variant="contained"
+            sx={{ marginBottom: '20px', marginLeft: '20px' }}
+            onClick={handleOpenFilterDialog}
+          >
+            {t('Filter')}
           </Button>
 
           <Box sx={{ minWidth: 700 }}>
@@ -159,8 +199,7 @@ const ReconciliationPage1 = () => {
                     <TableRow hover key={index}>
                       <TableCell>{item.reconciliationId}</TableCell>
                       <TableCell>{item.reconciliationJobName}</TableCell>
-                      <TableCell>{item.createOn}</TableCell>
-
+                      <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
                       <TableCell>{bank ? bank.name : ''}</TableCell>
                       <TableCell>{merchant ? merchant.name : ''}</TableCell>
                       <TableCell>
@@ -186,11 +225,16 @@ const ReconciliationPage1 = () => {
                           <Button
                             variant="contained"
                             size="small"
-                            onClick={() => handleResolve(item.id)}
+                            onClick={handleOpenDialogConfirm}
                           >
                             {t('fixed')}
                           </Button>
                         )}
+                        <ConfirmationDialog
+                          open={openDialogConfirm}
+                          onClose={handleCloseDialog}
+                          onConfirm={() => handleConfirm(item.id)}
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -203,7 +247,7 @@ const ReconciliationPage1 = () => {
                 onPageChange={handlePageChange}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleRowsPerPageChange}
-                rowsPerPageOptions={[]}
+                rowsPerPageOptions={[5, 25, 50, 100]}
               />
             </Card>
           </Box>
@@ -214,6 +258,10 @@ const ReconciliationPage1 = () => {
             merchants={merchants}
             statuses={statuses}
             types={types}
+            dialogType={dialogType}
+            page={page}
+            count={rowsPerPage}
+            onFilterResults={handleFilterResults}
           />
         </Container>
       </Box>

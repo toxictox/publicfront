@@ -55,6 +55,7 @@ const text = {
   'Success deleted': 'Запись удалена',
   'Reset title': 'Восстановление пароля',
   'Success recovery send token': 'Инструкция по была отправлена на email',
+  Filter: 'Фильтр',
 
   'Transactions List': 'Список транзакций',
   'Transactions Confirmation': 'Справка транзакций',

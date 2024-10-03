@@ -87,3 +87,28 @@ export const getFile = async (
     })
     .catch((error) => console.log(error));
 };
+
+export const getResults = async (
+  page,
+  count,
+  resolved,
+  startDate,
+  endDate,
+  merchants,
+  banks,
+  statuses,
+  jobs
+) => {
+  const merchantParams = merchants
+    .map((merchant) => `merchants[]=${merchant}`)
+    .join('&');
+  const bankParams = banks.map((bank) => `banks[]=${bank}`).join('&');
+  const typesParams = jobs.map((job) => `jobs[]=${job}`).join('&');
+  const statusParams = statuses
+    .map((status) => `statuses[]=${status}`)
+    .join('&');
+  const response = await axios.get(
+    `${app.api}/reconciliation/results?page=${page}&count=${count}&resolved=${resolved}&startDate=${startDate}&endDate=${endDate}&${merchantParams}&${bankParams}&${statusParams}&${typesParams}`
+  );
+  return response.data;
+};

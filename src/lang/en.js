@@ -51,7 +51,7 @@ const text = {
   'Success deleted': 'Entry deleted',
   'Reset title': 'Restore password',
   'Success recovery send token': 'Instructions sent to email',
-
+  Filter: 'Filter',
   reconciliationId: 'Reconciliation ID',
   reconciliationJobName: 'Reconciliation Type',
   createOn: 'Date',
@@ -180,7 +180,7 @@ const text = {
   status_new: 'New',
   status_processing: 'Processing',
   status_finished: 'Finished',
-  status_failed: 'Failed',
+  status_failed: 'Failed'
 };
 
 const fields = {
@@ -233,7 +233,7 @@ const fields = {
   frequency: 'frequency',
   startedAt: 'started At',
   finishedAt: 'finished At',
-  status: 'status',
+  status: 'status'
 };
 
 const server = {

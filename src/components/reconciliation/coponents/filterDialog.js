@@ -20,30 +20,55 @@ import {
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { getFile, initialValues } from '../helper';
+import { getFile, getResults, initialValues } from '../helper';
 
-const FilterDialog = ({ open, onClose, banks, merchants, statuses, types }) => {
+const FilterDialog = ({
+  open,
+  onClose,
+  banks,
+  merchants,
+  statuses,
+  types,
+  dialogType,
+  page,
+  count,
+  onFilterResults
+}) => {
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     try {
-      const response = await getFile(
-        values.resolved,
-        values.startDate,
-        values.endDate,
-        values.merchants,
-        values.bankId,
-        values.statuses,
-        values.jobs
-      );
+      if (dialogType === 'download') {
+        const response = await getFile(
+          values.resolved,
+          values.startDate,
+          values.endDate,
+          values.merchants,
+          values.bankId,
+          values.statuses,
+          values.jobs
+        );
+      } else {
+        const response = await getResults(
+          page + 1,
+          count,
+          values.resolved,
+          values.startDate,
+          values.endDate,
+          values.merchants,
+          values.bankId,
+          values.statuses,
+          values.jobs
+        );
+        onFilterResults(response)
+      }
       onClose();
-      console.log(response);
     } catch (error) {}
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Фильтр</DialogTitle>
+      <DialogTitle>{t('Filter')}</DialogTitle>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({
           values,
@@ -100,9 +125,7 @@ const FilterDialog = ({ open, onClose, banks, merchants, statuses, types }) => {
                     label={t('Reconciliation type')}
                     name="jobs"
                     onBlur={handleBlur}
-                    value={
-                      values.jobs !== undefined ? values.jobs : []
-                    }
+                    value={values.jobs !== undefined ? values.jobs : []}
                     sx={{ m: 0 }}
                     onChange={(e) => {
                       setFieldValue('jobs', e.target.value);
