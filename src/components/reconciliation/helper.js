@@ -99,16 +99,35 @@ export const getResults = async (
   statuses,
   jobs
 ) => {
-  const merchantParams = merchants
-    .map((merchant) => `merchants[]=${merchant}`)
+  const merchantParams = merchants.length
+    ? merchants.map((merchant) => `merchants[]=${merchant}`).join('&')
+    : '';
+  const bankParams = banks.length
+    ? banks.map((bank) => `banks[]=${bank}`).join('&')
+    : '';
+  const typesParams = jobs.length
+    ? jobs.map((job) => `jobs[]=${job}`).join('&')
+    : '';
+  const statusParams = statuses.length
+    ? statuses.map((status) => `statuses[]=${status}`).join('&')
+    : '';
+
+  const params = [
+    `page=${page}`,
+    `count=${count}`,
+    `resolved=${resolved}`,
+    `startDate=${startDate}`,
+    `endDate=${endDate}`,
+    merchantParams,
+    bankParams,
+    statusParams,
+    typesParams
+  ]
+    .filter(Boolean)
     .join('&');
-  const bankParams = banks.map((bank) => `banks[]=${bank}`).join('&');
-  const typesParams = jobs.map((job) => `jobs[]=${job}`).join('&');
-  const statusParams = statuses
-    .map((status) => `statuses[]=${status}`)
-    .join('&');
+
   const response = await axios.get(
-    `${app.api}/reconciliation/results?page=${page}&count=${count}&resolved=${resolved}&startDate=${startDate}&endDate=${endDate}&${merchantParams}&${bankParams}&${statusParams}&${typesParams}`
+    `${app.api}/reconciliation/results?${params}`
   );
   return response.data;
 };

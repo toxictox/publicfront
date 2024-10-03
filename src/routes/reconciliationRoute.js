@@ -25,7 +25,7 @@ export const reconciliationRoute = {
       )
     },
     {
-      path: 'report',
+      path: 'results',
       element: (
         <ACLGuard can={'read'}>
           <ReconciliationPageOne />

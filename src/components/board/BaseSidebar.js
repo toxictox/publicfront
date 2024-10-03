@@ -181,7 +181,7 @@ const BaseSidebar = (props) => {
           children: [
             {
               title: t('reconciliationResult'),
-              path: '/reconciliation/report',
+              path: '/reconciliation/results',
               icon: <DescriptionOutlined fontSize="small" />,
               active: getActiveStatus('reconciliation')
             }

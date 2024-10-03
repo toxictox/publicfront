@@ -1,4 +1,3 @@
-import ReconciliationFilter from '@comp/reconciliation/ReconciliationFilter';
 import useSettings from '@hooks/useSettings';
 import axios from '@lib/axios';
 import {
@@ -21,9 +20,7 @@ const ReconciliationList = () => {
   const [dataList, setListData] = useState({ data: [], count: 0 });
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState({});
-  const updateData = async (values) => {
-    await handlePageChange(null, 0, { bankId: values });
-  };
+ 
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
@@ -39,13 +36,6 @@ const ReconciliationList = () => {
         setFilterList(params);
         setListData(response.data);
       });
-  };
-
-  const updateList = async (response) => {
-    setListData({
-      dataList,
-      data: [response, ...dataList.data]
-    });
   };
 
   return (
@@ -64,8 +54,8 @@ const ReconciliationList = () => {
           <Box sx={{ mt: 1 }}>
             <Card sx={{ mt: 1 }}>
               <CardHeader title={t('Reconciliation List')} />
-              <Divider />
-              <ReconciliationFilter callback={updateData} update={updateList} />
+              {/* <Divider /> */}
+              {/* <ReconciliationFilter callback={updateData} update={updateList} /> */}
               <Divider />
               {/* <TableStatic
                 header={[
