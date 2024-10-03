@@ -1,6 +1,4 @@
-import { fetchReconciliationData } from '@comp/reconciliation/helper';
 import ReconciliationFilter from '@comp/reconciliation/ReconciliationFilter';
-import useAuth from '@hooks/useAuth';
 import useSettings from '@hooks/useSettings';
 import axios from '@lib/axios';
 import {
@@ -12,10 +10,9 @@ import {
   TablePagination
 } from '@material-ui/core';
 import { app } from '@root/config';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import './ReconcilationDetail.scss';
 
 const ReconciliationList = () => {
@@ -27,7 +24,6 @@ const ReconciliationList = () => {
   const updateData = async (values) => {
     await handlePageChange(null, 0, { bankId: values });
   };
-
 
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);

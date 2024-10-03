@@ -61,7 +61,6 @@ const text = {
 
   nonExistent: 'Відсутній у ПО',
   missing: 'Відсутній у звіті',
-  amount: 'Сума',
   resp_code: 'Статус (код)',
   duplicate: 'Дублікат',
 
@@ -135,7 +134,6 @@ const text = {
   tranId: 'ID транзакції',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
-  amount: 'Сума',
   approval: 'Код авторизації',
   callbackUrl: 'Call back URL',
   fee: 'Комісія',

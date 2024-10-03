@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import UploadFilesInput from './coponents/UploadFilesInput';
 import FilterDialog from './coponents/filterDialog';
 
-
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
   const { callback, update } = props;

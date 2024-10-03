@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./src",
     "lint-fix": "eslint --fix ./src",
-    "start": "cross-env FAST_REFRESH=false react-app-rewired start",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider FAST_REFRESH=false react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-app-rewired eject"
   },

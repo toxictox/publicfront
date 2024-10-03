@@ -78,7 +78,6 @@ const text = {
 
   nonExistent:'Отсутствует в ПО',
   missing:'Отсутствует в отчете',
-  amount:'Сумма',
   resp_code:'Статус(код)',
   duplicate:'Дубликат',
 
@@ -130,7 +129,6 @@ const text = {
   clientId: 'ID клиента',
   gateway: 'Банк',
   acsStatus: 'Статус 3DS',
-  amount: 'Сумма',
   approval: 'Код авторизации',
   callbackUrl: 'Call back URL',
   fee: 'Комиссия',
