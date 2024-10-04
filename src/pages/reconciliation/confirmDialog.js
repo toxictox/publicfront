@@ -10,7 +10,7 @@ const ConfirmationDialog = ({ open, onClose, onConfirm }) => {
   const { t } = useTranslation();
   return (
     <Dialog open={open} onClose={onClose} BackdropProps={{ invisible: true }}>
-      <DialogContent>{t('Do you want to remove')}</DialogContent>
+      <DialogContent>{t('Confirm')}</DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary" variant='outlined'>
           {t('Cancel button')}

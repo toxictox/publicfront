@@ -63,6 +63,7 @@ const text = {
   reportField: 'Report Value',
   resolved: 'Fixed',
   reconciliationResult: 'Reconciliation result',
+  Confirm: 'You confirm the action ?',
 
   nonExistent: 'Non-existent in software',
   missing: 'Missing in report',

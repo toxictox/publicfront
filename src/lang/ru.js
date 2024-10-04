@@ -18,7 +18,7 @@ const buttons = {
   'register-city': 'Зарегистрировать',
   'Create transaction': 'Создать транзакцию',
   'Create transaction confirmation': 'Создать справку о транзакциях',
-  'Create': 'Создать'
+  Create: 'Создать'
 };
 
 const menu = {
@@ -68,6 +68,7 @@ const text = {
   'Roles List': 'Список ролей',
   'Role Item Create': 'Создание роли',
   'Role Item Update': 'Обновление роли',
+  Confirm: 'Вы подтверждаете действие ?',
 
   'Terminals List': 'Список терминалов',
   'Terminals Item Id': 'Информация о терминале',
@@ -77,10 +78,10 @@ const text = {
   'Terminal Item Id': 'Информация о терминале',
   'Do you want to update token': 'Вы действительно хотите обновить ключ?',
 
-  nonExistent:'Отсутствует в ПО',
-  missing:'Отсутствует в отчете',
-  resp_code:'Статус(код)',
-  duplicate:'Дубликат',
+  nonExistent: 'Отсутствует в ПО',
+  missing: 'Отсутствует в отчете',
+  resp_code: 'Статус(код)',
+  duplicate: 'Дубликат',
 
   'Merchant List': 'Список мерчантов',
   'Merchant Item Id': 'Описание мерчанта',
@@ -234,9 +235,9 @@ const text = {
   'Successfully created': 'Создано успешно',
   'Hide deleted': 'Скрыть удаленные',
   'Show deleted': 'Показать удаленные',
-  'Deleted': 'Удаленно',
+  Deleted: 'Удаленно',
   'Sanctions White List': 'Белый список санкций',
-  'Create sanctions white list entities': 'Добавить исключение',
+  'Create sanctions white list entities': 'Добавить исключение'
 };
 
 const fields = {

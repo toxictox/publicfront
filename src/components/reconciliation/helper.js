@@ -115,9 +115,9 @@ export const getResults = async (
   const params = [
     `page=${page}`,
     `count=${count}`,
-    `resolved=${resolved}`,
-    `startDate=${startDate}`,
-    `endDate=${endDate}`,
+    resolved !== undefined && resolved !== null ? `resolved=${resolved}` : '',
+    startDate ? `startDate=${startDate}` : '',
+    endDate ? `endDate=${endDate}` : '',
     merchantParams,
     bankParams,
     statusParams,
