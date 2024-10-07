@@ -67,25 +67,37 @@ export const getFile = async (
   statuses,
   jobs
 ) => {
-  const merchantParams = merchants
-    .map((merchant) => `merchants[]=${merchant}`)
-    .join('&');
-  const bankParams = banks.map((bank) => `banks[]=${bank}`).join('&');
-  const typesParams = jobs.map((job) => `jobs[]=${job}`).join('&');
-  const statusParams = statuses
-    .map((status) => `statuses[]=${status}`)
+  const merchantParams = merchants.length
+    ? merchants.map((merchant) => `merchants[]=${merchant}`).join('&')
+    : '';
+  const bankParams = banks.length
+    ? banks.map((bank) => `banks[]=${bank}`).join('&')
+    : '';
+  const typesParams = jobs.length
+    ? jobs.map((job) => `jobs[]=${job}`).join('&')
+    : '';
+  const statusParams = statuses.length
+    ? statuses.map((status) => `statuses[]=${status}`).join('&')
+    : '';
+
+  const params = [
+    resolved !== undefined && resolved !== null ? `resolved=${resolved}` : '',
+    startDate ? `startDate=${startDate}` : '',
+    endDate ? `endDate=${endDate}` : '',
+    merchantParams,
+    bankParams,
+    statusParams,
+    typesParams
+  ]
+    .filter(Boolean)
     .join('&');
 
-  axios
-    .get(
-      `${app.api}/reconciliation/results/report?resolved=${resolved}&startDate=${startDate}&endDate=${endDate}&${merchantParams}&${bankParams}&${statusParams}&${typesParams}`,
-      { responseType: 'blob' }
-    )
+  const response = await axios
+    .get(`${app.api}/reconciliation/results/report?${params}`)
     .then((res) => {
       const { data, headers } = res;
       getCsvFileHelper2({ data, headers });
-    })
-    .catch((error) => console.log(error));
+    });
 };
 
 export const getResults = async (
