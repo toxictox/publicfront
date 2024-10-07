@@ -99,7 +99,7 @@ const ReconciliationTable2 = ({
                 </TableCell>
                 <TableCell>
                   {item.params.totalAffectedRowsCount > 0 &&
-                    item.status !== 'processed' && (
+                    item.status === 'processed' && (
                       <Button
                         variant="contained"
                         size="small"
