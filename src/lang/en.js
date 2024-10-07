@@ -70,6 +70,18 @@ const text = {
   amount: 'Amount',
   resp_code: 'Status (code)',
   duplicate: 'Duplicate',
+  'Total Amount Report': 'Total Amount Report',
+  'View results': 'View results',
+  new: 'New',
+  loaded: 'Loaded',
+  error: 'Error',
+  validation_error: 'Validation Error',
+  processing: 'Processing',
+  processed: 'Processed',
+
+  'Number of report lines': 'Number of report lines',
+  'Number of rows affected': 'Number of rows affected',
+  'Total number of rows processed': 'Total number of rows processed',
 
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',

@@ -109,8 +109,11 @@ export const getResults = async (
   merchants,
   banks,
   statuses,
-  jobs
+  jobs,
+  pageNumber
 ) => {
+  const url = pageNumber ==='one' ? 'reconciliation/results' : 'reconciliation'
+
   const merchantParams = merchants.length
     ? merchants.map((merchant) => `merchants[]=${merchant}`).join('&')
     : '';
@@ -137,9 +140,10 @@ export const getResults = async (
   ]
     .filter(Boolean)
     .join('&');
+    
 
   const response = await axios.get(
-    `${app.api}/reconciliation/results?${params}`
+    `${app.api}/${url}?${params}`
   );
   return response.data;
 };

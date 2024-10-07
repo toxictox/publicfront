@@ -58,6 +58,12 @@ const text = {
   Filter: 'Фильтр',
 
   'Transactions List': 'Список транзакций',
+  'Transactions Sum': 'Сумма транзакций',
+
+  'Number of report lines': 'Количество строк отчета',
+  'Number of rows affected': 'Количество затронутых строк',
+  'Total number of rows processed': 'Общее количество обработанных строк',
+
   'Transactions Confirmation': 'Справка транзакций',
   'Transactions Item': 'Информация о транзакции',
 
@@ -174,7 +180,7 @@ const text = {
   resolved: 'Исправлено',
   reconciliationResult: 'Результат сверки',
   fixed: 'Исправить',
-
+  reconciliation:'Сверка',
   'Export List': 'Экспорт файлов',
   generated_reports_list: 'Список доступных файлов',
   'City24 Files List': 'Экспорт файлов city24',
@@ -328,7 +334,16 @@ const fields = {
   country_code: 'Код страны',
   country_code3: 'Код страны',
   knownHolders: 'Держатели карты',
-  documentRef: 'Номер документа'
+  documentRef: 'Номер документа',
+  'Total Amount Report': 'Отчет об общей сумме',
+  'View results': 'Просмотр результатов',
+
+  new: 'Новый',
+  loaded: 'Загружен',
+  error: 'Ошибка',
+  validation_error: 'Ошибка валидации',
+  processing: 'В Обработке',
+  processed: 'Готов'
 };
 
 const server = {

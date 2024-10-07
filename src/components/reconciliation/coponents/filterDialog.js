@@ -32,7 +32,8 @@ const FilterDialog = ({
   setFilterData,
   page,
   count,
-  onFilterResults
+  onFilterResults,
+  pageNumber
 }) => {
   const { t } = useTranslation();
 
@@ -47,7 +48,8 @@ const FilterDialog = ({
         values.merchants,
         values.bankId,
         values.statuses,
-        values.jobs
+        values.jobs,
+        pageNumber
       );
       setFilterData(values)
       onFilterResults(response);

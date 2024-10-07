@@ -1,6 +1,6 @@
-import { lazy } from 'react';
-import Loadable from '@root/routes/Loadable';
 import ACLGuard from '@comp/ACLGuard';
+import Loadable from '@root/routes/Loadable';
+import { lazy } from 'react';
 
 const ReconciliationList = Loadable(
   lazy(() => import('@pages/reconciliation/index'))
@@ -28,7 +28,15 @@ export const reconciliationRoute = {
       path: 'results',
       element: (
         <ACLGuard can={'read'}>
-          <ReconciliationPageOne />
+          <ReconciliationPageOne pageNumber="one" />
+        </ACLGuard>
+      )
+    },
+    {
+      path: 'results2',
+      element: (
+        <ACLGuard can={'read'}>
+          <ReconciliationPageOne pageNumber="two" />
         </ACLGuard>
       )
     },

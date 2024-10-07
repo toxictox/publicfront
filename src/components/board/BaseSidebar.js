@@ -184,6 +184,12 @@ const BaseSidebar = (props) => {
               path: '/reconciliation/results',
               icon: <DescriptionOutlined fontSize="small" />,
               active: getActiveStatus('reconciliation')
+            },
+            {
+              title: t('Reconciliation menu'),
+              path: '/reconciliation/results2',
+              icon: <DescriptionOutlined fontSize="small" />,
+              active: getActiveStatus('reconciliation')
             }
           ]
         },
