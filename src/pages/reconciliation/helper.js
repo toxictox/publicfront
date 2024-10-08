@@ -2,11 +2,11 @@ import { app } from '@root/config';
 import { getCsvFileHelper2 } from '@utils/getCsvFileHelper';
 import axios from 'axios';
 
-export const getResults = async (page, count, redirectId) => {
+export const getResults = async (page, count, id) => {
   const baseUrl = `${app.api}/reconciliation/results`;
   const params = new URLSearchParams();
-  if (redirectId) {
-    params.append('reconciliation', redirectId);
+  if (id) {
+    params.append('reconciliation', id);
   }
   params.append('page', page);
   params.append('count', count);
@@ -16,7 +16,7 @@ export const getResults = async (page, count, redirectId) => {
 
 export const getResults2 = async (page, count) => {
   const response = await axios.get(
-    `${app.api}/reconciliation/?page=${page}&count=${count}`
+    `${app.api}/reconciliation?page=${page}&count=${count}`
   );
   return response.data;
 };
@@ -32,6 +32,12 @@ export const getMerchants = async () => {
 export const getStatuses = async () => {
   const response = await axios.get(
     `${app.api}/reconciliation/results/statuses`
+  );
+  return response.data;
+};
+export const getStatuses2 = async () => {
+  const response = await axios.get(
+    `${app.api}/reconciliation/statuses`
   );
   return response.data;
 };
@@ -52,4 +58,20 @@ export const getFileReconciliation = async (id) => {
       const { data, headers } = res;
       getCsvFileHelper2({ data, headers });
     });
+};
+
+export const uploadFile = async (file, uid) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post(
+    `${app.api}/reconciliation/job/${uid}/upload`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+
+  return response.data;
 };

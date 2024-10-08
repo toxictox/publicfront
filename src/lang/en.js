@@ -64,6 +64,7 @@ const text = {
   resolved: 'Fixed',
   reconciliationResult: 'Reconciliation result',
   Confirm: 'You confirm the action ?',
+  'File upload': 'File uploaded successfully',
 
   nonExistent: 'Non-existent in software',
   missing: 'Missing in report',
@@ -78,6 +79,8 @@ const text = {
   validation_error: 'Validation Error',
   processing: 'Processing',
   processed: 'Processed',
+  'Upload Files': 'Uploading a file',
+  'Reconciliation type': 'Reconciliation type',
 
   'Number of report lines': 'Number of report lines',
   'Number of rows affected': 'Number of rows affected',

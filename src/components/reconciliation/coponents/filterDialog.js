@@ -20,7 +20,7 @@ import {
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { getResults, initialValues } from '../helper';
+import { getResults, getResultsReconciliation, initialValues } from '../helper';
 
 const FilterDialog = ({
   open,
@@ -33,26 +33,45 @@ const FilterDialog = ({
   page,
   count,
   onFilterResults,
-  pageNumber
+  pageNumber,
+  id
 }) => {
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     try {
-      const response = await getResults(
-        page + 1,
-        count,
-        values.resolved,
-        values.startDate,
-        values.endDate,
-        values.merchants,
-        values.bankId,
-        values.statuses,
-        values.jobs,
-        pageNumber
-      );
-      setFilterData(values)
-      onFilterResults(response);
+      if (pageNumber === 'one') {
+        const response = await getResults(
+          page + 1,
+          count,
+          values.resolved,
+          values.startDate,
+          values.endDate,
+          values.merchants,
+          values.bankId,
+          values.statuses,
+          values.jobs,
+          pageNumber,
+          id
+        );
+        onFilterResults(response);
+      } else {
+        const response = await getResultsReconciliation(
+          page + 1,
+          count,
+          values.resolved,
+          values.startDate,
+          values.endDate,
+          values.merchants,
+          values.bankId,
+          values.statuses,
+          values.jobs,
+          pageNumber
+        );
+        onFilterResults(response);
+      }
+
+      setFilterData(values);
       onClose();
     } catch (error) {}
   };
@@ -182,35 +201,37 @@ const FilterDialog = ({
                   />
                 </Grid>
 
-                <Grid item xs={6}>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">{t('resolved')}</FormLabel>
-                    <RadioGroup
-                      row
-                      name="resolved"
-                      value={
-                        values.resolved === null
-                          ? ''
-                          : values.resolved.toString()
-                      }
-                      onChange={(event) => {
-                        const value = event.target.value === 'true';
-                        setFieldValue('resolved', value);
-                      }}
-                    >
-                      <FormControlLabel
-                        value="true"
-                        control={<Radio />}
-                        label="Да"
-                      />
-                      <FormControlLabel
-                        value="false"
-                        control={<Radio />}
-                        label="Нет"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
+                {pageNumber === 'one' && (
+                  <Grid item xs={6}>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">{t('resolved')}</FormLabel>
+                      <RadioGroup
+                        row
+                        name="resolved"
+                        value={
+                          values.resolved === null
+                            ? ''
+                            : values.resolved.toString()
+                        }
+                        onChange={(event) => {
+                          const value = event.target.value === 'true';
+                          setFieldValue('resolved', value);
+                        }}
+                      >
+                        <FormControlLabel
+                          value="true"
+                          control={<Radio />}
+                          label="Да"
+                        />
+                        <FormControlLabel
+                          value="false"
+                          control={<Radio />}
+                          label="Нет"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                )}
               </Grid>
             </DialogContent>
             <DialogActions>

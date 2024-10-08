@@ -9,7 +9,6 @@ const ReconciliationTable1 = ({
   reportData,
   banks,
   merchants,
-  reasonMapping,
   totalRows,
   rowsPerPage,
   page,
@@ -29,6 +28,14 @@ const ReconciliationTable1 = ({
 
   const handleCloseDialog = () => {
     setOpenDialogConfirm(false);
+  };
+
+	const reasonMapping = {
+    nonExistent: 'Отсутствует в ПО',
+    missing: 'Отсутствует в отчете',
+    amount: 'Сумма',
+    resp_code: 'Статус (код)',
+    duplicate: 'Дубликат'
   };
 
   const handleConfirm = () => {

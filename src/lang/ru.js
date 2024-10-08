@@ -58,7 +58,7 @@ const text = {
   Filter: 'Фильтр',
 
   'Transactions List': 'Список транзакций',
-  'Transactions Sum': 'Сумма транзакций',
+  'Transactions Sum': 'Сумма транзакций в ПО',
 
   'Number of report lines': 'Количество строк отчета',
   'Number of rows affected': 'Количество затронутых строк',
@@ -291,6 +291,9 @@ const fields = {
   'Comment show': 'Комментарий',
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
+  'File upload': 'Файл успешно загружен',
+  'Upload Files': 'Загрузка файла',
+  'Reconciliation type': 'Тип сверки',
   cityRespCode: 'City24 статус',
   company_email: 'Email компании',
   company_id: 'ID компании',
@@ -335,7 +338,7 @@ const fields = {
   country_code3: 'Код страны',
   knownHolders: 'Держатели карты',
   documentRef: 'Номер документа',
-  'Total Amount Report': 'Отчет об общей сумме',
+  'Total Amount Report': 'Cумма тразнауций в отчете',
   'View results': 'Просмотр результатов',
 
   new: 'Новый',

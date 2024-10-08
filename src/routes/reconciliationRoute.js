@@ -20,7 +20,7 @@ export const reconciliationRoute = {
       path: '/',
       element: (
         <ACLGuard can={'read'}>
-          <ReconciliationList />
+          <ReconciliationPageOne pageNumber="two" />
         </ACLGuard>
       )
     },
@@ -33,10 +33,10 @@ export const reconciliationRoute = {
       )
     },
     {
-      path: 'results2',
+      path: 'results/:id',
       element: (
         <ACLGuard can={'read'}>
-          <ReconciliationPageOne pageNumber="two" />
+          <ReconciliationPageOne pageNumber="one" />
         </ACLGuard>
       )
     },

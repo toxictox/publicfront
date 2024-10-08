@@ -110,10 +110,55 @@ export const getResults = async (
   banks,
   statuses,
   jobs,
+  pageNumber,
+  id
+) => {
+  const merchantParams = merchants.length
+    ? merchants.map((merchant) => `merchants[]=${merchant}`).join('&')
+    : '';
+  const bankParams = banks.length
+    ? banks.map((bank) => `banks[]=${bank}`).join('&')
+    : '';
+  const typesParams = jobs.length
+    ? jobs.map((job) => `jobs[]=${job}`).join('&')
+    : '';
+  const statusParams = statuses.length
+    ? statuses.map((status) => `statuses[]=${status}`).join('&')
+    : '';
+
+  const params = [
+    `page=${page}`,
+    `count=${count}`,
+    resolved !== undefined && resolved !== null ? `resolved=${resolved}` : '',
+    startDate ? `startDate=${startDate}` : '',
+    endDate ? `endDate=${endDate}` : '',
+    merchantParams,
+    bankParams,
+    statusParams,
+    typesParams,
+     id ? `reconciliation=${id}` : ''
+  ]
+    .filter(Boolean)
+    .join('&');
+    
+
+  const response = await axios.get(
+    `${app.api}/reconciliation/results?${params}`
+  );
+  return response.data;
+};
+export const getResultsReconciliation = async (
+  page,
+  count,
+  resolved,
+  startDate,
+  endDate,
+  merchants,
+  banks,
+  statuses,
+  jobs,
   pageNumber
 ) => {
-  const url = pageNumber ==='one' ? 'reconciliation/results' : 'reconciliation'
-
   const merchantParams = merchants.length
     ? merchants.map((merchant) => `merchants[]=${merchant}`).join('&')
     : '';
@@ -140,10 +185,9 @@ export const getResults = async (
   ]
     .filter(Boolean)
     .join('&');
-    
 
-  const response = await axios.get(
-    `${app.api}/${url}?${params}`
-  );
+  const manualURL = `${app.api}/reconciliation?${params}`;
+
+  const response = await axios.get(manualURL);
   return response.data;
 };

@@ -12,10 +12,12 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { getFileReconciliation } from './helper'
+import { useNavigate } from 'react-router'
 
 const ReconciliationTable2 = ({
   reportData,
   banks,
+  merchants,
   totalRows,
   rowsPerPage,
   page,
@@ -24,9 +26,10 @@ const ReconciliationTable2 = ({
   onRedirect
 }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const redirectUrl = (id) => {
-    localStorage.setItem('redirectId', id);
-    window.open(`/reconciliation/results`, '_blank');
+    navigate(`/reconciliation/results/${id}`);
   };
 
   const downloadFile = async (id) => {
@@ -44,6 +47,8 @@ const ReconciliationTable2 = ({
         <Divider />
         <TableStatic
           header={[
+            'ID',
+            'merchantId',
             'reconciliationJobName',
             'status',
             'bankId',
@@ -54,12 +59,16 @@ const ReconciliationTable2 = ({
         >
           {reportData.items?.map((item, index) => {
             const bank = banks.data?.find((bank) => bank.id === item.bankId);
-
+            const merchant = merchants.data?.find(
+              (merchant) => merchant.id === item.merchantId
+            );
             return (
               <TableRow hover key={index}>
+                <TableCell>{item.id}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{t(item.status)}</TableCell>
                 <TableCell>{bank ? bank.name : ''}</TableCell>
+                <TableCell>{merchant ? merchant.name : ''}</TableCell>
                 <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
                 <TableCell>
                   <div>

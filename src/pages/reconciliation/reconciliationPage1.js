@@ -4,17 +4,20 @@ import useSettings from '@hooks/useSettings';
 import { Box, Button, Container } from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router';
 import {
   getBanks,
   getMerchants,
   getResults,
   getResults2,
   getStatuses,
+  getStatuses2,
   getTypes,
   resolved
 } from './helper';
 import ReconciliationTable1 from './ReconciliationTable1';
 import ReconciliationTable2 from './reconciliationTable2';
+import UploadFileDialog from './uploadFileDialog';
 
 const ReconciliationPage1 = ({ pageNumber }) => {
   const { settings } = useSettings();
@@ -23,6 +26,7 @@ const ReconciliationPage1 = ({ pageNumber }) => {
   const [banks, setBanks] = useState([]);
   const [merchants, setMerchants] = useState([]);
   const [statuses, setStatuses] = useState([]);
+  const [statuses2, setStatuses2] = useState([]);
   const [types, setTypes] = useState([]);
   const { t } = useTranslation();
   const [page, setPage] = useState(0);
@@ -31,11 +35,12 @@ const ReconciliationPage1 = ({ pageNumber }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogType, setDialogType] = useState(null);
   const [filterData, setFilterData] = useState();
+  const [uploadDialog, setUploadDialog] = useState(false);
 
   const [page2, setPage2] = useState(0);
   const [rowsPerPage2, setRowsPerPage2] = useState(5);
   const [totalRows2, setTotalRows2] = useState(0);
-  const redirectId = localStorage.getItem('redirectId');
+  const { id } = useParams();
 
   const reasonMapping = {
     nonExistent: 'Отсутствует в ПО',
@@ -56,14 +61,16 @@ const ReconciliationPage1 = ({ pageNumber }) => {
           merchantResults,
           statusesResults,
           typesResult,
-          results2
+          results2,
+          statusesResults2
         ] = await Promise.all([
-          getResults(page + 1, rowsPerPage, redirectId),
+          getResults(page + 1, rowsPerPage, id),
           getBanks(),
           getMerchants(),
           getStatuses(),
           getTypes(),
-          getResults2(page2 + 1, rowsPerPage2)
+          getResults2(page2 + 1, rowsPerPage2),
+          getStatuses2()
         ]);
 
         if (isMounted) {
@@ -75,6 +82,7 @@ const ReconciliationPage1 = ({ pageNumber }) => {
           setTypes(typesResult);
           setTotalRows(reportResults?.count || 0);
           setTotalRows2(results2?.count || 0);
+          setStatuses2(statusesResults2);
         }
       } catch (error) {
         if (isMounted) {
@@ -89,7 +97,7 @@ const ReconciliationPage1 = ({ pageNumber }) => {
     return () => {
       isMounted = false;
     };
-  }, [page, rowsPerPage, page2, rowsPerPage2]);
+  }, [page, rowsPerPage, page2, rowsPerPage2, id, uploadDialog]);
 
   const handlePageChange = useCallback((event, newPage) => {
     setPage(newPage);
@@ -160,6 +168,16 @@ const ReconciliationPage1 = ({ pageNumber }) => {
     setPage2(0);
   }, []);
 
+  const uploadFile = () => {};
+
+  const handleClickOpenDialogUpload = () => {
+    setUploadDialog(true);
+  };
+
+  const handleCloseDialogUpload = () => {
+    setUploadDialog(false);
+  };
+
   return (
     <>
       <Box
@@ -177,6 +195,16 @@ const ReconciliationPage1 = ({ pageNumber }) => {
           >
             {t('Filter')}
           </Button>
+
+          {pageNumber === 'two' && (
+            <Button
+              onClick={handleClickOpenDialogUpload}
+              variant="contained"
+              sx={{ marginBottom: '20px' }}
+            >
+              {t('Upload file')}
+            </Button>
+          )}
 
           {filterData && pageNumber === 'one' && (
             <Button
@@ -225,7 +253,7 @@ const ReconciliationPage1 = ({ pageNumber }) => {
             onClose={() => filterDialogClose()}
             banks={banks}
             merchants={merchants}
-            statuses={statuses}
+            statuses={pageNumber === 'one' ? statuses : statuses2}
             types={types}
             dialogType={dialogType}
             page={page}
@@ -235,6 +263,13 @@ const ReconciliationPage1 = ({ pageNumber }) => {
             }
             setFilterData={setFilterData}
             pageNumber={pageNumber}
+            id={id}
+          />
+
+          <UploadFileDialog
+            open={uploadDialog}
+            onClose={handleCloseDialogUpload}
+            jobs={types}
           />
         </Container>
       </Box>
