@@ -60,7 +60,7 @@ const text = {
   'Transactions List': 'Список транзакций',
   'Transactions Sum': 'Сумма транзакций в ПО',
 
-  'Number of report lines': 'Количество строк отчета',
+  'Number of report lines': 'Количество строк в отчете',
   'Number of rows affected': 'Количество затронутых строк',
   'Total number of rows processed': 'Общее количество обработанных строк',
 

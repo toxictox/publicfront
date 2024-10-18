@@ -11,8 +11,8 @@ import {
   TableRow
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { getFileReconciliation } from './helper'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
+import { getFileReconciliation } from './helper';
 
 const ReconciliationTable2 = ({
   reportData,
@@ -101,7 +101,7 @@ const ReconciliationTable2 = ({
                     <b>{item.params.totalProcessedRowsCount}</b>
                     <br />
                     <strong>{t('frequency')}:</strong>{' '}
-                    {toLocaleDateTime(item.params.startDate)} -
+                    {toLocaleDateTime(item.params.startDate)} -{' '}
                     {toLocaleDateTime(item.params.endDate)}
                     <br />
                   </div>
