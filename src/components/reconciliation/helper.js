@@ -100,7 +100,7 @@ export const getFile = async (
     });
 };
 
-export const getResults = async (
+export const getResultsInFilter = async (
   page,
   count,
   resolved,
@@ -147,7 +147,7 @@ export const getResults = async (
   );
   return response.data;
 };
-export const getResultsReconciliation = async (
+export const getResultsReconciliationInFilter = async (
   page,
   count,
   resolved,

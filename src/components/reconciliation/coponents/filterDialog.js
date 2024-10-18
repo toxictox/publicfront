@@ -20,7 +20,11 @@ import {
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { getResults, getResultsReconciliation, initialValues } from '../helper';
+import {
+  getResultsInFilter,
+  getResultsReconciliationInFilter,
+  initialValues
+} from '../helper';
 
 const FilterDialog = ({
   open,
@@ -41,7 +45,7 @@ const FilterDialog = ({
   const handleSubmit = async (values) => {
     try {
       if (pageNumber === 'one') {
-        const response = await getResults(
+        const response = await getResultsInFilter(
           page + 1,
           count,
           values.resolved,
@@ -54,9 +58,9 @@ const FilterDialog = ({
           pageNumber,
           id
         );
-        onFilterResults(response);
+        onFilterResults(response, values);
       } else {
-        const response = await getResultsReconciliation(
+        const response = await getResultsReconciliationInFilter(
           page + 1,
           count,
           values.resolved,
@@ -68,7 +72,7 @@ const FilterDialog = ({
           values.jobs,
           pageNumber
         );
-        onFilterResults(response);
+        onFilterResults(response, values);
       }
 
       setFilterData(values);

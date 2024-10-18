@@ -48,10 +48,10 @@ const ReconciliationTable2 = ({
         <TableStatic
           header={[
             'ID',
-            'merchantId',
             'reconciliationJobName',
-            'status',
             'bankId',
+            'status',
+            'merchantId',
             'createOn',
             'description',
             'reconciliationResult'
@@ -66,8 +66,8 @@ const ReconciliationTable2 = ({
               <TableRow hover key={index}>
                 <TableCell>{item.id}</TableCell>
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{t(item.status)}</TableCell>
                 <TableCell>{bank ? bank.name : ''}</TableCell>
+                <TableCell>{t(item.status)}</TableCell>
                 <TableCell>{merchant ? merchant.name : ''}</TableCell>
                 <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
                 <TableCell>

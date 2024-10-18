@@ -36,11 +36,13 @@ const ReconciliationPage1 = ({ pageNumber }) => {
   const [dialogType, setDialogType] = useState(null);
   const [filterData, setFilterData] = useState();
   const [uploadDialog, setUploadDialog] = useState(false);
-
   const [page2, setPage2] = useState(0);
   const [rowsPerPage2, setRowsPerPage2] = useState(5);
   const [totalRows2, setTotalRows2] = useState(0);
+  const [filterValueResults1, setFilterValueResults1] = useState();
+  const [filterValueResults2, setFilterValueResults2] = useState();
   const { id } = useParams();
+  
 
   const reasonMapping = {
     nonExistent: 'Отсутствует в ПО',
@@ -64,12 +66,12 @@ const ReconciliationPage1 = ({ pageNumber }) => {
           results2,
           statusesResults2
         ] = await Promise.all([
-          getResults(page + 1, rowsPerPage, id),
+          getResults(page + 1, rowsPerPage, id, filterValueResults1),
           getBanks(),
           getMerchants(),
           getStatuses(),
           getTypes(),
-          getResults2(page2 + 1, rowsPerPage2),
+          getResults2(page2 + 1, rowsPerPage2, filterValueResults2),
           getStatuses2()
         ]);
 
@@ -135,11 +137,13 @@ const ReconciliationPage1 = ({ pageNumber }) => {
     setOpenDialog(false);
   };
 
-  const handleFilterResults = (results) => {
+  const handleFilterResults = (results, values) => {
     setReportData(results);
+    setFilterValueResults1(values)
   };
 
-  const handleFilterResults2 = (results) => {
+  const handleFilterResults2 = (results, values) => {
+    setFilterValueResults2(values)
     setReportData2(results);
   };
 
@@ -167,8 +171,6 @@ const ReconciliationPage1 = ({ pageNumber }) => {
     setRowsPerPage2(parseInt(event.target.value, 10));
     setPage2(0);
   }, []);
-
-  const uploadFile = () => {};
 
   const handleClickOpenDialogUpload = () => {
     setUploadDialog(true);

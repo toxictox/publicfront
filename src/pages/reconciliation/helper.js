@@ -2,24 +2,90 @@ import { app } from '@root/config';
 import { getCsvFileHelper2 } from '@utils/getCsvFileHelper';
 import axios from 'axios';
 
-export const getResults = async (page, count, id) => {
+export const getResults = async (page, count, id, filterValueResults) => {
   const baseUrl = `${app.api}/reconciliation/results`;
-  const params = new URLSearchParams();
-  if (id) {
-    params.append('reconciliation', id);
-  }
-  params.append('page', page);
-  params.append('count', count);
-  const response = await axios.get(`${baseUrl}?${params.toString()}`);
+  const bankParams = filterValueResults?.bankId?.length
+    ? filterValueResults.bankId.map((bank) => `banks[]=${bank}`).join('&')
+    : '';
+  const merchantParams = filterValueResults?.merchants?.length
+    ? filterValueResults.merchants
+        .map((merchant) => `merchants[]=${merchant}`)
+        .join('&')
+    : '';
+  const statusParams = filterValueResults?.statuses?.length
+    ? filterValueResults.statuses
+        .map((status) => `statuses[]=${status}`)
+        .join('&')
+    : '';
+  const typesParams = filterValueResults?.jobs?.length
+    ? filterValueResults.jobs.map((job) => `jobs[]=${job}`).join('&')
+    : '';
+
+  const params = [
+    `page=${page}`,
+    `count=${count}`,
+    id ? `reconciliation=${id}` : '',
+    filterValueResults?.resolved !== undefined &&
+    filterValueResults?.resolved !== null
+      ? `resolved=${filterValueResults.resolved}`
+      : '',
+    filterValueResults?.startDate
+      ? `startDate=${filterValueResults.startDate}`
+      : '',
+    filterValueResults?.endDate ? `endDate=${filterValueResults.endDate}` : '',
+    bankParams,
+    merchantParams,
+    statusParams,
+    typesParams
+  ]
+    .filter(Boolean)
+    .join('&');
+  const response = await axios.get(`${baseUrl}?${params}`);
   return response.data;
 };
 
-export const getResults2 = async (page, count) => {
-  const response = await axios.get(
-    `${app.api}/reconciliation?page=${page}&count=${count}`
-  );
+export const getResults2 = async (page, count, filterValueResults) => {
+  const baseUrl = `${app.api}/reconciliation`;
+
+  const bankParams = filterValueResults?.bankId?.length
+    ? filterValueResults.bankId.map((bank) => `banks[]=${bank}`).join('&')
+    : '';
+  const merchantParams = filterValueResults?.merchants?.length
+    ? filterValueResults.merchants
+        .map((merchant) => `merchants[]=${merchant}`)
+        .join('&')
+    : '';
+  const statusParams = filterValueResults?.statuses?.length
+    ? filterValueResults.statuses
+        .map((status) => `statuses[]=${status}`)
+        .join('&')
+    : '';
+  const typesParams = filterValueResults?.jobs?.length
+    ? filterValueResults.jobs.map((job) => `jobs[]=${job}`).join('&')
+    : '';
+  const params = [
+    `page=${page}`,
+    `count=${count}`,
+    filterValueResults?.resolved !== undefined &&
+    filterValueResults?.resolved !== null
+      ? `resolved=${filterValueResults.resolved}`
+      : '',
+    filterValueResults?.startDate
+      ? `startDate=${filterValueResults.startDate}`
+      : '',
+    filterValueResults?.endDate ? `endDate=${filterValueResults.endDate}` : '',
+    bankParams,
+    merchantParams,
+    statusParams,
+    typesParams
+  ]
+    .filter(Boolean)
+    .join('&');
+
+  const response = await axios.get(`${baseUrl}?${params}`);
   return response.data;
 };
+
 export const getBanks = async () => {
   const response = await axios.get(`${app.api}/banks`);
   return response.data;
@@ -36,15 +102,14 @@ export const getStatuses = async () => {
   return response.data;
 };
 export const getStatuses2 = async () => {
-  const response = await axios.get(
-    `${app.api}/reconciliation/statuses`
-  );
+  const response = await axios.get(`${app.api}/reconciliation/statuses`);
   return response.data;
 };
 export const getTypes = async () => {
   const response = await axios.get(`${app.api}/reconciliation/job`);
   return response.data;
 };
+
 export const resolved = async (id) => {
   const response = await axios.post(
     `${app.api}/reconciliation/results/${id}/resolve`
@@ -68,8 +133,8 @@ export const uploadFile = async (file, uid) => {
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     }
   );
 
