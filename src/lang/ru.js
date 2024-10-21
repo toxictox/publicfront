@@ -338,7 +338,7 @@ const fields = {
   country_code3: 'Код страны',
   knownHolders: 'Держатели карты',
   documentRef: 'Номер документа',
-  'Total Amount Report': 'Cумма тразнауций в отчете',
+  'Total Amount Report': 'Cумма тразнакций в отчете',
   'View results': 'Просмотр результатов',
 
   new: 'Новый',

@@ -42,7 +42,6 @@ const ReconciliationPage1 = ({ pageNumber }) => {
   const [filterValueResults1, setFilterValueResults1] = useState();
   const [filterValueResults2, setFilterValueResults2] = useState();
   const { id } = useParams();
-  
 
   const reasonMapping = {
     nonExistent: 'Отсутствует в ПО',
@@ -138,13 +137,23 @@ const ReconciliationPage1 = ({ pageNumber }) => {
   };
 
   const handleFilterResults = (results, values) => {
+    setFilterValueResults1(values);
+    setPage(0);
     setReportData(results);
-    setFilterValueResults1(values)
+    getResults(1, rowsPerPage, id, values).then((newResults) => {
+      setReportData(newResults);
+      setTotalRows(newResults?.count || 0);
+    });
   };
 
   const handleFilterResults2 = (results, values) => {
-    setFilterValueResults2(values)
+    setFilterValueResults2(values);
+    setPage2(0);
     setReportData2(results);
+    getResults2(1, rowsPerPage2, values).then((newResults) => {
+      setReportData2(newResults);
+      setTotalRows2(newResults?.count || 0);
+    });
   };
 
   const downloadFile = async () => {
