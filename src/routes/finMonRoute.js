@@ -4,12 +4,13 @@ import ACLGuard from '@comp/ACLGuard';
 import SanctionExclusionList from '@pages/sanction/_exclusion';
 
 const SanctionsListPage = Loadable(lazy(() => import('@pages/sanction/index')));
+const FinMonRuleIndex = Loadable(lazy(() => import('@pages/finMon/rules/index')));
 
 export const finMonRoute = {
-  path: 'sanctions',
+  path: 'fin_mon',
   children: [
     {
-      path: '/',
+      path: '/sanctions',
       element: (
         <SanctionsListPage />
       ),
@@ -18,6 +19,12 @@ export const finMonRoute = {
       path: '/exceptions',
       element: (
         <SanctionExclusionList />
+      ),
+    },
+    {
+      path: '/rules',
+      element: (
+        <FinMonRuleIndex />
       ),
     },
   ],

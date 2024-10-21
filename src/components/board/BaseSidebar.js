@@ -31,7 +31,10 @@ import {
   Code,
   Dns,
   GridOn,
-  VpnLock
+  VpnLock,
+  Lock,
+  StackedLineChart,
+  LockOpen
 } from '@material-ui/icons';
 import {red} from '@material-ui/core/colors';
 
@@ -199,18 +202,6 @@ const BaseSidebar = (props) => {
           active: true,
           children: [
             {
-              title: t('Sanctions List'),
-              path: '/sanctions',
-              icon: <VpnLock fontSize="small" />,
-              active: true,
-            },
-            {
-              title: t('Sanctions White List'),
-              path: '/sanctions/exceptions',
-              icon: <VpnLock fontSize="small" />,
-              active: true,
-            },
-            {
               title: t('Bin menu'),
               path: '/bin',
               icon: <Dns fontSize="small" />,
@@ -222,6 +213,31 @@ const BaseSidebar = (props) => {
               icon: <Code fontSize="small" />,
               active: getActiveStatus('codes')
             }
+          ]
+        },
+        {
+          title: t('Financial monitoring'),
+          icon: <Lock fontSize="small" />,
+          active: true,
+          children: [
+            {
+              title: t('Sanctions List'),
+              path: '/fin_mon/sanctions',
+              icon: <VpnLock fontSize="small" />,
+              active: true,
+            },
+            {
+              title: t('Sanctions White List'),
+              path: '/fin_mon/exceptions',
+              icon: <LockOpen fontSize="small" />,
+              active: true,
+            },
+            {
+              title: t('Rules'),
+              path: '/fin_mon/rules',
+              icon: <StackedLineChart fontSize="small" />,
+              active: true,
+            },
           ]
         },
       ]
