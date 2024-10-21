@@ -174,10 +174,7 @@ const RuleModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props}) 
                     helperText={touched.type && errors.type}
                     label={t("ruleType")}
                     name="type"
-                    onChange={(e ,f) => {
-                        values.options = {};
-                        handleChange(e, f);
-                    }}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     select
                     value={values.type}

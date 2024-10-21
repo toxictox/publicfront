@@ -9,7 +9,6 @@ const fieldComponents = {
 };
 
 const DynamicField = ({type, ...props}) => {
-    console.log(type);
     const SpecificField = fieldComponents[type];
 
     return (<SpecificField {...props} />);
