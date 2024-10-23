@@ -90,6 +90,8 @@ const text = {
   missing: 'Отсутствует в отчете',
   resp_code: 'Статус(код)',
   duplicate: 'Дубликат',
+  'Total Amount Report': 'Общее кол-во в отчете',
+  'View results': 'Посмотреть результаты',
   new: 'Новый',
   loaded: 'Загружено',
   error: 'Ошибка',
