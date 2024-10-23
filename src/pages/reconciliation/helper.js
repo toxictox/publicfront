@@ -118,7 +118,9 @@ export const resolved = async (id) => {
 };
 export const getFileReconciliation = async (id) => {
   const response = await axios
-    .get(`${app.api}/reconciliation/results/report?reconciliation=${id}`)
+    .get(`${app.api}/reconciliation/results/report?reconciliation=${id}`, {
+      responseType: 'blob'
+    })
     .then((res) => {
       const { data, headers } = res;
       getCsvFileHelper2({ data, headers });
