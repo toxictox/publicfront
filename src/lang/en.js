@@ -7,6 +7,7 @@ const buttons = {
   'Update button': 'Оновити',
   'Delete button': 'Delete',
   'Search button': 'Search',
+  'Apply button': 'Apply',
   'Clear button': 'Clear',
   'Copy button': 'Copy',
   'Cancel button': 'Cancel',
@@ -50,6 +51,40 @@ const text = {
   'Success deleted': 'Entry deleted',
   'Reset title': 'Restore password',
   'Success recovery send token': 'Instructions sent to email',
+  Filter: 'Filter',
+  reconciliationId: 'Reconciliation ID',
+  reconciliationJobName: 'Reconciliation Type',
+  createOn: 'Date',
+  merchantId: 'Merchant',
+  fieldName: 'Reconciliation Field',
+  reason: 'Status',
+  reference: 'Field Value',
+  originalField: 'System Value',
+  reportField: 'Report Value',
+  resolved: 'Fixed',
+  reconciliationResult: 'Reconciliation result',
+  Confirm: 'You confirm the action ?',
+  'File upload': 'File uploaded successfully',
+
+  nonExistent: 'Non-existent in software',
+  missing: 'Missing in report',
+  amount: 'Amount',
+  resp_code: 'Status (code)',
+  duplicate: 'Duplicate',
+  'Total Amount Report': 'Total Amount Report',
+  'View results': 'View results',
+  new: 'New',
+  loaded: 'Loaded',
+  error: 'Error',
+  validation_error: 'Validation Error',
+  processing: 'Processing',
+  processed: 'Processed',
+  'Upload Files': 'Uploading a file',
+  'Reconciliation type': 'Reconciliation type',
+
+  'Number of report lines': 'Number of report lines',
+  'Number of rows affected': 'Number of rows affected',
+  'Total number of rows processed': 'Total number of rows processed',
 
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',
@@ -117,7 +152,6 @@ const text = {
   tranId: 'Transaction ID',
   gateway: 'Bank',
   acsStatus: '3DS status',
-  amount: 'Amount',
   approval: 'Authorization code',
   callbackUrl: 'Call back URL',
   fee: 'Fee',
@@ -142,6 +176,7 @@ const text = {
   Settings: 'Settings',
   Logout: 'Logout',
   Balance: 'Balance',
+  fixed: 'To correct',
 
   'Export List': 'Экспорт файлов',
   'Download File': 'Download File',
@@ -161,7 +196,7 @@ const text = {
   status_new: 'New',
   status_processing: 'Processing',
   status_finished: 'Finished',
-  status_failed: 'Failed',
+  status_failed: 'Failed'
 };
 
 const fields = {
@@ -175,7 +210,6 @@ const fields = {
   tranId: 'transaction id',
   tranType: 'type of operation',
   pan: 'card number',
-  amount: 'amount',
   fee: 'commission',
   gateway: 'acquirer',
   respCode: 'response code',
@@ -215,7 +249,7 @@ const fields = {
   frequency: 'frequency',
   startedAt: 'started At',
   finishedAt: 'finished At',
-  status: 'status',
+  status: 'status'
 };
 
 const server = {

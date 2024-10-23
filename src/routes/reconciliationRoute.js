@@ -1,9 +1,12 @@
-import { lazy } from 'react';
-import Loadable from '@root/routes/Loadable';
 import ACLGuard from '@comp/ACLGuard';
+import Loadable from '@root/routes/Loadable';
+import { lazy } from 'react';
 
 const ReconciliationList = Loadable(
   lazy(() => import('@pages/reconciliation/index'))
+);
+const ReconciliationPageOne = Loadable(
+  lazy(() => import('@pages/reconciliation/reconciliationPage1'))
 );
 
 const ReconciliationDetail = Loadable(
@@ -17,7 +20,23 @@ export const reconciliationRoute = {
       path: '/',
       element: (
         <ACLGuard can={'read'}>
-          <ReconciliationList />
+          <ReconciliationPageOne pageNumber="two" />
+        </ACLGuard>
+      )
+    },
+    {
+      path: 'results',
+      element: (
+        <ACLGuard can={'read'}>
+          <ReconciliationPageOne pageNumber="one" />
+        </ACLGuard>
+      )
+    },
+    {
+      path: 'results/:id',
+      element: (
+        <ACLGuard can={'read'}>
+          <ReconciliationPageOne pageNumber="one" />
         </ACLGuard>
       )
     },

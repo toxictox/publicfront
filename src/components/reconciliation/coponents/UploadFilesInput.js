@@ -4,7 +4,7 @@ import ButtonWithLoader from './ButtonWithLoader';
 export default function UploadFilesInput(props) {
   const { file, setFieldValue, handleSubmit, setFile } = props;
   return (
-    <Grid item xs={6}>
+    <Grid>
       <Stack direction="row" spacing={2}>
         <label htmlFor="contained-button-file">
           {!file || (

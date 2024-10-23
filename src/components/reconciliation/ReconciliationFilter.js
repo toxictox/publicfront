@@ -1,30 +1,12 @@
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import {
-  Box,
-  MenuItem,
-  FormHelperText,
-  TextField,
-  Grid,
-  Button
-} from '@material-ui/core';
-import { setLocalFormValues, getLocalFormValues } from '@utils/localFormValues';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import axios from '@lib/axios';
-import { app } from '@root/config';
-import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
+import axios from '@lib/axios';
+import { Box, Button, Grid } from '@material-ui/core';
+import { app } from '@root/config';
+import { getLocalFormValues } from '@utils/localFormValues';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import UploadFilesInput from './coponents/UploadFilesInput';
-
-const getInitialValues = () => {
-  return (
-    getLocalFormValues('reconcilation') || {
-      bankId: '',
-      bankName: ''
-    }
-  );
-};
+import FilterDialog from './coponents/filterDialog';
 
 const TransactionFilter = (props) => {
   const { t } = useTranslation();
@@ -32,7 +14,7 @@ const TransactionFilter = (props) => {
   const [banksList, setBanksList] = useState([]);
   const [file, setFile] = useState(true);
   const { getAccess } = useAuth();
-
+  const [openFilterDialog, setOpenFilterDialog] = useState(false);
   useEffect(() => {
     if (getLocalFormValues('reconcilation')) {
       callback(getLocalFormValues('reconcilation').bankId);
@@ -54,102 +36,33 @@ const TransactionFilter = (props) => {
   }, []);
 
   return (
-    <Formik
-      initialValues={getInitialValues()}
-      validationSchema={Yup.object().shape({
-        bankId: Yup.string().max(255),
-        bankName: Yup.string().max(255)
-      })}
-      onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const formData = new FormData();
-        formData.append('bankId', values.bankId);
-        formData.append('file', values.file, values.file.name);
-        await axios
-          .post(`${app.api}/reconciliation/file`, formData)
-          .then((response) => {
-            setFile(true);
-            update(response.data);
-            toast.success(t('Success upload'));
-          })
-          .catch((e) => {
-            setFile(true);
-            toast.error(e.response.data.message);
-          });
-      }}
-    >
-      {({
-        errors,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        setFieldValue,
-        touched,
-        values
-      }) => (
-        <form noValidate onSubmit={handleSubmit} {...props}>
-          <Box m={2}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  error={Boolean(touched.bankId && errors.bankId)}
-                  fullWidth
-                  select
-                  helperText={touched.bankId && errors.bankId}
-                  label={t('bankId')}
-                  margin="normal"
-                  name="bankId"
-                  onBlur={handleBlur}
-                  onChange={(e, elem) => {
-                    setLocalFormValues('reconcilation', {
-                      bankId: e.target.value,
-                      bankName: elem.props.children
-                    });
-                    setFieldValue('bankId', e.target.value);
-                    setFieldValue('bankName', elem.props.children);
-                    callback(e.target.value);
-                  }}
-                  value={values.bankId}
-                  variant="outlined"
-                  size="small"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  sx={{ m: 0 }}
-                >
-                  <MenuItem key={-1} value={''}>
-                    {t('Select value')}
-                  </MenuItem>
-                  {banksList.map((item) => (
-                    <MenuItem
-                      key={item.id}
-                      value={item.id}
-                      data-name={item.name}
-                    >
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              {values.bankId !== '' && getAccess('reconciliation', 'upload') ? (
-                <UploadFilesInput
-                  file={file}
-                  setFieldValue={setFieldValue}
-                  handleSubmit={handleSubmit}
-                  setFile={setFile}
-                />
-              ) : null}
+    <>
+      <Box m={2}>
+        <Grid container spacing={3}>
+          <Grid item>
+            <Button
+              onClick={() => setOpenFilterDialog(true)}
+              variant="contained"
+            >
+              Фильтр
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained">Скачать CSV</Button>
+          </Grid>
+          {getAccess('reconciliation', 'upload') && (
+            <Grid item>
+              <UploadFilesInput file={file} setFile={setFile} />
             </Grid>
-          </Box>
-
-          {errors.submit && (
-            <Box sx={{ mt: 3 }}>
-              <FormHelperText error>{errors.submit}</FormHelperText>
-            </Box>
           )}
-        </form>
-      )}
-    </Formik>
+        </Grid>
+      </Box>
+      <FilterDialog
+        open={openFilterDialog}
+        onClose={() => setOpenFilterDialog(false)}
+        banksList={banksList}
+      />
+    </>
   );
 };
 

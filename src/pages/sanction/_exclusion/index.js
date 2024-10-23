@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Box, Card, CardHeader, Container, Divider, TableCell, TablePagination, TableRow, Typography } from '@material-ui/core';
+import { Box, Card, CardHeader, Container, Divider, TableCell, TablePagination, TableRow, Typography } from '@material-ui/core'
+import { useCallback, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 
-import useMounted from '@hooks/useMounted';
-import useSettings from '@hooks/useSettings';
+import useMounted from '@hooks/useMounted'
+import useSettings from '@hooks/useSettings'
 
-import axios from '@lib/axios';
-import { app } from '@root/config';
-import { TableStatic } from '@comp/core/tables';
-import { useTranslation } from 'react-i18next';
-import WhiteListModalForm from '@comp/sanction/WhiteListModalForm';
-import { GroupTable } from '@comp/core/buttons';
-import useAuth from '@hooks/useAuth';
-import WhiteListFilterForm from '@comp/sanction/WhiteListFilterForm';
-import { red } from '@material-ui/core/colors';
+import { GroupTable } from '@comp/core/buttons'
+import { TableStatic } from '@comp/core/tables'
+import WhiteListFilterForm from '@comp/sanction/WhiteListFilterForm'
+import WhiteListModalForm from '@comp/sanction/WhiteListModalForm'
+import useAuth from '@hooks/useAuth'
+import axios from '@lib/axios'
+import { red } from '@material-ui/core/colors'
+import { app } from '@root/config'
+import { useTranslation } from 'react-i18next'
 
 const SanctionExclusionList = () => {
   const mounted = useMounted();
