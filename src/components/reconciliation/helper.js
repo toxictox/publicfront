@@ -93,7 +93,9 @@ export const getFile = async (
     .join('&');
 
   const response = await axios
-    .get(`${app.api}/reconciliation/results/report?${params}`)
+    .get(`${app.api}/reconciliation/results/report?${params}`, {
+      responseType: 'blob'
+    })
     .then((res) => {
       const { data, headers } = res;
       getCsvFileHelper2({ data, headers });
