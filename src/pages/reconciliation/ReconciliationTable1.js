@@ -74,16 +74,16 @@ const ReconciliationTable1 = ({
 
             return (
               <TableRow hover key={index}>
-                <TableCell>{item.reconciliationId}</TableCell>
-                <TableCell>{item.reconciliationJobName}</TableCell>
-                <TableCell>{toLocaleDateTime(item.createOn)}</TableCell>
-                <TableCell>{bank ? bank.name : ''}</TableCell>
-                <TableCell>{merchant ? merchant.name : ''}</TableCell>
+                <TableCell>{item?.reconciliationId}</TableCell>
+                <TableCell>{item?.reconciliationJobName}</TableCell>
+                <TableCell>{toLocaleDateTime(item?.createOn)}</TableCell>
+                <TableCell>{bank ? bank?.name : ''}</TableCell>
+                <TableCell>{merchant ? merchant?.name : ''}</TableCell>
                 <TableCell>
-                  {reasonMapping[item.reason] || item.reason}
+                  {reasonMapping[item?.reason] || item?.reason}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRedirect(item.tranUid)}
+                  onClick={() => onRedirect(item?.tranUid)}
                   style={{
                     cursor: 'pointer',
                     color: '#7474e3'
@@ -91,18 +91,18 @@ const ReconciliationTable1 = ({
                 >
                   {item.tranId}
                 </TableCell>
-                <TableCell>{item.fieldName}</TableCell>
-                <TableCell>{item.reference}</TableCell>
-                <TableCell>{item.originalField}</TableCell>
-                <TableCell>{item.reportField}</TableCell>
+                <TableCell>{item?.fieldName}</TableCell>
+                <TableCell>{item?.reference}</TableCell>
+                <TableCell>{item?.originalField}</TableCell>
+                <TableCell>{item?.reportField}</TableCell>
                 <TableCell>
-                  {item.resolved ? (
+                  {item?.resolved ? (
                     'Да'
                   ) : (
                     <Button
                       variant="contained"
                       size="small"
-                      onClick={() => handleOpenDialogConfirm(item.id)}
+                      onClick={() => handleOpenDialogConfirm(item?.id)}
                     >
                       {t('fixed')}
                     </Button>
