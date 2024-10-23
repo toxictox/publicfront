@@ -44,6 +44,7 @@ const SelectCheckbox = (props) => {
     onSelectAll,
     labelId,
     items,
+    disabled,
   } = props;
   const { t } = useTranslation();
 
@@ -90,6 +91,7 @@ const SelectCheckbox = (props) => {
         onChange={onChange}
         input={<OutlinedInput label={label} />}
         multiple
+        disabled={disabled}
       >
         {onSelectAll !== null ? (
           <Chip
