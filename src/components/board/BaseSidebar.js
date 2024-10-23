@@ -1,3 +1,4 @@
+import useAuth from '@hooks/useAuth';
 import {
   Box,
   Divider,
@@ -6,10 +7,10 @@ import {
   MenuItem,
   TextField,
   Tooltip,
-  Typography,
-} from '@material-ui/core'
-import { red } from '@material-ui/core/colors'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+  Typography
+} from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   AccountBalance,
   BlurLinear,
@@ -18,14 +19,25 @@ import {
   DescriptionOutlined,
   Dns,
   GridOn,
-  VpnLock,
+  Group,
+  Home,
+  LinearScale,
   Lock,
+  LockOpen,
+  PriceCheck,
+  Receipt,
+  Security,
   StackedLineChart,
-  LockOpen
+  Storefront,
+  Timeline,
+  VpnLock
 } from '@material-ui/icons';
-import {red} from '@material-ui/core/colors';
-
-import useAuth from '@hooks/useAuth'
+import PropTypes from 'prop-types';
+import { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import NavSection from './NavSection';
+import Scrollbar from './Scrollbar';
 import axios from '@lib/axios'
 import { app } from '@root/config'
 import { formatCurrency } from '@utils/formatCurrency'
@@ -51,7 +63,7 @@ const BaseSidebar = (props) => {
     month_transaction_debit: 0,
     month_transaction_credit: 0,
     day_transaction_credit: 0,
-    day_transaction_debit: 0,
+    day_transaction_debit: 0
   });
 
   const [overdrafts, setOverdrafts] = useState([]);
@@ -62,9 +74,11 @@ const BaseSidebar = (props) => {
       .get(`${app.api}/merchant/${merchId}/overdraft/totals`)
       .then((response) => {
         setOverdrafts(response.data);
-        setOverdraftsSum(response.data.reduce((sum, val) => {
-          return sum + Math.abs(val.amount);
-        }, 0));
+        setOverdraftsSum(
+          response.data.reduce((sum, val) => {
+            return sum + Math.abs(val.amount);
+          }, 0)
+        );
       })
       .catch((e) => {
         console.error(e);
@@ -225,22 +239,22 @@ const BaseSidebar = (props) => {
               title: t('Sanctions List'),
               path: '/fin_mon/sanctions',
               icon: <VpnLock fontSize="small" />,
-              active: true,
+              active: true
             },
             {
               title: t('Sanctions White List'),
               path: '/fin_mon/exceptions',
               icon: <LockOpen fontSize="small" />,
-              active: true,
+              active: true
             },
             {
               title: t('Rules'),
               path: '/fin_mon/rules',
               icon: <StackedLineChart fontSize="small" />,
-              active: true,
-            },
+              active: true
+            }
           ]
-        },
+        }
       ]
     }
   ];
@@ -323,11 +337,11 @@ const BaseSidebar = (props) => {
           </Box>
         </Box>
         <Divider />
-        { overdraftsSum > 0 &&
+        {overdraftsSum > 0 && (
           <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <Typography 
+                <Typography
                   color={red[800]}
                   variant="subtitle1"
                   component="div"
@@ -341,7 +355,12 @@ const BaseSidebar = (props) => {
                   title={
                     <Fragment>
                       {overdrafts.map((item) => {
-                          return <Typography color="inherit">{item.bank}: {formatCurrency(item.amount / 100, '\u20B8')}</Typography>
+                        return (
+                          <Typography color="inherit">
+                            {item.bank}:{' '}
+                            {formatCurrency(item.amount / 100, '\u20B8')}
+                          </Typography>
+                        );
                       })}
                     </Fragment>
                   }
@@ -359,33 +378,41 @@ const BaseSidebar = (props) => {
               </Grid>
             </Grid>
           </Box>
-        }
-        { Number(balance.hold) > 0 &&
-        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="subtitle1" component="div" className="balanse__title">
-                {t('Hold Funds')}
-              </Typography>
+        )}
+        {Number(balance.hold) > 0 && (
+          <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  className="balanse__title"
+                >
+                  {t('Hold Funds')}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography
+                  variant="subtitle2"
+                  component="div"
+                  className="balanse__amount"
+                  sx={{ textAlign: 'right' }}
+                >
+                  {formatCurrency(balance.hold / 100, '\u20B8')}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Typography
-                variant="subtitle2"
-                component="div"
-                className="balanse__amount"
-                sx={{ textAlign: 'right' }}
-              >
-                {formatCurrency(balance.hold / 100, '\u20B8')}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Box>
-        }
+          </Box>
+        )}
 
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" component="div" className="balanse__title">
+              <Typography
+                variant="subtitle1"
+                component="div"
+                className="balanse__title"
+              >
                 {t('Available Funds')}
               </Typography>
             </Grid>
@@ -404,7 +431,11 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" className="balanse__title" component="div">
+              <Typography
+                variant="subtitle1"
+                className="balanse__title"
+                component="div"
+              >
                 {t('Day Transactions Credit')}
               </Typography>
             </Grid>
@@ -423,7 +454,11 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" className="balanse__title" component="div">
+              <Typography
+                variant="subtitle1"
+                className="balanse__title"
+                component="div"
+              >
                 {t('Day Transactions Debit')}
               </Typography>
             </Grid>
@@ -442,7 +477,11 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" className="balanse__title" component="div">
+              <Typography
+                variant="subtitle1"
+                className="balanse__title"
+                component="div"
+              >
                 {t('Month Transactions Credit')}
               </Typography>
             </Grid>
@@ -461,7 +500,11 @@ const BaseSidebar = (props) => {
         <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" className="balanse__title" component="div">
+              <Typography
+                variant="subtitle1"
+                className="balanse__title"
+                component="div"
+              >
                 {t('Month Transactions Debit')}
               </Typography>
             </Grid>
