@@ -42,7 +42,9 @@ const menu = {
   'Bin menu': 'Bin',
   'Reconciliation menu': 'Сверка',
   'Catalogs menu': 'Справочники',
-  'Sanctions List': 'Санкционные списки'
+  'Sanctions List':'Санкционные списки',
+  'Financial monitoring': 'Финансовый мониторинг',
+  'Rules': 'Правила'
 };
 
 const text = {
@@ -243,7 +245,11 @@ const text = {
   'Show deleted': 'Показать удаленные',
   Deleted: 'Удаленно',
   'Sanctions White List': 'Белый список санкций',
-  'Create sanctions white list entities': 'Добавить исключение'
+  'Create sanctions white list entities': 'Добавить исключение',
+  'Blocking': 'Останавливает',
+  'Alert only': 'Только уведомление',
+  'All': 'Все',
+  'Financial Monitoring Rules': 'Правила финансового мониторинга',
 };
 
 const fields = {
@@ -338,15 +344,20 @@ const fields = {
   country_code3: 'Код страны',
   knownHolders: 'Держатели карты',
   documentRef: 'Номер документа',
-  'Total Amount Report': 'Cумма тразнакций в отчете',
-  'View results': 'Просмотр результатов',
-
-  new: 'Новый',
-  loaded: 'Загружен',
-  error: 'Ошибка',
-  validation_error: 'Ошибка валидации',
-  processing: 'В Обработке',
-  processed: 'Готов'
+  'filterMerchants': 'Мерчанты',
+  'filterTransactionTypes': 'Типы транзакций',
+  'critical': 'Важность',
+  'Enabled': 'Включено',
+  'Disabled': 'Отключено',
+  'ruleType': 'Тип правила',
+  'limit': 'Лимит',
+  'startDate': 'Дата отсчета',
+  'transactionTypes': 'Типы транзакций',
+  'merchants': 'Мерчанты',
+  'Merchants filter enabled': 'Фильтр по мерчантам включен',
+  'Merchants filter disabled': 'Фильтр по мерчантам выключен',
+  'Transaction types filter enabled': 'Фильтр по типам транзакций включен',
+  'Transaction types filter disabled': 'Фильтр по типам транзакций выключен',
 };
 
 const server = {
