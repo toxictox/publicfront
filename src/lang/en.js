@@ -196,7 +196,9 @@ const text = {
   status_new: 'New',
   status_processing: 'Processing',
   status_finished: 'Finished',
-  status_failed: 'Failed'
+  status_failed: 'Failed',
+  'Create company': 'Create company',
+  'Update company': 'Edit company',
 };
 
 const fields = {

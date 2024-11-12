@@ -260,6 +260,9 @@ const text = {
   'Alert only': 'Только уведомление',
   'All': 'Все',
   'Financial Monitoring Rules': 'Правила финансового мониторинга',
+  'Create company': 'Создание компании',
+  'Update company': 'Редактирование компании',
+  
 };
 
 const fields = {
