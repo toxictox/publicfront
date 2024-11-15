@@ -238,7 +238,7 @@ const fields = {
   gateway: 'acquirer',
   respCode: 'response code',
   lang: 'language',
-  editOn: 'updated',
+  editOn: 'Updated',
   firstName: 'name',
   lastName: 'surname',
   phone: 'phone number',

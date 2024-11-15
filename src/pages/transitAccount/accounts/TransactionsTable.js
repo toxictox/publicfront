@@ -49,6 +49,8 @@ export const TransactionsTable = ({ transactions, refetch }) => {
                   'status',
                   'statusName',
                   'bik',
+                  'createOn',
+                  'editOn',
                   ''
                 ]}
               >
@@ -65,6 +67,8 @@ export const TransactionsTable = ({ transactions, refetch }) => {
                     <TableCell>{item?.status}</TableCell>
                     <TableCell>{item?.statusName}</TableCell>
                     <TableCell>{item?.bik}</TableCell>
+                    <TableCell>{item?.createdAt}</TableCell>
+                    <TableCell>{item?.updatedAt}</TableCell>
                     <TableCell>
                       {item?.status === 'ready' ? (
                         <Button
