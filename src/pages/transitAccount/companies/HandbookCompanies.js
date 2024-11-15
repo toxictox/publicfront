@@ -1,15 +1,10 @@
 import { CreateButton } from '@comp/core/buttons';
 import useSettings from '@hooks/useSettings';
-import {
-  Box,
-  Card,
-  CardHeader,
-  Container,
-  Divider,
-  TablePagination
-} from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { Box, Card, CardHeader, Container, Divider, TablePagination } from '@material-ui/core';
+import { setAuthState } from '@slices/authBck';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import AuthTransitAccount from '../Auth';
 import { getAllCompanies } from '../helper';
@@ -19,49 +14,33 @@ const HandbookCompanies = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [authState, setAuthState] = useState(false);
-  const [count, setCount] = useState(10);
+  const [companies, setCompanies] = useState([]);
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [companies, setCompanies] = useState([]);
-  const [totalRows, setTotalRows] = useState(0); //
+  
 
   const handleAuthSuccess = () => {
-    setAuthState(true);
+    dispatch(setAuthState(true));
   };
-  const fakeCompanies = [
-    {
-      id: 1,
-      name: 'Test2',
-      iin: '220440024754',
-      bik: 'TSESKZKA',
-      bankAccount: 'KZ089985TB0001712398',
-      bankName: 'Can be empty'
-    },
-    {
-      id: 1,
-      name: 'Test2',
-      iin: '220440024754',
-      bik: 'TSESKZKA',
-      bankAccount: 'KZ089985TB0001712398',
-      bankName: 'Can be empty'
+
+  const fetchCompanies = useCallback(async () => {
+    try {
+      const data = await getAllCompanies(page + 1, rowsPerPage);
+      setCompanies(data.items);
+      setTotalRows(data.count || 0);
+    } catch (error) {
+      setTotalRows(0);
     }
-  ];
+  }, [page, rowsPerPage]);
 
   useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        const data = await getAllCompanies(page + 1, rowsPerPage);
-        setCompanies(data.companies);
-        setTotalRows(data.total || 0);
-      } catch (error) {
-        console.log('Error fetching companies:', error);
-        setTotalRows(0);
-      }
-    };
-
-    fetchCompanies();
-  }, [page, rowsPerPage]);
+    if (isAuthenticated) {
+      fetchCompanies();
+    }
+  }, [fetchCompanies, isAuthenticated, page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -82,7 +61,7 @@ const HandbookCompanies = () => {
         }}
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
-          {authState ? (
+          {!isAuthenticated ? (
             <Card sx={{ mt: 1, maxWidth: 600, p: 4 }}>
               <AuthTransitAccount onAuthSuccess={handleAuthSuccess} />
             </Card>
@@ -100,9 +79,12 @@ const HandbookCompanies = () => {
                 />
                 <Divider />
 
-                {fakeCompanies && fakeCompanies.length > 0 ? (
+                {companies && companies.length > 0 ? (
                   <>
-                    <HandbookTable fakeCompanies={fakeCompanies} />
+                    <HandbookTable
+                      companies={companies}
+                      refreshCompanies={fetchCompanies}
+                    />
                     <TablePagination
                       component="div"
                       count={totalRows}
@@ -110,7 +92,7 @@ const HandbookCompanies = () => {
                       onPageChange={handleChangePage}
                       rowsPerPage={rowsPerPage}
                       onRowsPerPageChange={handleChangeRowsPerPage}
-                      rowsPerPageOptions={[5, 10, 25, 50, 100]}
+                      rowsPerPageOptions={[5, 10, 25, 50]}
                     />
                   </>
                 ) : (

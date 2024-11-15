@@ -10,49 +10,80 @@ import {
   TextField
 } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
+import { useEffect, useMemo } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
+import { createCompany, updateCompany } from '../helper';
 import * as Yup from 'yup';
-
-const validationSchema = Yup.object({
-  name: Yup.string().required('Name is required'),
-  iin: Yup.string().required('IIN is required'),
-  bik: Yup.string().required('BIK is required'),
-  bankAccount: Yup.string().required('Bank Account is required'),
-  bankName: Yup.string().required('Bank Name is required')
-});
 
 const HandbookCreateAndUpdate = () => {
   const { settings } = useSettings();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const location = useLocation();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const companyData = location.state?.item || {
-    name: '',
-    iin: '',
-    bik: '',
-    bankAccount: '',
-    bankName: ''
-  };
+  const companyData = useMemo(
+    () =>
+      location.state?.item || {
+        name: '',
+        iin: '',
+        bik: '',
+        bankAccount: '',
+        bankName: ''
+      },
+    [location.state]
+  );
 
-  const initialValues = {
-    name: companyData.name,
-    iin: companyData.iin,
-    bik: companyData.bik,
-    bankAccount: companyData.bankAccount,
-    bankName: companyData.bankName
-  };
+  const initialValues = useMemo(
+    () => ({
+      name: companyData.name,
+      iin: companyData.iin,
+      bik: companyData.bik,
+      bankAccount: companyData.bankAccount,
+      bankName: companyData.bankName
+    }),
+    [companyData]
+  );
+ const validationSchema = Yup.object({
+    name: Yup.string().required(t('required')),
+    iin: Yup.string().required(t('required')),
+    bik: Yup.string().required(t('required')),
+    bankAccount: Yup.string().required(t('required')),
+    bankName: Yup.string().required(t('required'))
+  });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     if (companyData.id) {
-      //   редактирование
-      console.log('Editing company with values:', values);
+      try {
+        const response = await updateCompany(companyData.id, values);
+        if (response.id) {
+          toast.success(t('Successfully updated'));
+          navigate('/transit-account/handbookCompanies');
+        }
+      } catch (error) {
+        toast.error('Error');
+      }
     } else {
-      //  это создание
-      console.log('Creating new company with values:', values);
+      try {
+        const response = await createCompany(values);
+        if (response.id) {
+          toast.success(t('Successfully created'));
+          navigate('/transit-account/handbookCompanies');
+        }
+      } catch (error) {
+        toast.error('Error');
+      }
     }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/transit-account/handbookCompanies');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
@@ -70,7 +101,7 @@ const HandbookCreateAndUpdate = () => {
 
           <Card sx={{ mt: 2, p: 3 }}>
             <CardHeader
-              title={companyData?.id ? t('Update Company') : t('Create Company')}
+              title={t(companyData?.id ? 'Update Company' : 'Create Company')}
             />
             <Formik
               initialValues={initialValues}
@@ -80,73 +111,23 @@ const HandbookCreateAndUpdate = () => {
               {({ errors, touched, handleChange, handleBlur, values }) => (
                 <Form>
                   <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        label="Name"
-                        name="name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                        error={touched.name && Boolean(errors.name)}
-                        helperText={touched.name && errors.name}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        label="IIN"
-                        name="iin"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.iin}
-                        error={touched.iin && Boolean(errors.iin)}
-                        helperText={touched.iin && errors.iin}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        label="BIK"
-                        name="bik"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.bik}
-                        error={touched.bik && Boolean(errors.bik)}
-                        helperText={touched.bik && errors.bik}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        label="Bank Account"
-                        name="bankAccount"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.bankAccount}
-                        error={
-                          touched.bankAccount && Boolean(errors.bankAccount)
-                        }
-                        helperText={touched.bankAccount && errors.bankAccount}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        as={TextField}
-                        fullWidth
-                        label="Bank Name"
-                        name="bankName"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.bankName}
-                        error={touched.bankName && Boolean(errors.bankName)}
-                        helperText={touched.bankName && errors.bankName}
-                      />
-                    </Grid>
+                    {['name', 'iin', 'bik', 'bankAccount', 'bankName'].map(
+                      (field) => (
+                        <Grid item xs={12} key={field}>
+                          <Field
+                            as={TextField}
+                            fullWidth
+                            label={t(field)}
+                            name={field}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values[field]}
+                            error={touched[field] && Boolean(errors[field])}
+                            helperText={touched[field] && errors[field]}
+                          />
+                        </Grid>
+                      )
+                    )}
                     <Grid item xs={2}>
                       <Button
                         type="submit"
@@ -154,9 +135,7 @@ const HandbookCreateAndUpdate = () => {
                         color="primary"
                         fullWidth
                       >
-                        {companyData.id
-                          ? t('Update button')
-                          : t('Create button')}
+                        {t(companyData?.id ? 'Update button' : 'Create button')}
                       </Button>
                     </Grid>
                   </Grid>

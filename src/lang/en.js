@@ -199,6 +199,27 @@ const text = {
   status_failed: 'Failed',
   'Create company': 'Create company',
   'Update company': 'Edit company',
+
+  name: 'Company name',
+  iin: 'IIN/BIN',
+  bik: 'BIK',
+  bankAccount: 'Company bank account',
+  balance: 'Balance',
+  account: 'Transit account Id',
+  targetAccount: 'Company bank account',
+  code: 'Beneficiary code',
+  knp: 'KNP',
+  statusName: 'Status description',
+  narrative: 'Comment',
+  'Transit Account': 'Transit account id',
+  transport: 'Transit account bank name',
+  'Create transactions': 'Create transactions',
+  'Delete entry':'Post deleted',
+  'Select Company':'Select Company',
+  'Select Account':'Transit account',
+  'Create Transactions':'Create transaction',
+  'Success': 'Success',
+
 };
 
 const fields = {

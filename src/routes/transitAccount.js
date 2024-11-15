@@ -5,10 +5,13 @@ const HandbookCompanies = Loadable(
   lazy(() => import('@pages/transitAccount/companies/HandbookCompanies'))
 );
 const TransitTransactions = Loadable(
-  lazy(() => import('@pages/transitAccount/TransitTransactions'))
+  lazy(() => import('@pages/transitAccount/accounts/TransitTransactions'))
 );
 const HandbookForm = Loadable(
   lazy(() => import('@pages/transitAccount/companies/HandbookCreateAndUpdate'))
+);
+const CreateTransactions = Loadable(
+  lazy(() => import('@pages/transitAccount/accounts/CreateTransactions'))
 );
 
 export const transitAccountRoute = {
@@ -25,6 +28,10 @@ export const transitAccountRoute = {
     {
       path: '/handbook/form',
       element: <HandbookForm />
+    },
+    {
+      path: '/createTransactions',
+      element: <CreateTransactions />
     }
   ]
 };

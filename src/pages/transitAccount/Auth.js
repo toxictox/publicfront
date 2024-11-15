@@ -2,6 +2,7 @@ import { Box, Button, FormHelperText, TextField } from '@material-ui/core';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { auth } from './helper'
 
 const AuthTransitAccount = ({ onAuthSuccess }) => {
   const { t } = useTranslation();
@@ -18,8 +19,10 @@ const AuthTransitAccount = ({ onAuthSuccess }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          console.log('auth successful');
-          onAuthSuccess();
+          const response = await auth(values)
+          if(response.token) {
+            onAuthSuccess();
+          }
         } catch (err) {
           setErrors({ submit: 'Authentication failed' });
         } finally {

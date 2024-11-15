@@ -3,12 +3,13 @@ import { TableStatic } from '@comp/core/tables';
 import useAuth from '@hooks/useAuth';
 import { Box, TableCell, TableRow } from '@material-ui/core';
 import { showConfirm } from '@slices/dialog';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { deleteCompany } from '../helper';
 
-export const HandbookTable = ({ fakeCompanies }) => {
-  console.log(fakeCompanies, 'fakeCompanies');
+export const HandbookTable = ({ companies, refreshCompanies }) => {
   const { t } = useTranslation();
   const { getAccess } = useAuth();
   const dispatch = useDispatch();
@@ -18,13 +19,23 @@ export const HandbookTable = ({ fakeCompanies }) => {
     navigate('/transit-account/handbook/form', { state: { item } });
   };
 
+  const deleteCompanyId = async (item) => {
+    try {
+      const response = await deleteCompany(item.id);
+      toast.success('Delete entry');
+      refreshCompanies();
+    } catch (error) {
+      toast.error(t('Error!'));
+    }
+  };
+
   return (
     <>
       <Box sx={{ minWidth: 700 }}>
         <TableStatic
           header={['id', 'name', 'iin', 'bik', 'bankAccount', 'bankName', '']}
         >
-          {fakeCompanies?.map((item, index) => {
+          {companies?.map((item, index) => {
             return (
               <TableRow hover key={index}>
                 <TableCell>{item?.id}</TableCell>
@@ -44,7 +55,7 @@ export const HandbookTable = ({ fakeCompanies }) => {
                             title: t('Do you want to remove'),
                             isOpen: true,
                             okCallback: () => {
-                              console.log('delete');
+                              deleteCompanyId(item);
                             }
                           })
                         );
