@@ -1,6 +1,5 @@
-import { setLoaderHandler } from '@lib/axios';
-import { CssBaseline, LinearProgress, ThemeProvider } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useRoutes } from 'react-router-dom';
 import RTL from './components/RTL';
@@ -18,13 +17,11 @@ const App = () => {
   const content = useRoutes(routes);
   const { settings } = useSettings();
   const auth = useAuth();
-  const [loading, setLoading] = useState(false);
 
   useScrollReset();
 
   useEffect(() => {
     gtm.initialize(gtmConfig);
-    setLoaderHandler(setLoading);
   }, []);
 
   const theme = createCustomTheme({
@@ -39,7 +36,6 @@ const App = () => {
       <RTL direction={settings.direction}>
         <CssBaseline />
         <Toaster position="top-center" />
-        {loading && <LinearProgress />}
         {auth.isInitialized ? content : <SplashScreen />}
       </RTL>
     </ThemeProvider>
