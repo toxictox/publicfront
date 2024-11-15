@@ -219,6 +219,7 @@ const text = {
   'Select Account':'Transit account',
   'Create Transactions':'Create transaction',
   'Success': 'Success',
+  'Do you confirm the action?': 'Do you confirm the action?',
 
 };
 

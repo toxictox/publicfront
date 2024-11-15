@@ -3,22 +3,33 @@ import { Box, Button, Card, TableCell, TableRow } from '@material-ui/core';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { acceptTransaction } from '../helper';
+import { useDispatch } from 'react-redux'
+import { showConfirm } from '@slices/dialog'
 
 export const TransactionsTable = ({ transactions, refetch }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const sendToBank = async (item) => {
-    console.log(item);
-    try {
-      const response = await acceptTransaction(item.id);
-      if (response) {
-        toast.success(t('Success'));
-        refetch();
-      }
-    } catch (error) {
-      toast.error(t('Error!'));
-    }
+    dispatch(
+      showConfirm({
+        title: t('Do you confirm the action?'),
+        isOpen: true,
+        okCallback: async () => {
+          try {
+            const response = await acceptTransaction(item.id);
+            if (response) {
+              toast.success(t('Success'));
+              refetch();
+            }
+          } catch (error) {
+            toast.error(t('Error!'));
+          }
+        }
+      })
+    );
   };
+  
   return (
     <>
       <Box sx={{ marginTop: '20px' }}>

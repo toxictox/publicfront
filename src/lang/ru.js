@@ -281,6 +281,7 @@ const text = {
   'Select Company':'Выбор компании',
   'Select Account':'Название банка транзитного счета',
   'Create Transactions':'Создать транзакцию',
+  'Do you confirm the action?': 'Вы подтверждаете действие ?',
 
 };
 
