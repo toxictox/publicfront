@@ -1,10 +1,10 @@
 import { TableStatic } from '@comp/core/tables';
 import { Box, Button, Card, TableCell, TableRow } from '@material-ui/core';
+import { showConfirm } from '@slices/dialog';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { acceptTransaction } from '../helper';
-import { useDispatch } from 'react-redux'
-import { showConfirm } from '@slices/dialog'
+import { useDispatch } from 'react-redux';
+import { acceptTransaction, getTransactionStatus } from '../helper';
 
 export const TransactionsTable = ({ transactions, refetch }) => {
   const { t } = useTranslation();
@@ -29,7 +29,16 @@ export const TransactionsTable = ({ transactions, refetch }) => {
       })
     );
   };
-  
+
+  const refreshStatus = async (id) => {
+    try {
+      const response = await getTransactionStatus(id);
+      toast.success(t('updateStatus'));
+    } catch (error) {
+      toast.error(t('Error!'));
+    }
+  };
+
   return (
     <>
       <Box sx={{ marginTop: '20px' }}>
@@ -76,6 +85,15 @@ export const TransactionsTable = ({ transactions, refetch }) => {
                           onClick={() => sendToBank(item)}
                         >
                           {t('Send to Bank')}
+                        </Button>
+                      ) : null}
+
+                      {item?.status === 'send' ? (
+                        <Button
+                          variant="contained"
+                          onClick={() => refreshStatus(item.id)}
+                        >
+                          {t('Update Status')}
                         </Button>
                       ) : null}
                     </TableCell>

@@ -15,8 +15,8 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { createCompany, updateCompany } from '../helper';
 import * as Yup from 'yup';
+import { createCompany, updateCompany } from '../helper';
 
 const HandbookCreateAndUpdate = () => {
   const { settings } = useSettings();
@@ -47,11 +47,18 @@ const HandbookCreateAndUpdate = () => {
     }),
     [companyData]
   );
- const validationSchema = Yup.object({
-    name: Yup.string().required(t('required')),
-    iin: Yup.string().required(t('required')),
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, t('nameFormat'))
+      .max(100, t('nameFormat'))
+      .required(t('required')),
+    iin: Yup.string()
+      .matches(/^\d{12}$/, t('iinError'))
+      .required(t('required')),
     bik: Yup.string().required(t('required')),
-    bankAccount: Yup.string().required(t('required')),
+    bankAccount: Yup.string()
+      .matches(/^[KZ]{2}[A-Z0-9]{18}$/, t('invalidBankAccountFormat'))
+      .required(t('required')),
     bankName: Yup.string().required(t('required'))
   });
 

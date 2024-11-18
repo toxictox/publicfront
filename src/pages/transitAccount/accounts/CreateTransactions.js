@@ -38,8 +38,10 @@ const CreateTransactions = () => {
     targetAccount: Yup.string().required(t('required')),
     iin: Yup.string().required(t('required')),
     bik: Yup.string().required(t('required')),
+    knp: Yup.string().matches(/^\d{3}$/, t('knpError')),
     narrative: Yup.string().required(t('required')),
-    amount: Yup.number().required(t('required'))
+    amount: Yup.number().required(t('required')),
+    code: Yup.number().max(100, t('max2digits'))
   });
 
   const fetchCompanies = useCallback(async () => {
@@ -82,12 +84,29 @@ const CreateTransactions = () => {
       iin: '',
       bik: '',
       narrative: '',
-      amount: ''
+      amount: '',
+      knp: '',
+      code: ''
     },
     validationSchema,
     onSubmit: async (values) => {
-      const amount = parseFloat(values.amount);
-      const updatedValues = { ...values, amount };
+      const selectedAccount = accountOptions.find(
+        (account) => account.id === values.account
+      );
+      const { account, amount, ...rest } = values;
+      const updatedValues = {
+        ...rest,
+        amount: parseFloat(amount),
+        account: selectedAccount.id
+      };
+      if (amount > selectedAccount.balance) {
+        formik.setFieldError(
+          'amount',
+          t('The entered amount exceeds the available balance')
+        );
+        return;
+      }
+
       try {
         await createTransaction(updatedValues);
         toast.success('Successfully created');
@@ -95,7 +114,6 @@ const CreateTransactions = () => {
       } catch (error) {
         toast.error('Error!');
       }
-      console.log(updatedValues);
     }
   });
 
@@ -142,7 +160,9 @@ const CreateTransactions = () => {
               <InputLabel>{t('Select Account')}</InputLabel>
               <Select
                 value={formik.values.account}
-                onChange={formik.handleChange}
+                onChange={(e) =>
+                  formik.setFieldValue('account', e.target.value)
+                }
                 inputProps={{ name: 'account' }}
                 error={formik.touched.account && Boolean(formik.errors.account)}
               >
@@ -162,6 +182,8 @@ const CreateTransactions = () => {
             {renderField('targetAccount', 'targetAccount')}
             {renderField('iin', 'iin')}
             {renderField('bik', 'bik')}
+            {renderField('knp', 'knp')}
+            {renderField('code', 'code')}
             {renderField('narrative', 'narrative')}
             {renderField('amount', 'Amount')}
 

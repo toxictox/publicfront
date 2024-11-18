@@ -213,6 +213,7 @@ const text = {
   narrative: 'Comment',
   'Transit Account': 'Transit account id',
   transport: 'Transit account bank name',
+  updateStatus: 'Status updated',
   'Create transactions': 'Create transactions',
   'Delete entry':'Post deleted',
   'Select Company':'Select Company',
@@ -220,6 +221,14 @@ const text = {
   'Create Transactions':'Create transaction',
   'Success': 'Success',
   'Do you confirm the action?': 'Do you confirm the action?',
+  'Handbook Companies': 'Handbook Companies',
+  'Transit transactions': 'Transit transactions',
+  'knpError': 'KNP consists from 3 digits',
+  'The entered amount exceeds the available balance': 'The entered amount exceeds the available balance',
+  'nameFormat': 'Allowed number of characters 2–100',
+  'invalidBankAccountFormat': ' Invalid format',
+  'iinError': 'Valid value maximum 12 digits',
+  'max2digits': 'Beneficiary code consists from 2 digits',
 
 };
 

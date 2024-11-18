@@ -275,6 +275,7 @@ const text = {
   statusName: 'Описание статуса',
   narrative: 'Комментарий',
   transport: 'Название банка транзитного счета',
+  updateStatus: 'Статус обновлен',
   'Transit Account': 'Название банка транзитного счета',
   'Create transactions': 'Создать транзакцию',
   'Delete entry':'Запись удалена',
@@ -282,6 +283,15 @@ const text = {
   'Select Account':'Название банка транзитного счета',
   'Create Transactions':'Создать транзакцию',
   'Do you confirm the action?': 'Вы подтверждаете действие ?',
+  'Handbook Companies': 'Справочник компаний',
+  'Transit transactions': 'Транзитные транзакции',
+  'knpError': 'КНП состоит из 3 цифр',
+  'nameFormat': 'Допустимое количество символов 2-100',
+  'iinError': 'Allowed maximum value is 12 digits',
+  'invalidBankAccountFormat': 'Недопустимый формат',
+  'The entered amount exceeds the available balance': 'Введенная сумма превышает баланс выбранного транзитного счета',
+  'max2digits': 'Код бенефициара состоит из 2 цифр',
+  
 
 };
 
