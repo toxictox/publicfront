@@ -36,6 +36,7 @@ const TransitTransactions = () => {
   };
 
   const getData = async () => {
+    setLoading(true);
     try {
       const [accountsResponse, transactionResponse] = await Promise.all([
         getAllAccounts(),
@@ -46,6 +47,8 @@ const TransitTransactions = () => {
       setTotalRows(transactionResponse.count || 0);
     } catch (err) {
       console.log('error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,7 +111,7 @@ const TransitTransactions = () => {
                   sx={{ mt: 2 }}
                   onClick={handleUpdateClick}
                 >
-                  {t('Update button')}
+                  {t('refresh')}
                 </Button>
                 <Button
                   variant="contained"

@@ -276,6 +276,7 @@ const text = {
   narrative: 'Комментарий',
   transport: 'Название банка транзитного счета',
   updateStatus: 'Статус обновлен',
+  refresh: 'Обновить',
   'Transit Account': 'Название банка транзитного счета',
   'Create transactions': 'Создать транзакцию',
   'Delete entry':'Запись удалена',
