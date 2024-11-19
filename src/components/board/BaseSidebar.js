@@ -258,19 +258,19 @@ const BaseSidebar = (props) => {
         {
           title: t('Transit account'),
           icon: <Lock fontSize="small" />,
-          active: true,
+          active: getActiveStatus('blockTransitionAccount'),
           children: [
             {
               title: t('Handbook Companies'),
               path: '/transit-account/handbookCompanies',
               icon: <VpnLock fontSize="small" />,
-              active: true
+              active: getActiveStatus('blockTransitionAccount')
             },
             {
               title: t('Transit transactions'),
               path: '/transit-account/transitTransactions',
               icon: <LockOpen fontSize="small" />,
-              active: true
+              active: getActiveStatus('blockTransitionAccount')
             },
           ]
         }
