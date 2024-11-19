@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { acceptTransaction, getTransactionStatus } from '../helper';
 
-export const TransactionsTable = ({ transactions, refetch }) => {
+export const TransactionsTable = ({ transactions, refetch, setLoading }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -16,6 +16,7 @@ export const TransactionsTable = ({ transactions, refetch }) => {
         title: t('Do you confirm the action?'),
         isOpen: true,
         okCallback: async () => {
+          setLoading(true);
           try {
             const response = await acceptTransaction(item.id);
             if (response) {
@@ -24,6 +25,8 @@ export const TransactionsTable = ({ transactions, refetch }) => {
             }
           } catch (error) {
             toast.error(t('Error!'));
+          } finally {
+            setLoading(false);
           }
         }
       })
@@ -31,12 +34,24 @@ export const TransactionsTable = ({ transactions, refetch }) => {
   };
 
   const refreshStatus = async (id) => {
-    try {
-      const response = await getTransactionStatus(id);
-      toast.success(t('updateStatus'));
-    } catch (error) {
-      toast.error(t('Error!'));
-    }
+    dispatch(
+      showConfirm({
+        title: t('Do you confirm the action?'),
+        isOpen: true,
+        okCallback: async () => {
+          setLoading(true);
+          try {
+            await getTransactionStatus(id);
+            toast.success(t('updateStatus'));
+            refetch();
+          } catch (error) {
+            toast.error(t('Error!'));
+          } finally {
+            setLoading(false);
+          }
+        }
+      })
+    );
   };
 
   return (
@@ -88,9 +103,9 @@ export const TransactionsTable = ({ transactions, refetch }) => {
                         </Button>
                       ) : null}
 
-                      {item?.status === 'send' ? (
+                      {item?.status !== 'new' && item?.status !== 'ready' ? (
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           onClick={() => refreshStatus(item.id)}
                         >
                           {t('Update Status')}

@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Container,
+  LinearProgress,
   TablePagination
 } from '@material-ui/core';
 import { setAuthState } from '@slices/authBck';
@@ -27,6 +28,7 @@ const TransitTransactions = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
 
   const handleAuthSuccess = () => {
     dispatch(setAuthState(true));
@@ -62,6 +64,18 @@ const TransitTransactions = () => {
   };
   return (
     <>
+      {loading && (
+        <LinearProgress
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            zIndex: 9999
+          }}
+        />
+      )}
+
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -93,6 +107,7 @@ const TransitTransactions = () => {
               <TransactionsTable
                 transactions={transactions}
                 refetch={getData}
+                setLoading={setLoading}
               />
               <TablePagination
                 component="div"

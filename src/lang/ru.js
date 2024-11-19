@@ -291,6 +291,9 @@ const text = {
   'invalidBankAccountFormat': 'Недопустимый формат',
   'The entered amount exceeds the available balance': 'Введенная сумма превышает баланс выбранного транзитного счета',
   'max2digits': 'Код бенефициара состоит из 2 цифр',
+  'Transit account': 'Транзитный счет',
+  'Update Status': 'Обновить статус',
+  'Send to Bank': 'Отправить в банк',
   
 
 };

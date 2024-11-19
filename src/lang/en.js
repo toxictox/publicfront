@@ -199,6 +199,7 @@ const text = {
   status_failed: 'Failed',
   'Create company': 'Create company',
   'Update company': 'Edit company',
+  'Transit account': 'Transit account',
 
   name: 'Company name',
   iin: 'IIN/BIN',
@@ -228,7 +229,9 @@ const text = {
   'nameFormat': 'Allowed number of characters 2–100',
   'invalidBankAccountFormat': ' Invalid format',
   'iinError': 'Valid value maximum 12 digits',
+  'Update Status': 'Update Status',
   'max2digits': 'Beneficiary code consists from 2 digits',
+  'Send to Bank': 'Send to Bank',
 
 };
 

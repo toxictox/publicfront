@@ -59,7 +59,7 @@ const HandbookCreateAndUpdate = () => {
     bankAccount: Yup.string()
       .matches(/^[KZ]{2}[A-Z0-9]{18}$/, t('invalidBankAccountFormat'))
       .required(t('required')),
-    bankName: Yup.string().required(t('required'))
+    bankName: Yup.string()
   });
 
   const handleSubmit = async (values) => {
