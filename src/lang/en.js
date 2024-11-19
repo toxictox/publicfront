@@ -228,7 +228,7 @@ const text = {
   'The entered amount exceeds the available balance': 'The entered amount exceeds the available balance',
   'nameFormat': 'Allowed number of characters 2–100',
   'invalidBankAccountFormat': ' Invalid format',
-  'iinError': 'Valid value maximum 12 digits',
+  'iinError': 'Iin consists from 12 digits',
   'Update Status': 'Update Status',
   'max2digits': 'Beneficiary code consists from 2 digits',
   'Send to Bank': 'Send to Bank',

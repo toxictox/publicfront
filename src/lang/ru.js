@@ -287,7 +287,7 @@ const text = {
   'Transit transactions': 'Транзитные транзакции',
   'knpError': 'КНП состоит из 3 цифр',
   'nameFormat': 'Допустимое количество символов 2-100',
-  'iinError': 'Allowed maximum value is 12 digits',
+  'iinError': 'ИИН/БИН состоит из 12 цифр',
   'invalidBankAccountFormat': 'Недопустимый формат',
   'The entered amount exceeds the available balance': 'Введенная сумма превышает баланс выбранного транзитного счета',
   'max2digits': 'Код бенефициара состоит из 2 цифр',

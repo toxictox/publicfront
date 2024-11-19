@@ -29,6 +29,7 @@ const TransitTransactions = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const handleAuthSuccess = () => {
     dispatch(setAuthState(true));
@@ -52,7 +53,7 @@ const TransitTransactions = () => {
     if (isAuthenticated) {
       getData();
     }
-  }, [isAuthenticated, page, rowsPerPage]);
+  }, [isAuthenticated, page, rowsPerPage, updateTrigger]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -61,6 +62,10 @@ const TransitTransactions = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleUpdateClick = () => {
+    setUpdateTrigger((prev) => !prev);
   };
   return (
     <>
@@ -91,7 +96,20 @@ const TransitTransactions = () => {
           ) : (
             <Box>
               {accounts && <Accounts accounts={accounts} />}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: '20px'
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                  onClick={handleUpdateClick}
+                >
+                  {t('Update button')}
+                </Button>
                 <Button
                   variant="contained"
                   sx={{ mt: 2 }}
