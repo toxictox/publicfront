@@ -85,8 +85,8 @@ const CreateTransactions = () => {
       bik: '',
       narrative: '',
       amount: '',
-      knp: '',
-      code: ''
+      knp: '119',
+      code: '17'
     },
     validationSchema,
     onSubmit: async (values) => {
