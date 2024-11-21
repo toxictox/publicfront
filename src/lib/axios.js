@@ -1,6 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
+
+
 const token = localStorage.getItem("accessToken");
-if (token !== null && token !== undefined) {
+if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
+
 export default axios;

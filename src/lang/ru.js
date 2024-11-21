@@ -42,9 +42,9 @@ const menu = {
   'Bin menu': 'Bin',
   'Reconciliation menu': 'Сверка',
   'Catalogs menu': 'Справочники',
-  'Sanctions List':'Санкционные списки',
+  'Sanctions List': 'Санкционные списки',
   'Financial monitoring': 'Финансовый мониторинг',
-  'Rules': 'Правила'
+  Rules: 'Правила'
 };
 
 const text = {
@@ -192,7 +192,7 @@ const text = {
   resolved: 'Исправлено',
   reconciliationResult: 'Результат сверки',
   fixed: 'Исправить',
-  reconciliation:'Сверка',
+  reconciliation: 'Сверка',
   'Export List': 'Экспорт файлов',
   generated_reports_list: 'Список доступных файлов',
   'City24 Files List': 'Экспорт файлов city24',
@@ -201,6 +201,7 @@ const text = {
   'Invitation link': 'Ссылка для приглашения пользователей',
 
   'Success tab': 'Успешные',
+  'Success': 'Успешнно',
   'Failed tab': 'Отклоненные',
   'Conversion tab': 'Конверсия',
 
@@ -256,10 +257,46 @@ const text = {
   Deleted: 'Удаленно',
   'Sanctions White List': 'Белый список санкций',
   'Create sanctions white list entities': 'Добавить исключение',
-  'Blocking': 'Останавливает',
+  Blocking: 'Останавливает',
   'Alert only': 'Только уведомление',
-  'All': 'Все',
+  All: 'Все',
   'Financial Monitoring Rules': 'Правила финансового мониторинга',
+  'Create company': 'Создание компании',
+  'Update company': 'Редактирование компании',
+
+  name: 'Название компании',
+  iin: 'ИИН/БИН',
+  bik: 'БИК',
+  bankAccount: 'Номер счета компании',
+  account: 'ID транзитного счета',
+  targetAccount: 'Номер счета компании',
+  code: 'Код бенефициара',
+  knp: 'Код назначения платежа (КНП)',
+  statusName: 'Описание статуса',
+  narrative: 'Комментарий',
+  transport: 'Название банка транзитного счета',
+  updateStatus: 'Статус обновлен',
+  refresh: 'Обновить',
+  'Transit Account': 'Название банка транзитного счета',
+  'Create transactions': 'Создать транзакцию',
+  'Delete entry':'Запись удалена',
+  'Select Company':'Выбор компании',
+  'Select Account':'Название банка транзитного счета',
+  'Create Transactions':'Создать транзакцию',
+  'Do you confirm the action?': 'Вы подтверждаете действие ?',
+  'Handbook Companies': 'Справочник компаний',
+  'Transit transactions': 'Транзитные транзакции',
+  'knpError': 'КНП состоит из 3 цифр',
+  'nameFormat': 'Допустимое количество символов 2-100',
+  'iinError': 'ИИН/БИН состоит из 12 цифр',
+  'invalidBankAccountFormat': 'Недопустимый формат',
+  'The entered amount exceeds the available balance': 'Введенная сумма превышает баланс выбранного транзитного счета',
+  'max2digits': 'Код бенефициара состоит из 2 цифр',
+  'Transit account': 'Транзитный счет',
+  'Update Status': 'Обновить статус',
+  'Send to Bank': 'Отправить в банк',
+  
+
 };
 
 const fields = {
@@ -354,20 +391,20 @@ const fields = {
   country_code3: 'Код страны',
   knownHolders: 'Держатели карты',
   documentRef: 'Номер документа',
-  'filterMerchants': 'Мерчанты',
-  'filterTransactionTypes': 'Типы транзакций',
-  'critical': 'Важность',
-  'Enabled': 'Включено',
-  'Disabled': 'Отключено',
-  'ruleType': 'Тип правила',
-  'limit': 'Лимит',
-  'startDate': 'Дата отсчета',
-  'transactionTypes': 'Типы транзакций',
-  'merchants': 'Мерчанты',
+  filterMerchants: 'Мерчанты',
+  filterTransactionTypes: 'Типы транзакций',
+  critical: 'Важность',
+  Enabled: 'Включено',
+  Disabled: 'Отключено',
+  ruleType: 'Тип правила',
+  limit: 'Лимит',
+  startDate: 'Дата отсчета',
+  transactionTypes: 'Типы транзакций',
+  merchants: 'Мерчанты',
   'Merchants filter enabled': 'Фильтр по мерчантам включен',
   'Merchants filter disabled': 'Фильтр по мерчантам выключен',
   'Transaction types filter enabled': 'Фильтр по типам транзакций включен',
-  'Transaction types filter disabled': 'Фильтр по типам транзакций выключен',
+  'Transaction types filter disabled': 'Фильтр по типам транзакций выключен'
 };
 
 const server = {

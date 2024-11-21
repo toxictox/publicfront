@@ -28,5 +28,6 @@ export const gtmConfig = {
 };
 
 export const app = {
-  api: process.env.REACT_APP_API_URL
+  api: process.env.REACT_APP_API_URL,
+  apiNewService: process.env.REACT_APP_API_URL_NEW_SERVICE
 };

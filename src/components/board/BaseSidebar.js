@@ -254,6 +254,25 @@ const BaseSidebar = (props) => {
               active: true
             }
           ]
+        },
+        {
+          title: t('Transit account'),
+          icon: <Lock fontSize="small" />,
+          active: getActiveStatus('blockTransitionAccount'),
+          children: [
+            {
+              title: t('Handbook Companies'),
+              path: '/transit-account/handbookCompanies',
+              icon: <VpnLock fontSize="small" />,
+              active: getActiveStatus('blockTransitionAccount')
+            },
+            {
+              title: t('Transit transactions'),
+              path: '/transit-account/transitTransactions',
+              icon: <LockOpen fontSize="small" />,
+              active: getActiveStatus('blockTransitionAccount')
+            },
+          ]
         }
       ]
     }
