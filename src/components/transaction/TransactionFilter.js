@@ -20,12 +20,12 @@ import {
   TextField,
   Tooltip
 } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import { app } from '@root/config';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import InfoIcon from '@material-ui/icons/Info';
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -61,6 +61,7 @@ const TransactionFilter = (props) => {
         };
 
   const tranIndex = [
+    { label: '-', value: 'clear' },
     { label: 'Qiwi', value: 'qiwi_' },
     { label: 'Kassa 24', value: 'kassa24_' }
   ];
@@ -100,8 +101,12 @@ const TransactionFilter = (props) => {
           selectedTranId &&
           allowedMerchantNames?.includes(user?.merchantName)
         ) {
-          const originalTranId = values.tranId.replace(/^.*?_/, '');
-          values.tranId = `${selectedTranId}${originalTranId}`;
+          const originalTranId = values.tranId?.replace(/^.*?_/, '');
+          if (selectedTranId === 'clear') {
+            values.tranId = values.tranId?.split('_')?.slice(1)?.join('_');
+          } else {
+            values.tranId = `${selectedTranId}${originalTranId}`;
+          }
         }
 
         try {
@@ -213,6 +218,32 @@ const TransactionFilter = (props) => {
                 />
               </Grid>
 
+              {allowedMerchantNames?.includes(user?.merchantName) ? (
+                <Grid item xs={3}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel id="demo-simple-select-helper-label">
+                      {t('Transaction prefix')}
+                    </InputLabel>
+                    <Select
+                      value={selectedTranId}
+                      onChange={handleSelectChange}
+                      onBlur={handleBlur}
+                      label={t('Transaction prefix')}
+                      labelId="demo-simple-select-helper-label"
+                    >
+                      {tranIndex.map((item) => (
+                        <MenuItem key={item.value} value={item.value}>
+                          {item.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {touched.tranIdPrefix && errors.tranIdPrefix && (
+                      <FormHelperText>{errors.tranIdPrefix}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+              ) : null}
+
               <Grid item xs={3}>
                 <TextField
                   error={Boolean(touched.tranId && errors.tranId)}
@@ -239,32 +270,6 @@ const TransactionFilter = (props) => {
                   }}
                 />
               </Grid>
-
-              {allowedMerchantNames?.includes(user?.merchantName) ? (
-                <Grid item xs={3}>
-                  <FormControl
-                    fullWidth
-                    error={Boolean(touched.tranIdPrefix && errors.tranIdPrefix)}
-                    size="small"
-                  >
-                    <InputLabel>{t('Transaction prefix')}</InputLabel>
-                    <Select
-                      value={selectedTranId}
-                      onChange={handleSelectChange}
-                      onBlur={handleBlur}
-                    >
-                      {tranIndex.map((item) => (
-                        <MenuItem key={item.value} value={item.value}>
-                          {item.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {touched.tranIdPrefix && errors.tranIdPrefix && (
-                      <FormHelperText>{errors.tranIdPrefix}</FormHelperText>
-                    )}
-                  </FormControl>
-                </Grid>
-              ) : null}
 
               <Grid item xs={3}>
                 <SelectCheckboxCodes
