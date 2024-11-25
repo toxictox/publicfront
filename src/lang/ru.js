@@ -295,6 +295,7 @@ const text = {
   'Transit account': 'Транзитный счет',
   'Update Status': 'Обновить статус',
   'Send to Bank': 'Отправить в банк',
+  'Transaction prefix': 'Префикс транзакции',
   
 
 };

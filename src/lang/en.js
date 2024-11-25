@@ -200,6 +200,7 @@ const text = {
   'Create company': 'Create company',
   'Update company': 'Edit company',
   'Transit account': 'Transit account',
+  'Transaction prefix': 'Transaction prefix',
 
   name: 'Company name',
   iin: 'IIN/BIN',
