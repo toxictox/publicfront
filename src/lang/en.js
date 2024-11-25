@@ -201,6 +201,8 @@ const text = {
   'Update company': 'Edit company',
   'Transit account': 'Transit account',
   'Transaction prefix': 'Transaction prefix',
+  infoTranid:
+    'If the "transaction prefix" is selected, when entering the "Transaction ID", the transaction number should be added without the "kassa24" or "qiwi" prefix. If the "transaction prefix" is not selected, the search will be performed by exact match with the full "Transaction ID" value.',
 
   name: 'Company name',
   iin: 'IIN/BIN',
@@ -218,23 +220,23 @@ const text = {
   updateStatus: 'Status updated',
   refresh: 'Refresh',
   'Create transactions': 'Create transactions',
-  'Delete entry':'Post deleted',
-  'Select Company':'Select Company',
-  'Select Account':'Transit account',
-  'Create Transactions':'Create transaction',
-  'Success': 'Success',
+  'Delete entry': 'Post deleted',
+  'Select Company': 'Select Company',
+  'Select Account': 'Transit account',
+  'Create Transactions': 'Create transaction',
+  Success: 'Success',
   'Do you confirm the action?': 'Do you confirm the action?',
   'Handbook Companies': 'Handbook Companies',
   'Transit transactions': 'Transit transactions',
-  'knpError': 'KNP consists from 3 digits',
-  'The entered amount exceeds the available balance': 'The entered amount exceeds the available balance',
-  'nameFormat': 'Allowed number of characters 2–100',
-  'invalidBankAccountFormat': ' Invalid format',
-  'iinError': 'Iin consists from 12 digits',
+  knpError: 'KNP consists from 3 digits',
+  'The entered amount exceeds the available balance':
+    'The entered amount exceeds the available balance',
+  nameFormat: 'Allowed number of characters 2–100',
+  invalidBankAccountFormat: ' Invalid format',
+  iinError: 'Iin consists from 12 digits',
   'Update Status': 'Update Status',
-  'max2digits': 'Beneficiary code consists from 2 digits',
-  'Send to Bank': 'Send to Bank',
-
+  max2digits: 'Beneficiary code consists from 2 digits',
+  'Send to Bank': 'Send to Bank'
 };
 
 const fields = {

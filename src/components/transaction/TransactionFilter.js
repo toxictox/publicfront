@@ -13,16 +13,19 @@ import {
   FormControl,
   FormHelperText,
   Grid,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
-  TextField
+  TextField,
+  Tooltip
 } from '@material-ui/core';
 import { app } from '@root/config';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import InfoIcon from '@material-ui/icons/Info';
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -62,7 +65,7 @@ const TransactionFilter = (props) => {
     { label: 'Kassa 24', value: 'kassa24_' }
   ];
   const allowedMerchantNames = [
-    'BeeCredit',
+    'Beeсlever',
     'OneCredit',
     'Credit365',
     'A-Credit'
@@ -225,6 +228,15 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip title={t('infoTranid')}>
+                          <InfoIcon />
+                        </Tooltip>
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </Grid>
 
@@ -253,8 +265,6 @@ const TransactionFilter = (props) => {
                   </FormControl>
                 </Grid>
               ) : null}
-
-             
 
               <Grid item xs={3}>
                 <SelectCheckboxCodes
