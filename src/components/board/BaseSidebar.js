@@ -30,7 +30,8 @@ import {
   StackedLineChart,
   Storefront,
   Timeline,
-  VpnLock
+  VpnLock,
+  Warning
 } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { Fragment, useEffect, useState } from 'react';
@@ -245,13 +246,19 @@ const BaseSidebar = (props) => {
               title: t('Sanctions White List'),
               path: '/fin_mon/exceptions',
               icon: <LockOpen fontSize="small" />,
-              active: true
+              active: getActiveStatus('sanctionWhiteList')
             },
             {
               title: t('Rules'),
               path: '/fin_mon/rules',
               icon: <StackedLineChart fontSize="small" />,
-              active: true
+              active: getActiveStatus('finmonRules')
+            },
+            {
+              title: t('Violations'),
+              path: '/fin_mon/violation',
+              icon: <Warning fontSize="small" />,
+              active: getActiveStatus('finmonViolation')
             }
           ]
         },
