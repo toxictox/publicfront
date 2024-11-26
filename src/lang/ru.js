@@ -201,7 +201,7 @@ const text = {
   'Invitation link': 'Ссылка для приглашения пользователей',
 
   'Success tab': 'Успешные',
-  'Success': 'Успешнно',
+  Success: 'Успешнно',
   'Failed tab': 'Отклоненные',
   'Conversion tab': 'Конверсия',
 
@@ -279,24 +279,26 @@ const text = {
   refresh: 'Обновить',
   'Transit Account': 'Название банка транзитного счета',
   'Create transactions': 'Создать транзакцию',
-  'Delete entry':'Запись удалена',
-  'Select Company':'Выбор компании',
-  'Select Account':'Название банка транзитного счета',
-  'Create Transactions':'Создать транзакцию',
+  'Delete entry': 'Запись удалена',
+  'Select Company': 'Выбор компании',
+  'Select Account': 'Название банка транзитного счета',
+  'Create Transactions': 'Создать транзакцию',
   'Do you confirm the action?': 'Вы подтверждаете действие ?',
   'Handbook Companies': 'Справочник компаний',
   'Transit transactions': 'Транзитные транзакции',
-  'knpError': 'КНП состоит из 3 цифр',
-  'nameFormat': 'Допустимое количество символов 2-100',
-  'iinError': 'ИИН/БИН состоит из 12 цифр',
-  'invalidBankAccountFormat': 'Недопустимый формат',
-  'The entered amount exceeds the available balance': 'Введенная сумма превышает баланс выбранного транзитного счета',
-  'max2digits': 'Код бенефициара состоит из 2 цифр',
+  knpError: 'КНП состоит из 3 цифр',
+  nameFormat: 'Допустимое количество символов 2-100',
+  iinError: 'ИИН/БИН состоит из 12 цифр',
+  invalidBankAccountFormat: 'Недопустимый формат',
+  'The entered amount exceeds the available balance':
+    'Введенная сумма превышает баланс выбранного транзитного счета',
+  max2digits: 'Код бенефициара состоит из 2 цифр',
   'Transit account': 'Транзитный счет',
   'Update Status': 'Обновить статус',
   'Send to Bank': 'Отправить в банк',
-  
-
+  'Transaction prefix': 'Префикс транзакции',
+  infoTranid:
+    'Если в поле "Префикс транзакции" выбран вариант,  то при вводе "ID транзакции" следует добавить номер транзакции без префикса "kassa24" или "qiwi". Если префикс транзакции не указан, поиск будет осуществляться по полному совпадению с полным значением "ID транзакции".'
 };
 
 const fields = {
