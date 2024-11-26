@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { app } from '@root/config';
 
-// const baseURL = `${app.apiNewService}`;
-const baseURL = `https://bcc3.paytech.agis.work/api`;
+const baseURL = `${app.apiNewService}`;
+// const baseURL = `https://bcc3.paytech.agis.work/api`;
 
 let token = '';
 
