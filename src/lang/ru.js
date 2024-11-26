@@ -44,7 +44,8 @@ const menu = {
   'Catalogs menu': 'Справочники',
   'Sanctions List': 'Санкционные списки',
   'Financial monitoring': 'Финансовый мониторинг',
-  Rules: 'Правила'
+  Rules: 'Правила',
+  'Violations': 'Нарушения'
 };
 
 const text = {
@@ -295,8 +296,7 @@ const text = {
   'Transit account': 'Транзитный счет',
   'Update Status': 'Обновить статус',
   'Send to Bank': 'Отправить в банк',
-  
-
+  'Violation List': 'Список нарушений',
 };
 
 const fields = {

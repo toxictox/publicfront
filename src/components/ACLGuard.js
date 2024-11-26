@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import useAuth from "@hooks/useAuth";
 import ForbiddenRequest from "@pages/ForbiddenRequest";
 
-const ACLGuard = (props) => {
-  const { children, can } = props;
+const ACLGuard = ({children, type = undefined, can}) => {
   const auth = useAuth();
   const location = useLocation();
-  const path = location.pathname.split("/").filter((item) => item !== "")[0];
+  const path = type ? type : location.pathname.split("/").filter((item) => item !== "")[0];
 
   if (auth.user.permissions[path] === undefined) {
     return <ForbiddenRequest />;
