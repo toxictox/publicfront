@@ -1,24 +1,31 @@
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import {
+  OrderBySelect,
+  SelectCheckbox,
+  SelectCheckboxCodes
+} from '@comp/core/forms';
+import useAuth from '@hooks/useAuth';
+import useMounted from '@hooks/useMounted';
+import axios from '@lib/axios';
+import { GetFilterDataFromStore } from '@lib/filter';
 import {
   Box,
   Button,
+  FormControl,
   FormHelperText,
-  TextField,
   Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Tooltip
 } from '@material-ui/core';
-import useMounted from '@hooks/useMounted';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import axios from '@lib/axios';
+import InfoIcon from '@material-ui/icons/Info';
 import { app } from '@root/config';
-import { GetFilterDataFromStore } from '@lib/filter';
-import {
-  SelectCheckbox,
-  SelectCheckboxCodes,
-  OrderBySelect,
-} from '@comp/core/forms';
-import useAuth from '@hooks/useAuth';
+import { Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
 const TransactionFilter = (props) => {
   const mounted = useMounted();
@@ -26,8 +33,8 @@ const TransactionFilter = (props) => {
   const [banks, setBanks] = useState([]);
   const [tranType, setTranType] = useState([]);
   const [respCode, setRespCode] = useState([]);
-  const { getAccess } = useAuth();
-
+  const { getAccess, user } = useAuth();
+  const [selectedTranId, setSelectedTranId] = useState('');
   useEffect(() => {
     const getData = async () => {
       await axios.get(`${app.api}/filter/banks`).then((response) => {
@@ -50,8 +57,19 @@ const TransactionFilter = (props) => {
       ? GetFilterDataFromStore('transactions')
       : {
           respCode: [],
-          banks: [],
+          banks: []
         };
+
+  const tranIndex = [
+    { label: '-', value: 'clear' },
+    { label: 'Qiwi', value: 'qiwi_' },
+    { label: 'Kassa 24', value: 'kassa24_' }
+  ];
+
+  const handleSelectChange = (event) => {
+    setSelectedTranId(event.target.value);
+  };
+
   return (
     <Formik
       initialValues={dataForFields}
@@ -69,12 +87,22 @@ const TransactionFilter = (props) => {
         pan1: Yup.string().min(6).max(6),
         pan2: Yup.string().min(4).max(4),
         rrn: Yup.string(),
-        gatewayRefNo: Yup.string(),
+        gatewayRefNo: Yup.string()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        if (values.tranId && selectedTranId) {
+          const originalTranId = values.tranId?.replace(/^.*?_/, '');
+          if (selectedTranId === 'clear') {
+            values.tranId = values.tranId?.split('_')?.slice(1)?.join('_');
+            setSelectedTranId('');
+          } else {
+            values.tranId = `${selectedTranId}${originalTranId}`;
+          }
+        }
+
         try {
           await props.callback({
-            ...values,
+            ...values
           });
 
           if (mounted.current) {
@@ -98,7 +126,7 @@ const TransactionFilter = (props) => {
         setFieldValue,
         isSubmitting,
         touched,
-        values,
+        values
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
@@ -119,7 +147,7 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 />
@@ -141,7 +169,7 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   sx={{ m: 0 }}
                 />
@@ -155,9 +183,7 @@ const TransactionFilter = (props) => {
                   label={t('tranTypeId')}
                   name="tranTypes"
                   onBlur={handleBlur}
-                  value={
-                    values.tranTypes !== undefined ? values.tranTypes : []
-                  }
+                  value={values.tranTypes !== undefined ? values.tranTypes : []}
                   sx={{ m: 0 }}
                   onChange={(e) => {
                     setFieldValue('tranTypes', e.target.value);
@@ -184,21 +210,27 @@ const TransactionFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                <SelectCheckboxCodes
-                  error={Boolean(touched.respCode && errors.respCode)}
-                  labelId="respCode"
-                  helperText={touched.respCode && errors.respCode}
-                  label={t('respCode')}
-                  name="respCode"
-                  onBlur={handleBlur}
-                  value={values.respCode !== undefined ? values.respCode : []}
-                  sx={{ m: 0 }}
-                  onChange={(data) => {
-                    setFieldValue('respCode', data);
-                  }}
-                  fieldText={['external', 'langEn']}
-                  items={respCode}
-                />
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-simple-select-helper-label">
+                    {t('Transaction prefix')}
+                  </InputLabel>
+                  <Select
+                    value={selectedTranId}
+                    onChange={handleSelectChange}
+                    onBlur={handleBlur}
+                    label={t('Transaction prefix')}
+                    labelId="demo-simple-select-helper-label"
+                  >
+                    {tranIndex.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.tranIdPrefix && errors.tranIdPrefix && (
+                    <FormHelperText>{errors.tranIdPrefix}</FormHelperText>
+                  )}
+                </FormControl>
               </Grid>
 
               <Grid item xs={3}>
@@ -216,6 +248,33 @@ const TransactionFilter = (props) => {
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip title={t('infoTranid')}>
+                          <InfoIcon />
+                        </Tooltip>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <SelectCheckboxCodes
+                  error={Boolean(touched.respCode && errors.respCode)}
+                  labelId="respCode"
+                  helperText={touched.respCode && errors.respCode}
+                  label={t('respCode')}
+                  name="respCode"
+                  onBlur={handleBlur}
+                  value={values.respCode !== undefined ? values.respCode : []}
+                  sx={{ m: 0 }}
+                  onChange={(data) => {
+                    setFieldValue('respCode', data);
+                  }}
+                  fieldText={['external', 'langEn']}
+                  items={respCode}
                 />
               </Grid>
 
@@ -292,60 +351,60 @@ const TransactionFilter = (props) => {
               </Grid>
 
               <Grid item xs={3}>
-                  <TextField
-                      error={Boolean(touched.orderId && errors.orderId)}
-                      fullWidth
-                      helperText={touched.orderId && errors.orderId}
-                      label={t('orderId')}
-                      margin="normal"
-                      name="orderId"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      type="text"
-                      value={values.orderId}
-                      variant="outlined"
-                      size="small"
-                      sx={{ m: 0 }}
-                  />
+                <TextField
+                  error={Boolean(touched.orderId && errors.orderId)}
+                  fullWidth
+                  helperText={touched.orderId && errors.orderId}
+                  label={t('orderId')}
+                  margin="normal"
+                  name="orderId"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.orderId}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
               </Grid>
 
               <Grid item xs={3}>
-                  <TextField
-                      error={Boolean(touched.rrn && errors.rrn)}
-                      fullWidth
-                      helperText={touched.rrn && errors.rrn}
-                      label={t('rrn')}
-                      margin="normal"
-                      name="rrn"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      type="text"
-                      value={values.rrn}
-                      variant="outlined"
-                      size="small"
-                      sx={{ m: 0 }}
-                  />
+                <TextField
+                  error={Boolean(touched.rrn && errors.rrn)}
+                  fullWidth
+                  helperText={touched.rrn && errors.rrn}
+                  label={t('rrn')}
+                  margin="normal"
+                  name="rrn"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.rrn}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
               </Grid>
 
-              {getAccess('transactions', 'viewExtraInfo') &&
+              {getAccess('transactions', 'viewExtraInfo') && (
                 <Grid item xs={3}>
-                    <TextField
-                        error={Boolean(touched.gatewayRefNo && errors.gatewayRefNo)}
-                        fullWidth
-                        helperText={touched.gatewayRefNo && errors.gatewayRefNo}
-                        label={t('gatewayRefNo')}
-                        margin="normal"
-                        name="gatewayRefNo"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        type="text"
-                        value={values.gatewayRefNo}
-                        variant="outlined"
-                        size="small"
-                        sx={{ m: 0 }}
-                    />
+                  <TextField
+                    error={Boolean(touched.gatewayRefNo && errors.gatewayRefNo)}
+                    fullWidth
+                    helperText={touched.gatewayRefNo && errors.gatewayRefNo}
+                    label={t('gatewayRefNo')}
+                    margin="normal"
+                    name="gatewayRefNo"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="text"
+                    value={values.gatewayRefNo}
+                    variant="outlined"
+                    size="small"
+                    sx={{ m: 0 }}
+                  />
                 </Grid>
-              }
+              )}
 
               <OrderBySelect
                 touched={touched}
@@ -355,135 +414,135 @@ const TransactionFilter = (props) => {
                 values={values}
               />
 
-              {getAccess('transactions', 'viewExtraInfo') &&
+              {getAccess('transactions', 'viewExtraInfo') && (
                 <>
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.email && errors.email)}
-                          fullWidth
-                          helperText={touched.email && errors.email}
-                          label={'email'}
-                          margin="normal"
-                          name="email"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.email}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.email && errors.email)}
+                      fullWidth
+                      helperText={touched.email && errors.email}
+                      label={'email'}
+                      margin="normal"
+                      name="email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.email}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.city && errors.city)}
-                          fullWidth
-                          helperText={touched.city && errors.city}
-                          label={t('city')}
-                          margin="normal"
-                          name="city"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.city}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.city && errors.city)}
+                      fullWidth
+                      helperText={touched.city && errors.city}
+                      label={t('city')}
+                      margin="normal"
+                      name="city"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.city}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.country && errors.country)}
-                          fullWidth
-                          helperText={touched.country && errors.country}
-                          label={t('country')}
-                          margin="normal"
-                          name="country"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.country}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.country && errors.country)}
+                      fullWidth
+                      helperText={touched.country && errors.country}
+                      label={t('country')}
+                      margin="normal"
+                      name="country"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.country}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.cardHash && errors.cardHash)}
-                          fullWidth
-                          helperText={touched.cardHash && errors.cardHash}
-                          label={t('cardHash')}
-                          margin="normal"
-                          name="cardHash"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.cardHash}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.cardHash && errors.cardHash)}
+                      fullWidth
+                      helperText={touched.cardHash && errors.cardHash}
+                      label={t('cardHash')}
+                      margin="normal"
+                      name="cardHash"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.cardHash}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.ip && errors.ip)}
-                          fullWidth
-                          helperText={touched.ip && errors.ip}
-                          label={t('ip')}
-                          margin="normal"
-                          name="ip"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.ip}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.ip && errors.ip)}
+                      fullWidth
+                      helperText={touched.ip && errors.ip}
+                      label={t('ip')}
+                      margin="normal"
+                      name="ip"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.ip}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.customerId && errors.customerId)}
-                          fullWidth
-                          helperText={touched.customerId && errors.customerId}
-                          label={t('customerId')}
-                          margin="normal"
-                          name="customerId"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.customerId}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.customerId && errors.customerId)}
+                      fullWidth
+                      helperText={touched.customerId && errors.customerId}
+                      label={t('customerId')}
+                      margin="normal"
+                      name="customerId"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.customerId}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
 
                   <Grid item xs={3}>
-                      <TextField
-                          error={Boolean(touched.holder && errors.holder)}
-                          fullWidth
-                          helperText={touched.holder && errors.holder}
-                          label={t('holder')}
-                          margin="normal"
-                          name="holder"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          type="text"
-                          value={values.holder}
-                          variant="outlined"
-                          size="small"
-                          sx={{ m: 0 }}
-                      />
+                    <TextField
+                      error={Boolean(touched.holder && errors.holder)}
+                      fullWidth
+                      helperText={touched.holder && errors.holder}
+                      label={t('holder')}
+                      margin="normal"
+                      name="holder"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      type="text"
+                      value={values.holder}
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 0 }}
+                    />
                   </Grid>
                 </>
-              }
+              )}
 
               <Grid item xs={12}>
                 <Box sx={{ mt: 2 }}>

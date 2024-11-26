@@ -58,6 +58,7 @@ const text = {
   'Users List': 'Список користувачів',
   'User Item Update': 'Оновлення користувача',
   'User Item Create': 'Створення користувача',
+  'Transaction prefix': 'Префикс транзакции',
 
   nonExistent: 'Відсутній у ПО',
   missing: 'Відсутній у звіті',
