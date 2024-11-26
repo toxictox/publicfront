@@ -65,12 +65,6 @@ const TransactionFilter = (props) => {
     { label: 'Qiwi', value: 'qiwi_' },
     { label: 'Kassa 24', value: 'kassa24_' }
   ];
-  const allowedMerchantNames = [
-    'Beeсlever',
-    'OneCredit',
-    'Credit365',
-    'A-Credit'
-  ];
 
   const handleSelectChange = (event) => {
     setSelectedTranId(event.target.value);
@@ -96,11 +90,7 @@ const TransactionFilter = (props) => {
         gatewayRefNo: Yup.string()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        if (
-          values.tranId &&
-          selectedTranId &&
-          allowedMerchantNames?.includes(user?.merchantName)
-        ) {
+        if (values.tranId && selectedTranId) {
           const originalTranId = values.tranId?.replace(/^.*?_/, '');
           if (selectedTranId === 'clear') {
             values.tranId = values.tranId?.split('_')?.slice(1)?.join('_');
@@ -218,31 +208,29 @@ const TransactionFilter = (props) => {
                 />
               </Grid>
 
-              {allowedMerchantNames?.includes(user?.merchantName) ? (
-                <Grid item xs={3}>
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="demo-simple-select-helper-label">
-                      {t('Transaction prefix')}
-                    </InputLabel>
-                    <Select
-                      value={selectedTranId}
-                      onChange={handleSelectChange}
-                      onBlur={handleBlur}
-                      label={t('Transaction prefix')}
-                      labelId="demo-simple-select-helper-label"
-                    >
-                      {tranIndex.map((item) => (
-                        <MenuItem key={item.value} value={item.value}>
-                          {item.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {touched.tranIdPrefix && errors.tranIdPrefix && (
-                      <FormHelperText>{errors.tranIdPrefix}</FormHelperText>
-                    )}
-                  </FormControl>
-                </Grid>
-              ) : null}
+              <Grid item xs={3}>
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-simple-select-helper-label">
+                    {t('Transaction prefix')}
+                  </InputLabel>
+                  <Select
+                    value={selectedTranId}
+                    onChange={handleSelectChange}
+                    onBlur={handleBlur}
+                    label={t('Transaction prefix')}
+                    labelId="demo-simple-select-helper-label"
+                  >
+                    {tranIndex.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.tranIdPrefix && errors.tranIdPrefix && (
+                    <FormHelperText>{errors.tranIdPrefix}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
 
               <Grid item xs={3}>
                 <TextField
