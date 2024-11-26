@@ -94,6 +94,7 @@ const TransactionFilter = (props) => {
           const originalTranId = values.tranId?.replace(/^.*?_/, '');
           if (selectedTranId === 'clear') {
             values.tranId = values.tranId?.split('_')?.slice(1)?.join('_');
+            setSelectedTranId('');
           } else {
             values.tranId = `${selectedTranId}${originalTranId}`;
           }
