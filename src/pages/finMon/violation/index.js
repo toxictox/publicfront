@@ -170,6 +170,7 @@ const FinMonViolationIndex = () => {
                     "amount",
                     "respCode",
                     "tranType",
+                    "merchant",
                     "clientId",
                     "customerEmail",
                     "pan",
@@ -200,6 +201,9 @@ const FinMonViolationIndex = () => {
                         </TableCell>
                         <TableCell>
                           {item.transaction in transactionList ? transactionList[item.transaction].tranType : t("Loading...")}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList ? transactionList[item.transaction].merchant : t("Loading...")}
                         </TableCell>
                         <TableCell>
                           {item.transaction in transactionList ? transactionList[item.transaction].client : t("Loading...")}
