@@ -68,8 +68,6 @@ const FinMonViolationIndex = () => {
   };
 
   const fetchViolations = async (filters) => {
-    console.log(filters, 'filters');
-
     await axios
       .get(`${app.api}/finMon/violation`, {
         params: {
