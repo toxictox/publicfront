@@ -27,7 +27,7 @@ const ViolationTable = ({
         ''
       ]}
     >
-      {dataList.items.map((item) => (
+      {dataList?.items?.map((item) => (
         <TableRow hover key={item.id}>
           <TableCell>
             {transactionList[item.transaction]?.createOn || t('Loading...')}
@@ -35,57 +35,57 @@ const ViolationTable = ({
           <TableCell>
             <Link
               component={RouterLink}
-              to={`/transactions/${item.transaction}`}
+              to={`/transactions/${item?.transaction}`}
               underline="none"
               variant="subtitle2"
             >
-              {item.transaction}
+              {item?.transaction}
             </Link>
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.amount || t('Loading...')}
+            {transactionList[item?.transaction]?.amount || t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]
-              ? `${transactionList[item.transaction].respCode} ${
-                  transactionList[item.transaction].respMessage
+            {transactionList[item?.transaction]
+              ? `${transactionList[item?.transaction].respCode} ${
+                  transactionList[item?.transaction].respMessage
                 }`
               : t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.tranType || t('Loading...')}
+            {transactionList[item?.transaction]?.tranType || t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.merchant || t('Loading...')}
+            {transactionList[item?.transaction]?.merchant || t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.client || t('Loading...')}
+            {transactionList[item?.transaction]?.client || t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.customerEmail ||
+            {transactionList[item?.transaction]?.customerEmail ||
               t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.pan || t('Loading...')}
+            {transactionList[item?.transaction]?.pan || t('Loading...')}
           </TableCell>
           <TableCell>
-            {transactionList[item.transaction]?.gateway || t('Loading...')}
+            {transactionList[item?.transaction]?.gateway || t('Loading...')}
           </TableCell>
           <TableCell>{item.message}</TableCell>
           <TableCell>
             {item.isCritical ? t('Blocking') : t('Alert only')}
           </TableCell>
           <TableCell>
-            {transactionCountList[item.transaction] ? (
+            {transactionCountList[item?.transaction] ? (
               <Link
                 component={RouterLink}
                 to={`/transactions?${getTransactionsListQuery(
-                  transactionList[item.transaction]
+                  transactionList[item?.transaction]
                 )}`}
                 underline="none"
                 variant="subtitle2"
               >
-                {transactionCountList[item.transaction]}
+                {transactionCountList[item?.transaction]}
               </Link>
             ) : (
               t('Loading...')
