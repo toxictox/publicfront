@@ -1,27 +1,162 @@
-import useAuth from '@hooks/useAuth';
-import useSettings from '@hooks/useSettings';
 import {
   Box,
   Card,
   CardHeader,
   Container,
   Divider,
-  TablePagination
+  Link,
+  TableCell,
+  TablePagination,
+  TableRow
 } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link as RouterLink } from 'react-router-dom';
+
+import useMounted from '@hooks/useMounted';
+import useSettings from '@hooks/useSettings';
+
+import { TableStatic } from '@comp/core/tables';
+import useAuth from '@hooks/useAuth';
+import axios from '@lib/axios';
+import { app } from '@root/config';
 import { useTranslation } from 'react-i18next';
 import FilterForm from './FilterForm';
-import ViolationTable from './ViolationTable';
-import { useViolations } from './useViolations';
 
 const FinMonViolationIndex = () => {
-  const { dataList, page, count, setPage, setCount, setFilters } =
-    useViolations();
-  const { settings } = useSettings();
+  const mounted = useMounted();
   const { t } = useTranslation();
+  const { settings } = useSettings();
+  const [dataList, setListData] = useState({
+    items: [],
+    count: 0
+  });
+  const [transactionList, setTransactionList] = useState({});
+  const [transactionCountList, setTransactionCountList] = useState({});
+  const [a2cTranType, seta2cTranType] = useState(0);
+  const [respCodeId, setRespCodeId] = useState(0);
+  const [page, setPage] = useState(0);
+  const [count, setCount] = useState(50);
   const { user } = useAuth();
-  const handlePageChange = (e, newPage) => setPage(newPage);
-  const handleRowsPerPageChange = (e) => setCount(e.target.value);
+
+  const fetchTranType = async () => {
+    if (a2cTranType != 0) {
+      return;
+    }
+
+    await axios.get(`${app.api}/filter/tran_types`).then((response) => {
+      const item = response.data.find((element) => element.name == 'a2c');
+      if (item) {
+        seta2cTranType(item.id);
+      }
+    });
+  };
+
+  const fetchRespCode = async () => {
+    if (respCodeId != 0) {
+      return;
+    }
+
+    await axios.get(`${app.api}/filter/codes`).then((response) => {
+      const item = response.data.data.find(
+        (element) => element.internal == '1000'
+      );
+      if (item) {
+        setRespCodeId(item.id);
+      }
+    });
+  };
+
+  const fetchViolations = async (filters) => {
+    await axios
+      .get(`${app.api}/finMon/violation`, {
+        params: {
+          page: page + 1,
+          count: count,
+          ...filters
+        }
+      })
+      .then((response) => {
+        setListData(response.data);
+        response.data.items.forEach((item) =>
+          fetchTransaction(item.transaction)
+        );
+      });
+  };
+
+  useEffect(() => {
+    fetchTranType();
+    fetchRespCode();
+  }, [mounted]);
+
+  useEffect(() => {
+    if (respCodeId != 0 && a2cTranType != 0) {
+      fetchViolations();
+    }
+  }, [count, page]);
+
+  useEffect(() => {
+    if (respCodeId != 0 && a2cTranType != 0) {
+      fetchViolations();
+    }
+  }, [a2cTranType, respCodeId]);
+
+  const fetchTransaction = async (transactionRef) => {
+    if (!(transactionRef in transactionList)) {
+      await axios
+        .get(`${app.api}/transaction/${transactionRef}`)
+        .then((response) => {
+          setTransactionList((state) => ({
+            ...state,
+            [transactionRef]: response.data
+          }));
+          fetchTransactionCount(response.data);
+        });
+    }
+  };
+
+  const fetchTransactionCount = (transaction) => {
+    if (!(transaction.uuid in transactionCountList)) {
+      const today = new Date();
+      const targetDate = new Date();
+      targetDate.setDate(today.getDate() - 30);
+      axios
+        .get(`${app.api}/transactions`, {
+          params: {
+            merchant: transaction.merchantId,
+            cardHash: transaction.panHash,
+            respCode: [respCodeId],
+            tranTypes: [a2cTranType],
+            dateFrom: targetDate.toUTCString()
+          }
+        })
+        .then((response) => {
+          setTransactionCountList((state) => ({
+            ...state,
+            [transaction.uuid]: response.data.count
+          }));
+        });
+    }
+  };
+
+  const handlePageChange = async (e, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = async (e, newValue) => {
+    setCount(newValue.props.value);
+  };
+
+  const getTransactionsListQuery = (transaction) => {
+    const params = {
+      merchant: transaction.merchantId,
+      cardHash: transaction.panHash,
+      respCode: [respCodeId],
+      tranTypes: [a2cTranType]
+    };
+
+    return new URLSearchParams(params).toString();
+  };
 
   const initialValues = {
     merchantIds: [],
@@ -31,20 +166,27 @@ const FinMonViolationIndex = () => {
   };
 
   const handleFilterSubmit = (values) => {
-    const filters = {
-      merchantIds: values.merchantIds,
-      tranId: values.tranId,
-      dateFrom: values.dateFrom,
-      dateTo: values.dateTo
-    };
-    setFilters(filters);
+    const filters = Object.fromEntries(
+      Object.entries({
+        merchantIds: values.merchantIds,
+        tranId: values.tranId,
+        dateFrom: values.dateFrom,
+        dateTo: values.dateTo,
+      }).filter(([_, value]) => {
+        if (Array.isArray(value)) return value.length > 0;
+        return value !== '' && value !== null && value !== undefined;
+      })
+    );
+  
+    fetchViolations(filters);
   };
 
   return (
     <>
       <Helmet>
-        <title>Violation List</title>
+        <title>{t('Violation List')}</title>
       </Helmet>
+
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -53,27 +195,128 @@ const FinMonViolationIndex = () => {
         }}
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
-          <Card sx={{ mt: 2 }}>
-            <CardHeader title={t('violationList')} />
-            <Divider />
+          <Box sx={{ minWidth: 700 }}>
+            <Card sx={{ mt: 2 }}>
+              <CardHeader title={t('Violation List')} />
+              <Divider />
 
-            <FilterForm
-              initialValues={initialValues}
-              onSubmit={handleFilterSubmit}
-              merchants={user.merchants}
-            />
+              <FilterForm
+                initialValues={initialValues}
+                merchants={user.merchants}
+                handleFilterSubmit={handleFilterSubmit}
+              />
 
-            <Divider />
-            <ViolationTable dataList={dataList} />
-            <TablePagination
-              count={dataList.count}
-              page={page}
-              rowsPerPage={count}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              rowsPerPageOptions={[5, 10, 25, 50, 100]}
-            />
-          </Card>
+              <TableStatic
+                header={[
+                  'createOn',
+                  'transaction',
+                  'amount',
+                  'respCode',
+                  'tranType',
+                  'clientId',
+                  'customerEmail',
+                  'pan',
+                  'gateway',
+                  'message',
+                  'critical',
+                  ''
+                ]}
+              >
+                {dataList.items.map(function (item) {
+                  return (
+                    <>
+                      <TableRow hover key={item.id}>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].createOn
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            component={RouterLink}
+                            to={`/transactions/${item.transaction}`}
+                            underline="none"
+                            variant="subtitle2"
+                          >
+                            {item.transaction}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].amount
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? `${transactionList[item.transaction].respCode} ${
+                                transactionList[item.transaction].respMessage
+                              }`
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].tranType
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].client
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].customerEmail
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].pan
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].gateway
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>{item.message}</TableCell>
+                        <TableCell>
+                          {item.isCritical ? t('Blocking') : t('Alert only')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionCountList ? (
+                            <Link
+                              component={RouterLink}
+                              to={
+                                `/transactions?` +
+                                getTransactionsListQuery(
+                                  transactionList[item.transaction]
+                                )
+                              }
+                              underline="none"
+                              variant="subtitle2"
+                            >
+                              {transactionCountList[item.transaction]}
+                            </Link>
+                          ) : (
+                            t('Loading...')
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  );
+                })}
+              </TableStatic>
+
+              <TablePagination
+                count={dataList.count}
+                onPageChange={handlePageChange}
+                page={page}
+                rowsPerPage={count}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              />
+            </Card>
+          </Box>
         </Container>
       </Box>
     </>

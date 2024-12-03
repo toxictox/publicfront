@@ -2,11 +2,11 @@ import { Autocomplete, Button, Grid, TextField } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-const FilterForm = ({ initialValues, onSubmit, merchants }) => {
+const FilterForm = ({ initialValues, handleFilterSubmit, merchants }) => {
   const { t } = useTranslation();
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleFilterSubmit}>
       {({ handleSubmit, setFieldValue, getFieldProps, values }) => (
         <Form onSubmit={handleSubmit}>
           <Grid container spacing={2} sx={{ p: 2 }}>
