@@ -15,8 +15,8 @@ export const useViolations = () => {
       fetchRespCodes()
     ]);
 
-    const a2cTran = tranTypes.find((item) => item.name === 'a2c');
-    const respCode = respCodes.find((item) => item.internal === '1000');
+    const a2cTran = tranTypes?.find((item) => item?.name === 'a2c');
+    const respCode = respCodes?.find((item) => item?.internal === '1000');
 
     if (a2cTran) seta2cTranType(a2cTran.id);
     if (respCode) setRespCodeId(respCode.id);
