@@ -201,6 +201,8 @@ const text = {
   'Update company': 'Edit company',
   'Transit account': 'Transit account',
   'Transaction prefix': 'Transaction prefix',
+  'startDate': 'Period start date and time',
+  'endDate': 'Period end date and time',
   infoTranid:
     'If the "transaction prefix" is selected, when entering the "Transaction ID", the transaction number should be added without the "kassa24" or "qiwi" prefix. If the "transaction prefix" is not selected, the search will be performed by exact match with the full "Transaction ID" value.',
 
