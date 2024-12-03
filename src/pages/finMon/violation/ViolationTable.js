@@ -47,8 +47,8 @@ const ViolationTable = ({
           </TableCell>
           <TableCell>
             {transactionList[item?.transaction]
-              ? `${transactionList[item?.transaction].respCode} ${
-                  transactionList[item?.transaction].respMessage
+              ? `${transactionList[item?.transaction]?.respCode} ${
+                  transactionList[item?.transaction]?.respMessage
                 }`
               : t('Loading...')}
           </TableCell>
@@ -71,9 +71,9 @@ const ViolationTable = ({
           <TableCell>
             {transactionList[item?.transaction]?.gateway || t('Loading...')}
           </TableCell>
-          <TableCell>{item.message}</TableCell>
+          <TableCell>{item?.message}</TableCell>
           <TableCell>
-            {item.isCritical ? t('Blocking') : t('Alert only')}
+            {item?.isCritical ? t('Blocking') : t('Alert only')}
           </TableCell>
           <TableCell>
             {transactionCountList[item?.transaction] ? (
