@@ -171,13 +171,13 @@ const FinMonViolationIndex = () => {
         merchantIds: values.merchantIds,
         tranId: values.tranId,
         dateFrom: values.dateFrom,
-        dateTo: values.dateTo,
+        dateTo: values.dateTo
       }).filter(([_, value]) => {
         if (Array.isArray(value)) return value.length > 0;
         return value !== '' && value !== null && value !== undefined;
       })
     );
-  
+
     fetchViolations(filters);
   };
 
@@ -213,6 +213,7 @@ const FinMonViolationIndex = () => {
                   'amount',
                   'respCode',
                   'tranType',
+                  'merchant',
                   'clientId',
                   'customerEmail',
                   'pan',
@@ -256,6 +257,11 @@ const FinMonViolationIndex = () => {
                         <TableCell>
                           {item.transaction in transactionList
                             ? transactionList[item.transaction].tranType
+                            : t('Loading...')}
+                        </TableCell>
+                        <TableCell>
+                          {item.transaction in transactionList
+                            ? transactionList[item.transaction].merchant
                             : t('Loading...')}
                         </TableCell>
                         <TableCell>
