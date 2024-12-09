@@ -147,6 +147,7 @@ const text = {
   panMask: 'Маска карты',
   'card first 6 number': 'Первые 6 цифр карты',
   'card last 4 number': 'Последние 4 цифры карты',
+  'Type and press Enter': 'Введите и нажмите Enter',
   tranId: 'ID транзакции',
   orderId: 'ID кредита',
   clientId: 'ID клиента',

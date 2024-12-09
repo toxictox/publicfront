@@ -304,6 +304,7 @@ const ExportFileFilter = (props) => {
                             variant="outlined"
                             label={t('tranId')}
                             size="small"
+                            placeholder={t('Type and press Enter')}
                           />
                         )}
                         value={values.tranId || []}
@@ -323,6 +324,7 @@ const ExportFileFilter = (props) => {
                             variant="outlined"
                             label={t('panMask')}
                             size="small"
+                            placeholder={t('Type and press Enter')}
                           />
                         )}
                         value={values.panMask || []}
@@ -342,6 +344,7 @@ const ExportFileFilter = (props) => {
                             variant="outlined"
                             label={t('panHash')}
                             size="small"
+                            placeholder={t('Type and press Enter')}
                           />
                         )}
                         value={values.panHash || []}
@@ -361,6 +364,7 @@ const ExportFileFilter = (props) => {
                             variant="outlined"
                             label={t('RNN')}
                             size="small"
+                            placeholder={t('Type and press Enter')}
                           />
                         )}
                         value={values.rrn || []}
@@ -380,6 +384,7 @@ const ExportFileFilter = (props) => {
                             variant="outlined"
                             label={t('IP')}
                             size="small"
+                            placeholder={t('Type and press Enter')}
                           />
                         )}
                         value={values.ip || []}
