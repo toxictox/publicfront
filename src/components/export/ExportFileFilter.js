@@ -1,21 +1,22 @@
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  FormHelperText,
-  Divider,
-  TextField,
-  MenuItem,
-  Grid
-} from '@material-ui/core';
+import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
 import useMounted from '@hooks/useMounted';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
 import axios from '@lib/axios';
 import { getCurrentDate, toLocaleDateTime } from '@lib/date';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Divider,
+  FormHelperText,
+  Grid,
+  MenuItem,
+  TextField
+} from '@material-ui/core';
 import { app } from '@root/config';
-import { SelectCheckbox, SelectCheckboxCodes } from '@comp/core/forms';
+import { Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 import { useReports } from './useReports';
 
 const ExportFileFilter = (props) => {
@@ -57,7 +58,14 @@ const ExportFileFilter = (props) => {
         dateEnd: getCurrentDate(),
         merchantId: [],
         respCodeId: [],
-        bankId: []
+        bankId: [],
+        amountFrom: '',
+        amountTo: '',
+        tranId: [],
+        panMask: [],
+        panHash: [],
+        rrn: [],
+        ip: []
       }}
       validationSchema={Yup.object().shape({
         dateEnd: Yup.string().required(t('required'))
@@ -243,6 +251,142 @@ const ExportFileFilter = (props) => {
                     items={respCode}
                   />
                 </Grid>
+
+                {values.reportType === 'aml' && (
+                  <>
+                    <Grid item xs={3}>
+                      <TextField
+                        error={Boolean(touched.amountFrom && errors.amountFrom)}
+                        fullWidth
+                        helperText={touched.amountFrom && errors.amountFrom}
+                        label={t('amountFrom')}
+                        margin="normal"
+                        name="amountFrom"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        type="number"
+                        value={values.amountFrom}
+                        variant="outlined"
+                        size="small"
+                        sx={{ m: 0 }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={3}>
+                      <TextField
+                        error={Boolean(touched.amountTo && errors.amountTo)}
+                        fullWidth
+                        helperText={touched.amountTo && errors.amountTo}
+                        label={t('amountTo')}
+                        margin="normal"
+                        name="amountTo"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        type="number"
+                        value={values.amountTo}
+                        variant="outlined"
+                        size="small"
+                        sx={{ m: 0 }}
+                      />
+                    </Grid>
+
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        multiple
+                        freeSolo
+                        options={[]}
+                        onChange={(event, value) => {
+                          setFieldValue('tranId', value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            label={t('tranId')}
+                            size="small"
+                          />
+                        )}
+                        value={values.tranId || []}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        multiple
+                        freeSolo
+                        options={[]}
+                        onChange={(event, value) => {
+                          setFieldValue('panMask', value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            label={t('panMask')}
+                            size="small"
+                          />
+                        )}
+                        value={values.panMask || []}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        multiple
+                        freeSolo
+                        options={[]}
+                        onChange={(event, value) => {
+                          setFieldValue('panHash', value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            label={t('panHash')}
+                            size="small"
+                          />
+                        )}
+                        value={values.panHash || []}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        multiple
+                        freeSolo
+                        options={[]}
+                        onChange={(event, value) => {
+                          setFieldValue('rrn', value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            label={t('RNN')}
+                            size="small"
+                          />
+                        )}
+                        value={values.rrn || []}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Autocomplete
+                        multiple
+                        freeSolo
+                        options={[]}
+                        onChange={(event, value) => {
+                          setFieldValue('ip', value);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            label={t('IP')}
+                            size="small"
+                          />
+                        )}
+                        value={values.ip || []}
+                      />
+                    </Grid>
+                  </>
+                )}
 
                 <Grid item xs={12}>
                   <Box sx={{ mt: 2 }}>

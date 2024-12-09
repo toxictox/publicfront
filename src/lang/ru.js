@@ -143,6 +143,8 @@ const text = {
   respCode: 'Статус',
   amountFrom: 'Сумма от',
   amountTo: 'Сумма до',
+  panHash: 'Хеш карты',
+  panMask: 'Маска карты',
   'card first 6 number': 'Первые 6 цифр карты',
   'card last 4 number': 'Последние 4 цифры карты',
   tranId: 'ID транзакции',

@@ -209,6 +209,8 @@ const text = {
   name: 'Company name',
   iin: 'IIN/BIN',
   bik: 'BIK',
+  panHash: 'Hash cards',
+  panMask: 'Card mask',
   bankAccount: 'Company bank account',
   balance: 'Balance',
   account: 'Transit account Id',
