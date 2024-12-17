@@ -560,7 +560,7 @@ const BaseSidebar = (props) => {
           </Grid>
         </Box>
 
-        {hcbBalance && (
+        {hcbBalance !== null && hcbBalance !== undefined && (
           <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
