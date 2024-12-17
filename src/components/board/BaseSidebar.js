@@ -1,4 +1,5 @@
 import useAuth from '@hooks/useAuth';
+import axios from '@lib/axios';
 import {
   Box,
   Divider,
@@ -33,16 +34,15 @@ import {
   VpnLock,
   Warning
 } from '@material-ui/icons';
+import { app } from '@root/config';
+import { formatCurrency } from '@utils/formatCurrency';
 import PropTypes from 'prop-types';
 import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import NavSection from './NavSection';
 import Scrollbar from './Scrollbar';
-import axios from '@lib/axios'
-import { app } from '@root/config'
-import { formatCurrency } from '@utils/formatCurrency'
-import './styles/sidebar.scss'
+import './styles/sidebar.scss';
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
@@ -278,7 +278,7 @@ const BaseSidebar = (props) => {
               path: '/transit-account/transitTransactions',
               icon: <LockOpen fontSize="small" />,
               active: getActiveStatus('blockTransitionAccount')
-            },
+            }
           ]
         }
       ]
@@ -321,12 +321,25 @@ const BaseSidebar = (props) => {
         console.error(e);
       });
   };
+  const [hcbBalance, setHcbBalance] = useState();
+  const gethcbBalance = async () => {
+    await axios
+      .post(`${app.api}/merchant/${merchId}/hcb/balance`)
+      .then((response) => {
+        setHcbBalance(response.data.balance);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
 
   useEffect(() => {
     const intervalCall = setInterval(() => {
       getBalance();
+      gethcbBalance();
     }, 30000);
     getBalance();
+    gethcbBalance();
     return () => {
       clearInterval(intervalCall);
     };
@@ -546,6 +559,33 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
+
+        {hcbBalance && (
+          <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography
+                  variant="subtitle1"
+                  className="balanse__title"
+                  component="div"
+                >
+                  {t('HCB BALANCE')}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography
+                  variant="subtitle2"
+                  className="balanse__amount"
+                  component="div"
+                  sx={{ textAlign: 'right' }}
+                >
+                  {formatCurrency(hcbBalance / 100, '\u20B8')}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+
         <Divider />
         <Box sx={{ p: 2 }}>
           {sections.map((section) => {
