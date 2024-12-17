@@ -65,6 +65,7 @@ const text = {
   reconciliationResult: 'Reconciliation result',
   Confirm: 'You confirm the action ?',
   'File upload': 'File uploaded successfully',
+  'HCB BALANCE': 'HomeCreditBank corporate account balance',
 
   nonExistent: 'Non-existent in software',
   missing: 'Missing in report',
