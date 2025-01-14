@@ -20,6 +20,7 @@ import { GroupTable } from "@comp/core/buttons";
 import { TableStatic } from "@comp/core/tables";
 import useAuth from "@hooks/useAuth";
 import BlackListModalForm from "@comp/finMon/blackList/BlackListModalForm";
+import BlackFilterForm from "@comp/finMon/blackList/BlackListFilterForm";
 
 const BlackListIndex = () => {
   const { settings } = useSettings();
@@ -31,10 +32,13 @@ const BlackListIndex = () => {
   });
   const [page, setPage] = useState(0);
   const [count, setCount] = useState(50);
+  const [loading, setLoading] = useState(false);
   const { getAccess } = useAuth();
 
   const [isModalFormOpen, setModalFormOpen] = useState(false);
   const [editableItem, setEditableItem] = useState(null);
+
+  const [filter, setFilter] = useState({});
 
   const openForm = (item) => {
     setModalFormOpen(true);
@@ -47,15 +51,18 @@ const BlackListIndex = () => {
   };
 
   const fetchItems = useCallback(async () => {
+    setLoading(true);
     axios.get(`${app.api}/finMon/black_list/`, {
       params: {
         page: page + 1,
         count: count,
+        ...filter
       }
     }).then((response) => {
+      setLoading(false);
       setDataList(response.data);
     });
-  }, [page, count]);
+  }, [page, count, filter]);
 
   const deleteItem = async (id) => {
     axios.delete(`${app.api}/finMon/black_list/${id}`).then(fetchItems);
@@ -110,6 +117,10 @@ const BlackListIndex = () => {
                 }
               />
               <Divider />
+              <BlackFilterForm
+                onSubmit={setFilter}
+              />
+              <Divider />
               <TableStatic
                 header={[
                   "id",
@@ -120,7 +131,14 @@ const BlackListIndex = () => {
                   "",
                 ]}
               >
-                {dataList.items.map(function (item) {
+                {loading &&
+                  <TableRow>
+                    <TableCell colSpan={6}>
+                      Loading...
+                    </TableCell>
+                  </TableRow>
+                }
+                {!loading && dataList.items.map(function (item) {
                   return (
                     <>
                       <TableRow hover key={item.id}>
