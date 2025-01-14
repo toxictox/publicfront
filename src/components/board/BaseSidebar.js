@@ -14,6 +14,7 @@ import { red } from '@material-ui/core/colors';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   AccountBalance,
+  AppBlocking,
   BlurLinear,
   CenterFocusWeak,
   Code,
@@ -259,6 +260,12 @@ const BaseSidebar = (props) => {
               path: '/fin_mon/violation',
               icon: <Warning fontSize="small" />,
               active: getActiveStatus('finmonViolation')
+            },
+            {
+              title: t('Black List'),
+              path: '/fin_mon/black_list',
+              icon: <AppBlocking fontSize="small" />,
+              active: getActiveStatus('finmonBlackList')
             }
           ]
         },

@@ -6,6 +6,7 @@ import SanctionExclusionList from '@pages/sanction/_exclusion';
 const SanctionsListPage = Loadable(lazy(() => import('@pages/sanction/index')));
 const FinMonRuleIndex = Loadable(lazy(() => import('@pages/finMon/rules/index')));
 const FinMonViolationIndex = Loadable(lazy(() => import('@pages/finMon/violation/index')));
+const FinMonBlackListIndex = Loadable(lazy(() => import('@pages/finMon/blackList/index')));
 
 export const finMonRoute = {
   path: 'fin_mon',
@@ -39,6 +40,14 @@ export const finMonRoute = {
           <FinMonViolationIndex />
         </ACLGuard>
       ),
+    },
+    {
+        path: '/black_list',
+        element: (
+          <ACLGuard type={'finmonBlackList'} can={'view'}>
+            <FinMonBlackListIndex />
+          </ACLGuard>
+        ),
     },
   ],
 };
