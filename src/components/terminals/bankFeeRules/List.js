@@ -137,6 +137,7 @@ const List = ({ reload, terminalId }) => {
                     header={[
                       "Start date",
                       "fee",
+                      "minFee",
                       "Card Issuer Bank Name",
                       ''
                     ]}
@@ -147,6 +148,7 @@ const List = ({ reload, terminalId }) => {
                           <TableRow hover key={item.id}>
                             <TableCell>{item.startDate ? toLocaleDateTime(item.startDate.date) : t('No date restrictions')}</TableCell>
                             <TableCell>{item.fee}&nbsp;&#37;</TableCell>
+                            <TableCell>{item.minFee}</TableCell>
                             <TableCell>{item.cardIssuer ? item.cardIssuer : t('Default rule')}</TableCell>
                             <TableCell
                               align="right"
