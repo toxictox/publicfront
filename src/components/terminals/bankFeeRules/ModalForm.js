@@ -88,7 +88,8 @@ const ModalForm = ({entity, open, terminalId, onClose, onUpdate, ...props}) => {
       {
         fee: values.fee,
         startDate: values.startDate,
-        cardIssuer: values.cardIssuer ? values.cardIssuer : ''
+        cardIssuer: values.cardIssuer ? values.cardIssuer : '',
+        minFee: values.minFee ? values.minFee : null
       }
     )
     .then(async (response) => {
@@ -108,6 +109,7 @@ const ModalForm = ({entity, open, terminalId, onClose, onUpdate, ...props}) => {
       startDate: Yup.date().nullable().default(null),
       cardIssuer: Yup.string().max(255),
       fee: Yup.number().min(0, 'Should be 0 or greater').required('Required'),
+      minFee: Yup.number().min(0, 'Should be 0 or greater'),
     });
 
   const form = (
@@ -163,6 +165,20 @@ const ModalForm = ({entity, open, terminalId, onClose, onUpdate, ...props}) => {
               helperText={errors.fee}
               InputProps={{
                 startAdornment: <InputAdornment position="start">&#37;</InputAdornment>,
+              }}
+            />
+            <TextField
+              label={t('minFee')}
+              value={values.minFee}
+              name="minFee"
+              fullWidth
+              onBlur={handleBlur}
+              onChange={handleChange}
+              margin="normal"
+              type="number"
+              error={Boolean(errors.minFee)}
+              helperText={errors.minFee}
+              InputProps={{
               }}
             />
             <TextField 

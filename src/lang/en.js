@@ -156,6 +156,7 @@ const text = {
   approval: 'Authorization code',
   callbackUrl: 'Call back URL',
   fee: 'Fee',
+  minFee: 'Min Fee',
   getewayRefNo: 'Bank ID',
   lang: 'Language',
   pan: 'Map',

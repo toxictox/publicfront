@@ -364,6 +364,7 @@ const fields = {
   Description: 'Описание',
   'Agreement number': 'Номер договора',
   Fee: 'Комиссия',
+  minFee: 'Минимальная комиссия',
   Amount: 'Сумма',
   'Payment link': 'Ссылка для оплаты',
   docRef: 'Номер документ',
