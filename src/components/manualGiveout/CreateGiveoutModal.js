@@ -212,7 +212,7 @@ const CreateGiveoutModal = ({entity, open, merchantId, onClose, onUpdate, ...pro
                         />
                         <TextField
                             label={t('phoneNumber')}
-                            value={values.iin}
+                            value={values.phoneNumber}
                             name="phoneNumber"
                             fullWidth
                             onBlur={handleBlur}

@@ -35,7 +35,6 @@ const ManualGiveoutIndex = () => {
   const [isManualGiveoutReportDownloading, setManualGiveoutDownloadReport] =
     useState(false);
   const { settings } = useSettings();
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [dataList, setDataList] = useState({
     items: [],
@@ -126,25 +125,44 @@ const ManualGiveoutIndex = () => {
     4: red[800]
   };
 
-  const getFileByLink = (linkUrl) => {
-    window.open(linkUrl, '_blank', 'noopener,noreferrer');
-  };
-
   const downloadReportClickHandler = async (manualGiveoutId) => {
     setDownloadingReportId(manualGiveoutId);
     setManualGiveoutDownloadReport(true);
     const response = await axios.post(
-      `${app.api}/manual/giveout/${manualGiveoutId}/report/create`
+      `${app.api}/manual/giveout/${manualGiveoutId}/report/create`,
+        {},
+        {
+          responseType: 'blob'
+        }
     );
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+
+    let filename = 'file.xlsx';
+    const contentDisposition = response.headers['content-disposition'];
+
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename="(.+?)"/);
+      if (filenameMatch) {
+        filename = filenameMatch[1];
+      }
+    }
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
 
     setManualGiveoutDownloadReport(false);
     setDownloadingReportId(null);
-    //getFileByLink(response.data.filePath);
   };
 
   useEffect(() => {
     fetchManualGiveouts();
   }, [fetchManualGiveouts]);
+
   const [isUploading, setIsUploading] = useState(false);
   
   const handleFileUpload = async (event) => {
@@ -170,6 +188,7 @@ const ManualGiveoutIndex = () => {
           }
         );
         toast.success(t('fileUploaded'));
+        fetchManualGiveouts();
       } catch (error) {
         toast.error(t('fileUploadError'));
       } finally {
