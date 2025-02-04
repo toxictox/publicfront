@@ -68,7 +68,8 @@ const text = {
   Confirm: 'You confirm the action ?',
   'File upload': 'File uploaded successfully',
   'HCB BALANCE': 'HomeCreditBank corporate account balance',
-
+  fileUploaded:'File uploaded successfully',
+  fileUploadError:'Error uploading file',
   nonExistent: 'Non-existent in software',
   missing: 'Missing in report',
   amount: 'Amount',

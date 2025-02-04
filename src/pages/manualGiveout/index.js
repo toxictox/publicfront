@@ -146,6 +146,7 @@ const ManualGiveoutIndex = () => {
     fetchManualGiveouts();
   }, [fetchManualGiveouts]);
   const [isUploading, setIsUploading] = useState(false);
+  
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -168,9 +169,9 @@ const ManualGiveoutIndex = () => {
             }
           }
         );
-        toast.success('Файл успешно загружен');
+        toast.success(t('fileUploaded'));
       } catch (error) {
-        toast.error('Ошибка при загрузке файла');
+        toast.error(t('fileUploadError'));
       } finally {
         setIsUploading(false);
       }

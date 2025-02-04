@@ -81,7 +81,8 @@ const text = {
   'Role Item Create': 'Создание роли',
   'Role Item Update': 'Обновление роли',
   Confirm: 'Вы подтверждаете действие ?',
-
+  fileUploaded:'Файл успешно загружен',
+  fileUploadError:'Ошибка загрузки файла',
   'Terminals List': 'Список терминалов',
   'Terminals Item Id': 'Информация о терминале',
   'Terminals Model Create': 'Создание нового терминала',
