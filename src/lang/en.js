@@ -37,7 +37,9 @@ const menu = {
   'Description menu city24': 'Export city24',
   'Codes menu': 'Codes',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Reconciliation'
+  'Reconciliation menu': 'Reconciliation',
+  'Manual giveout menu': 'Manual giveout',
+  'Manual giveout list': 'Manual giveout list',
 };
 
 const text = {
@@ -182,6 +184,8 @@ const text = {
 
   'Export List': 'Экспорт файлов',
   'Download File': 'Download File',
+  'Create Report': 'Create report',
+  'Create Manual Giveout': 'Создать ручную выдачу',
   generated_reports_list: 'List of available files',
 
   'Bin List': 'Bin',
@@ -264,6 +268,8 @@ const fields = {
   lang: 'language',
   editOn: 'Updated',
   firstName: 'name',
+  clientName: 'Client name',
+  phoneNumber: 'Phone number',
   lastName: 'surname',
   phone: 'phone number',
   loginTries: 'login attempts',

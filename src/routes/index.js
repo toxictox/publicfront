@@ -24,6 +24,7 @@ import { usersRoute } from '@root/routes/usersRoute';
 import { lazy } from 'react';
 import { blog, dashboard, docs } from './developRoutes';
 import { finMonRoute } from './finMonRoute';
+import { manualGiveoutRoute } from './manualGiveoutRoute';
 import { transitAccountRoute } from './transitAccount';
 
 const Login = Loadable(lazy(() => import('@pages/authentication/Login')));
@@ -69,6 +70,7 @@ const routes = [
       error500Route,
       notFoundRoute,
       finMonRoute,
+      manualGiveoutRoute,
       transitAccountRoute
     ]
   }
