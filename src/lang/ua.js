@@ -36,7 +36,9 @@ const menu = {
   'Description menu city24': 'Экспорт city24',
   'Codes menu': 'Коди',
   'Bin menu': 'Bin',
-  'Reconciliation menu': 'Звірка'
+  'Reconciliation menu': 'Звірка',
+  'Manual giveout menu': 'Manual giveout',
+  'Manual giveout list': 'Manual giveout list',
 };
 
 const text = {
@@ -164,6 +166,7 @@ const text = {
   generated_reports_list: 'Список доступних файлів',
   'City24 Files List': 'Експорт файлов city24',
   'Download File': 'Завантажити файл',
+  'Create Report': 'Create report',
   'Bin List': 'Bin',
   'Invitation link': 'Посилання для запрошення користувачів',
 

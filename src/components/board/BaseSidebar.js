@@ -233,6 +233,19 @@ const BaseSidebar = (props) => {
           ]
         },
         {
+          title: t('Manual giveout menu'),
+          icon: <Lock fontSize="small" />,
+          active: true,
+          children: [
+            {
+              title: t('Manual giveout list'),
+              path: '/manual_giveout/list',
+              icon: <Dns fontSize="small" />,
+              active: getActiveStatus('manualGiveout')
+            }
+          ]
+        },
+        {
           title: t('Financial monitoring'),
           icon: <Lock fontSize="small" />,
           active: true,
