@@ -26,7 +26,7 @@ import CreateGiveoutModal from "@comp/manualGiveout/CreateGiveoutModal";
 const ManualGiveoutIndex = () => {
     const { user } = useAuth();
     const [isStatusLoading, setIsStatusLoading] = useState(false);
-    const [getManualGiveoutDownloadReport, setManualGiveoutDownloadReport] = useState([]);
+    const [isManualGiveoutReportDownloading, setManualGiveoutDownloadReport] = useState(false);
     const { settings } = useSettings();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -116,15 +116,12 @@ const ManualGiveoutIndex = () => {
     };
 
     const downloadReportClickHandler = async (manualGiveoutId) => {
-        setManualGiveoutDownloadReport([
-           'manualGiveoutId':  manualGiveoutId,
-            'isDownloading' => true
-        ]);
+        setManualGiveoutDownloadReport(true);
         const response = await axios.post(
             `${app.api}/manual/giveout/${manualGiveoutId}/report/create`
         );
 
-        setIsDownloadReportLoading(false);
+        setManualGiveoutDownloadReport(false);
         //getFileByLink(response.data.filePath);
     };
 
@@ -222,14 +219,14 @@ const ManualGiveoutIndex = () => {
                                                     <Button
                                                         type="button"
                                                         variant={'contained'}
-                                                        disabled={item.status !== 3 || isDownloadReportLoading}
+                                                        disabled={item.status !== 3 || isManualGiveoutReportDownloading}
                                                         size={'small'}
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             downloadReportClickHandler(item.id);
                                                         }}
                                                     >
-                                                        {isDownloadReportLoading && (
+                                                        {isManualGiveoutReportDownloading && (
                                                             <Box id={item.id}
                                                                 sx={{
                                                                     display: 'flex',
