@@ -69,7 +69,7 @@ const CreateGiveoutModal = ({entity, open, merchantId, onClose, onUpdate, ...pro
         clientName: "",
         iin: "",
         phoneNumber: "",
-        email: "",
+        customerEmail: "",
         customerId: "",
         tranId: ""
     };
@@ -88,7 +88,7 @@ const CreateGiveoutModal = ({entity, open, merchantId, onClose, onUpdate, ...pro
                 clientName: values.clientName,
                 iin: values.iin,
                 phoneNumber: values.phoneNumber,
-                email: values.email,
+                customerEmail: values.customerEmail,
                 customerId: values.customerId,
                 tranId: values.tranId
             }
@@ -227,11 +227,11 @@ const CreateGiveoutModal = ({entity, open, merchantId, onClose, onUpdate, ...pro
                             helperText={touched.email && errors.email}
                             label={t('email')}
                             margin="normal"
-                            name="email"
+                            name="customerEmail"
                             onBlur={handleBlur}
                             onChange={handleChange}
                             type="email"
-                            value={values.email}
+                            value={values.customerEmail}
                             variant="outlined"
                             size="small"
                             sx={{m: 0}}
