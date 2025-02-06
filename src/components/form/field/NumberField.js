@@ -19,8 +19,7 @@ const NumberField = ({label, value, name, onBlur, onChange, errors, options}) =>
             margin="normal"
             type="number"
             error={Boolean(errors[name])}
-            helperText={options.helperText ?? ""}
-
+            helperText={options?.helperText ?? ""}
         />
     );
 };

@@ -13,6 +13,14 @@ const ReconciliationDetail = Loadable(
   lazy(() => import('@pages/reconciliation/ReconcilationDetail'))
 );
 
+const ReconciliationSettings = Loadable(
+  lazy(() => import('@pages/reconciliation/settings'))
+);
+
+const ReconciliationSettingsIndex = Loadable(
+  lazy(() => import('@pages/reconciliation/settings/id'))
+);
+
 export const reconciliationRoute = {
   path: 'reconciliation',
   children: [
@@ -29,6 +37,22 @@ export const reconciliationRoute = {
       element: (
         <ACLGuard can={'read'}>
           <ReconciliationPageOne pageNumber="one" />
+        </ACLGuard>
+      )
+    },
+    {
+      path: 'settings',
+      element: (
+        <ACLGuard can={'read'}>
+          <ReconciliationSettings />
+        </ACLGuard>
+      )
+    },
+    {
+      path: 'settings/:id',
+      element: (
+        <ACLGuard can={'read'}>
+          <ReconciliationSettingsIndex />
         </ACLGuard>
       )
     },
