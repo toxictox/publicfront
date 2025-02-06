@@ -1,7 +1,6 @@
-import { GroupTable } from '@comp/core/buttons';
-import { TableStatic } from '@comp/core/tables';
+import {GroupTable} from '@comp/core/buttons';
+import {TableStatic} from '@comp/core/tables';
 import CreateGiveoutModal from '@comp/manualGiveout/CreateGiveoutModal';
-import ManualGiveoutListFilter from '@comp/manualGiveout/ManualGiveoutListFilter';
 import useAuth from '@hooks/useAuth';
 import useSettings from '@hooks/useSettings';
 import axios from '@lib/axios';
@@ -20,14 +19,13 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import { blue, green, red } from '@material-ui/core/colors';
+import {blue, green, red} from '@material-ui/core/colors';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { app } from '@root/config';
-import { useCallback, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import {app} from '@root/config';
+import {useCallback, useEffect, useState} from 'react';
+import {Helmet} from 'react-helmet-async';
 import toast from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 const ManualGiveoutIndex = () => {
   const { user } = useAuth();
@@ -159,12 +157,49 @@ const ManualGiveoutIndex = () => {
     setDownloadingReportId(null);
   };
 
+  const getActionCustom = () => {
+    return [
+      {
+        title: t('downloadManualGiveoutTemplate'),
+        callback: () => handleActionCustom()
+      }
+    ];
+  };
+
   useEffect(() => {
     fetchManualGiveouts();
   }, [fetchManualGiveouts]);
 
   const [isUploading, setIsUploading] = useState(false);
-  
+
+  const handleActionCustom = async (event) => {
+    const response = await axios.get(
+        `${app.api}/manual/giveout/file/template`,
+        {
+          responseType: 'blob'
+        }
+    );
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+
+    let filename = 'file.xlsx';
+    const contentDisposition = response.headers['content-disposition'];
+
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename="(.+?)"/);
+      if (filenameMatch) {
+        filename = filenameMatch[1];
+      }
+    }
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -224,45 +259,44 @@ const ManualGiveoutIndex = () => {
                 title={t('manualGiveoutList')}
                 action={
                   <Box display="flex" alignItems="center">
+                    <GroupTable
+                        actionCreate={{
+                          access: getAccess('manualGiveout', 'create'),
+                          callback: () => {
+                            openForm(null);
+                          }
+                        }}
+                        actionCustom={getActionCustom()}
+                    />
                     <input
-                      accept=".xlsx"
-                      style={{ display: 'none' }}
-                      id="file-upload"
-                      type="file"
-                      onChange={handleFileUpload}
+                        accept=".xlsx"
+                        style={{display: 'none'}}
+                        id="file-upload"
+                        type="file"
+                        onChange={handleFileUpload}
                     />
                     <label htmlFor="file-upload">
                       <IconButton color="primary" component="span">
-                        <CloudUploadIcon />
+                        <CloudUploadIcon/>
                       </IconButton>
                     </label>
-                    <GroupTable
-                      actionCreate={{
-                        access: getAccess('manualGiveout', 'create'),
-                        callback: () => {
-                          openForm(null);
-                        }
-                      }}
-                    />
                   </Box>
                 }
               />
-              <Divider />
-              <ManualGiveoutListFilter onSubmit={setFilter} />
-              <Divider />
+              <Divider/>
               <TableStatic
-                header={[
-                  'id',
-                  'merchantName',
-                  'status',
-                  'manual_giveout_user_created_email',
-                  'actions'
-                ]}
+                  header={[
+                    'id',
+                    'merchantName',
+                    'status',
+                    'manual_giveout_user_created_email',
+                    'actions'
+                  ]}
               >
                 {dataList.items.map(function (item) {
                   return (
-                    <>
-                      <TableRow hover key={item.id}>
+                      <>
+                        <TableRow hover key={item.id}>
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{item.merchantName}</TableCell>
                         <TableCell>

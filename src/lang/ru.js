@@ -392,6 +392,7 @@ const fields = {
   'Server maintenance schedule': 'Расписание серверных работ',
   'Create schedule': 'Создать расписание',
   'Edit schedule': 'Редактировать расписание',
+  downloadManualGiveoutTemplate: 'Скачать шаблон ручной выдачи',
   gatewayRefNo: 'Ref банка',
   holder: 'Владелец карты',
   customerId: 'Id клиента',
