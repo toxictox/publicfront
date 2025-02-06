@@ -7,7 +7,7 @@ import {
     Switch,
   } from '@material-ui/core';
 
-const SwitchField = ({label, value, key, handleChange}) => {
+const SwitchField = ({label, value, key, onChange}) => {
       const { t } = useTranslation();
 
     return (
@@ -15,7 +15,7 @@ const SwitchField = ({label, value, key, handleChange}) => {
             <Switch
                 checked={value}
                 name={key}
-                onChange={handleChange}
+                onChange={onChange}
                 color={value ? "success" : "error"}
             />}
             label={value ? t("Yes") : t("No")}

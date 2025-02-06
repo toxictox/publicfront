@@ -18,7 +18,7 @@ const TextField = ({label, value, name, onBlur, onChange, errors, options}) => {
             onChange={onChange}
             margin="normal"
             error={Boolean(errors[name])}
-            helperText={options.helperText ?? ""}
+            helperText={options?.helperText ?? ""}
         />
     );
 };
