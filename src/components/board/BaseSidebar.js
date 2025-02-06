@@ -19,16 +19,16 @@ import {
   CenterFocusWeak,
   Code,
   DescriptionOutlined,
-  Dns,
+  Dns, DockTwoTone, DocumentScanner, FileCopy, FilePresent,
   GridOn,
   Group,
   Home,
   LinearScale,
   Lock,
-  LockOpen,
+  LockOpen, PermDataSetting,
   PriceCheck,
   Receipt,
-  Security,
+  Security, Settings,
   StackedLineChart,
   Storefront,
   Timeline,
@@ -188,13 +188,19 @@ const BaseSidebar = (props) => {
             {
               title: t('reconciliationResult'),
               path: '/reconciliation/results',
-              icon: <DescriptionOutlined fontSize="small" />,
+              icon: <FilePresent fontSize="small" />,
               active: getActiveStatus('reconciliation')
             },
             {
               title: t('Reconciliation menu'),
               path: '/reconciliation',
-              icon: <DescriptionOutlined fontSize="small" />,
+              icon: <FileCopy fontSize="small" />,
+              active: getActiveStatus('reconciliation')
+            },
+            {
+              title: t('Reconciliation settings'),
+              path: '/reconciliation/settings',
+              icon: <Settings fontSize="small" />,
               active: getActiveStatus('reconciliation')
             }
           ]
