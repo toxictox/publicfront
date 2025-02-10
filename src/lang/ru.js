@@ -72,10 +72,13 @@ const text = {
 
   'Transactions Confirmation': 'Справка транзакций',
   'Transactions Item': 'Информация о транзакции',
+  'Create New Statement': 'Создать выписку',
 
   'Users List': 'Список пользователей',
   'User Item Update': 'Обновление пользователя',
   'User Item Create': 'Создание пользователя',
+  'Account statements': 'Выписки по счету',
+  'Download statement': 'Скачать выписку',
 
   'Roles List': 'Список ролей',
   'Role Item Create': 'Создание роли',

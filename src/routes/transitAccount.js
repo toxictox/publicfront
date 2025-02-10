@@ -13,6 +13,9 @@ const HandbookForm = Loadable(
 const CreateTransactions = Loadable(
   lazy(() => import('@pages/transitAccount/accounts/CreateTransactions'))
 );
+const Statement = Loadable(
+  lazy(() => import('@pages/transitAccount/accounts/Statement'))
+);
 
 export const transitAccountRoute = {
   path: 'transit-account',
@@ -32,6 +35,10 @@ export const transitAccountRoute = {
     {
       path: '/createTransactions',
       element: <CreateTransactions />
+    },
+    {
+      path: '/statement/:id',
+      element: <Statement />
     }
   ]
 };

@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { app } from '@root/config';
+import { getCsvFileHelper2 } from '@utils/getCsvFileHelper'
+import axios from 'axios';
 
 const baseURL = `${app.apiNewService}`;
 // const baseURL = `https://bcc3.paytech.agis.work/api`;
@@ -108,5 +109,27 @@ export const getTransactionStatus = async (transactionId) => {
       headers: getAuthHeaders()
     }
   );
+  return response.data;
+};
+export const getStatement = async (page, id) => {
+  const response = await axios.get(
+    `${baseURL}/account/${id}/statement?page=${page}`,
+    {
+      headers: getAuthHeaders()
+    }
+  );
+  return response.data;
+};
+export const getStatementDownload = async (accountId, idStatement) => {
+  const response = await axios.get(
+    `${baseURL}/account/${accountId}/statement/${idStatement}/download`,
+    {
+      responseType: 'blob',
+      headers: getAuthHeaders()
+    }
+  ).then((res) => {
+    const { data, headers } = res;
+    getCsvFileHelper2({ data, headers });
+  });
   return response.data;
 };
