@@ -107,6 +107,8 @@ const text = {
   processing: 'Обработка',
   processed: 'Обработано',
   'Upload Files': 'Загрузить файл',
+  'Start Date': 'Начало',
+  'End Date': 'Конец',
   'Reconciliation type': 'Тип сверки',
 
   'Merchant List': 'Список мерчантов',

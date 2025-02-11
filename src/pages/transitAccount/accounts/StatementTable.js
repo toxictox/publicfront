@@ -7,7 +7,6 @@ import {
   TableRow
 } from '@material-ui/core';
 import React from 'react';
-import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { getStatementDownload } from '../helper';
@@ -27,12 +26,12 @@ const StatementTable = ({
     try {
       await getStatementDownload(id, idStatement);
     } catch (error) {
-      toast.error('Error!');
+      console.log('Error!');
     }
   };
   return (
     <Box>
-      <TableStatic header={['id', 'status', 'createOn', 'editOn', '']}>
+      <TableStatic header={['id', 'status', 'Start Date', 'End Date', '']}>
         {data?.items?.map((item) => (
           <TableRow hover key={item?.id}>
             <TableCell>{item?.id}</TableCell>

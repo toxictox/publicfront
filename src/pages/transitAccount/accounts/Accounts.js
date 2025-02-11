@@ -1,6 +1,6 @@
 import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 
 export const Accounts = ({ accounts }) => {
   const { t } = useTranslation();
@@ -30,11 +30,12 @@ export const Accounts = ({ accounts }) => {
                   {t('transport')}: {account?.transport}
                 </Typography>
                 <Button
+                  sx={{ marginTop: '20px' }}
                   variant="contained"
                   color="primary"
                   onClick={() => handleRedirect(account.id)}
                 >
-                  {t('View Statement')}
+                  {t('Account statements')}
                 </Button>
               </CardContent>
             </Card>

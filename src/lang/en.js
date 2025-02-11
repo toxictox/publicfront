@@ -92,6 +92,8 @@ const text = {
   'Total number of rows processed': 'Total number of rows processed',
   'Account statements': 'Account statements',
   'Download statement': 'Download account statement',
+  'Start Date': 'Start Date',
+  'End Date': 'End Date',
 
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',
