@@ -1,24 +1,11 @@
 import { TableStatic } from '@comp/core/tables';
-import {
-  Box,
-  Button,
-  TableCell,
-  TablePagination,
-  TableRow
-} from '@material-ui/core';
+import { Box, Button, TableCell, TableRow } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { getStatementDownload } from '../helper';
 
-const StatementTable = ({
-  data,
-  page,
-  rowsPerPage,
-  totalRows,
-  onPageChange,
-  onRowsPerPageChange
-}) => {
+const StatementTable = ({ data }) => {
   const { t } = useTranslation();
   const { id } = useParams();
 
@@ -52,16 +39,6 @@ const StatementTable = ({
           </TableRow>
         ))}
       </TableStatic>
-
-      <TablePagination
-        component="div"
-        count={totalRows}
-        page={page}
-        onPageChange={onPageChange}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={onRowsPerPageChange}
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-      />
     </Box>
   );
 };

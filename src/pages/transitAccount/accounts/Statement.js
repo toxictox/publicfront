@@ -1,6 +1,13 @@
 import { BackButton, GroupTable } from '@comp/core/buttons';
 import useSettings from '@hooks/useSettings';
-import { Box, Card, CardHeader, Container, Divider } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardHeader,
+  Container,
+  Divider,
+  TablePagination
+} from '@material-ui/core';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -14,13 +21,13 @@ const Statement = () => {
   const { settings } = useSettings();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [page, setPage] = useState(0);
   const [data, setData] = useState(null);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const [totalRows, setTotalRows] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const handleOpen = useCallback(() => setOpen(true), []);
   const handleClose = useCallback(() => setOpen(false), []);
@@ -33,13 +40,13 @@ const Statement = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const result = await getStatement(page + 1, id);
+      const result = await getStatement(page + 1, id, rowsPerPage);
       setData(result);
       setTotalRows(result.count);
     } catch (error) {
       toast.error('Error!');
     }
-  }, [page, id]);
+  }, [page, id, rowsPerPage]);
 
   useEffect(() => {
     fetchData();
@@ -47,18 +54,18 @@ const Statement = () => {
     return () => clearInterval(interval);
   }, [page, id, fetchData]);
 
-  const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage);
-  }, []);
-
-  const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  }, []);
-
   const openCreateStatement = useCallback(() => {
     handleOpen();
   }, [handleOpen]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleSubmit = useCallback(
     async (values) => {
@@ -111,6 +118,15 @@ const Statement = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                   />
                 )}
+                <TablePagination
+                  component="div"
+                  count={totalRows}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPage={rowsPerPage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25, 50]}
+                />
               </Card>
             </Box>
           </Container>

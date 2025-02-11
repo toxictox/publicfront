@@ -111,9 +111,9 @@ export const getTransactionStatus = async (transactionId) => {
   );
   return response.data;
 };
-export const getStatement = async (page, id) => {
+export const getStatement = async (page, id, count) => {
   const response = await axios.get(
-    `${baseURL}/account/${id}/statement?page=${page}`,
+    `${baseURL}/account/${id}/statement?page=${page}&count=${count}`,
     {
       headers: getAuthHeaders()
     }
