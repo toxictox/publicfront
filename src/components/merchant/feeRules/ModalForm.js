@@ -221,7 +221,7 @@ const ModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props}) => {
                     error={Boolean(touched.tranType && errors.tranType)}
                     fullWidth
                     helperText={touched.tranType && errors.tranType}
-                    label="tranType"
+                    label={t('tranType')}
                     name="tranType"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -245,7 +245,7 @@ const ModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props}) => {
                     error={Boolean(touched.terminal && errors.terminal)}
                     fullWidth
                     helperText={touched.terminal && errors.terminal}
-                    label="terminal"
+                    label={t('terminal')}
                     name="terminal"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -299,7 +299,7 @@ const ModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props}) => {
                     error={Boolean(touched.strategyName && errors.strategyName)}
                     fullWidth
                     helperText={touched.strategyName && errors.strategyName}
-                    label="strategyName"
+                    label={t('strategyName')}
                     name="strategyName"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -330,6 +330,21 @@ const ModalForm = ({entity, open, merchantId, onClose, onUpdate, ...props}) => {
                   type="number"
                   error={Boolean(errors.value)}
                   helperText={errors.value}
+                />
+              </Grid>
+
+              <Grid item xs={8}>
+                <TextField
+                    label={t('minValue')}
+                    value={values.minValue}
+                    name="minValue"
+                    fullWidth
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    margin="normal"
+                    type="number"
+                    error={Boolean(errors.minValue)}
+                    helperText={errors.minValue}
                 />
               </Grid>
 

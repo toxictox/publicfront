@@ -135,13 +135,14 @@ const List = ({ reload, merchantId }) => {
                 <>
                   <TableStatic
                     header={[
-                      "Priority",
+                      "priority",
                       "tranType",
-                      "Terminal",
-                      "Min",
-                      "Max",
-                      "Strategy",
-                      "Value",
+                      "terminal",
+                      "min",
+                      "max",
+                      "strategy",
+                      "value",
+                      "minValue",
                       "startDate",
                       "endDate",
                       "merchantFeePercent",
@@ -159,6 +160,7 @@ const List = ({ reload, merchantId }) => {
                             <TableCell>{item.max}</TableCell>
                             <TableCell>{item.strategyName}</TableCell>
                             <TableCell>{item.value}</TableCell>
+                            <TableCell>{item.minValue}</TableCell>
                             <TableCell>{item.startDate ? toLocaleDateTime(item.startDate) : t('No start date restrictions')}</TableCell>
                             <TableCell>{item.endDate ? toLocaleDateTime(item.endDate) : t('No end date restrictions')}</TableCell>
                             <TableCell>{item.merchantFeePercent}&nbsp;&#37;</TableCell>
