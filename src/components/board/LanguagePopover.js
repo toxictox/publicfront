@@ -7,7 +7,7 @@ import { useStyles } from "./styles/lang.style";
 const LanguagePopover = () => {
   const lang = localStorage.getItem("i18nextLng");
   const { i18n } = useTranslation();
-  const [value, setValue] = useState(lang !== null ? lang : "en");
+  const [value, setValue] = useState(lang !== null ? lang : "ru");
   const classes = useStyles();
   const handleChangeLanguage = (e) => {
     i18n.changeLanguage(e.target.value);
@@ -30,7 +30,6 @@ const LanguagePopover = () => {
       // }}
     >
       <MenuItem value={"ru"}>Ru</MenuItem>
-      <MenuItem value={"ua"}>Ua</MenuItem>
       <MenuItem value={"en"}>En</MenuItem>
     </TextField>
   );
