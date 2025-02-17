@@ -19,7 +19,7 @@ export const getCsvFileHelper2 = ({ data, headers }) => {
   const contentDisposition = headers['content-disposition'];
 
   if (contentDisposition) {
-    const filenameMatch = contentDisposition.match(/filename="(.+?)"/);
+    const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
     if (filenameMatch) {
       filename = filenameMatch[1];
     }

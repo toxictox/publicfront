@@ -75,10 +75,13 @@ const text = {
 
   'Transactions Confirmation': 'Справка транзакций',
   'Transactions Item': 'Информация о транзакции',
+  'Create New Statement': 'Создать выписку',
 
   'Users List': 'Список пользователей',
   'User Item Update': 'Обновление пользователя',
   'User Item Create': 'Создание пользователя',
+  'Account statements': 'Выписки по счету',
+  'Download statement': 'Скачать выписку',
 
   'Roles List': 'Список ролей',
   'Role Item Create': 'Создание роли',
@@ -107,6 +110,8 @@ const text = {
   processing: 'Обработка',
   processed: 'Обработано',
   'Upload Files': 'Загрузить файл',
+  'Start Date': 'Начало',
+  'End Date': 'Конец',
   'Reconciliation type': 'Тип сверки',
 
   'Merchant List': 'Список мерчантов',

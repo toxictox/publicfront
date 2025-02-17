@@ -1,8 +1,14 @@
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 export const Accounts = ({ accounts }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleRedirect = (id) => {
+    navigate(`/transit-account/statement/${id}`);
+  };
 
   return (
     <>
@@ -11,8 +17,8 @@ export const Accounts = ({ accounts }) => {
           <Grid item xs={12} sm={6} md={4} key={account.id}>
             <Card>
               <CardContent>
-							<Typography variant="h6" component="div">
-                 {t('Transit Account')} : {account?.id}
+                <Typography variant="h6" component="div">
+                  {t('Transit Account')} : {account?.id}
                 </Typography>
                 <Typography variant="h6" component="div">
                   {account?.name}
@@ -23,6 +29,14 @@ export const Accounts = ({ accounts }) => {
                 <Typography color="textSecondary">
                   {t('transport')}: {account?.transport}
                 </Typography>
+                <Button
+                  sx={{ marginTop: '20px' }}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleRedirect(account.id)}
+                >
+                  {t('Account statements')}
+                </Button>
               </CardContent>
             </Card>
           </Grid>

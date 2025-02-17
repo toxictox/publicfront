@@ -85,10 +85,15 @@ const text = {
   processed: 'Processed',
   'Upload Files': 'Uploading a file',
   'Reconciliation type': 'Reconciliation type',
+  'Create New Statement': 'Create statement',
 
   'Number of report lines': 'Number of report lines',
   'Number of rows affected': 'Number of rows affected',
   'Total number of rows processed': 'Total number of rows processed',
+  'Account statements': 'Account statements',
+  'Download statement': 'Download account statement',
+  'Start Date': 'Start Date',
+  'End Date': 'End Date',
 
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',
