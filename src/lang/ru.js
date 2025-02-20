@@ -417,6 +417,7 @@ const fields = {
   'Create schedule': 'Создать расписание',
   'Edit schedule': 'Редактировать расписание',
   downloadManualGiveoutTemplate: 'Скачать шаблон ручной выдачи',
+  downloadImportBinTemplate: 'Скачать шаблон',
   gatewayRefNo: 'Ref банка',
   holder: 'Владелец карты',
   customerId: 'Id клиента',
