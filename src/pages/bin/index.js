@@ -82,30 +82,20 @@ const TransactionsList = () => {
               <TableStatic
                 header={[
                   "id",
-                  "rangeMin",
-                  "rangeMax",
+                  "bin",
                   "bankName",
                   "countryName",
                   "countryCode",
-                  "countryAlpha",
-                  "productName",
-                  "rangeType",
-                  "tokenFlag",
                 ]}
               >
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.id}</TableCell>
-                      <TableCell>{item.rangeMin}</TableCell>
-                      <TableCell>{item.rangeMax}</TableCell>
+                      <TableCell>{item.bin}</TableCell>
                       <TableCell>{item.bankName}</TableCell>
                       <TableCell>{item.countryName}</TableCell>
                       <TableCell>{item.countryCode}</TableCell>
-                      <TableCell>{item.countryAlpha}</TableCell>
-                      <TableCell>{item.productName}</TableCell>
-                      <TableCell>{item.rangeType}</TableCell>
-                      <TableCell>{item.tokenFlag}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -119,7 +109,7 @@ const TransactionsList = () => {
               onPageChange={handlePageChange}
               page={page}
               rowsPerPage={25}
-              rowsPerPageOptions={[25]}
+              rowsPerPageOptions={[25, 50, 100]}
             />
           </Box>
         </Container>

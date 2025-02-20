@@ -182,6 +182,9 @@ const text = {
   timezone: 'Временная зона',
   comment: 'Коментарии',
   bankName: 'Банк',
+  bin: 'Первые 6 цифр карты',
+  countryCode: 'Код страны',
+  countryName: 'Имя страны',
   fields: 'Другие поля',
   langEn: 'Английский',
   langRu: 'Русский',
@@ -219,7 +222,7 @@ const text = {
   'Create Report': 'Создать отчет',
   'Create Manual Giveout Report': 'Отчет о выдаче',
   'Create Manual Giveout': 'Создать ручную выдачу',
-  'Bin List': 'Bin',
+  'Bin List': 'Список бинов',
   'Invitation link': 'Ссылка для приглашения пользователей',
 
   'Success tab': 'Успешные',
