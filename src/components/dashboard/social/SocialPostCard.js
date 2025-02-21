@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Lightbox } from 'react-modal-image';
 import PropTypes from 'prop-types';
 import { formatDistanceToNowStrict } from 'date-fns';
 import {
@@ -171,12 +170,12 @@ const SocialPostCard = (props) => {
           <SocialPostCommentAdd />
         </Box>
       </Card>
-      {expandMedia && (
+      {/* {expandMedia && (
         <Lightbox
           large={media}
           onClose={() => setExpandMedia(false)}
         />
-      )}
+      )} */}
     </>
   );
 };
