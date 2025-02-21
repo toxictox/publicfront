@@ -90,7 +90,7 @@ const AccountId = () => {
               <Divider />
               <TableStatic>
                 <TableRow>
-                  <TableCell>{t('Id')}</TableCell>
+                  <TableCell>{t('id')}</TableCell>
                   <TableCell>{account.id}</TableCell>
                 </TableRow>
                 <TableRow>

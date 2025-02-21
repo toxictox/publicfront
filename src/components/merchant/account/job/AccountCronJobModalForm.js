@@ -211,7 +211,7 @@ const AccountCronJobModalForm = ({entity, open, merchant, onClose, onUpdate, ...
                       error={Boolean(touched.source && errors.source)}
                       fullWidth
                       helperText={touched.source && errors.source}
-                      label="source"
+                      label={t("source")}
                       name="source"
                       onChange={(e ,f) => {
                           if (f.props.value == values.target) {
@@ -239,7 +239,7 @@ const AccountCronJobModalForm = ({entity, open, merchant, onClose, onUpdate, ...
                       error={Boolean(touched.target && errors.target)}
                       fullWidth
                       helperText={touched.target && errors.target}
-                      label="target"
+                      label={t("target")}
                       name="target"
                       onChange={(e ,f) => {
                           if (values.source == f.props.value) {
