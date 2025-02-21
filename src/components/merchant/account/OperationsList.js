@@ -154,7 +154,7 @@ const OperationsList = ({ accountId, merchantId }) => {
                 :
                 <CardContent>
                   <Typography>
-                    {t('NoOperations', "No operations has been registred for this account yet.")}
+                    {t('NoOperations')}
                   </Typography>
                 </CardContent>
               }
