@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { Lightbox } from 'react-modal-image';
 import { Avatar, Box, Link, Typography } from '@material-ui/core';
 
 const ChatMessage = (props) => {
@@ -112,12 +111,12 @@ const ChatMessage = (props) => {
           </Box>
         </div>
       </Box>
-      {expandMedia && (
+      {/* {expandMedia && (
         <Lightbox
           large={body}
           onClose={() => setExpandMedia(true)}
         />
-      )}
+      )} */}
     </Box>
   );
 };
