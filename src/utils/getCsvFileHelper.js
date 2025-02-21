@@ -22,6 +22,7 @@ export const getCsvFileHelper2 = ({ data, headers }) => {
     const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
     if (filenameMatch) {
       filename = filenameMatch[1];
+      filename = filename.replaceAll('"', '');
     }
   }
   a.download = filename;
