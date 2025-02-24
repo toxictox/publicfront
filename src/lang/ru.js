@@ -53,6 +53,9 @@ const menu = {
 const text = {
   Name: 'Имя',
   source: 'Источник',
+  rule: 'Правило',
+  gatewayMethod: 'Тип платежа',
+  gatewayId: 'ID гейта',
   target: 'Цель',
   cronExpression: 'Выражение крон',
   'An error occurred during creating cron job. Please try again later.': 'Возникла ошибка во время создании крон задания',
@@ -270,6 +273,7 @@ const text = {
   'Merchant fee rules': 'Список правил комиссий',
   'Start date': 'Дата начала',
   merchantFeePercent: 'Кешбек мерчанта в %',
+  tranTypesId: 'Типы транзакций',
   strategyName: 'Тип стратегии',
   strategy: 'Тип стратегии',
   value: 'Значение',
@@ -346,6 +350,8 @@ const text = {
 };
 
 const fields = {
+  gatewayId: 'ID гейта',
+  tranTypesId: 'Типы транзакций',
   orderBy: 'Сортировать по',
   sortDescending: 'По убыванию',
   sortAscending: 'По возрастанию',
@@ -390,6 +396,7 @@ const fields = {
   'Comment show': 'Комментарий',
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
+  'Upload manual giveout file': 'Импорт с файла',
   'File upload': 'Файл успешно загружен',
   'Upload Files': 'Загрузка файла',
   'Reconciliation type': 'Тип сверки',
@@ -422,6 +429,7 @@ const fields = {
   'Create schedule': 'Создать расписание',
   'Edit schedule': 'Редактировать расписание',
   downloadManualGiveoutTemplate: 'Скачать шаблон ручной выдачи',
+  createManualGiveout: 'Создать ручную выдачу',
   downloadImportBinTemplate: 'Скачать шаблон',
   'Merchant Account Item': 'Счет партнера',
   id: 'Идентификатор',

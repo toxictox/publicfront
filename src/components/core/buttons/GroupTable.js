@@ -10,6 +10,7 @@ const GroupTable = (props) => {
     actionView,
     actionCustom,
     actionCustomIcon,
+    actionExcelFileUpload,
   } = props;
 
   return (
@@ -21,6 +22,7 @@ const GroupTable = (props) => {
                 <Button
                   key={item.title}
                   variant={"contained"}
+                  component="label"
                   size={"small"}
                   color={item.color ? item.color : "primary"}
                   onClick={item.callback}
@@ -31,6 +33,20 @@ const GroupTable = (props) => {
             )
           : null}
 
+        {actionExcelFileUpload !== undefined
+            ? actionExcelFileUpload.map((item) =>
+                item.access !== false ? (
+                    <Button
+                        component="label"
+                        variant={"contained"}
+                        size={"small"}
+                    >
+                      {item.title}
+                      <input accept=".xlsx" hidden type="file" onChange={item.callback}/>
+                    </Button>
+                ) : null
+            )
+            : null}
 
         {actionCreate !== undefined &&
         typeof actionCreate === "object" &&
@@ -120,12 +136,14 @@ GroupTable.defaultProps = {
   actionDelete: undefined,
   actionView: undefined,
   actionCustom: undefined,
+  actionExcelFileUpload: undefined,
 };
 
 GroupTable.propTypes = {
   actionUpdate: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   actionDelete: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   actionView: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  actionExcelFileUpload: PropTypes.array,
   actionCustom: PropTypes.array,
 };
 

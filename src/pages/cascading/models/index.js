@@ -190,7 +190,7 @@ const CascadingModelsList = () => {
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
-                      label="tranTypesId"
+                      label={t('tranTypesId')}
                       name="tranTypesId"
                       onChange={handleChangeTranTypes}
                       select
