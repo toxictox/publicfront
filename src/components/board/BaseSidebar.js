@@ -347,12 +347,12 @@ const BaseSidebar = (props) => {
         console.error(e);
       });
   };
-  const [hcbBalance, setHcbBalance] = useState();
-  const gethcbBalance = async () => {
+  const [terminalBalances, setTerminalBalances] = useState([]);
+  const getTerminalbBalances = async () => {
     await axios
-      .post(`${app.api}/merchant/${merchId}/hcb/balance`)
+      .get(`${app.api}/merchant/${merchId}/terminal/balance`)
       .then((response) => {
-        setHcbBalance(response.data.balance);
+        setTerminalBalances(response.data);
       })
       .catch((e) => {
         console.error(e);
@@ -362,10 +362,10 @@ const BaseSidebar = (props) => {
   useEffect(() => {
     const intervalCall = setInterval(() => {
       getBalance();
-      gethcbBalance();
+      getTerminalbBalances();
     }, 30000);
     getBalance();
-    gethcbBalance();
+    getTerminalbBalances();
     return () => {
       clearInterval(intervalCall);
     };
@@ -585,32 +585,33 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
-
-        {hcbBalance !== null && hcbBalance !== undefined && (
-          <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Typography
-                  variant="subtitle1"
-                  className="balanse__title"
-                  component="div"
-                >
-                  {t('HCB BALANCE')}
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Typography
-                  variant="subtitle2"
-                  className="balanse__amount"
-                  component="div"
-                  sx={{ textAlign: 'right' }}
-                >
-                  {formatCurrency(hcbBalance / 100, '\u20B8')}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-        )}
+        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+          <Grid container spacing={2}>
+            {terminalBalances.map((item) => (
+              <>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="subtitle1"
+                    className="balanse__title"
+                    component="div"
+                  >
+                    {item.label}
+                  </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography
+                    variant="subtitle2"
+                    className="balanse__amount"
+                    component="div"
+                    sx={{ textAlign: 'right' }}
+                  >
+                    {formatCurrency(item.amount / 100, '\u20B8')}
+                  </Typography>
+                </Grid>
+              </>
+            ))}
+          </Grid>
+        </Box>
 
         <Divider />
         <Box sx={{ p: 2 }}>

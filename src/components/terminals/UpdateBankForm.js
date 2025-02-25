@@ -7,6 +7,8 @@ import {
   TextField,
   Grid,
   MenuItem,
+  FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
@@ -62,6 +64,8 @@ const UpdateBankForm = (props) => {
         gatewayMethod: data.gatewayMethod,
         merchant: data.merchant,
         account: data.account,
+        showOnDashboard: data.showOnDashboard,
+        dashboardLabel: data.dashboardLabel,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
@@ -111,6 +115,37 @@ const UpdateBankForm = (props) => {
                   onChange={handleChange}
                   type="text"
                   value={values.name}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControlLabel control={
+                    <Switch
+                        checked={values.showOnDashboard}
+                        name='showOnDashboard'
+                        onChange={handleChange}
+                        color={values.showOnDashboard ? "success" : "error"}
+                    />}
+                    label={values.showOnDashboard ? t("Display in sidebar balances") : t("Hide in sidebar balances")}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  error={Boolean(touched.dashboardLabel && errors.dashboardLabel)}
+                  fullWidth
+                  helperText={touched.dashboardLabel && errors.dashboardLabel}
+                  label={t("dashboardLabel")}
+                  margin="normal"
+                  name="dashboardLabel"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values.dashboardLabel}
                   variant="outlined"
                   size="small"
                   sx={{ m: 0 }}
