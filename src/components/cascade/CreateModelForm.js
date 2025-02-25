@@ -151,7 +151,7 @@ const CreateModelForm = (props) => {
                     error={Boolean(touched.gatewayId && errors.gatewayId)}
                     fullWidth
                     helperText={touched.gatewayId && errors.gatewayId}
-                    label="gatewayId"
+                    label={t('gatewayId')}
                     name="gatewayId"
                     onChange={(e) => {
                       setFieldValue('gatewayId', e.target.value);

@@ -11,13 +11,14 @@ import {
   CardHeader,
   CircularProgress,
   Container,
-  Divider,
+  Divider, FormHelperText,
   IconButton,
   LinearProgress,
   TableCell,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  ButtonGroup,
 } from '@material-ui/core';
 import {blue, green, red} from '@material-ui/core/colors';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -162,7 +163,22 @@ const ManualGiveoutIndex = () => {
       {
         title: t('downloadManualGiveoutTemplate'),
         callback: () => handleActionCustom()
-      }
+      },
+      {
+        title: t('createManualGiveout'),
+        callback: () => {
+          openForm(null);
+        }
+      },
+    ];
+  };
+
+  const getActionExcelFileUpload = () => {
+    return [
+      {
+        title: t('Upload manual giveout file'),
+        callback: handleFileUpload
+      },
     ];
   };
 
@@ -259,27 +275,9 @@ const ManualGiveoutIndex = () => {
                 title={t('manualGiveoutList')}
                 action={
                   <Box display="flex" alignItems="center">
-                    <GroupTable
-                        actionCreate={{
-                          access: getAccess('manualGiveout', 'create'),
-                          callback: () => {
-                            openForm(null);
-                          }
-                        }}
-                        actionCustom={getActionCustom()}
-                    />
-                    <input
-                        accept=".xlsx"
-                        style={{display: 'none'}}
-                        id="file-upload"
-                        type="file"
-                        onChange={handleFileUpload}
-                    />
-                    <label htmlFor="file-upload">
-                      <IconButton color="primary" component="span">
-                        <CloudUploadIcon/>
-                      </IconButton>
-                    </label>
+                    {getAccess('manualGiveout', 'create') && (
+                        <GroupTable actionCustom={getActionCustom()} actionExcelFileUpload={getActionExcelFileUpload()}/>
+                    )}
                   </Box>
                 }
               />
