@@ -76,6 +76,7 @@ const text = {
   'Transactions List': 'Список транзакций',
   'Transactions Sum': 'Сумма транзакций в ПО',
   'HCB BALANCE': 'Баланс корп. счета HomeCreditBank',
+  'Balance merchants': 'Балансы мерчантов',
 
   'Number of report lines': 'Количество строк в отчете',
   'Number of rows affected': 'Количество затронутых строк',

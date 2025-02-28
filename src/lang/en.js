@@ -94,6 +94,7 @@ const text = {
   'Download statement': 'Download account statement',
   'Start Date': 'Start Date',
   'End Date': 'End Date',
+  'Balance merchants': 'Balance merchants',
 
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',

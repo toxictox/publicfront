@@ -347,25 +347,25 @@ const BaseSidebar = (props) => {
         console.error(e);
       });
   };
-  const [terminalBalances, setTerminalBalances] = useState([]);
-  const getTerminalbBalances = async () => {
-    await axios
-      .get(`${app.api}/merchant/${merchId}/terminal/balance`)
-      .then((response) => {
-        setTerminalBalances(response.data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
+  // const [terminalBalances, setTerminalBalances] = useState([]);
+  // const getTerminalbBalances = async () => {
+  //   await axios
+  //     .get(`${app.api}/merchant/${merchId}/terminal/balance`)
+  //     .then((response) => {
+  //       setTerminalBalances(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // };
 
   useEffect(() => {
     const intervalCall = setInterval(() => {
       getBalance();
-      getTerminalbBalances();
+      // getTerminalbBalances();
     }, 30000);
     getBalance();
-    getTerminalbBalances();
+    // getTerminalbBalances();
     return () => {
       clearInterval(intervalCall);
     };
@@ -585,7 +585,7 @@ const BaseSidebar = (props) => {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
+        {/* <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
           <Grid container spacing={2}>
             {terminalBalances.map((item) => (
               <>
@@ -611,7 +611,7 @@ const BaseSidebar = (props) => {
               </>
             ))}
           </Grid>
-        </Box>
+        </Box> */}
 
         <Divider />
         <Box sx={{ p: 2 }}>
