@@ -347,25 +347,13 @@ const BaseSidebar = (props) => {
         console.error(e);
       });
   };
-  const [terminalBalances, setTerminalBalances] = useState([]);
-  const getTerminalbBalances = async () => {
-    await axios
-      .get(`${app.api}/merchant/${merchId}/terminal/balance`)
-      .then((response) => {
-        setTerminalBalances(response.data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
+ 
 
   useEffect(() => {
     const intervalCall = setInterval(() => {
       getBalance();
-      getTerminalbBalances();
     }, 30000);
     getBalance();
-    getTerminalbBalances();
     return () => {
       clearInterval(intervalCall);
     };
@@ -583,33 +571,6 @@ const BaseSidebar = (props) => {
                 {formatCurrency(balance.monthTransactionDebit / 100, '\u20B8')}
               </Typography>
             </Grid>
-          </Grid>
-        </Box>
-        <Box sx={{ paddingY: 1, paddingX: 3, marginTop: 1 }}>
-          <Grid container spacing={2}>
-            {terminalBalances.map((item) => (
-              <>
-                <Grid item xs={4}>
-                  <Typography
-                    variant="subtitle1"
-                    className="balanse__title"
-                    component="div"
-                  >
-                    {item.label}
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography
-                    variant="subtitle2"
-                    className="balanse__amount"
-                    component="div"
-                    sx={{ textAlign: 'right' }}
-                  >
-                    {formatCurrency(item.amount / 100, '\u20B8')}
-                  </Typography>
-                </Grid>
-              </>
-            ))}
           </Grid>
         </Box>
 
