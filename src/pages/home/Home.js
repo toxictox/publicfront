@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-  const { user } = useAuth();
+  const { user, getAccess } = useAuth();
 
   const [total, setTotal] = useState({});
   const [terminalBalances, setTerminalBalances] = useState([]);
@@ -64,7 +64,7 @@ const Home = () => {
         <Container maxWidth={settings.compact ? 'xl' : false}>
           <Box sx={{ mt: 1 }}>
             <Grid item xl={12} md={12} xs={12}>
-              {terminalBalances.length > 0 && (
+              {terminalBalances.length > 0 && getAccess('boardBalance', 'read') && (
                 <Grid item md={12} sm={12} xs={12}>
                   <Card sx={{ height: '100%', mb: 2 }}>
                     <Box
