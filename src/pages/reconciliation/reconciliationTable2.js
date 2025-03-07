@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { getFileReconciliation } from './helper';
+import { getFileReconciliation, getReconciliationTransactionFile } from './helper';
 
 const ReconciliationTable2 = ({
   reportData,
@@ -35,6 +35,14 @@ const ReconciliationTable2 = ({
   const downloadFile = async (id) => {
     try {
       const response = await getFileReconciliation(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const downloadReconciliationTransactionFile = async (id) => {
+    try {
+      const response = await getReconciliationTransactionFile(id);
     } catch (error) {
       console.log(error);
     }
@@ -118,6 +126,13 @@ const ReconciliationTable2 = ({
                       </Button>
                     )}
 
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => downloadReconciliationTransactionFile(item.id)}
+                  >
+                    {t('Download Reconciliation Transactions Report')}
+                  </Button>
                   <Button
                     variant="contained"
                     sx={{ marginLeft: '10px' }}

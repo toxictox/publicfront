@@ -127,6 +127,17 @@ export const getFileReconciliation = async (id) => {
     });
 };
 
+export const getReconciliationTransactionFile = async (id) => {
+  const response = await axios
+    .get(`${app.api}/reconciliation/${id}/report/transactions`, {
+      responseType: 'blob'
+    })
+    .then((res) => {
+      const { data, headers } = res;
+      getCsvFileHelper2({ data, headers });
+    });
+};
+
 export const uploadFile = async (file, uid) => {
   const formData = new FormData();
   formData.append('file', file);
