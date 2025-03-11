@@ -228,6 +228,7 @@ const text = {
   generated_reports_list: 'Список доступных файлов',
   'City24 Files List': 'Экспорт файлов city24',
   'Download File': 'Скачать файл',
+  'Download Reconciliation Transactions Report': 'Скачать исходные тразакции',
   'Create Report': 'Создать отчет',
   'Create Manual Giveout Report': 'Отчет о выдаче',
   'Create Manual Giveout': 'Создать ручную выдачу',
