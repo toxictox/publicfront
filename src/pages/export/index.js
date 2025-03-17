@@ -114,6 +114,7 @@ const ExportList = () => {
                   "status",
                   "createdAt",
                   "generation duration",
+                  "createdBy",
                   "",
                 ]}
               >
@@ -129,6 +130,7 @@ const ExportList = () => {
                       </TableCell>
                       <TableCell>{report.createdAat}</TableCell>
                       <TableCell>{report.time}</TableCell>
+                      <TableCell>{report.createdBy}</TableCell>
                       <TableCell align="right">
                         <Button
                           type="button"
