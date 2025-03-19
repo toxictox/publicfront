@@ -20,6 +20,7 @@ import { app } from '@root/config';
 import { getCsvFileHelper } from '@utils/getCsvFileHelper';
 import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
+import toast from 'react-hot-toast';
 
 const ExportList = () => {
   const { t } = useTranslation();
@@ -67,6 +68,16 @@ const ExportList = () => {
       // })
       .then(() => {
         setFilterList(values);
+      })
+      .catch((err) => {
+        const reader = new FileReader();
+        const blob = err.response.data;
+
+        reader.onload = function () {
+          toast.error(t(JSON.parse(reader.result).message));
+        };
+
+        reader.readAsText(blob);
       });
   };
 
