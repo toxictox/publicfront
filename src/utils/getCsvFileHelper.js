@@ -32,3 +32,25 @@ export const getCsvFileHelper2 = ({ data, headers }) => {
   URL.revokeObjectURL(downloadUrl);
 };
 
+export const getFileHelper = (data, headers, filename) => {
+  const blob = new Blob([data], { type: headers['content-type'] });
+  const downloadUrl = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = downloadUrl;
+
+  const contentDisposition = headers['content-disposition'];
+
+  if (contentDisposition) {
+    const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+    if (filenameMatch) {
+      filename = filenameMatch[1];
+      filename = filename.replaceAll('"', '');
+    }
+  }
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(downloadUrl);
+};
+

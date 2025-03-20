@@ -23,6 +23,7 @@ import { toLocaleDateTime } from '@lib/date';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
 import HoldersList from '@comp/transaction/HoldersList';
+import { getFileHelper } from '@utils/getCsvFileHelper';
 
 const TransactionsList = () => {
   const mounted = useMounted();
@@ -33,6 +34,13 @@ const TransactionsList = () => {
   const { getAccess } = useAuth();
   const [dataList, setListData] = useState({});
   const [status, setStatus] = useState(undefined);
+
+  const { user } = useAuth();
+  const [merchId] = useState(
+    localStorage.getItem('merchId') !== null
+      ? localStorage.getItem('merchId')
+      : user.merchantId
+  );
 
   const getItem = useCallback(async () => {
     try {
@@ -51,17 +59,6 @@ const TransactionsList = () => {
     await axios
       .post(`${app.api}/transactions/callback/${id}`)
       .then((response) => {
-        toast.success(t('Success update'));
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
-
-  const regTransaction = () => {
-    axios
-      .post(`${app.api}/transactions/city/register/${id}`)
-      .then(() => {
         toast.success(t('Success update'));
       })
       .catch((err) => {
@@ -97,7 +94,19 @@ const TransactionsList = () => {
       });
   };
 
-  const getActionCustom = (status, statusCity) => {
+  const confirmationDownload = () => {
+    axios
+      .get(`${app.api}/merchant/${merchId}/document/transaction/confirmation/transaction/${id}/`, {
+        responseType: 'blob'
+      })
+      .then((res) => {
+        const { data, headers } = res;
+        getFileHelper(data, headers, `${id}.pdf`);
+      });
+
+  }
+
+  const getActionCustom = (status) => {
     const actions = [
       {
         title: 'callback',
@@ -108,6 +117,12 @@ const TransactionsList = () => {
         callback: () => sendStatus()
       }
     ];
+    if (status == 1000) {
+      actions.push({
+        title: t('confirmation'),
+        callback: () => confirmationDownload()
+      });
+    }
     return actions;
   };
 

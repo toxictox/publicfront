@@ -216,6 +216,12 @@ const BaseSidebar = (props) => {
               path: '/export',
               icon: <DescriptionOutlined fontSize="small" />,
               active: getActiveStatus('export')
+            },
+            {
+              title: t('Transaction confirmations'),
+              path: '/export/transaction/confirmation',
+              icon: <DescriptionOutlined fontSize="small" />,
+              active: getActiveStatus('export')
             }
           ]
         },
