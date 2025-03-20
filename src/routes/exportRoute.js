@@ -3,9 +3,7 @@ import Loadable from '@root/routes/Loadable';
 import ACLGuard from '@comp/ACLGuard';
 
 const ExportIndexPage = Loadable(lazy(() => import('@pages/export/index')));
-const ExportCity24Docs = Loadable(
-  lazy(() => import('@pages/export/ExportCity24Docs'))
-);
+const TransactionConfirmationIndexPage = Loadable(lazy(() => import('@pages/export/transactionConfirmation/index')));
 
 export const exportRoute = {
   path: 'export',
@@ -19,10 +17,10 @@ export const exportRoute = {
       )
     },
     {
-      path: '/city24',
+      path: '/transaction/confirmation',
       element: (
         <ACLGuard can={'read'}>
-          <ExportCity24Docs />
+          <TransactionConfirmationIndexPage />
         </ACLGuard>
       )
     }

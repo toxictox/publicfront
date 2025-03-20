@@ -18,7 +18,6 @@ import { TableStatic } from '@comp/core/tables/index';
 import { useTranslation } from 'react-i18next';
 import TransactionFilter from '@comp/transaction/TransactionFilter';
 import TransactionCreateModal from '@comp/transaction/TransactionCreateModal';
-import TransactionConfirmationModal from '@comp/transaction/TransactionConfirmationModal';
 import { GroupTable } from '@comp/core/buttons';
 import { toLocaleDateTime } from '@lib/date';
 import useAuth from '@hooks/useAuth';
@@ -33,7 +32,6 @@ const TransactionListTable = (props) => {
     <>
       <Card {...other}>
         <CardHeader avatar={<TransactionCreateModal />} action={<MoreMenu />} title={t('Transactions List')} />
-        <CardHeader avatar={<TransactionConfirmationModal />} action={<MoreMenu />} title={t('Transactions Confirmation')} />
 
         <Divider />
         <TransactionFilter callback={props.callback} />

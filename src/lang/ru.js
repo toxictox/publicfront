@@ -528,7 +528,23 @@ const fields = {
   'Edit reconciliation settings': 'Редактировать настройки',
   'Main settings': 'Основные',
   'Parsing settings': 'Парсинг',
-  'Reconciliation settings Item': 'Настройки'
+  'Reconciliation settings Item': 'Настройки',
+  'Transaction confirmations': 'Справки по транзакциям',
+  'date': 'Дата',
+  'confirmation': 'Справка'
+};
+
+const transaction_confirmation = {
+  status:  {
+    'new': 'В очереди',
+    'generating': 'Генерируется',
+    'generated': 'Сгенерирован, ожидает архивации',
+    'compressing': 'Архивируется',
+    'ready': 'Готов',
+    'empty': 'Транзакции не найдены',
+  },
+  'create_from_file': 'Создать из csv файла',
+  file_example: 'Пример содержимого файла'
 };
 
 const server = {
@@ -556,5 +572,6 @@ export const ru = {
   ...text,
   ...validationForm,
   ...menu,
-  ...server
+  ...server,
+  transaction_confirmation: transaction_confirmation
 };

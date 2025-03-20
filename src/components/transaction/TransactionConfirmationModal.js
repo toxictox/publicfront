@@ -22,6 +22,7 @@ import {
   TextareaAutosize
 } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import toast from 'react-hot-toast';
 
 import { useTranslation } from 'react-i18next';
 
@@ -74,21 +75,13 @@ const TransactionConfirmationModal = (props) => {
 
     await axios
     .post(
-      `${app.api}/merchant/${merchId}/document/transaction_confirmation_certificate`,
+      `${app.api}/merchant/${merchId}/document/transaction/confirmation/`,
       {
-        tranId: values.tranId.split("\n")
-      }, {
-          responseType: 'blob'
-        }
+        transactions: values.tranId.split("\n")
+      }
     )
     .then(async (response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'file.pdf');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      toast.success(t('fileUploaded'));
       setIsSubmitted(true);
     })
     .catch(async (error) => {
@@ -96,7 +89,7 @@ const TransactionConfirmationModal = (props) => {
     });
   };
 
-  const validationSchema = 
+  const validationSchema =
     Yup.object().shape({
       tranId: Yup.string().max(255).required('Required')
     });
