@@ -140,7 +140,6 @@ const tansactionConfirmationList = () => {
         }
       })
       .then((res) => {
-        console.log('done');
         const { data, headers } = res;
         getFileHelper(data, headers, 'file.zip');
       })
