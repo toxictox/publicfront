@@ -47,7 +47,7 @@ function LinearProgressWithLabel(props) {
   );
 }
 
-const tansactionConfirmationList = () => {
+const TansactionConfirmationList = () => {
   const mounted = useMounted();
   const { t } = useTranslation();
   const { settings } = useSettings();
@@ -303,4 +303,4 @@ const tansactionConfirmationList = () => {
   );
 };
 
-export default tansactionConfirmationList;
+export default TansactionConfirmationList;
