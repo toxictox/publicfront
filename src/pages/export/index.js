@@ -22,7 +22,6 @@ import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
 import useMounted from '@hooks/useMounted';
-import { join } from 'lodash';
 
 const ExportList = () => {
   const { t } = useTranslation();
@@ -177,7 +176,7 @@ const ExportList = () => {
                           size={'small'}
                           onClick={(e) => {
                             e.stopPropagation();
-                            buttonClickHandler(`${app.api.replace("/api", "")}${report.link}`);
+                            buttonClickHandler(report.link);
                           }}
                         >
                           {t('Download File')}
