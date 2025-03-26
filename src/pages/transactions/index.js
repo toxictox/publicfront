@@ -24,6 +24,7 @@ const TransactionsList = () => {
     count: 0,
   });
   const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [ loading, setLoading ] = useState(false);
 
   const [merchId, setMerchId] = useState(
     localStorage.getItem('merchId') !== null
@@ -42,6 +43,7 @@ const TransactionsList = () => {
 
   const getOrders = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await axios
         .get(`${app.api}/transactions`,
         {
@@ -53,7 +55,9 @@ const TransactionsList = () => {
           }
         }
         )
-        .then((response) => response.data);
+        .then((response) => response.data)
+        .finally(() => [setLoading(false)]);
+        ;
 
       if (mounted.current) {
         setListData(response);
@@ -115,7 +119,11 @@ const TransactionsList = () => {
       >
         <Container maxWidth={settings.compact ? 'xl' : false}>
           <Box sx={{ mt: 1 }}>
-            <TransactionListTable data={dataList.data} callback={filter} />
+            <TransactionListTable
+              data={dataList.data}
+              callback={filter}
+              loading={loading}
+            />
             <TablePagination
               component="div"
               count={dataList.count}
