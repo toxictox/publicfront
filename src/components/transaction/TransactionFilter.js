@@ -10,6 +10,7 @@ import { GetFilterDataFromStore } from '@lib/filter';
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   Grid,
@@ -28,6 +29,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 const TransactionFilter = (props) => {
+  const { loading, ...other } = props;
   const mounted = useMounted();
   const { t } = useTranslation();
   const [banks, setBanks] = useState([]);
@@ -56,9 +58,9 @@ const TransactionFilter = (props) => {
     GetFilterDataFromStore('transactions') !== undefined
       ? GetFilterDataFromStore('transactions')
       : {
-          respCode: [],
-          banks: []
-        };
+        respCode: [],
+        banks: []
+      };
 
   const tranIndex = [
     { label: '-', value: 'clear' },
@@ -548,11 +550,16 @@ const TransactionFilter = (props) => {
                 <Box sx={{ mt: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || loading}
                     type="submit"
                     variant="contained"
                     size="small"
                   >
+                    {(isSubmitting || loading) &&
+                      <>
+                        <CircularProgress size={20} />&nbsp;
+                      </>
+                    }
                     {t('Search button')}
                   </Button>
                 </Box>

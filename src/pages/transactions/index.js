@@ -79,6 +79,7 @@ const TransactionsList = () => {
     setPage(newPage);
     dispatch(setFilterPage({ path: 'transactions', page: newPage }));
 
+    setLoading(true);
     await axios
       .get(
         `${app.api}/transactions`,
@@ -98,6 +99,9 @@ const TransactionsList = () => {
           );
         }
         setListData(response.data);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -126,7 +130,7 @@ const TransactionsList = () => {
             />
             <TablePagination
               component="div"
-              count={dataList.count}
+              count={dataList.count == rowsPerPage ? rowsPerPage * (page + 2) : rowsPerPage * page + dataList.count }
               onPageChange={handlePageChange}
               page={page}
               rowsPerPage={rowsPerPage}
