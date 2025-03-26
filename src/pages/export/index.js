@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   Box,
@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
   Button,
-  Typography
+  Typography, TablePagination
 } from '@material-ui/core';
 import useSettings from '@hooks/useSettings';
 import { useTranslation } from 'react-i18next';
@@ -21,21 +21,40 @@ import { getCsvFileHelper } from '@utils/getCsvFileHelper';
 import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
+import useMounted from '@hooks/useMounted';
+import { join } from 'lodash';
 
 const ExportList = () => {
   const { t } = useTranslation();
+  const mounted = useMounted();
   const { settings } = useSettings();
-  const [filterList, setFilterList] = useState({});
-  const [generatedReports, setGeneratedReports] = useState([]);
+  const [filterList, setFilterList] = useState();
+  const [generatedReports, setGeneratedReports] = useState({
+    items: [],
+    count: 0,
+  });
+  const [page, setPage] = useState(0);
+  const [count, setCount] = useState(25);
 
-  useEffect(() => {
-    axios.get(`${app.api}/report/task/list`).then((res) => {
+  const getItems = useCallback(async () => {
+    await axios.get(`${app.api}/report/task/list`,
+      {
+        params: {
+          page: page + 1,
+          count: count,
+          ...filterList
+        }
+      }).then((res) => {
       const { data } = res;
       if (data) {
         setGeneratedReports(data);
       }
     });
-  }, [filterList]);
+  }, [mounted, count, page, filterList]);
+
+  useEffect(() => {
+    getItems();
+  }, [getItems]);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -79,6 +98,14 @@ const ExportList = () => {
 
         reader.readAsText(blob);
       });
+  };
+
+  const handlePageChange = async (e, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = async (e, newValue) => {
+    setCount(newValue.props.value);
   };
 
   const buttonClickHandler = (link) => {
@@ -129,7 +156,7 @@ const ExportList = () => {
                   "",
                 ]}
               >
-                {generatedReports.map(function (report, idx) {
+                {generatedReports.items.map(function (report, idx) {
                   return (
                     <TableRow hover key={report.id}>
                       <TableCell>{idx}</TableCell>
@@ -139,7 +166,7 @@ const ExportList = () => {
                           {t(statuses[report.status])}
                         </Typography>
                       </TableCell>
-                      <TableCell>{report.createdAat}</TableCell>
+                      <TableCell>{report.createdAt}</TableCell>
                       <TableCell>{report.time}</TableCell>
                       <TableCell>{report.createdBy}</TableCell>
                       <TableCell align="right">
@@ -150,7 +177,7 @@ const ExportList = () => {
                           size={'small'}
                           onClick={(e) => {
                             e.stopPropagation();
-                            buttonClickHandler(report.link);
+                            buttonClickHandler(`${app.api.replace("/api", "")}${report.link}`);
                           }}
                         >
                           {t('Download File')}
@@ -160,8 +187,16 @@ const ExportList = () => {
                   );
                 })}
               </TableStatic>
-              <Divider sx={{ paddingBottom: '20px' }}></Divider>
             </Card>
+            <TablePagination
+              component="div"
+              count={generatedReports.count}
+              onPageChange={handlePageChange}
+              page={page}
+              rowsPerPage={count}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            />
           </Box>
         </Container>
       </Box>
