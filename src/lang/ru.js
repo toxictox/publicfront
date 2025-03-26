@@ -531,7 +531,8 @@ const fields = {
   'Reconciliation settings Item': 'Настройки',
   'Transaction confirmations': 'Справки по транзакциям',
   'date': 'Дата',
-  'confirmation': 'Справка'
+  'confirmation': 'Справка',
+  'loading': 'Загрузка'
 };
 
 const transaction_confirmation = {

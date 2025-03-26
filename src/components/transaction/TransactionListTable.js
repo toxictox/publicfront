@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import {
   Box,
   Card,
+  CardContent,
   CardHeader,
+  CircularProgress,
   Divider,
   Link,
   TableCell,
@@ -23,7 +25,7 @@ import { toLocaleDateTime } from '@lib/date';
 import useAuth from '@hooks/useAuth';
 
 const TransactionListTable = (props) => {
-  const { data, ...other } = props;
+  const { data, loading, ...other } = props;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getAccess } = useAuth();
@@ -54,6 +56,14 @@ const TransactionListTable = (props) => {
                 ''
               ]}
             >
+              {loading &&
+                <CardContent>
+                  <Typography>
+                    <CircularProgress size={20} />
+                    &nbsp;{t('loading')}
+                  </Typography>
+                </CardContent>
+              }
               {data.map((order) => {
                 return (
                   <TableRow hover key={order.uuid}>
@@ -76,7 +86,7 @@ const TransactionListTable = (props) => {
                       {order.tranId}
                     </TableCell>
                     <TableCell className="static-table__table-cell static-table__table-cell--word-wrap static-table__table-cell-id">
-                    {order.orderId}
+                      {order.orderId}
                     </TableCell>
                     <TableCell className="static-table__table-cell static-table__table-cell--word-wrap static-table__table-cell-id">
                       {order.client}
