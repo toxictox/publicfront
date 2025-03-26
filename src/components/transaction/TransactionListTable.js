@@ -36,7 +36,7 @@ const TransactionListTable = (props) => {
         <CardHeader avatar={<TransactionCreateModal />} action={<MoreMenu />} title={t('Transactions List')} />
 
         <Divider />
-        <TransactionFilter callback={props.callback} />
+        <TransactionFilter loading={loading} callback={props.callback} />
         <Divider />
         <Scrollbar>
           <Box sx={{ minWidth: false }}>
