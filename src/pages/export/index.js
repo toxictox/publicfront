@@ -9,7 +9,11 @@ import {
   TableRow,
   TableCell,
   Button,
-  Typography, TablePagination, CircularProgress
+  Typography,
+  TablePagination,
+  makeStyles,
+  LinearProgress,
+  CircularProgress
 } from '@material-ui/core';
 import useSettings from '@hooks/useSettings';
 import { useTranslation } from 'react-i18next';
@@ -17,12 +21,39 @@ import gtm from '../../lib/gtm';
 import { ExportFileFilter } from '@comp/export';
 import axios from '@lib/axios';
 import { app } from '@root/config';
-import { getCsvFileHelper } from '@utils/getCsvFileHelper';
 import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
 import useMounted from '@hooks/useMounted';
-import {is} from "date-fns/locale";
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    position: 'absolute',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5]
+  },
+}));
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 const ExportList = () => {
   const { t } = useTranslation();
@@ -45,28 +76,26 @@ const ExportList = () => {
           ...filterList
         }
       }).then((res) => {
-      const { data } = res;
-      if (data) {
-        setGeneratedReports(data);
-      }
-    });
+        const { data } = res;
+        if (data) {
+          setGeneratedReports(data);
+        }
+      });
   }, [mounted, count, page, filterList]);
 
   useEffect(() => {
+    const intervalCall = setInterval(() => {
+      getItems();
+    }, 10000);
     getItems();
+    return () => {
+      clearInterval(intervalCall);
+    };
   }, [getItems]);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  // const getFilesByID = (fileId) =>
-  //   axios
-  //     .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
-  //     .then((res) => {
-  //       const { data, headers } = res;
-  //       getCsvFileHelper({ data, headers });
-  //     });
 
   const getFileByLink = (linkUrl) => {
     window.open(linkUrl, '_blank', 'noopener,noreferrer');
@@ -84,11 +113,8 @@ const ExportList = () => {
           responseType: 'blob'
         }
       )
-      // .then((response) => {
-      //   const { data } = response;
-      //   return getFilesByID(data.id);
-      // })
       .then(() => {
+        toast.success(t('Report created'));
         setFilterList(values);
       })
       .catch((err) => {
@@ -115,10 +141,10 @@ const ExportList = () => {
     setDownloadingReportId(reportTaskId);
     setReportDownload(true);
     const response = await axios.get(
-        `${app.api}/report/${reportTaskId}/download`,
-        {
-          responseType: 'blob'
-        }
+      `${app.api}/report/${reportTaskId}/download`,
+      {
+        responseType: 'blob'
+      }
     );
 
     const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -144,7 +170,7 @@ const ExportList = () => {
     setDownloadingReportId(null);
   };
 
-  const statuses =  {
+  const statuses = {
     1: 'status_new',
     2: 'status_processing',
     3: 'status_finished',
@@ -179,7 +205,6 @@ const ExportList = () => {
               <Divider></Divider>
               <TableStatic
                 header={[
-                  "id",
                   "filename",
                   "status",
                   "createdAt",
@@ -191,7 +216,6 @@ const ExportList = () => {
                 {generatedReports.items.map(function (report, idx) {
                   return (
                     <TableRow hover key={report.id}>
-                      <TableCell>{idx}</TableCell>
                       <TableCell>{report.fileName}</TableCell>
                       <TableCell>
                         <Typography color={statusColors[report.status]}>
@@ -202,32 +226,42 @@ const ExportList = () => {
                       <TableCell>{report.time}</TableCell>
                       <TableCell>{report.createdBy}</TableCell>
                       <TableCell align="right">
-                        <Button
-                          type="button"
-                          variant={'contained'}
-                          disabled={
+                        {report.status == 3 ?
+                          <Button
+                            type="button"
+                            variant={'contained'}
+                            disabled={
                               report.status !== 3 ||
                               (isReportDownloading && downloadingReportId === report.id)
-                          }
-                          size={'small'}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            buttonClickHandler(report.id);
-                          }}
-                        >
-                          {isReportDownloading && downloadingReportId === report.id && (
+                            }
+                            size={'small'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              buttonClickHandler(report.id);
+                            }}
+                          >
+                            {isReportDownloading && downloadingReportId === report.id && (
                               <Box
-                                  id={report.id}
-                                  sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center'
-                                  }}
+                                id={report.id}
+                                sx={{
+                                  display: 'flex',
+                                  justifyContent: 'center'
+                                }}
                               >
                                 <CircularProgress id={report.id} size={20} />
                               </Box>
-                          )}
-                          {t('Download File')}
-                        </Button>
+                            )}
+                            {t('Download File')}
+                          </Button>
+                          :
+                          <>
+                            {t(`report.status.${report.status}`)}&nbsp;
+                            {report.status == 2 &&
+                              <LinearProgressWithLabel value={Math.floor(report.processed / report.total * 100)} />
+                            }
+                          </>
+
+                        }
                       </TableCell>
                     </TableRow>
                   );
