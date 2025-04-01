@@ -8,7 +8,7 @@ import {
   TableCell,
   TablePagination,
   TableRow,
-  Card, Button,
+  Card, Button, CardContent, Typography, CircularProgress,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import useSettings from "@hooks/useSettings";
@@ -35,21 +35,25 @@ const TransactionsList = () => {
   });
 
   const [page, setPage] = useState(GetFilterPageFromStore("bin"));
+  const [count, setCount] = useState(25);
   const filterList = GetFilterDataFromStore("bin");
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { getAccess } = useAuth();
 
   useEffect(() => {
     gtm.push({ event: "page_view" });
   }, []);
 
-  const getOrders = useCallback(async () => {
+  const getBins = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await axios
-        .get(`${app.api}/bin/table?page=${page}&count=${25}`, filterList)
-        .then((response) => response.data);
+        .get(`${app.api}/bin/table?page=${page}&count=${count}`, filterList)
+        .then((response) => response.data)
+        .finally(() => [setLoading(false)]);
 
       if (mounted.current) {
         setListData(response);
@@ -57,7 +61,7 @@ const TransactionsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted, page]);
+  }, [mounted, page, count]);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -82,7 +86,7 @@ const TransactionsList = () => {
             }
         );
         toast.success(t('fileUploaded'));
-        getOrders();
+        getBins();
       } catch (error) {
         toast.error(t('fileUploadError'));
       } finally {
@@ -128,14 +132,27 @@ const TransactionsList = () => {
     ];
   };
 
+  const getActionExcelFileUpload = () => {
+    return [
+      {
+        title: t('Upload file'),
+        callback: handleFileUpload
+      },
+    ];
+  };
+
   const handlePageChange = async (e, newPage, values) => {
     setPage(newPage);
     dispatch(setFilterPage({ path: "bin", page: newPage }));
   };
 
+  const handleRowsPerPageChange = async (e, newValue) => {
+    setCount(newValue.props.value);
+  };
+
   useEffect(() => {
-    getOrders();
-  }, [getOrders]);
+    getBins();
+  }, [getBins]);
 
   return (
     <>
@@ -156,18 +173,12 @@ const TransactionsList = () => {
                 title={t("Bin List")}
                 action={
                   <Box display="flex" alignItems="center">
-                    <GroupTable
-                        actionCustom={getActionCustom()}
-                    />
-                    {getAccess('bin', 'import') ? (
-                        <Button
-                            variant="contained"
-                            component="label"
-                        >
-                          {t('Upload file')}
-                          <input accept=".xlsx" type="file" hidden onChange={handleFileUpload} />
-                        </Button>
-                    ) : null}
+                    {getAccess('bin', 'import') && (
+                        <GroupTable
+                            actionCustom={getActionCustom()}
+                            actionExcelFileUpload={getActionExcelFileUpload()}
+                        />
+                    )}
                   </Box>
                 }
               />
@@ -180,6 +191,14 @@ const TransactionsList = () => {
                   "countryCode",
                 ]}
               >
+                {loading &&
+                    <CardContent>
+                      <Typography>
+                        <CircularProgress size={20} />
+                        &nbsp;{t('loading')}
+                      </Typography>
+                    </CardContent>
+                }
                 {dataList.data.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
@@ -199,9 +218,17 @@ const TransactionsList = () => {
               component="div"
               count={dataList.count}
               onPageChange={handlePageChange}
+              onRowsPerPageChange={handleRowsPerPageChange}
               page={page}
-              rowsPerPage={25}
+              rowsPerPage={count}
               rowsPerPageOptions={[25, 50, 100]}
+              labelRowsPerPage={t('rows_per_page')}
+              labelDisplayedRows={({ from, to, count, page }) => {
+                const labelFrom = t('from');
+                const labelGreaterThan = t('greater_than');
+
+                return `${from}-${to} ${labelFrom} ${count !== -1 ? count : `${labelGreaterThan} ${to}`}`;
+              }}
             />
           </Box>
         </Container>
