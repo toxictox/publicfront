@@ -9,7 +9,9 @@ import {
   TableRow,
   TableCell,
   Button,
-  Typography, TablePagination
+  Typography, TablePagination,
+  makeStyles,
+  LinearProgress
 } from '@material-ui/core';
 import useSettings from '@hooks/useSettings';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +24,35 @@ import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
 import useMounted from '@hooks/useMounted';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    position: 'absolute',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5]
+  },
+}));
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 const ExportList = () => {
   const { t } = useTranslation();
@@ -44,15 +75,21 @@ const ExportList = () => {
           ...filterList
         }
       }).then((res) => {
-      const { data } = res;
-      if (data) {
-        setGeneratedReports(data);
-      }
-    });
+        const { data } = res;
+        if (data) {
+          setGeneratedReports(data);
+        }
+      });
   }, [mounted, count, page, filterList]);
 
   useEffect(() => {
+    const intervalCall = setInterval(() => {
+      getItems();
+    }, 10000);
     getItems();
+    return () => {
+      clearInterval(intervalCall);
+    };
   }, [getItems]);
 
   useEffect(() => {
@@ -85,6 +122,7 @@ const ExportList = () => {
       //   return getFilesByID(data.id);
       // })
       .then(() => {
+        toast.success(t('Report created'));
         setFilterList(values);
       })
       .catch((err) => {
@@ -111,7 +149,7 @@ const ExportList = () => {
     getFileByLink(link);
   };
 
-  const statuses =  {
+  const statuses = {
     1: 'status_new',
     2: 'status_processing',
     3: 'status_finished',
@@ -146,7 +184,6 @@ const ExportList = () => {
               <Divider></Divider>
               <TableStatic
                 header={[
-                  "id",
                   "filename",
                   "status",
                   "createdAt",
@@ -158,7 +195,6 @@ const ExportList = () => {
                 {generatedReports.items.map(function (report, idx) {
                   return (
                     <TableRow hover key={report.id}>
-                      <TableCell>{idx}</TableCell>
                       <TableCell>{report.fileName}</TableCell>
                       <TableCell>
                         <Typography color={statusColors[report.status]}>
@@ -169,18 +205,28 @@ const ExportList = () => {
                       <TableCell>{report.time}</TableCell>
                       <TableCell>{report.createdBy}</TableCell>
                       <TableCell align="right">
-                        <Button
-                          type="button"
-                          variant={'contained'}
-                          disabled={report.status != 3}
-                          size={'small'}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            buttonClickHandler(report.link);
-                          }}
-                        >
-                          {t('Download File')}
-                        </Button>
+                        {report.status == 3 ?
+                          <Button
+                            type="button"
+                            variant={'contained'}
+                            disabled={report.status != 3}
+                            size={'small'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              buttonClickHandler(report.link);
+                            }}
+                          >
+                            {t('Download File')}
+                          </Button>
+                          :
+                          <>
+                            {t(`report.status.${report.status}`)}&nbsp;
+                            {report.status == 2 &&
+                              <LinearProgressWithLabel value={Math.floor(report.processed / report.total * 100)} />
+                            }
+                          </>
+
+                        }
                       </TableCell>
                     </TableRow>
                   );

@@ -548,6 +548,15 @@ const transaction_confirmation = {
   file_example: 'Пример содержимого файла'
 };
 
+const report = {
+  status: {
+    '1': 'В очереди',
+    '2': 'Создается',
+    '3': 'Готов',
+    '4': 'Ошибка'
+  }
+}
+
 const server = {
   'Token error': 'Неверный ключ',
   '404 error title': 'Страница не найдена',
@@ -574,5 +583,6 @@ export const ru = {
   ...validationForm,
   ...menu,
   ...server,
+  report: report,
   transaction_confirmation: transaction_confirmation
 };
