@@ -9,9 +9,11 @@ import {
   TableRow,
   TableCell,
   Button,
-  Typography, TablePagination,
+  Typography,
+  TablePagination,
   makeStyles,
-  LinearProgress
+  LinearProgress,
+  CircularProgress
 } from '@material-ui/core';
 import useSettings from '@hooks/useSettings';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +21,6 @@ import gtm from '../../lib/gtm';
 import { ExportFileFilter } from '@comp/export';
 import axios from '@lib/axios';
 import { app } from '@root/config';
-import { getCsvFileHelper } from '@utils/getCsvFileHelper';
 import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
@@ -96,17 +97,12 @@ const ExportList = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  // const getFilesByID = (fileId) =>
-  //   axios
-  //     .get(`${app.api}/report/${fileId}`, { responseType: 'blob' })
-  //     .then((res) => {
-  //       const { data, headers } = res;
-  //       getCsvFileHelper({ data, headers });
-  //     });
-
   const getFileByLink = (linkUrl) => {
     window.open(linkUrl, '_blank', 'noopener,noreferrer');
   };
+
+  const [downloadingReportId, setDownloadingReportId] = useState(null);
+  const [isReportDownloading, setReportDownload] = useState(false);
 
   const createFile = async (reportPath, values) => {
     await axios
@@ -117,10 +113,6 @@ const ExportList = () => {
           responseType: 'blob'
         }
       )
-      // .then((response) => {
-      //   const { data } = response;
-      //   return getFilesByID(data.id);
-      // })
       .then(() => {
         toast.success(t('Report created'));
         setFilterList(values);
@@ -145,8 +137,37 @@ const ExportList = () => {
     setCount(newValue.props.value);
   };
 
-  const buttonClickHandler = (link) => {
-    getFileByLink(link);
+  const buttonClickHandler = async (reportTaskId) => {
+    setDownloadingReportId(reportTaskId);
+    setReportDownload(true);
+    const response = await axios.get(
+      `${app.api}/report/${reportTaskId}/download`,
+      {
+        responseType: 'blob'
+      }
+    );
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+
+    let filename = 'file.xlsx';
+    const contentDisposition = response.headers['content-disposition'];
+
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+      if (filenameMatch) {
+        filename = filenameMatch[1];
+      }
+    }
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+
+    setReportDownload(false);
+    setDownloadingReportId(null);
   };
 
   const statuses = {
@@ -209,13 +230,27 @@ const ExportList = () => {
                           <Button
                             type="button"
                             variant={'contained'}
-                            disabled={report.status != 3}
+                            disabled={
+                              report.status !== 3 ||
+                              (isReportDownloading && downloadingReportId === report.id)
+                            }
                             size={'small'}
                             onClick={(e) => {
                               e.stopPropagation();
-                              buttonClickHandler(report.link);
+                              buttonClickHandler(report.id);
                             }}
                           >
+                            {isReportDownloading && downloadingReportId === report.id && (
+                              <Box
+                                id={report.id}
+                                sx={{
+                                  display: 'flex',
+                                  justifyContent: 'center'
+                                }}
+                              >
+                                <CircularProgress id={report.id} size={20} />
+                              </Box>
+                            )}
                             {t('Download File')}
                           </Button>
                           :
