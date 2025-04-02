@@ -9,15 +9,17 @@ import {
   MenuItem,
   FormControlLabel,
   Switch,
+  Divider,
 } from "@material-ui/core";
 import useMounted from "@hooks/useMounted";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { fields } from "@lib/validate";
+import DynamicFieldsSet from '@comp/form/DynamicFieldsSet';
 
-const UpdateBankForm = (props) => {
+const UpdateTerminalForm = (props) => {
   const mounted = useMounted();
   const { data, callback } = props;
   const { t } = useTranslation();
@@ -59,13 +61,14 @@ const UpdateBankForm = (props) => {
   return (
     <Formik
       initialValues={{
-        name: data.name,
-        tid: data.tid,
-        gatewayMethod: data.gatewayMethod,
-        merchant: data.merchant,
-        account: data.account,
-        showOnDashboard: data.showOnDashboard,
-        dashboardLabel: data.dashboardLabel,
+        name: data.data.name,
+        tid: data.data.tid,
+        gatewayMethod: data.data.gatewayMethod,
+        merchant: data.data.merchant,
+        account: data.data.account,
+        showOnDashboard: data.data.showOnDashboard,
+        dashboardLabel: data.data.dashboardLabel,
+        options: data.settings
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
@@ -151,108 +154,18 @@ const UpdateBankForm = (props) => {
                   sx={{ m: 0 }}
                 />
               </Grid>
+
               <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.tid && errors.tid)}
-                  fullWidth
-                  helperText={touched.tid && errors.tid}
-                  label={t("tid")}
-                  margin="normal"
-                  name="tid"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.tid}
-                  variant="outlined"
-                  size="small"
-                  sx={{ m: 0 }}
+                <Divider />
+                <DynamicFieldsSet
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors}
+                    name='options'
+                    value={values.options}
+                    fields={data.form}
                 />
               </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(
-                    touched.gatewayMethod && errors.gatewayMethod
-                  )}
-                  fullWidth
-                  helperText={touched.gatewayMethod && errors.gatewayMethod}
-                  label="gatewayMethod"
-                  name="gatewayMethod"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  select
-                  size="small"
-                  value={values.gatewayMethod}
-                  variant="outlined"
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {gatewayMethod.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.merchant && errors.merchant)}
-                  fullWidth
-                  helperText={touched.merchant && errors.merchant}
-                  label="merchant"
-                  name="merchant"
-                  onBlur={handleBlur}
-                  select
-                  size="small"
-                  value={values.merchant}
-                  variant="outlined"
-                  onChange={(e, f) => {
-                    handleChange(e, f);
-                    values.account = "";
-                    getAccounts(f.props.value);
-                  }}
-                >
-                  <MenuItem key={-1} value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {merchantList.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              {values.merchant ?
-                <Grid item xs={12}>
-                <TextField
-                  error={Boolean(touched.account && errors.account)}
-                  fullWidth
-                  helperText={touched.account && errors.account}
-                  label="account"
-                  name="account"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  select
-                  size="small"
-                  value={values.account}
-                  variant="outlined"
-                >
-                  <MenuItem value={""}>
-                    {t("Select value")}
-                  </MenuItem>
-                  {accountList.items.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              :
-              <></>
-              }
 
               <Grid item xs={12}>
                 <Box sx={{ mt: 2 }}>
@@ -281,4 +194,4 @@ const UpdateBankForm = (props) => {
   );
 };
 
-export default UpdateBankForm;
+export default UpdateTerminalForm;

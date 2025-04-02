@@ -40,7 +40,7 @@ const BankId = () => {
         .get(`${app.api}/terminal/${id}`)
         .then((response) => response.data);
       if (mounted.current) {
-        setListData(response);
+        setListData(response.data);
       }
     } catch (err) {
       console.error(err);

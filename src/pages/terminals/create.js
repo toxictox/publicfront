@@ -20,7 +20,7 @@ const UserIdUpdate = () => {
         .post(`${app.api}/terminal`, { ...values })
         .then((response) => {
           toast.success(t("Success update"));
-          navigate(`/terminals/id/${response.data.id}`);
+          navigate(`/terminals/id/${response.data.data.id}`);
         });
     } catch (err) {
       toast.error(err.response.data.message);

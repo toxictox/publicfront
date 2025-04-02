@@ -7,6 +7,7 @@ const DynamicFieldsSet = ({fields, value, name, ...props}) => {
         {fields.length !== 0
         ? fields.map((item) => (
             <DynamicField
+                key={item.name}
                 value={value[item.name]}
                 label={item.label}
                 name={`${name}.${item.name}`}
