@@ -107,6 +107,7 @@ const text = {
   'Roles List': 'Role list',
   'Role Item Create': 'Creating a role',
   'Role Item Update': 'Role update',
+  'Search by email': 'Search by email',
 
   'Terminals List': 'Terminal list',
   'Terminals Item Id': 'Terminal info',

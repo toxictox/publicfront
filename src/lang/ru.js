@@ -47,7 +47,7 @@ const menu = {
   'Sanctions List': 'Санкционные списки',
   'Financial monitoring': 'Финансовый мониторинг',
   Rules: 'Правила',
-  'Violations': 'Нарушения'
+  Violations: 'Нарушения'
 };
 
 const text = {
@@ -58,7 +58,8 @@ const text = {
   gatewayId: 'ID гейта',
   target: 'Цель',
   cronExpression: 'Выражение крон',
-  'An error occurred during creating cron job. Please try again later.': 'Возникла ошибка во время создании крон задания',
+  'An error occurred during creating cron job. Please try again later.':
+    'Возникла ошибка во время создании крон задания',
   'Having an account': 'Уже есть аккаунт',
   'Reset account password': 'Восстановить доступ',
   'Success update': 'Запись обновлена',
@@ -67,7 +68,7 @@ const text = {
   'Success registration': 'Вы успешно зарегистрированы',
   'Dashboard menu': 'Главная',
   action: 'Действие',
-  'reportType': 'Тип отчета',
+  reportType: 'Тип отчета',
   'Success deleted': 'Запись удалена',
   'Reset title': 'Восстановление пароля',
   'Success recovery send token': 'Инструкция по была отправлена на email',
@@ -96,8 +97,8 @@ const text = {
   'Role Item Create': 'Создание роли',
   'Role Item Update': 'Обновление роли',
   Confirm: 'Вы подтверждаете действие ?',
-  fileUploaded:'Файл успешно загружен',
-  fileUploadError:'Ошибка загрузки файла',
+  fileUploaded: 'Файл успешно загружен',
+  fileUploadError: 'Ошибка загрузки файла',
   'Terminals List': 'Список терминалов',
   'Terminals Item Id': 'Информация о терминале',
   'Terminals Model Create': 'Создание нового терминала',
@@ -210,6 +211,7 @@ const text = {
   'Day Transactions Debit': 'Сумма погашений за сегодня',
   'Month Transactions Credit': 'Сумма выдачи за месяц',
   'Month Transactions Debit': 'Сумма погашений за месяц',
+  'Search by email': 'Поиск по email',
 
   reconciliationId: 'ИД сверки',
   reconciliationJobName: 'Тип Сверки',
@@ -345,8 +347,8 @@ const text = {
   'Send to Bank': 'Отправить в банк',
   'Violation List': 'Список нарушений',
   'Transaction prefix': 'Префикс транзакции',
-  'startDate': 'Дата и время начала периода',
-  'endDate': 'Дата и время конца периода',
+  startDate: 'Дата и время начала периода',
+  endDate: 'Дата и время конца периода',
   infoTranid:
     'Если в поле "Префикс транзакции" выбран вариант,  то при вводе "ID транзакции" следует добавить номер транзакции без префикса "kassa24" или "qiwi". Если префикс транзакции не указан, поиск будет осуществляться по полному совпадению с полным значением "ID транзакции".',
   'limit exceeded': 'Превышен лимит на создание отчета'
@@ -399,12 +401,12 @@ const fields = {
   'Comment show': 'Комментарий',
   Loading: 'Загрузка',
   'Upload file': 'Загрузить файл',
-  'rows_per_page': 'Количество записей на страницу',
-  'from': 'из',
-  'to': 'по',
-  'count': 'количество',
-  'greater_than': 'больше чем',
-  'page': 'страница',
+  rows_per_page: 'Количество записей на страницу',
+  from: 'из',
+  to: 'по',
+  count: 'количество',
+  greater_than: 'больше чем',
+  page: 'страница',
   'Upload manual giveout file': 'Импорт с файла',
   'File upload': 'Файл успешно загружен',
   'Upload Files': 'Загрузка файла',
@@ -479,20 +481,20 @@ const fields = {
   knownHolders: 'Держатели карты',
   documentRef: 'Номер документа',
   filterMerchants: 'Мерчанты',
-  merchantName: "Имя мерчанта",
-  actions: "Действия",
-  manual_giveout_user_created_email: "Пользователь, создавший ручную выдачу",
+  merchantName: 'Имя мерчанта',
+  actions: 'Действия',
+  manual_giveout_user_created_email: 'Пользователь, создавший ручную выдачу',
   user: 'Пользователь',
   'Bank Deposit History': 'История банковских депозитов',
   filterTransactionTypes: 'Типы транзакций',
   critical: 'Важность',
   Enabled: 'Включено',
-  Accounts: "Счета",
-  Invoice: "Чек",
-  'Cron Jobs': "Крон задачи",
-  'Merchant Accounts': "Счета партнера",
+  Accounts: 'Счета',
+  Invoice: 'Чек',
+  'Cron Jobs': 'Крон задачи',
+  'Merchant Accounts': 'Счета партнера',
   Balance: 'Баланс',
-  overdraftLimit: "Лимит овердрафта",
+  overdraftLimit: 'Лимит овердрафта',
   default: 'Основной',
   'Create account': 'Создать счет',
   Disabled: 'Отключено',
@@ -536,32 +538,32 @@ const fields = {
   'Parsing settings': 'Парсинг',
   'Reconciliation settings Item': 'Настройки',
   'Transaction confirmations': 'Справки по транзакциям',
-  'date': 'Дата',
-  'confirmation': 'Справка',
-  'loading': 'Загрузка'
+  date: 'Дата',
+  confirmation: 'Справка',
+  loading: 'Загрузка'
 };
 
 const transaction_confirmation = {
-  status:  {
-    'new': 'В очереди',
-    'generating': 'Генерируется',
-    'generated': 'Сгенерирован, ожидает архивации',
-    'compressing': 'Архивируется',
-    'ready': 'Готов',
-    'empty': 'Транзакции не найдены',
+  status: {
+    new: 'В очереди',
+    generating: 'Генерируется',
+    generated: 'Сгенерирован, ожидает архивации',
+    compressing: 'Архивируется',
+    ready: 'Готов',
+    empty: 'Транзакции не найдены'
   },
-  'create_from_file': 'Создать из csv файла',
+  create_from_file: 'Создать из csv файла',
   file_example: 'Пример содержимого файла'
 };
 
 const report = {
   status: {
-    '1': 'В очереди',
-    '2': 'Создается',
-    '3': 'Готов',
-    '4': 'Ошибка'
+    1: 'В очереди',
+    2: 'Создается',
+    3: 'Готов',
+    4: 'Ошибка'
   }
-}
+};
 
 const server = {
   'Token error': 'Неверный ключ',
