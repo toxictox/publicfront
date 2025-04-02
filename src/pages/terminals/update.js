@@ -7,11 +7,11 @@ import useSettings from "@hooks/useSettings";
 import axios from "@lib/axios";
 import { app } from "@root/config";
 import { useTranslation } from "react-i18next";
-import UpdateForm from "@comp/terminals/UpdateBankForm";
+import UpdateForm from "@comp/terminals/UpdateTerminalForm";
 import toast from "react-hot-toast";
 import { BackButton } from "@comp/core/buttons";
 
-const BankIdUpdate = () => {
+const TerminalUpdate = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { id } = useParams();
@@ -78,4 +78,4 @@ const BankIdUpdate = () => {
   );
 };
 
-export default BankIdUpdate;
+export default TerminalUpdate;

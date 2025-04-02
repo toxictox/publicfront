@@ -107,7 +107,7 @@ const UpdateForm = (props) => {
                   error={Boolean(touched.name && errors.name)}
                   fullWidth
                   helperText={touched.name && errors.name}
-                  label={t("name")}
+                  label={t("terminal_name")}
                   margin="normal"
                   name="name"
                   onBlur={handleBlur}
@@ -151,7 +151,7 @@ const UpdateForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+            {/*  <Grid item xs={12}>
                 <TextField
                   error={Boolean(touched.tid && errors.tid)}
                   fullWidth
@@ -167,7 +167,7 @@ const UpdateForm = (props) => {
                   size="small"
                   sx={{ m: 0 }}
                 />
-              </Grid>
+              </Grid>*/}
 
               <Grid item xs={12}>
                 <TextField
@@ -176,7 +176,7 @@ const UpdateForm = (props) => {
                   )}
                   fullWidth
                   helperText={touched.gatewayMethod && errors.gatewayMethod}
-                  label="gatewayMethod"
+                  label={t("gatewayMethod")}
                   name="gatewayMethod"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -201,7 +201,7 @@ const UpdateForm = (props) => {
                   error={Boolean(touched.merchant && errors.merchant)}
                   fullWidth
                   helperText={touched.merchant && errors.merchant}
-                  label="merchant"
+                  label={t("merchant")}
                   name="merchant"
                   onBlur={handleBlur}
                   select
@@ -231,7 +231,7 @@ const UpdateForm = (props) => {
                   error={Boolean(touched.account && errors.account)}
                   fullWidth
                   helperText={touched.account && errors.account}
-                  label="account"
+                  label={t('terminal_account')}
                   name="account"
                   onChange={handleChange}
                   onBlur={handleBlur}
