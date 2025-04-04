@@ -68,7 +68,9 @@ const UpdateTerminalForm = (props) => {
         account: data.data.account,
         showOnDashboard: data.data.showOnDashboard,
         dashboardLabel: data.data.dashboardLabel,
-        options: data.settings
+        options: typeof data.settings === 'object' && data.settings !== null && !Array.isArray(data.settings)
+            ? data.settings
+            : {}
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required(t("required")),
@@ -101,6 +103,7 @@ const UpdateTerminalForm = (props) => {
         isSubmitting,
         touched,
         values,
+        setFieldValue
       }) => (
         <form noValidate onSubmit={handleSubmit} {...props}>
           <Box m={2}>
@@ -158,7 +161,17 @@ const UpdateTerminalForm = (props) => {
               <Grid item xs={12}>
                 <Divider />
                 <DynamicFieldsSet
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const name = e.target.name;
+                      const value = e.target.value;
+
+                      if (name.startsWith('options.')) {
+                        const fieldKey = name.split('.')[1];
+                        setFieldValue(`options.${fieldKey}`, value);
+                      } else {
+                        handleChange(e);
+                      }
+                    }}
                     onBlur={handleBlur}
                     errors={errors}
                     name='options'

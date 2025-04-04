@@ -34,14 +34,21 @@ const TerminalUpdate = () => {
 
   const handleSubmit = async (values) => {
     try {
+      const requestData = {
+        ...values,
+        options: typeof values.options === 'object' && !Array.isArray(values.options)
+            ? values.options
+            : {}
+      };
+
       await axios
-        .put(`${app.api}/terminal/${id}`, { ...values })
-        .then((response) => {
-          toast.success(t("Success update"));
-          navigate(`/terminals/id/${id}`);
-        });
+          .put(`${app.api}/terminal/${id}`, requestData)
+          .then((response) => {
+            toast.success(t("Success update"));
+            navigate(`/terminals/id/${id}`);
+          });
     } catch (err) {
-      toast.error(err.response.data.message);
+      toast.error(err.response?.data?.message || "Ошибка обновления");
     }
   };
 
