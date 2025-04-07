@@ -22,6 +22,10 @@ const MerchantTokenUpdate = Loadable(
   lazy(() => import('@pages/merchant/_token/update'))
 );
 
+const MerchantSettingsUpdate = Loadable(
+    lazy(() => import('@pages/merchant/_settings/update'))
+);
+
 const MerchantDepositUpdate = Loadable(
   lazy(() => import('@pages/merchant/_deposit/update'))
 );
@@ -65,7 +69,6 @@ export const merchantsRoute = {
         </ACLGuard>
       ),
     },
-
     {
       path: 'token/:id',
       element: (
@@ -122,6 +125,20 @@ export const merchantsRoute = {
       path: ':id/invoice/',
       element: (
         <MerchantInvoicePreviewPage />
+      ),
+    },
+    {
+      path: ':id/settings',
+      element: (
+          <ACLGuard can={'update'}>
+            <MerchantSettingsUpdate />
+          </ACLGuard>
+      ),
+    },
+    {
+      path: ':id/settings',
+      element: (
+          <MerchantOverdraftIndex />
       ),
     },
   ],

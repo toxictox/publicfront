@@ -135,6 +135,11 @@ const MerchantId = () => {
                         callback: () => navigate(`/merchants/token/${id}`),
                         access: getAccess("merchants", "getMerchantKey"),
                       },
+                      {
+                        title: t("settings"),
+                        callback: () => navigate(`/merchants/${id}/settings`),
+                        access: getAccess("merchants", "update"),
+                      },
                     ]}
                   />
                 }

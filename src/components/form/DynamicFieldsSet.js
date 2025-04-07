@@ -2,37 +2,35 @@
 
 import React from 'react';
 import DynamicField from './field/DynamicField';
+import {useTranslation} from "react-i18next";
 
 const DynamicFieldsSet = ({fields, value, name, onChange, ...props}) => {
+    const { t } = useTranslation();
     // Проверяем и преобразуем value, если это массив
     const handleFieldChange = (e) => {
-        // Получаем оригинальное событие
-        const { name: fieldName, value: fieldValue } = e.target;
+        const { name: fieldName, type } = e.target;
+        const fieldKey = fieldName.split('.')[1];
 
-        // Проверяем, относится ли поле к нашему набору options
-        if (fieldName.startsWith(`${name}.`)) {
-            // Получаем имя поля без префикса options.
-            const fieldKey = fieldName.split('.')[1];
+        let fieldValue;
 
-            // Создаем модифицированное событие
-            const modifiedEvent = {
-                target: {
-                    name: fieldName,
-                    value: fieldValue,
-                    // Добавляем метаданные, чтобы Formik мог обрабатывать массив как объект
-                    dataset: {
-                        isOptionsField: true,
-                        fieldKey: fieldKey
-                    }
-                }
-            };
-
-            // Вызываем обработчик с модифицированным событием
-            onChange(modifiedEvent);
+        if (type === 'checkbox') {
+            fieldValue = e.target.checked;
         } else {
-            // Для других полей просто передаем событие
-            onChange(e);
+            fieldValue = e.target.value;
         }
+
+        const modifiedEvent = {
+            target: {
+                name: fieldName,
+                value: fieldValue,
+                dataset: {
+                    isOptionsField: true,
+                    fieldKey: fieldKey
+                }
+            }
+        };
+
+        onChange(modifiedEvent);
     };
 
     return (
@@ -49,7 +47,7 @@ const DynamicFieldsSet = ({fields, value, name, onChange, ...props}) => {
                         <DynamicField
                             key={item.name}
                             value={fieldValue}
-                            label={item.label}
+                            label={t(item.label)}
                             name={`${name}.${item.name}`}
                             type={item.type}
                             options={item.options}
