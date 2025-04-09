@@ -214,6 +214,7 @@ const text = {
   'Search by email': 'Поиск по email',
 
   reconciliationId: 'ИД сверки',
+  Maintenance: 'Техническое обслуживание',
   reconciliationJobName: 'Тип Сверки',
   createOn: 'Дата',
   merchantId: 'Мерчант',
@@ -238,7 +239,7 @@ const text = {
   'Invitation link': 'Ссылка для приглашения пользователей',
 
   'Success tab': 'Успешные',
-  Success: 'Успешнно',
+  Success: 'Успешно',
   'Failed tab': 'Отклоненные',
   'Conversion tab': 'Конверсия',
 
@@ -469,6 +470,7 @@ const fields = {
   'Merchant Account Cron Jobs': 'Крон задачи счетов партнера',
   accounts: 'Счета',
   enabled: 'Включен',
+  off: 'Выключен',
   cronExpression: 'Выражение крон',
   'Create cron job': 'Создать задачу крон',
   balanceTimeAdjustment: 'Сдвиг во времени',
@@ -509,6 +511,7 @@ const fields = {
   transactionTypes: 'Типы транзакций',
   merchants: 'Мерчанты',
   'Merchants filter enabled': 'Фильтр по мерчантам включен',
+  'Merchants filter': 'Фильтр по мерчантам',
   'Merchants filter disabled': 'Фильтр по мерчантам выключен',
   'Transaction types filter enabled': 'Фильтр по типам транзакций включен',
   'Transaction types filter disabled': 'Фильтр по типам транзакций выключен',
@@ -537,6 +540,8 @@ const fields = {
   false: 'Нет',
   parsingSettings: 'Настройки',
   'Reconciliation settings': 'Настройки',
+  'Maintenance Create': 'Создание',
+  'Maintenance Update': 'Редактирование',
   'Create reconciliation settings': 'Создать настройки',
   'Edit reconciliation settings': 'Редактировать настройки',
   'Main settings': 'Основные',

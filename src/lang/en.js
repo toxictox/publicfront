@@ -39,7 +39,7 @@ const menu = {
   'Bin menu': 'Bin',
   'Reconciliation menu': 'Reconciliation',
   'Manual giveout menu': 'Manual giveout',
-  'Manual giveout list': 'Manual giveout list',
+  'Manual giveout list': 'Manual giveout list'
 };
 
 const text = {
@@ -68,8 +68,8 @@ const text = {
   Confirm: 'You confirm the action ?',
   'File upload': 'File uploaded successfully',
   'HCB BALANCE': 'HomeCreditBank corporate account balance',
-  fileUploaded:'File uploaded successfully',
-  fileUploadError:'Error uploading file',
+  fileUploaded: 'File uploaded successfully',
+  fileUploadError: 'Error uploading file',
   nonExistent: 'Non-existent in software',
   missing: 'Missing in report',
   amount: 'Amount',
@@ -83,6 +83,7 @@ const text = {
   validation_error: 'Validation Error',
   processing: 'Processing',
   processed: 'Processed',
+  merchants: 'Merchants',
   'Upload Files': 'Uploading a file',
   'Reconciliation type': 'Reconciliation type',
   'Create New Statement': 'Create statement',
@@ -99,16 +100,18 @@ const text = {
   'Transactions List': 'Transactions list',
   'Transactions Confirmation': 'Transactions Confirmation',
   'Transactions Item': 'Transaction info',
-
+  enabled: 'On',
+  off: 'Off',
   'Users List': 'Users list',
   'User Item Update': 'User update',
   'User Item Create': 'Creating a user',
-
+  'Maintenance Create': 'Create',
+  'Maintenance Update': 'Update',
   'Roles List': 'Role list',
   'Role Item Create': 'Creating a role',
   'Role Item Update': 'Role update',
   'Search by email': 'Search by email',
-
+  Maintenance: 'Maintenance',
   'Terminals List': 'Terminal list',
   'Terminals Item Id': 'Terminal info',
   'Terminals Model Create': 'Creating new terminal',
@@ -148,6 +151,7 @@ const text = {
   'Transactions Logs Item': 'Transaction logs',
   'Reconciliation List': 'Reconciliation',
   miss_in_bnk: 'Missing from the bank',
+  actions: 'Actions',
   miss_in_pt: 'Missing from the pytech',
   trn_not_registered: 'Not registered',
   miss_in_bnk2: 'Attention!!!',
@@ -255,6 +259,7 @@ const text = {
   invalidBankAccountFormat: ' Invalid format',
   iinError: 'Iin consists from 12 digits',
   'Update Status': 'Update Status',
+  'Merchants filter': 'Merchants filter',
   max2digits: 'Beneficiary code consists from 2 digits',
   'Send to Bank': 'Send to Bank'
 };

@@ -24,6 +24,7 @@ import { usersRoute } from '@root/routes/usersRoute';
 import { lazy } from 'react';
 import { blog, dashboard, docs } from './developRoutes';
 import { finMonRoute } from './finMonRoute';
+import { maintenanceRoute } from './maintenanceRoute';
 import { manualGiveoutRoute } from './manualGiveoutRoute';
 import { transitAccountRoute } from './transitAccount';
 
@@ -71,7 +72,8 @@ const routes = [
       notFoundRoute,
       finMonRoute,
       manualGiveoutRoute,
-      transitAccountRoute
+      transitAccountRoute,
+      maintenanceRoute
     ]
   }
 ];

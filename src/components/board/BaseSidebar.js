@@ -16,19 +16,23 @@ import {
   AccountBalance,
   AppBlocking,
   BlurLinear,
+  Build,
   CenterFocusWeak,
   Code,
   DescriptionOutlined,
-  Dns, DockTwoTone, DocumentScanner, FileCopy, FilePresent,
+  Dns,
+  FileCopy,
+  FilePresent,
   GridOn,
   Group,
   Home,
   LinearScale,
   Lock,
-  LockOpen, PermDataSetting,
+  LockOpen,
   PriceCheck,
   Receipt,
-  Security, Settings,
+  Security,
+  Settings,
   StackedLineChart,
   Storefront,
   Timeline,
@@ -47,7 +51,7 @@ import './styles/sidebar.scss';
 
 const BaseSidebar = (props) => {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, getAccess } = useAuth();
   const [merchId, setMerchId] = useState(
     localStorage.getItem('merchId') !== null
       ? localStorage.getItem('merchId')
@@ -312,6 +316,12 @@ const BaseSidebar = (props) => {
               active: getActiveStatus('blockTransitionAccount')
             }
           ]
+        },
+        {
+          title: t('Maintenance'),
+          path: '/maintenance',
+          icon: <Build fontSize="small" />,
+          active: getAccess('maintenance', 'view')
         }
       ]
     }
@@ -353,7 +363,6 @@ const BaseSidebar = (props) => {
         console.error(e);
       });
   };
- 
 
   useEffect(() => {
     const intervalCall = setInterval(() => {
