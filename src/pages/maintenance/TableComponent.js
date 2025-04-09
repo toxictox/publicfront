@@ -49,7 +49,7 @@ const TableComponent = ({
           'startDate',
           'endDate',
           'Merchants filter',
-          'actions'
+          ''
         ]}
       >
         {data?.items?.map((item) => (
