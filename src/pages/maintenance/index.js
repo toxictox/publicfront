@@ -53,17 +53,19 @@ const Maintenance = () => {
                 )
               }
             />
-            <TableComponent
-              data={data}
-              page={page}
-              count={count}
-              onPageChange={(e, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(e) => {
-                setCount(parseInt(e.target.value, 10));
-                setPage(0);
-              }}
-              onDataUpdate={(updatedData) => setData(updatedData)}
-            />
+            {data && (
+              <TableComponent
+                data={data}
+                page={page}
+                count={count}
+                onPageChange={(e, newPage) => setPage(newPage)}
+                onRowsPerPageChange={(e) => {
+                  setCount(parseInt(e.target.value, 10));
+                  setPage(0);
+                }}
+                onDataUpdate={(updatedData) => setData(updatedData)}
+              />
+            )}
           </Card>
         </Box>
       </Container>
