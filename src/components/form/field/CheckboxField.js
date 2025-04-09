@@ -14,13 +14,13 @@ const CheckboxField = ({label, value, name, handleBlur, onChange, setFieldValue}
         <FormControlLabel
           name={name}
           value={value}
-          checked={value}
           control={
             <Checkbox
               name={name}
               color="primary"
               onBlur={handleBlur}
               onChange={onChange}
+              checked={value}
             />
           }
           label={t(label)}
