@@ -1,7 +1,7 @@
-import { createContext, useEffect, useReducer } from 'react';
-import PropTypes from 'prop-types';
 import axios from '@lib/axios';
 import { app } from '@root/config';
+import PropTypes from 'prop-types';
+import { createContext, useEffect, useReducer } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -83,8 +83,7 @@ export const AuthProvider = (props) => {
                 user: {
                   ...response.data,
                   id: response.data.hash,
-                  avatar:
-                    '/static/mock-images/avatars/user.png',
+                  avatar: '/static/mock-images/avatars/user.png',
                   name: `${response.data.firstName} ${response.data.lastName}`,
                   plan: 'Premium'
                 }
@@ -118,22 +117,30 @@ export const AuthProvider = (props) => {
 
   const login = async (email, password) => {
     await axios
-      .post(`${app.api}/login_check`, {
-        email: email,
-        password: password
-      }, {transformRequest: (data, headers) => {
-        delete headers.common.Authorization;
+      .post(
+        `${app.api}/login_check`,
+        {
+          email: email,
+          password: password
+        },
+        {
+          transformRequest: (data, headers) => {
+            delete headers.common.Authorization;
 
-        return JSON.stringify(data);
-      },
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+            return JSON.stringify(data);
+          },
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
       .then((response) => {
+        const merchantId = localStorage.getItem('merchId');
         localStorage.setItem('accessToken', response.data.token);
         localStorage.setItem('accessId', response.data.user.hash); //response.data.token
-        localStorage.setItem('merchId', response.data.user.merchantId);
+        merchantId
+          ? localStorage.setItem('merchId', merchantId)
+          : localStorage.setItem('merchId', response.data.user.merchantId);
         window.location.reload();
       })
       .catch((err) => {
