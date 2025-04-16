@@ -9,8 +9,9 @@ axios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.clear();
-      window.location.reload();
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('accessId');
+      window.location.replace('/');
     }
     return Promise.reject(error);
   }
