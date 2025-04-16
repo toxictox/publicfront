@@ -49,6 +49,7 @@ const TransactionListTable = (props) => {
                 'clientId',
                 'tranType',
                 'pan',
+                'phoneNumber',
                 'amount',
                 'fee',
                 'gateway',
@@ -103,6 +104,9 @@ const TransactionListTable = (props) => {
                     <TableCell className="static-table__table-cell">
                       {order.pan}
                     </TableCell>
+                      <TableCell className="static-table__table-cell">
+                       {order.phoneNumber}
+                      </TableCell>
                     <TableCell className="static-table__table-cell">
                       {order.amount}
                     </TableCell>
