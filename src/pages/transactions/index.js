@@ -57,7 +57,6 @@ const TransactionsList = () => {
         )
         .then((response) => response.data)
         .finally(() => [setLoading(false)]);
-        ;
 
       if (mounted.current) {
         setListData(response);
