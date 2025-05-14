@@ -19,7 +19,7 @@ export const UseMerchantFormData = () => {
         setDesignId(res.data.data);
       });
 
-      await axios.get(`${app.api}/company`).then((res) => {
+      await axios.get(`${app.api}/filter/company`).then((res) => {
         setCompanies(res.data);
       });
     };

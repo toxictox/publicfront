@@ -126,6 +126,11 @@ const MerchantId = () => {
                         access: getAccess("merchants", "depositLimitEdit"),
                       },
                       {
+                        title: t("Corporate cards"),
+                        callback: () => navigate(`/merchants/${id}/corporate_card/`),
+                        access: getAccess("merchants", "depositLimitEdit"),
+                      },
+                      {
                         title: t("Overdrafts"),
                         callback: () => navigate(`/merchants/${id}/overdraft`),
                         access: getAccess("merchants", "depositLimitEdit"),
@@ -149,7 +154,12 @@ const MerchantId = () => {
                 {Object.keys(dataList).map(function (i, index) {
                   return (
                     <TableRow key={i}>
-                      <TableCell>{t(i)}</TableCell>
+                      <TableCell>
+                        {i === "name"
+                          ? t('merchantName')
+                          : t(i)
+                        }
+                      </TableCell>
                       {i === "status" ? (
                         <TableCell>
                           {dataList[i] === true ? (
@@ -168,7 +178,7 @@ const MerchantId = () => {
                         </TableCell>
                       ) : (
                         <TableCell>
-                          {i === "createOn" || i === "editOn"
+                          {i === "createOn" || i === "editOn" || (i === "contractDate" && dataList[i] !== null)
                             ? toLocaleDateTime(dataList[i])
                             : dataList[i]}
                         </TableCell>

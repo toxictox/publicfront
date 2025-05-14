@@ -7,6 +7,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 const CreateAndUpdateMerchantForm = (data) => {
   const {
@@ -26,23 +27,24 @@ const CreateAndUpdateMerchantForm = (data) => {
   } = data;
 
   const { t } = useTranslation();
+  
   return (
-    <form noValidate onSubmit={handleSubmit} {...externalProps}>
+    <form noValidate onSubmit={handleSubmit} {...externalProps} >
       <Box m={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              error={Boolean(touched.company_id && errors.company_id)}
+              error={Boolean(touched.company && errors.company)}
               fullWidth
-              helperText={touched.company_id && errors.company_id}
-              label={`${t('Company')} *`}
+              helperText={touched.company && errors.company}
+              label={`${t('company')} *`}
               margin="normal"
-              name="company_id"
+              name="company"
               onBlur={handleBlur}
               onChange={handleChange}
               type="text"
               select
-              value={values.company_id}
+              value={values.company}
               variant="outlined"
               size="small"
               sx={{ m: 0 }}
@@ -57,13 +59,85 @@ const CreateAndUpdateMerchantForm = (data) => {
               ))}
             </TextField>
           </Grid>
+          {values.company.length === 0 && (
+            <>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched?.newCompany?.name && errors?.newCompany?.name)}
+                  fullWidth
+                  helperText={touched?.newCompany?.name && errors?.newCompany?.name}
+                  label={`${t('companyName')} *`}
+                  margin="normal"
+                  name="newCompany.name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values?.newCompany?.name}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched?.newCompany?.companyEmail && errors?.newCompany?.companyEmail)}
+                  fullWidth
+                  helperText={touched?.newCompany?.companyEmail && errors?.newCompany?.companyEmail}
+                  label={`${t('companyEmail')}`}
+                  margin="normal"
+                  name="newCompany.companyEmail"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values?.newCompany?.companyEmail}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched?.newCompany?.iin && errors?.newCompany?.iin)}
+                  fullWidth
+                  helperText={touched?.newCompany?.iin && errors?.newCompany?.iin}
+                  label={`${t('companyIin')}`}
+                  margin="normal"
+                  name="newCompany.iin"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values?.newCompany?.iin}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={Boolean(touched?.newCompany?.bankAccountNumber && errors?.newCompany?.bankAccountNumber)}
+                  fullWidth
+                  helperText={touched?.newCompany?.bankAccountNumber && errors?.newCompany?.bankAccountNumber}
+                  label={`${t('companyBankAccountNumber')}`}
+                  margin="normal"
+                  name="newCompany.bankAccountNumber"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="text"
+                  value={values?.newCompany?.bankAccountNumber}
+                  variant="outlined"
+                  size="small"
+                  sx={{ m: 0 }}
+                />
+              </Grid>
+            </>
+          )}
           <Grid item xs={12}>
             <TextField
               autoFocus
               error={Boolean(touched.name && errors.name)}
               fullWidth
               helperText={touched.name && errors.name}
-              label={`${t('name')} *`}
+              label={`${t('merchantName')} *`}
               margin="normal"
               name="name"
               onBlur={handleBlur}
@@ -151,17 +225,17 @@ const CreateAndUpdateMerchantForm = (data) => {
 
           <Grid item xs={12}>
             <TextField
-              error={Boolean(touched.timezoneId && errors.timezoneId)}
+              error={Boolean(touched.timezone && errors.timezone)}
               fullWidth
-              helperText={touched.timezoneId && errors.timezoneId}
-              label={`${t('timezoneId')} *`}
+              helperText={touched.timezone && errors.timezone}
+              label={`${t('timezone')} *`}
               margin="normal"
-              name="timezoneId"
+              name="timezone"
               onBlur={handleBlur}
               onChange={handleChange}
               type="text"
               select
-              value={values.timezoneId}
+              value={values.timezone}
               variant="outlined"
               size="small"
               sx={{ m: 0 }}
@@ -205,12 +279,32 @@ const CreateAndUpdateMerchantForm = (data) => {
             </TextField>
           </Grid>
 
+          {values.design.length === 0 && (
+            <Grid item xs={12}>
+              <TextField
+                error={Boolean(touched?.newDesign?.name && errors?.newDesign?.name)}
+                fullWidth
+                helperText={touched?.newDesign?.name && errors?.newDesign?.name}
+                label={`${t('designName')} *`}
+                margin="normal"
+                name="newDesign.name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="text"
+                value={values?.newDesign?.name}
+                variant="outlined"
+                size="small"
+                sx={{ m: 0 }}
+              />
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <TextField
               error={Boolean(touched.type && errors.type)}
               fullWidth
               helperText={touched.type && errors.type}
-              label={`${t('type_operation')} *`}
+              label={`${t('type_operation')}`}
               margin="normal"
               name="type"
               onBlur={handleBlur}
@@ -235,10 +329,10 @@ const CreateAndUpdateMerchantForm = (data) => {
 
           <Grid item xs={12}>
             <TextField
-              error={Boolean(touched.design && errors.design)}
+              error={Boolean(touched.notificationChannel && errors.notificationChannel)}
               fullWidth
-              helperText={touched.design && errors.design}
-              label={`${t('notificationChannel')} *`}
+              helperText={touched.notificationChannel && errors.notificationChannel}
+              label={`${t('notificationChannel')}`}
               margin="normal"
               name="notificationChannel"
               onBlur={handleBlur}
@@ -261,46 +355,21 @@ const CreateAndUpdateMerchantForm = (data) => {
             </TextField>
           </Grid>
 
-          {values.notificationChannel ? (
-            <Grid item xs={12}>
-              <TextField
-                autoFocus
-                error={Boolean(
-                  touched[`сompany_${values.notificationChannel}`] &&
-                    errors[`сompany_${values.notificationChannel}`]
-                )}
-                fullWidth
-                helperText={
-                  touched[`сompany_${values.notificationChannel}`] &&
-                  errors[`сompany_${values.notificationChannel}`]
-                }
-                label={t(`field_${values.notificationChannel}`) + ' *'}
-                margin="normal"
-                name={`сompany_${values.notificationChannel}`}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="text"
-                value={values[`сompany_${values.notificationChannel}`]}
-                variant="outlined"
-                size="small"
-                sx={{ m: 0 }}
-              />
-            </Grid>
-          ) : null}
-
           <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>
               <Button
                 color="primary"
+                // disabled={isSubmitting || !Boolean(Object.keys(errors).length === 0)}
                 disabled={isSubmitting}
                 type="submit"
                 variant="contained"
                 size="large"
               >
-                {t('Update button')}
+                {values.id ? t('Update') : t('Create')}
               </Button>
             </Box>
           </Grid>
+
         </Grid>
       </Box>
 

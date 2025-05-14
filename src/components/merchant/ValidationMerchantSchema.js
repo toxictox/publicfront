@@ -8,17 +8,32 @@ export const getValidationMerchantSchema = (t) => {
     percentFee: Yup.string().matches(fields.decimal, t('field float')),
     minAmountFee: Yup.number().typeError(t('field number')),
     fixAmountFee: Yup.number(),
-    businessName: Yup.string(),
-    contractNumber: Yup.string(),
+    businessName: Yup.string().notRequired(),
+    contractNumber: Yup.string().notRequired(),
     contractDate: Yup.string(),
-    timezoneId: Yup.string().max(255).required(t('required')),
-    design: Yup.number().max(40).required(t('required')),
-    type: Yup.string().required(t('required')),
-    notificationChannel: Yup.string().required(t('required')),
-    company_id: Yup.number().max(255).required(t('required')),
-    company_email: Yup.string()
-      .email(t('email'))
-      .max(255)
-      .required(t('required'))
+    timezone: Yup.string().max(255).required(t('required')),
+    design: Yup.number().when("newDesign.name", {
+      is: undefined,
+      then: Yup.number().max(40).required(t('required')),
+      otherwise: Yup.number().notRequired(),
+    }),
+    type: Yup.string().notRequired(),
+    notificationChannel: Yup.string().notRequired(),
+    company: Yup.number().when("newCompany.name", {
+      is: undefined,
+      then: Yup.number().required(t('required')),
+      otherwise: Yup.number().notRequired(),
+    }),
+    newCompany: Yup.object().shape({
+      // name: Yup.string()
+      //   .when("$company", {
+      //     is: (company) => !company || company === '',
+      //     then: Yup.string().required(t('required')),
+      //     otherwise: Yup.string().notRequired(),
+      //   }),
+      companyEmail: Yup.string().notRequired(),
+      iin: Yup.string().notRequired(),
+      bankAccountNumber: Yup.string().notRequired()
+    }),
   });
 };
