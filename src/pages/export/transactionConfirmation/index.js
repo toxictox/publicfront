@@ -13,7 +13,7 @@ import TransactionConfirmationModal from '@comp/transaction/TransactionConfirmat
 import MoreMenu from '@comp/MoreMenu';
 import toast from 'react-hot-toast';
 import useAuth from '@hooks/useAuth';
-import { AddCircle } from '@material-ui/icons';
+import { AddCircle, Cancel } from '@material-ui/icons';
 import {
   Download
 } from '@material-ui/icons';
@@ -152,6 +152,11 @@ const TansactionConfirmationList = () => {
       ;
   };
 
+  const cancelFile = async (id) => {
+    await axios.post(`${app.api}/merchant/${merchId}/document/transaction/confirmation/${id}/cancel`)
+    .then(getItems);
+  }
+
   const getItems = useCallback(async () => {
     await axios
       .get(`${app.api}/merchant/${merchId}/document/transaction/confirmation/`,
@@ -253,7 +258,7 @@ const TansactionConfirmationList = () => {
                         <TableRow hover key={item.id}>
                           <TableCell>{item.date}</TableCell>
                           <TableCell>
-                            {item.status == 'ready' ?
+                            {item.status == 'ready' &&
                               <>
                                 {downloadList[item.id] == undefined ?
                                   <Button
@@ -268,8 +273,21 @@ const TansactionConfirmationList = () => {
                                   <CircularProgress variant="determinate" value={downloadList[item.id]} />
                                 }
                               </>
+                            }
+                            {item.status == 'canceled' ?
+                                <>
+                                  {t(`transaction_confirmation.status.${item.status}`, item.status)}&nbsp;
+                                </>
                               :
                               <>
+                                <Button
+                                  variant="text"
+                                  size="small"
+                                  onClick={() => cancelFile(item.id)}
+                                  endIcon={<Cancel />}
+                                >
+                                  {t(`Cancel`)}
+                                </Button>
                                 {t(`transaction_confirmation.status.${item.status}`, item.status)}&nbsp;
                                 <LinearProgressWithLabel value={Math.floor(item.processed / item.total * 100)} />
                               </>

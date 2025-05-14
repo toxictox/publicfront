@@ -25,6 +25,7 @@ import { TableStatic } from '@comp/core/tables';
 import { red, green, blue } from '@material-ui/core/colors';
 import toast from 'react-hot-toast';
 import useMounted from '@hooks/useMounted';
+import { Cancel } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -127,6 +128,11 @@ const ExportList = () => {
 
         reader.readAsText(blob);
       });
+  };
+
+  const cancel = async (reportTaskId) => {
+    axios.post(
+      `${app.api}/report/${reportTaskId}/cancel`).then(getItems);
   };
 
   const handlePageChange = async (e, newPage) => {
@@ -256,6 +262,17 @@ const ExportList = () => {
                           :
                           <>
                             {t(`report.status.${report.status}`)}&nbsp;
+                            {(report.status == 1 || report.status == 2) &&
+                              <Button
+                                type="button"
+                                variant={'contained'}
+                                size={'small'}
+                                onClick={() => cancel(report.id)}
+                                endIcon={<Cancel />}
+                              >
+                                {t('Cancel')}
+                              </Button>
+                            }
                             {report.status == 2 &&
                               <LinearProgressWithLabel value={Math.floor(report.processed / report.total * 100)} />
                             }

@@ -8,6 +8,23 @@ import {
 const NumberField = ({label, value, name, onBlur, onChange, errors, options}) => {
     const { t } = useTranslation();
 
+    const handleChange = (e) => {
+        const value = Number(e.target.value);
+
+        const modifiedEvent = {
+            target: {
+                name: e.target.name,
+                value: value,
+                dataset: {
+                    isOptionsField: true,
+                    fieldKey: e.target.dataset.fieldKey
+                }
+            }
+        };
+
+        onChange(modifiedEvent);
+    }
+
     return (
         <TextFieldMUI
             label={t(label)}
@@ -15,7 +32,7 @@ const NumberField = ({label, value, name, onBlur, onChange, errors, options}) =>
             name={name}
             fullWidth
             onBlur={onBlur}
-            onChange={onChange}
+            onChange={handleChange}
             margin="normal"
             type="number"
             error={Boolean(errors[name])}

@@ -403,6 +403,8 @@ const fields = {
   shouldDisplayBackToSiteButton: 'Включено отображение кнопки назад на странице статуса',
   shouldSendCardExpiryInCallback: 'Включена отправка срока действия карты в колбеке партнеру',
   shouldCloseFrameDataOnAbandoned: 'Включена автоочистка устаревших фреймов для оплаты (раз в 15 мин закрытие)',
+  reportDaysLimit: 'Ограничение периода выгрузки отчета(в днях)',
+  transactionConfirmationLimit: 'Ограничение количества транзакций в одной справке',
   keyToken: 'Ключи',
   settings: 'Настройки',
   flowName: 'Название схемы',
@@ -562,7 +564,8 @@ const fields = {
   'Transaction confirmations': 'Справки по транзакциям',
   date: 'Дата',
   confirmation: 'Справка',
-  loading: 'Загрузка'
+  loading: 'Загрузка',
+  Cancel: 'Отменить'
 };
 
 const transaction_confirmation = {
@@ -572,7 +575,8 @@ const transaction_confirmation = {
     generated: 'Сгенерирован, ожидает архивации',
     compressing: 'Архивируется',
     ready: 'Готов',
-    empty: 'Транзакции не найдены'
+    empty: 'Транзакции не найдены',
+    canceled: 'Отменен'
   },
   create_from_file: 'Создать из csv файла',
   file_example: 'Пример содержимого файла'
@@ -583,7 +587,8 @@ const report = {
     1: 'В очереди',
     2: 'Создается',
     3: 'Готов',
-    4: 'Ошибка'
+    4: 'Ошибка',
+    5: 'Отменен'
   }
 };
 

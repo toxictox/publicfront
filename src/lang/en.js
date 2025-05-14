@@ -366,6 +366,16 @@ const validationForm = {
   'Error phone format': 'Phone must be in 380XXXXXXXXXXX format'
 };
 
+const report = {
+  status: {
+    1: 'In queue',
+    2: 'Processing',
+    3: 'Ready',
+    4: 'Error',
+    5: 'Canceled'
+  }
+};
+
 export const en = {
   'Forgot password': 'Forgot password',
   'Create new account': 'Create new account',
@@ -375,5 +385,6 @@ export const en = {
   ...text,
   ...validationForm,
   ...menu,
-  ...server
+  ...server,
+  ...report
 };

@@ -6,32 +6,6 @@ import {useTranslation} from "react-i18next";
 
 const DynamicFieldsSet = ({fields, value, name, onChange, ...props}) => {
     const { t } = useTranslation();
-    // Проверяем и преобразуем value, если это массив
-    const handleFieldChange = (e) => {
-        const { name: fieldName, type } = e.target;
-        const fieldKey = fieldName.split('.')[1];
-
-        let fieldValue;
-
-        if (type === 'checkbox') {
-            fieldValue = e.target.checked;
-        } else {
-            fieldValue = e.target.value;
-        }
-
-        const modifiedEvent = {
-            target: {
-                name: fieldName,
-                value: fieldValue,
-                dataset: {
-                    isOptionsField: true,
-                    fieldKey: fieldKey
-                }
-            }
-        };
-
-        onChange(modifiedEvent);
-    };
 
     return (
         <>
@@ -51,7 +25,7 @@ const DynamicFieldsSet = ({fields, value, name, onChange, ...props}) => {
                             name={`${name}.${item.name}`}
                             type={item.type}
                             options={item.options}
-                            onChange={handleFieldChange}
+                            onChange={onChange}
                             onBlur={props.onBlur}
                             errors={props.errors}
                         />
