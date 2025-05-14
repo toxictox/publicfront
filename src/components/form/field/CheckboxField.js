@@ -10,6 +10,21 @@ import {
 const CheckboxField = ({label, value, name, handleBlur, onChange, setFieldValue}) => {
     const { t } = useTranslation();
 
+    const handleChange = (e) => {
+        const modifiedEvent = {
+            target: {
+                name: e.target.name,
+                value: e.target.checked,
+                dataset: {
+                    isOptionsField: true,
+                    fieldKey: e.target.dataset.fieldKey
+                }
+            }
+        };
+
+        onChange(modifiedEvent);
+    }
+
     return (
         <FormControlLabel
           name={name}
@@ -19,7 +34,7 @@ const CheckboxField = ({label, value, name, handleBlur, onChange, setFieldValue}
               name={name}
               color="primary"
               onBlur={handleBlur}
-              onChange={onChange}
+              onChange={handleChange}
               checked={value}
             />
           }
