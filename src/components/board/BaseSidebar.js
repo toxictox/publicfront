@@ -17,6 +17,7 @@ import {
   AppBlocking,
   BlurLinear,
   Build,
+  Business,
   CenterFocusWeak,
   Code,
   DescriptionOutlined,
@@ -29,11 +30,13 @@ import {
   LinearScale,
   Lock,
   LockOpen,
+  Preview,
   PriceCheck,
   Receipt,
   Security,
   Settings,
   StackedLineChart,
+  Store,
   Storefront,
   Timeline,
   VpnLock,
@@ -181,7 +184,27 @@ const BaseSidebar = (props) => {
           title: t('Merchant menu'),
           path: '/merchants',
           icon: <Storefront fontSize="small" />,
-          active: getActiveStatus('merchants')
+          active: getActiveStatus('merchants'),
+          children: [
+            {
+              title: t('Merchant menu'),
+              path: '/merchants',
+              icon: <Store fontSize="small" />,
+              active: getActiveStatus('merchants')
+            },
+            {
+              title: t('Companies'),
+              path: '/companies',
+              icon: <Business fontSize="small" />,
+              active: getActiveStatus('merchants')
+            },
+            {
+              title: t('Payment page design'),
+              path: '/payment-page-designs',
+              icon: <Preview fontSize="small" />,
+              active: getActiveStatus('merchants')
+            }
+          ]
         },
         {
           title: t('Reconciliation menu'),

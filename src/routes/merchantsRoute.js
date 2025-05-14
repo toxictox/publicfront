@@ -8,7 +8,7 @@ import AccountJobId from '@pages/merchant/_account/_job/id';
 import MerchantFeeRuleIndex from '@pages/merchant/_fee';
 import MerchantInvoicePreviewPage from '@pages/merchant/_invoice/preview';
 
-const MerchantList = Loadable(lazy(() => import('@pages/merchant/index')));
+const MerchantList = Loadable(lazy(() => import('@pages/merchant')));
 const MerchantModelId = Loadable(lazy(() => import('@pages/merchant/id')));
 const MerchantModelIdUpdate = Loadable(
   lazy(() => import('@pages/merchant/update'))
@@ -32,6 +32,10 @@ const MerchantDepositUpdate = Loadable(
 
 const MerchantOverdraftIndex = Loadable(
   lazy(() => import('@pages/merchant/_overdraft/index'))
+);
+
+const MerchantCorporateCardIndex = Loadable(
+  lazy(() => import('@pages/merchant/_corporate_card/index'))
 );
 
 export const merchantsRoute = {
@@ -139,6 +143,12 @@ export const merchantsRoute = {
       path: ':id/settings',
       element: (
           <MerchantOverdraftIndex />
+      ),
+    },
+    {
+      path: ':id/corporate_card/',
+      element: (
+          <MerchantCorporateCardIndex />
       ),
     },
   ],

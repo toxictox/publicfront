@@ -18,7 +18,8 @@ const buttons = {
   'register-city': 'Зарегистрировать',
   'Create transaction': 'Создать транзакцию',
   'Create transaction confirmation': 'Создать справку о транзакциях',
-  Create: 'Создать'
+  Create: 'Создать',
+  Edit: 'Редактировать'
 };
 
 const menu = {
@@ -301,6 +302,12 @@ const text = {
   'Fee Rules': 'Правила подсчета комиссии',
   NoFeeRulesDefined:
     'Для данного терминала нет правил подсчета комиссии. Создайте первое правило',
+  'Corporate cards': 'Корп.карты',
+  NoCorporateCardsDefined: 'Для данного мерчанта нет корпоративных карт. Создайте первую карту',
+  NoDesignsDefined: 'Дизайна платежных страниц отсутсвует. Создайте новый дизайн',
+  NoCompaniesDefined: 'Компании отсутвуют. Создайте новую компанию',
+  'Payment page design': 'Дизайн платежной страницы',
+  'Companies': 'Компании',
   'Successfully updated': 'Изменено успешно',
   'Successfully created': 'Создано успешно',
   'Hide deleted': 'Скрыть удаленные',
@@ -320,6 +327,15 @@ const text = {
   'Hide in sidebar balances': 'Скрыть с блока балансов',
   dashboardLabel: 'Название в блоке балансов',
   name: 'Название компании',
+  companyName: 'Название компании',
+  timezoneName: 'Название временной зоны',
+  company: 'Компания',
+  contractNumber: 'Номер контракта',
+  contractDate: 'Дата начала контракта',
+  businessName: 'Название компании(юр.лицо)',
+  design: 'Дизайн платежной страницы',
+  designName: 'Название платежной страницы',
+  editCardMask: 'Редактирование маски карты',
   iin: 'ИИН/БИН',
   bik: 'БИК',
   bankAccount: 'Номер счета компании',
@@ -430,7 +446,9 @@ const fields = {
   'Upload Files': 'Загрузка файла',
   'Reconciliation type': 'Тип сверки',
   cityRespCode: 'City24 статус',
-  company_email: 'Email компании',
+  companyEmail: 'Email компании',
+  companyIin: 'IIN компании',
+  companyBankAccountNumber: 'БИК компании',
   company_id: 'ID компании',
   TranId: 'ID транзакции',
   Description: 'Описание',

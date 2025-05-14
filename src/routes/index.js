@@ -27,6 +27,8 @@ import { finMonRoute } from './finMonRoute';
 import { maintenanceRoute } from './maintenanceRoute';
 import { manualGiveoutRoute } from './manualGiveoutRoute';
 import { transitAccountRoute } from './transitAccount';
+import { companiesRoute } from './companiesRoute';
+import { paymentPageDesignsRoute } from '@root/routes/paymentPageDesignsRoute';
 
 const Login = Loadable(lazy(() => import('@pages/authentication/Login')));
 
@@ -73,7 +75,9 @@ const routes = [
       finMonRoute,
       manualGiveoutRoute,
       transitAccountRoute,
-      maintenanceRoute
+      maintenanceRoute,
+      companiesRoute,
+      paymentPageDesignsRoute
     ]
   }
 ];

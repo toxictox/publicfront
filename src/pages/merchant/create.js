@@ -32,7 +32,7 @@ const UserIdUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>{t("Merchant Model Create")}</title>
+        <title>{t("Merchant Item Create")}</title>
       </Helmet>
       <Box
         sx={{

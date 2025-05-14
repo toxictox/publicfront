@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import useAuth from "@hooks/useAuth";
 
-const TerminalsList = () => {
+const MerchantList = () => {
   const mounted = useMounted();
   const { settings } = useSettings();
   const { t } = useTranslation();
@@ -32,10 +32,11 @@ const TerminalsList = () => {
   const { getAccess } = useAuth();
 
   const [dataList, setDataList] = useState({
-    data: [],
+    items: [],
     count: 0,
   });
   const [page, setPage] = useState(0);
+  const [count, setCount] = useState(25);
 
   const [isModalFormOpen, setModalFormOpen] = useState(false);
   const [editableItem, setEditableItem] = useState(null);
@@ -59,9 +60,8 @@ const TerminalsList = () => {
         toast.success(t("Success update"));
 
         setDataList({
-          page: dataList.page,
           count: dataList.count,
-          data: dataList.data.map((item) => {
+          items: dataList.items.map((item) => {
             if (item.id === id) {
               item.status = e.target.checked ? false : true;
             }
@@ -74,10 +74,15 @@ const TerminalsList = () => {
       });
   };
 
-  const getOrders = useCallback(async () => {
+  const getMerchants = useCallback(async () => {
     try {
       const response = await axios
-        .get(`${app.api}/merchants?page=${page}&count=${25}`)
+        .get(`${app.api}/merchants`, {
+          params: {
+            page: page + 1,
+            count: count,
+          }
+        })
         .then((response) => response.data);
 
       if (mounted.current) {
@@ -86,15 +91,19 @@ const TerminalsList = () => {
     } catch (err) {
       console.error(err);
     }
-  }, [mounted, page]);
+  }, [mounted, page, count]);
 
   const handlePageChange = async (e, newPage) => {
     setPage(newPage);
   };
 
+  const handleRowsPerPageChange = async (e, newValue) => {
+    setCount(newValue.props.value);
+  };
+
   useEffect(() => {
-    getOrders();
-  }, [getOrders]);
+    getMerchants();
+  }, [getMerchants]);
 
   return (
     <>
@@ -114,18 +123,20 @@ const TerminalsList = () => {
               <CardHeader
                 title={t("Merchant List")}
                 action={
-                  getAccess("merchants", "create") ? (
-                    <CreateButton
-                      action={() => navigate("/merchants/create")}
-                      text={t("Create button")}
+                  <>
+                    <GroupTable
+                      actionCreate={{
+                        callback: () => navigate("/merchants/create"),
+                        access: getAccess("merchants", "create"),
+                      }}
                     />
-                  ) : null
+                  </>
                 }
               />
               <Divider />
               <TableStatic
                 header={[
-                  "name",
+                  "merchantName",
                   "description",
                   "createOn",
                   "editOn",
@@ -133,7 +144,7 @@ const TerminalsList = () => {
                   "",
                 ]}
               >
-                {dataList.data.map(function (item) {
+                {dataList.items.map(function (item) {
                   return (
                     <TableRow hover key={item.id}>
                       <TableCell>{item.name}</TableCell>
@@ -170,8 +181,9 @@ const TerminalsList = () => {
               count={dataList.count}
               onPageChange={handlePageChange}
               page={page}
-              rowsPerPage={25}
-              rowsPerPageOptions={[25]}
+              rowsPerPage={count}
+              onRowsPerPageChange={handleRowsPerPageChange}
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
             />
           </Box>
         </Container>
@@ -180,4 +192,4 @@ const TerminalsList = () => {
   );
 };
 
-export default TerminalsList;
+export default MerchantList;
