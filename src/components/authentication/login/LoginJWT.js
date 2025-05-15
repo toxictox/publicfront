@@ -1,4 +1,3 @@
-// src/components/authentication/login/LoginJWT.js
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Box, Button, FormHelperText, TextField } from "@material-ui/core";
@@ -33,9 +32,6 @@ const LoginJWT = (props) => {
                         setSubmitting(false);
                     }
                 } catch (err) {
-                    console.error(err);
-
-                    // Проверяем, требуется ли 2FA
                     if (err.response && err.response.status === 401) {
                         if (err.response.data &&
                             err.response.data.error === 'access_denied' &&

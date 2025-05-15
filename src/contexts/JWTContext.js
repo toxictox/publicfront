@@ -1,4 +1,3 @@
-// src/contexts/JWTContext.js - окончательно исправленная версия
 import axios from '@lib/axios';
 import { app } from '@root/config';
 import PropTypes from 'prop-types';
@@ -32,7 +31,7 @@ const handlers = {
 
     return {
       ...state,
-      isAuthenticated: !twoFactorRequired, // Аутентифицирован, только если не требуется 2FA
+      isAuthenticated: !twoFactorRequired,
       user,
       twoFactorRequired,
       twoFactorRegistrationRequired
@@ -81,19 +80,17 @@ export const AuthProvider = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Признак, что осуществляется навигация (для предотвращения дублирующих перенаправлений)
   let isNavigating = false;
 
   useEffect(() => {
     const initialize = async () => {
-      // Проверяем, находимся ли мы на странице two-factor
       const isTwoFactorPage = location.pathname === '/authentication/two-factor';
-
-      // Получаем сохраненные данные из localStorage
       const accessToken = window.localStorage.getItem('accessToken');
       const accessId = window.localStorage.getItem('accessId');
 
-      // Если нет токена, значит пользователь не выполнил логин
+      const savedTwoFactorRequired = localStorage.getItem('twoFactorRequired') === 'true';
+      const savedTwoFactorRegistrationRequired = localStorage.getItem('twoFactorRegistrationRequired') === 'true';
+
       if (!accessToken || !accessId) {
         dispatch({
           type: 'INITIALIZE',
@@ -105,7 +102,6 @@ export const AuthProvider = (props) => {
           }
         });
 
-        // Если мы на странице 2FA, но нет токена, перенаправляем на логин
         if (isTwoFactorPage && !isNavigating) {
           isNavigating = true;
           navigate('/authentication/login');
@@ -113,27 +109,22 @@ export const AuthProvider = (props) => {
         return;
       }
 
-      // Устанавливаем токен для последующих запросов
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
-      // ВАЖНО: Если мы на странице two-factor, НЕ делаем запрос данных пользователя
-      // Это предотвращает 401 ошибку и бесконечный цикл перезагрузок
       if (isTwoFactorPage) {
         dispatch({
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
             user: null,
-            twoFactorRequired: true, // Устанавливаем флаг 2FA
-            twoFactorRegistrationRequired: false
+            twoFactorRequired: savedTwoFactorRequired,
+            twoFactorRegistrationRequired: savedTwoFactorRegistrationRequired  // Используем сохраненный флаг
           }
         });
         return;
       }
 
-      // Для других страниц проверяем статус авторизации
       try {
-        // Запрос данных пользователя
         const response = await axios.get(`${app.api}/user/${accessId}`);
 
         dispatch({
@@ -152,9 +143,6 @@ export const AuthProvider = (props) => {
           }
         });
       } catch (err) {
-        console.error('Ошибка при инициализации:', err);
-
-        // Проверка на 2FA требование
         if (err.response && err.response.status === 401) {
           if (err.response.data &&
               err.response.data.error === 'access_denied' &&
@@ -170,7 +158,6 @@ export const AuthProvider = (props) => {
               }
             });
 
-            // Перенаправляем на страницу 2FA
             if (!isTwoFactorPage && !isNavigating) {
               isNavigating = true;
               navigate('/authentication/two-factor');
@@ -179,9 +166,10 @@ export const AuthProvider = (props) => {
           }
         }
 
-        // Другие ошибки - очищаем данные сессии
         localStorage.removeItem('accessToken');
         localStorage.removeItem('accessId');
+        localStorage.removeItem('twoFactorRequired');
+        localStorage.removeItem('twoFactorRegistrationRequired');
 
         dispatch({
           type: 'INITIALIZE',
@@ -193,7 +181,6 @@ export const AuthProvider = (props) => {
           }
         });
 
-        // Перенаправляем на логин
         if (!isNavigating) {
           isNavigating = true;
           navigate('/authentication/login');
@@ -214,7 +201,6 @@ export const AuthProvider = (props) => {
           },
           {
             transformRequest: (data, headers) => {
-              // Удаляем заголовок Authorization для логина
               delete headers.common.Authorization;
               return JSON.stringify(data);
             },
@@ -224,28 +210,25 @@ export const AuthProvider = (props) => {
           }
       );
 
-      // Получаем данные из ответа
       const token = response.data.token;
       const user = response.data.user;
 
-      // Проверяем статус двухфакторной аутентификации
       const twoFactorRequired = response.data.result && response.data.result.two_factor_complete === false;
       const twoFactorRegistrationRequired = response.data.result && response.data.result.two_factor_registration_required === true;
 
-      // Сохраняем токен и ID пользователя
+      localStorage.setItem('twoFactorRequired', twoFactorRequired ? 'true' : 'false');
+      localStorage.setItem('twoFactorRegistrationRequired', twoFactorRegistrationRequired ? 'true' : 'false');
+
       localStorage.setItem('accessToken', token);
       localStorage.setItem('accessId', user.hash);
 
-      // Сохраняем ID мерчанта
       const merchantId = localStorage.getItem('merchId');
       merchantId
           ? localStorage.setItem('merchId', merchantId)
           : localStorage.setItem('merchId', user.merchantId);
 
-      // Устанавливаем токен для всех последующих запросов
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-      // Обновляем состояние авторизации
       dispatch({
         type: 'LOGIN',
         payload: {
@@ -261,7 +244,6 @@ export const AuthProvider = (props) => {
         }
       });
 
-      // Перенаправляем в зависимости от статуса 2FA
       if (twoFactorRequired || twoFactorRegistrationRequired) {
         navigate('/authentication/two-factor');
       } else {
@@ -270,9 +252,6 @@ export const AuthProvider = (props) => {
 
       return { success: true };
     } catch (err) {
-      console.error('Ошибка логина:', err);
-
-      // Проверка на 2FA ошибку
       if (err.response && err.response.status === 401) {
         if (err.response.data &&
             err.response.data.error === 'access_denied' &&
@@ -298,24 +277,24 @@ export const AuthProvider = (props) => {
   };
 
   const completeTwoFactor = () => {
+    localStorage.setItem('twoFactorRequired', 'false');
+    localStorage.setItem('twoFactorRegistrationRequired', 'false');
+
     dispatch({
       type: 'TWO_FACTOR_COMPLETE'
     });
   };
 
   const logout = async () => {
-    // Очищаем данные сессии
     localStorage.removeItem('accessToken');
     localStorage.removeItem('accessId');
     localStorage.removeItem('merchId');
+    localStorage.removeItem('twoFactorRequired');
+    localStorage.removeItem('twoFactorRegistrationRequired');
 
-    // Очищаем заголовки авторизации
     delete axios.defaults.headers.common.Authorization;
 
-    // Обновляем состояние
     dispatch({ type: 'LOGOUT' });
-
-    // Перенаправляем на страницу логина
     navigate('/authentication/login');
   };
 

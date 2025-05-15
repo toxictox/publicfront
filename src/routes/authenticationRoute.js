@@ -1,4 +1,3 @@
-// Обновленный src/routes/authenticationRoute.js с GuestGuardWithTwoFactor
 import { lazy } from 'react';
 import Loadable from '@root/routes/Loadable';
 import GuestGuard from '@root/components/GuestGuard';
