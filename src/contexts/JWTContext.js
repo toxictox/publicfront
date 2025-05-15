@@ -1,11 +1,11 @@
-// Исправленный JWTContext.js с предотвращением бесконечных редиректов
+// src/contexts/JWTContext.js - окончательно исправленная версия
 import axios from '@lib/axios';
 import { app } from '@root/config';
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const initialState = {
   isAuthenticated: false,
@@ -17,12 +17,14 @@ const initialState = {
 
 const handlers = {
   INITIALIZE: (state, action) => {
-    const { isAuthenticated, user } = action.payload;
+    const { isAuthenticated, user, twoFactorRequired, twoFactorRegistrationRequired } = action.payload;
     return {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
+      twoFactorRequired,
+      twoFactorRegistrationRequired
     };
   },
   LOGIN: (state, action) => {
@@ -77,51 +79,80 @@ export const AuthProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Добавляем флаг, чтобы избежать бесконечных редиректов
+  // Признак, что осуществляется навигация (для предотвращения дублирующих перенаправлений)
   let isNavigating = false;
 
   useEffect(() => {
     const initialize = async () => {
-      if (window.location.pathname === '' || window.location.pathname === '/') {
-        if (!isNavigating) {
+      // Проверяем, находимся ли мы на странице two-factor
+      const isTwoFactorPage = location.pathname === '/authentication/two-factor';
+
+      // Получаем сохраненные данные из localStorage
+      const accessToken = window.localStorage.getItem('accessToken');
+      const accessId = window.localStorage.getItem('accessId');
+
+      // Если нет токена, значит пользователь не выполнил логин
+      if (!accessToken || !accessId) {
+        dispatch({
+          type: 'INITIALIZE',
+          payload: {
+            isAuthenticated: false,
+            user: null,
+            twoFactorRequired: false,
+            twoFactorRegistrationRequired: false
+          }
+        });
+
+        // Если мы на странице 2FA, но нет токена, перенаправляем на логин
+        if (isTwoFactorPage && !isNavigating) {
           isNavigating = true;
-          navigate('/board');
+          navigate('/authentication/login');
         }
         return;
       }
 
-      try {
-        const accessToken = window.localStorage.getItem('accessToken');
-        const accessId = window.localStorage.getItem('accessId');
+      // Устанавливаем токен для последующих запросов
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
-        if (accessToken) {
-          await axios.get(`${app.api}/user/${accessId}`).then((response) => {
-            dispatch({
-              type: 'INITIALIZE',
-              payload: {
-                isAuthenticated: true,
-                user: {
-                  ...response.data,
-                  id: response.data.hash,
-                  avatar: '/static/mock-images/avatars/user.png',
-                  name: `${response.data.firstName} ${response.data.lastName}`,
-                  plan: 'Premium'
-                }
-              }
-            });
-          });
-        } else {
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: false,
-              user: null
-            }
-          });
-        }
+      // ВАЖНО: Если мы на странице two-factor, НЕ делаем запрос данных пользователя
+      // Это предотвращает 401 ошибку и бесконечный цикл перезагрузок
+      if (isTwoFactorPage) {
+        dispatch({
+          type: 'INITIALIZE',
+          payload: {
+            isAuthenticated: false,
+            user: null,
+            twoFactorRequired: true, // Устанавливаем флаг 2FA
+            twoFactorRegistrationRequired: false
+          }
+        });
+        return;
+      }
+
+      // Для других страниц проверяем статус авторизации
+      try {
+        // Запрос данных пользователя
+        const response = await axios.get(`${app.api}/user/${accessId}`);
+
+        dispatch({
+          type: 'INITIALIZE',
+          payload: {
+            isAuthenticated: true,
+            user: {
+              ...response.data,
+              id: response.data.hash,
+              avatar: '/static/mock-images/avatars/user.png',
+              name: `${response.data.firstName} ${response.data.lastName}`,
+              plan: 'Premium'
+            },
+            twoFactorRequired: false,
+            twoFactorRegistrationRequired: false
+          }
+        });
       } catch (err) {
-        console.error(err);
+        console.error('Ошибка при инициализации:', err);
 
         // Проверка на 2FA требование
         if (err.response && err.response.status === 401) {
@@ -129,7 +160,18 @@ export const AuthProvider = (props) => {
               err.response.data.error === 'access_denied' &&
               err.response.data.two_factor_complete === false) {
 
-            if (!isNavigating && window.location.pathname !== '/authentication/two-factor') {
+            dispatch({
+              type: 'INITIALIZE',
+              payload: {
+                isAuthenticated: false,
+                user: null,
+                twoFactorRequired: true,
+                twoFactorRegistrationRequired: false
+              }
+            });
+
+            // Перенаправляем на страницу 2FA
+            if (!isTwoFactorPage && !isNavigating) {
               isNavigating = true;
               navigate('/authentication/two-factor');
             }
@@ -137,23 +179,30 @@ export const AuthProvider = (props) => {
           }
         }
 
+        // Другие ошибки - очищаем данные сессии
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('accessId');
+
         dispatch({
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
-            user: null
+            user: null,
+            twoFactorRequired: false,
+            twoFactorRegistrationRequired: false
           }
         });
 
+        // Перенаправляем на логин
         if (!isNavigating) {
           isNavigating = true;
-          navigate('/board');
+          navigate('/authentication/login');
         }
       }
     };
 
     initialize();
-  }, [navigate]);
+  }, [location.pathname, navigate]);
 
   const login = async (email, password) => {
     try {
@@ -165,8 +214,8 @@ export const AuthProvider = (props) => {
           },
           {
             transformRequest: (data, headers) => {
+              // Удаляем заголовок Authorization для логина
               delete headers.common.Authorization;
-
               return JSON.stringify(data);
             },
             headers: {
@@ -175,29 +224,36 @@ export const AuthProvider = (props) => {
           }
       );
 
-      // Проверяем статус двухфакторной аутентификации из ответа сервера
+      // Получаем данные из ответа
+      const token = response.data.token;
+      const user = response.data.user;
+
+      // Проверяем статус двухфакторной аутентификации
       const twoFactorRequired = response.data.result && response.data.result.two_factor_complete === false;
       const twoFactorRegistrationRequired = response.data.result && response.data.result.two_factor_registration_required === true;
 
       // Сохраняем токен и ID пользователя
-      localStorage.setItem('accessToken', response.data.token);
-      localStorage.setItem('accessId', response.data.user.hash);
+      localStorage.setItem('accessToken', token);
+      localStorage.setItem('accessId', user.hash);
 
       // Сохраняем ID мерчанта
       const merchantId = localStorage.getItem('merchId');
       merchantId
           ? localStorage.setItem('merchId', merchantId)
-          : localStorage.setItem('merchId', response.data.user.merchantId);
+          : localStorage.setItem('merchId', user.merchantId);
+
+      // Устанавливаем токен для всех последующих запросов
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       // Обновляем состояние авторизации
       dispatch({
         type: 'LOGIN',
         payload: {
           user: {
-            ...response.data.user,
-            id: response.data.user.hash,
+            ...user,
+            id: user.hash,
             avatar: '/static/mock-images/avatars/user.png',
-            name: `${response.data.user.firstName} ${response.data.user.lastName}`,
+            name: `${user.firstName} ${user.lastName}`,
             plan: 'Premium'
           },
           twoFactorRequired,
@@ -205,20 +261,16 @@ export const AuthProvider = (props) => {
         }
       });
 
-      // Перенаправляем в зависимости от состояния 2FA
+      // Перенаправляем в зависимости от статуса 2FA
       if (twoFactorRequired || twoFactorRegistrationRequired) {
-        if (!isNavigating) {
-          isNavigating = true;
-          navigate('/authentication/two-factor');
-        }
+        navigate('/authentication/two-factor');
       } else {
-        if (!isNavigating) {
-          isNavigating = true;
-          navigate('/board');
-        }
+        navigate('/board');
       }
+
+      return { success: true };
     } catch (err) {
-      console.error(err);
+      console.error('Ошибка логина:', err);
 
       // Проверка на 2FA ошибку
       if (err.response && err.response.status === 401) {
@@ -235,15 +287,13 @@ export const AuthProvider = (props) => {
             }
           });
 
-          if (!isNavigating) {
-            isNavigating = true;
-            navigate('/authentication/two-factor');
-          }
-          return;
+          navigate('/authentication/two-factor');
+          return { success: false };
         }
       }
 
       toast.error(err.response?.data?.message || t('Login failed'));
+      return { success: false };
     }
   };
 
@@ -254,72 +304,68 @@ export const AuthProvider = (props) => {
   };
 
   const logout = async () => {
-    localStorage.clear();
+    // Очищаем данные сессии
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('accessId');
+    localStorage.removeItem('merchId');
+
+    // Очищаем заголовки авторизации
+    delete axios.defaults.headers.common.Authorization;
+
+    // Обновляем состояние
     dispatch({ type: 'LOGOUT' });
 
-    if (!isNavigating) {
-      isNavigating = true;
-      setTimeout(() => {
-        navigate('/board');
-      }, 200);
-    }
+    // Перенаправляем на страницу логина
+    navigate('/authentication/login');
   };
 
   const register = async (phone, password, linkToken = null) => {
-    await axios
-        .post(`${app.api}/registration`, {
-          phone,
-          password,
-          inviteHash: linkToken
-        })
-        .then((response) => {
-          toast.success(t('Success registration'));
+    try {
+      await axios.post(`${app.api}/registration`, {
+        phone,
+        password,
+        inviteHash: linkToken
+      });
 
-          if (!isNavigating) {
-            isNavigating = true;
-            navigate('/board');
-          }
-        })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
+      toast.success(t('Success registration'));
+      navigate('/authentication/login');
+      return { success: true };
+    } catch (err) {
+      toast.error(err.response?.data?.message || t('Registration failed'));
+      return { success: false };
+    }
   };
 
   const passwordRecovery = async (email, cb) => {
-    await axios
-        .post(`${app.api}/password/forget`, {
-          email
-        })
-        .then((response) => {
-          cb(true);
-        })
-        .catch((err) => {
-          if (err.response !== undefined) {
-            toast.error(t(err.response.data.message));
-          } else {
-            toast.error(`Ошибка отправки данных. Повторите позже`);
-          }
-          cb(false);
-        });
+    try {
+      await axios.post(`${app.api}/password/forget`, { email });
+      if (cb) cb(true);
+      return { success: true };
+    } catch (err) {
+      if (err.response !== undefined) {
+        toast.error(t(err.response.data.message));
+      } else {
+        toast.error(`Ошибка отправки данных. Повторите позже`);
+      }
+      if (cb) cb(false);
+      return { success: false };
+    }
   };
 
   const passwordReset = async (email, password, token) => {
-    await axios
-        .post(`${app.api}/password/change/${token}`, {
-          email,
-          password
-        })
-        .then((response) => {
-          toast.success(t('Password was successfully changed'));
+    try {
+      await axios.post(`${app.api}/password/change/${token}`, {
+        email,
+        password
+      });
 
-          if (!isNavigating) {
-            isNavigating = true;
-            navigate('/board');
-          }
-        })
-        .catch((err) => {
-          toast.error(t(err.response.data.message));
-        });
+      toast.success(t('Password was successfully changed'));
+      navigate('/authentication/login');
+      return { success: true };
+    } catch (err) {
+      toast.error(err.response?.data?.message || t('Password reset failed'));
+      return { success: false };
+    }
   };
 
   const getAccess = (path, name) => {
