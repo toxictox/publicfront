@@ -99,10 +99,6 @@ const TwoFactorAuth = () => {
             axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
             if (twoFactorRegistrationRequired) {
-                await axios.post(`${app.api}/2fa/google/confirm`, {
-                    authCode: code
-                });
-
                 await axios.post(`${app.api}/2fa/check`, {
                     authCode: code
                 });
@@ -121,7 +117,7 @@ const TwoFactorAuth = () => {
                 toast.success(t('Authentication successful'));
             }
 
-            completeTwoFactor();
+            await completeTwoFactor();
             setTimeout(() => {
                 navigate('/board');
                 window.location.reload();
