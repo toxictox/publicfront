@@ -1,6 +1,7 @@
 import AuthGuard from '@comp/AuthGuard';
 import BaseLayout from '@comp/board/BaseLayout';
 import GuestGuard from '@root/components/GuestGuard';
+import GuestGuardWithTwoFactor from '@root/components/GuestGuardWithTwoFactor';
 import Loadable from '@root/routes/Loadable';
 import { authenticationRoute } from '@root/routes/authenticationRoute';
 import { banksRoute } from '@root/routes/banksRoute';
@@ -31,6 +32,7 @@ import { companiesRoute } from './companiesRoute';
 import { paymentPageDesignsRoute } from '@root/routes/paymentPageDesignsRoute';
 
 const Login = Loadable(lazy(() => import('@pages/authentication/Login')));
+const TwoFactorAuth = Loadable(lazy(() => import('@pages/authentication/TwoFactorAuth')));
 
 const routes = [
   process.env.NODE_ENV === 'development' ? docs : {},
@@ -39,19 +41,27 @@ const routes = [
 
   authenticationRoute,
   {
+    path: 'authentication/two-factor',
+    element: (
+        <GuestGuardWithTwoFactor>
+          <TwoFactorAuth />
+        </GuestGuardWithTwoFactor>
+    )
+  },
+  {
     path: '*',
     element: (
-      <AuthGuard>
-        <BaseLayout />
-      </AuthGuard>
+        <AuthGuard>
+          <BaseLayout />
+        </AuthGuard>
     ),
     children: [
       {
         path: '/',
         element: (
-          <GuestGuard>
-            <Login />
-          </GuestGuard>
+            <GuestGuard>
+              <Login />
+            </GuestGuard>
         )
       },
       boardRoute,
